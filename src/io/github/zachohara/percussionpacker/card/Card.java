@@ -25,8 +25,6 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
@@ -37,7 +35,6 @@ public class Card extends Pane {
 	
 	public static final int HEIGHT = 37; // in pixels
 	public static final int MARGIN = 5; // in pixels
-	public static final int NAME_FIELD_WIDTH = 50; // in pixels
 	public static final String DEFAULT_NAME = "[name this]";
 	
 	private String name;
@@ -53,9 +50,6 @@ public class Card extends Pane {
 	public Card() {
 		super();
 		this.setPrefHeight(Card.HEIGHT);
-		
-		// initialize data specific to this card
-		this.name = "";
 		
 		// initialize handlers and listeners
 		this.addEventHandler(MouseEvent.ANY, new CardMouseHandler());
@@ -76,10 +70,7 @@ public class Card extends Pane {
 		this.nameText.addEventHandler(MouseEvent.ANY, new NameTextMouseHandler());
 		
 		// initialize the name text field
-		this.nameField = new TextField();
-		this.nameField.setPrefWidth(NAME_FIELD_WIDTH);
-		this.nameField.focusedProperty().addListener(new NameFieldFocusHandler());
-		this.nameField.setOnKeyPressed(new NameFieldKeyHandler());
+		this.nameField = new NameField(this);
 		
 		// initialize the border pane (for primary layout)
 		this.layoutPane = new BorderPane();
@@ -103,7 +94,7 @@ public class Card extends Pane {
 		// finalize and clean up
 		this.getChildren().add(this.stackPane);
 		this.handleResize();		
-		this.handleRename();
+		this.rename("");
 	}
 	
 	public double getCenterX() {
@@ -122,6 +113,11 @@ public class Card extends Pane {
 		this.titleText.setText(text);
 	}
 	
+	public boolean containsScenePoint(double x, double y) {
+		return x > this.getLayoutX() && x < this.getLayoutX() + this.getWidth()
+				&& y > this.getLayoutY() && y < this.getLayoutY() + this.getHeight();
+	}
+	
 	private void handleResize() {
 		this.resizeElement(baseButton, -2);
 		this.resizeElement(stackPane, 0);
@@ -133,6 +129,11 @@ public class Card extends Pane {
 		e.setMaxHeight(this.getHeight() + offset);
 		e.setPrefWidth(this.getWidth());
 		e.setMaxWidth(this.getWidth());
+	}
+	
+	protected void rename(String name) {
+		this.name = name;
+		this.handleRename();
 	}
 	
 	private void handleRename() {
@@ -210,31 +211,6 @@ public class Card extends Pane {
 					Card.this.nameField.requestFocus();
 					System.out.println("Request focus");
 				}
-			}
-		}
-		
-	}
-	
-	private class NameFieldFocusHandler implements ChangeListener<Boolean> {
-
-		@Override
-		public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue,
-				Boolean newValue) {
-			if (!newValue) {
-				Card.this.name = Card.this.nameField.getText();
-				Card.this.handleRename();
-			}
-		}
-		
-	}
-	
-	private class NameFieldKeyHandler implements EventHandler<KeyEvent> {
-
-		@Override
-		public void handle(KeyEvent event) {
-			KeyCode code = event.getCode();
-			if (code == KeyCode.ENTER || code == KeyCode.ESCAPE) {
-				Card.this.requestFocus();
 			}
 		}
 		
