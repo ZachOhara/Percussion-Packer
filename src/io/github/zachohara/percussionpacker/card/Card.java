@@ -20,7 +20,6 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -33,15 +32,14 @@ import javafx.scene.layout.StackPane;
 
 public class Card extends Pane {
 	
-	public static final int HEIGHT = 37; // in pixels
-	public static final int MARGIN = 5; // in pixels
-	public static final String DEFAULT_NAME = "[name this]";
+	public static final int HEIGHT = 40; // in pixels
+	public static final int MARGIN = 8; // in pixels
 	
 	private String name;
 	
 	private Button baseButton;
 	private Label titleText;
-	private Label nameText;
+	private NameLabel nameText;
 	private TextField nameField;
 	
 	StackPane stackPane;
@@ -61,13 +59,10 @@ public class Card extends Pane {
 		this.baseButton = new Button();
 		
 		// initialize the title label
-		this.titleText = new Label();
-		this.titleText.setStyle("-fx-font-family: Roboto; -fx-font-size: 16");
+		this.titleText = new TitleLabel(this);
 		
 		// initialize the name label
-		this.nameText = new Label();
-		this.nameText.setStyle("-fx-text-fill: green; -fx-background-color: lightblue");
-		this.nameText.addEventHandler(MouseEvent.ANY, new NameTextMouseHandler());
+		this.nameText = new NameLabel(this);
 		
 		// initialize the name text field
 		this.nameField = new NameField(this);
@@ -82,12 +77,6 @@ public class Card extends Pane {
 		this.stackPane.getChildren().addAll(this.baseButton, this.layoutPane);
 
 		// align all the elements
-		BorderPane.setAlignment(this.titleText, Pos.CENTER_LEFT);
-		BorderPane.setAlignment(this.nameText, Pos.CENTER_RIGHT);
-		BorderPane.setAlignment(this.nameField, Pos.CENTER_RIGHT);
-		BorderPane.setMargin(this.titleText, new Insets(Card.MARGIN));
-		BorderPane.setMargin(this.nameText, new Insets(Card.MARGIN));
-		BorderPane.setMargin(this.nameField, new Insets(Card.MARGIN));
 		StackPane.setAlignment(this.baseButton, Pos.CENTER);
 		StackPane.setAlignment(this.layoutPane, Pos.CENTER);
 		
@@ -105,11 +94,15 @@ public class Card extends Pane {
 		return this.getLayoutY() + (this.getHeight() / 2);
 	}
 	
-	public String getText() {
+	public String getTitle() {
 		return this.titleText.getText();
 	}
 	
-	public void setText(String text) {
+	public String getName() {
+		return this.name;
+	}
+	
+	public void setTitle(String text) {
 		this.titleText.setText(text);
 	}
 	
@@ -131,18 +124,14 @@ public class Card extends Pane {
 		e.setMaxWidth(this.getWidth());
 	}
 	
-	protected void rename(String name) {
-		this.name = name;
-		this.handleRename();
+	protected void promptRename() {
+		this.layoutPane.setRight(this.nameField);
+		this.nameField.requestFocus();
 	}
 	
-	private void handleRename() {
-		String displayText = this.name.trim();
-		if (displayText.length() == 0) {
-			displayText = Card.DEFAULT_NAME;
-		}
-		displayText = " " + displayText + " ";
-		this.nameText.setText(displayText);
+	protected void rename(String name) {
+		this.name = name.trim();
+		this.nameText.handleRename(this.name);
 		this.layoutPane.setRight(this.nameText);
 	}
 	
@@ -185,32 +174,6 @@ public class Card extends Pane {
 				Card.this.setLayoutY(this.lastCardPosY + (event.getSceneY() - this.lastMouseY));
 			} else if (type == MouseEvent.MOUSE_RELEASED) {
 				Card.this.requestFocus();
-			}
-		}
-		
-	}
-	
-	private class NameTextMouseHandler implements EventHandler<MouseEvent> {
-		
-		private boolean isDragging;
-		
-		public NameTextMouseHandler() {
-			this.isDragging = false;
-		}
-
-		@Override
-		public void handle(MouseEvent event) {
-			EventType<? extends MouseEvent> type = event.getEventType();
-			if (type == MouseEvent.MOUSE_PRESSED) {
-				this.isDragging = false;
-			} else if (type == MouseEvent.MOUSE_DRAGGED) {
-				this.isDragging = true;
-			} else if (type == MouseEvent.MOUSE_CLICKED) {
-				if (!this.isDragging) {
-					Card.this.layoutPane.setRight(Card.this.nameField);
-					Card.this.nameField.requestFocus();
-					System.out.println("Request focus");
-				}
 			}
 		}
 		

@@ -19,13 +19,16 @@ package io.github.zachohara.percussionpacker.card;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.BorderPane;
 
 public class NameField extends TextField {
 	
-	public static final int NAME_FIELD_WIDTH = 50; // in pixels
+	public static final int NAME_FIELD_WIDTH = 70; // in pixels
 	
 	private Card parent;
 	
@@ -35,6 +38,9 @@ public class NameField extends TextField {
 		this.setPrefWidth(NAME_FIELD_WIDTH);
 		this.focusedProperty().addListener(new NameFieldFocusHandler());
 		this.setOnKeyPressed(new NameFieldKeyHandler());
+		
+		BorderPane.setAlignment(this, Pos.CENTER_RIGHT);
+		BorderPane.setMargin(this, new Insets(Card.MARGIN));
 	}
 	
 	public boolean containsScenePoint(double x, double y) {

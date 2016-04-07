@@ -61,7 +61,7 @@ public class CardColumnScene extends Scene {
 				if (focusedObject instanceof NameField) {
 					Card activeCard = ((NameField) focusedObject).getCard();
 					if (!activeCard.containsScenePoint(event.getSceneX(), event.getSceneY())) {
-						activeCard.requestFocus();
+						CardColumnScene.this.primaryPane.requestFocus();
 					}
 				}
 			}
