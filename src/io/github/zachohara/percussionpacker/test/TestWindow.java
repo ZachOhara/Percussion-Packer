@@ -17,19 +17,14 @@
 package io.github.zachohara.percussionpacker.test;
 
 import io.github.zachohara.percussionpacker.card.Card;
-import io.github.zachohara.percussionpacker.window.WorkspaceScene;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-/**
- * 
- *
- * @author Zach Ohara
- */
 public class TestWindow extends Application {
 	
 	
@@ -61,7 +56,9 @@ public class TestWindow extends Application {
 			}
 		});
 		
-		WorkspaceScene s = new WorkspaceScene();
+		Pane p = new Pane();
+		p.setPrefSize(500, 500);
+		Scene s = new Scene(p);
 		
 		stage.setScene(s);
 		
@@ -73,7 +70,7 @@ public class TestWindow extends Application {
 		c.setLayoutY(100);
 		c.setPrefWidth(225);
 		
-		s.addAll(p2, c);
+		p.getChildren().addAll(p2, c);
 		
 	}
 	
