@@ -71,6 +71,7 @@ public class WorkspaceScene extends Scene {
 			this.resizeListener.addHandler(this.columnTitles[i]);
 		}
 		this.primaryPane.getChildren().addAll(this.columnTitles);
+		this.primaryPane.requestFocus(); // take focus away from backing buttons
 	}
 	
 	private class MouseHandler implements EventHandler<MouseEvent> {
