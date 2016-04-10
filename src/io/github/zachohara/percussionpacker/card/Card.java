@@ -16,8 +16,8 @@
 
 package io.github.zachohara.percussionpacker.card;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import io.github.zachohara.percussionpacker.event.RegionResizeListener;
+import io.github.zachohara.percussionpacker.event.ResizeHandler;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.geometry.Pos;
@@ -30,7 +30,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 
-public class Card extends Pane {
+public class Card extends Pane implements ResizeHandler {
 	
 	public static final int HEIGHT = 40; // in pixels
 	public static final int MARGIN = 8; // in pixels
@@ -51,9 +51,7 @@ public class Card extends Pane {
 		
 		// initialize handlers and listeners
 		this.addEventHandler(MouseEvent.ANY, new CardMouseHandler());
-		CardResizeHandler resizeListener = new CardResizeHandler();
-		this.widthProperty().addListener(resizeListener);
-		this.heightProperty().addListener(resizeListener);
+		new RegionResizeListener(this).addHandler(this);
 		
 		// initialize the button used as a base
 		this.baseButton = new Button();
@@ -111,7 +109,8 @@ public class Card extends Pane {
 				&& y > this.getLayoutY() && y < this.getLayoutY() + this.getHeight();
 	}
 	
-	private void handleResize() {
+	@Override
+	public void handleResize() {
 		this.resizeElement(baseButton, -2);
 		this.resizeElement(stackPane, 0);
 		this.resizeElement(layoutPane, 0);
@@ -133,15 +132,6 @@ public class Card extends Pane {
 		this.name = name.trim();
 		this.nameText.handleRename(this.name);
 		this.layoutPane.setRight(this.nameText);
-	}
-	
-	private class CardResizeHandler implements ChangeListener<Number> {
-
-		@Override
-		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-			Card.this.handleResize();
-		}
-		
 	}
 	
 	private class CardMouseHandler implements EventHandler<MouseEvent> {
