@@ -18,6 +18,7 @@ package io.github.zachohara.percussionpacker.card;
 
 import io.github.zachohara.percussionpacker.event.RegionResizeListener;
 import io.github.zachohara.percussionpacker.event.ResizeHandler;
+import io.github.zachohara.percussionpacker.graphic.BackingButton;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.geometry.Pos;
@@ -54,7 +55,7 @@ public class Card extends Pane implements ResizeHandler {
 		new RegionResizeListener(this).addHandler(this);
 		
 		// initialize the button used as a base
-		this.baseButton = new Button();
+		this.baseButton = new BackingButton(this);
 		
 		// initialize the title label
 		this.titleText = new TitleLabel(this);
@@ -111,9 +112,8 @@ public class Card extends Pane implements ResizeHandler {
 	
 	@Override
 	public void handleResize() {
-		this.resizeElement(baseButton, -2);
-		this.resizeElement(stackPane, 0);
-		this.resizeElement(layoutPane, 0);
+		this.resizeElement(this.stackPane, 0);
+		this.resizeElement(this.layoutPane, 0);
 	}
 	
 	private void resizeElement(Region e, int offset) {
