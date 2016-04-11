@@ -25,13 +25,13 @@ import javafx.scene.layout.StackPane;
 
 public class BackingButton extends Button implements ResizeHandler {
 	
-	public static final int HEIGHT_OFFSET = 2; //in pixels
+	public static final int HEIGHT_OFFSET = 1; //in pixels
 	
 	private Region parent;
 	
 	public BackingButton(Region parent) {
 		this(parent, new RegionResizeListener(parent));
-		StackPane.setAlignment(this, Pos.CENTER);
+		StackPane.setAlignment(this, Pos.TOP_CENTER);
 	}
 	
 	public BackingButton(Region parent, RegionResizeListener parentListener) {
