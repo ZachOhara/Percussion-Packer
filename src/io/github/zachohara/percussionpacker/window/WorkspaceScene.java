@@ -69,7 +69,7 @@ public class WorkspaceScene extends Scene {
 		this.columns = new Column[4];
 		this.seperators = new ColumnSeperator[this.columns.length - 1];
 		for (int i = 0; i < columnNames.length; i++) {
-			this.columns[i] = new Column(this, columnNames[i]);
+			this.columns[i] = new Column(this.columnPane, columnNames[i]);
 			if (i != 0) {
 				this.seperators[i-1] = new ColumnSeperator(this.columnPane, this.columns[i-1], this.columns[i]);
 				this.resizeListener.addHandler(this.seperators[i-1]);
