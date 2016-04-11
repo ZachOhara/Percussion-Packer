@@ -16,11 +16,16 @@
 
 package io.github.zachohara.percussionpacker.column;
 
+import io.github.zachohara.percussionpacker.event.mouse.MouseEventSelfListener;
+import io.github.zachohara.percussionpacker.event.mouse.MouseHandler;
 import io.github.zachohara.percussionpacker.event.resize.ResizeHandler;
+import javafx.event.EventType;
+import javafx.scene.Cursor;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 
-public class ColumnSeperator extends Pane implements ResizeHandler {
+public class ColumnSeperator extends Pane implements ResizeHandler, MouseHandler {
 	
 	public static final String DEFAULT_STYLE = "-fx-background-color: black ;-fx-background-radius: 3 3 3 3";
 	public static final int THICKNESS = 3; // in pixels
@@ -30,6 +35,7 @@ public class ColumnSeperator extends Pane implements ResizeHandler {
 	public ColumnSeperator(Region parent, Column leftColumn, Column rightColumn) {
 		super();
 		this.parent = parent;
+		new MouseEventSelfListener(this); // do not keep a reference here
 		this.setStyle(DEFAULT_STYLE);
 		this.setPrefWidth(THICKNESS);
 	}
@@ -37,6 +43,15 @@ public class ColumnSeperator extends Pane implements ResizeHandler {
 	@Override
 	public void handleResize() {
 		this.setPrefHeight(this.parent.getHeight());
+	}
+
+	@Override
+	public void handleMouse(MouseEvent event, EventType<? extends MouseEvent> type) {
+		if (type == MouseEvent.MOUSE_ENTERED) {
+			this.getScene().setCursor(Cursor.E_RESIZE);
+		} else if (type == MouseEvent.MOUSE_EXITED) {
+			this.getScene().setCursor(Cursor.DEFAULT);
+		}
 	}
 	
 }
