@@ -16,6 +16,7 @@
 
 package io.github.zachohara.percussionpacker.column;
 
+import io.github.zachohara.percussionpacker.event.resize.RegionResizeListener;
 import io.github.zachohara.percussionpacker.event.resize.ResizeHandler;
 import io.github.zachohara.percussionpacker.graphic.BackingButton;
 import javafx.geometry.Pos;
@@ -27,24 +28,26 @@ import javafx.scene.text.TextAlignment;
 public class ColumnTitle extends StackPane implements ResizeHandler {
 	
 	public static final int TITLE_HEIGHT = 80; // in pixels
-	public static final String TITLE_LABEL_STYLE = "-fx-font-size: 24; -fx-font-family: Arial; -fx-font-weight: bold"; 
+	public static final int TITLE_FONT_SIZE = 24; 
 	
 	private Column parent;
 	
 	private Label titleText;
 	private Button baseButton;
 	
+	private RegionResizeListener resizeListener;
+	
 	public ColumnTitle(Column parent, String name) {
 		super();
 		
 		this.parent = parent;
+		this.resizeListener = new RegionResizeListener(this);
 		
-		this.titleText = new Label(name);
-		this.titleText.setStyle(TITLE_LABEL_STYLE);
+		this.titleText = new ColumnTitleLabel(name, TITLE_FONT_SIZE, this.resizeListener);
 		this.titleText.setAlignment(Pos.CENTER);
 		this.titleText.setTextAlignment(TextAlignment.CENTER);
 		
-		this.baseButton = new BackingButton(this);
+		this.baseButton = new BackingButton(this, this.resizeListener);
 		
 		this.titleText.setPrefHeight(TITLE_HEIGHT);
 		this.setPrefHeight(TITLE_HEIGHT);
