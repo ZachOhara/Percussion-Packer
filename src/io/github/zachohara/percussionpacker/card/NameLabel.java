@@ -60,8 +60,7 @@ public class NameLabel extends Label implements MouseHandler {
 	}
 
 	@Override
-	public void handleMouse(MouseEvent event) {
-		EventType<? extends MouseEvent> type = event.getEventType();
+	public void handleMouse(MouseEvent event, EventType<? extends MouseEvent> type) {
 		if (type == MouseEvent.MOUSE_PRESSED) {
 			this.isDragging = false;
 		} else if (type == MouseEvent.MOUSE_DRAGGED) {

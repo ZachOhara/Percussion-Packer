@@ -37,7 +37,7 @@ public class MouseEventListener extends EventListener<MouseHandler> implements E
 	@Override
 	public void handle(MouseEvent event) {
 		for (MouseHandler handler : this.getHandlerList()) {
-			handler.handleMouse(event);
+			handler.handleMouse(event, event.getEventType());
 		}
 	}
 

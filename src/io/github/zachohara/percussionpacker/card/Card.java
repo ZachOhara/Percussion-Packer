@@ -113,8 +113,7 @@ public class Card extends StackPane implements ResizeHandler, MouseHandler {
 	}
 
 	@Override
-	public void handleMouse(MouseEvent event) {
-		EventType<? extends MouseEvent> type = event.getEventType();
+	public void handleMouse(MouseEvent event, EventType<? extends MouseEvent> type) {
 		if (type == MouseEvent.MOUSE_ENTERED) {
 			Card.this.baseButton.arm();
 		} else if (type == MouseEvent.MOUSE_EXITED) {

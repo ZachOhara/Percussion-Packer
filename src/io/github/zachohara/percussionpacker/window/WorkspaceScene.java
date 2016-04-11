@@ -44,8 +44,7 @@ public class WorkspaceScene extends Scene implements MouseHandler {
 	}
 
 	@Override
-	public void handleMouse(MouseEvent event) {
-		EventType<? extends MouseEvent> type = event.getEventType();
+	public void handleMouse(MouseEvent event, EventType<? extends MouseEvent> type) {
 		if (type == MouseEvent.MOUSE_CLICKED) {
 			Node focusedObject = WorkspaceScene.this.getFocusOwner();
 			if (focusedObject instanceof NameField) {

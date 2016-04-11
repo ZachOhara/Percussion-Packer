@@ -16,10 +16,11 @@
 
 package io.github.zachohara.percussionpacker.event.mouse;
 
+import javafx.event.EventType;
 import javafx.scene.input.MouseEvent;
 
 public interface MouseHandler {
 	
-	public void handleMouse(MouseEvent event);
+	public void handleMouse(MouseEvent event, EventType<? extends MouseEvent> type);
 
 }
