@@ -16,9 +16,11 @@
 
 package io.github.zachohara.percussionpacker.card;
 
+import io.github.zachohara.percussionpacker.event.key.KeyEventSelfListener;
+import io.github.zachohara.percussionpacker.event.key.KeyHandler;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.TextField;
@@ -26,7 +28,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 
-public class NameField extends TextField {
+public class NameField extends TextField implements KeyHandler {
 	
 	public static final int NAME_FIELD_WIDTH = 70; // in pixels
 	
@@ -37,7 +39,7 @@ public class NameField extends TextField {
 		this.parent = parent;
 		this.setPrefWidth(NAME_FIELD_WIDTH);
 		this.focusedProperty().addListener(new NameFieldFocusHandler());
-		this.setOnKeyPressed(new NameFieldKeyHandler());
+		new KeyEventSelfListener(this); // do not keep a reference here
 		
 		BorderPane.setAlignment(this, Pos.CENTER_RIGHT);
 		BorderPane.setMargin(this, new Insets(Card.MARGIN));
@@ -60,6 +62,15 @@ public class NameField extends TextField {
 	public double getSceneY() {
 		return this.localToScene(this.getLayoutX(), this.getLayoutY()).getY();
 	}
+
+	@Override
+	public void handleKey(KeyEvent event, EventType<KeyEvent> type, KeyCode code) {
+		if (type == KeyEvent.KEY_PRESSED) {
+			if (code == KeyCode.ENTER || code == KeyCode.ESCAPE) {
+				this.getParent().requestFocus();
+			}
+		}
+	}
 	
 	private class NameFieldFocusHandler implements ChangeListener<Boolean> {
 
@@ -68,18 +79,6 @@ public class NameField extends TextField {
 				Boolean newValue) {
 			if (!newValue) {
 				NameField.this.parent.rename(NameField.this.getText());
-			}
-		}
-		
-	}
-	
-	private class NameFieldKeyHandler implements EventHandler<KeyEvent> {
-
-		@Override
-		public void handle(KeyEvent event) {
-			KeyCode code = event.getCode();
-			if (code == KeyCode.ENTER || code == KeyCode.ESCAPE) {
-				NameField.this.getParent().requestFocus();
 			}
 		}
 		

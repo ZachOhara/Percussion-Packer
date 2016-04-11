@@ -14,29 +14,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package io.github.zachohara.percussionpacker.event.mouse;
+package io.github.zachohara.percussionpacker.event.key;
 
-import javafx.scene.Node;
-import javafx.scene.Scene;
+import javafx.event.EventType;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
-public class MouseEventSelfListener extends MouseEventListener {
-
-	public MouseEventSelfListener(Node n) {
-		super(n);
-		this.addSelf(n);
-	}
-
-	public MouseEventSelfListener(Scene s) {
-		super(s);
-		this.addSelf(s);
-	}
+public interface KeyHandler {
 	
-	private void addSelf(Object o) {
-		if (o instanceof MouseHandler) {
-			this.addHandler((MouseHandler) o);
-		} else {
-			throw new IllegalArgumentException("Event source must also be an event handler");
-		}
-	}
+	public void handleKey(KeyEvent event, EventType<KeyEvent> type, KeyCode code);
 
 }
