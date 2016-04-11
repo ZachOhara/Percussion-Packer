@@ -48,12 +48,23 @@ public class RegionResizeListener implements ChangeListener<Number> {
 		return this.resizeHandlers.add(handler);
 	}
 	
+	public boolean addAll(ResizeHandler... handlers) {
+		boolean success = true;
+		for (ResizeHandler handler : handlers) {
+			if (!this.addHandler(handler)) {
+				success = false;
+			}
+		}
+		return success;
+	}
+	
 	public boolean removeHandler(ResizeHandler handler) {
 		return this.resizeHandlers.remove(handler);
 	}
 
 	@Override
-	public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+	public void changed(ObservableValue<? extends Number> observable, Number oldValue,
+			Number newValue) {
 		for (ResizeHandler handler : this.resizeHandlers) {
 			handler.handleResize();
 		}
