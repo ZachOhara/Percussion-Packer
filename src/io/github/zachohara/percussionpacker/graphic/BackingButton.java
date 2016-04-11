@@ -29,15 +29,11 @@ public class BackingButton extends Button implements ResizeHandler {
 	
 	private Region parent;
 	
-	public BackingButton(Region parent) {
-		this(parent, new RegionResizeListener(parent));
-		StackPane.setAlignment(this, Pos.TOP_CENTER);
-	}
-	
 	public BackingButton(Region parent, RegionResizeListener parentListener) {
 		super();
 		this.parent = parent;
 		parentListener.addHandler(this);
+		StackPane.setAlignment(this, Pos.TOP_CENTER);
 	}
 
 	@Override
