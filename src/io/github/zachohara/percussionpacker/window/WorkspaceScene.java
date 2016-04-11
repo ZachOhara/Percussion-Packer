@@ -19,7 +19,7 @@ package io.github.zachohara.percussionpacker.window;
 import io.github.zachohara.percussionpacker.card.Card;
 import io.github.zachohara.percussionpacker.card.NameField;
 import io.github.zachohara.percussionpacker.event.MouseHandler;
-import io.github.zachohara.percussionpacker.event.MouseEventListener;
+import io.github.zachohara.percussionpacker.event.MouseEventSelfListener;
 import javafx.event.EventType;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -29,15 +29,13 @@ import javafx.scene.layout.Pane;
 public class WorkspaceScene extends Scene implements MouseHandler {
 	
 	private Pane columnPane;
-	
-	private MouseEventListener mouseListener;
+
 	
 	public WorkspaceScene() {
 		super(new ColumnPane());
 		this.columnPane = (Pane) this.getRoot();
 		
-		this.mouseListener = new MouseEventListener(this);
-		this.mouseListener.addHandler(this);
+		new MouseEventSelfListener(this); // do not keep a reference here
 		
 		this.columnPane.setPrefHeight(Window.DEFAULT_HEIGHT);
 		this.columnPane.setPrefWidth(Window.DEFAULT_WIDTH);	

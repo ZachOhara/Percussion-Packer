@@ -17,7 +17,7 @@
 package io.github.zachohara.percussionpacker.card;
 
 import io.github.zachohara.percussionpacker.event.MouseHandler;
-import io.github.zachohara.percussionpacker.event.MouseEventListener;
+import io.github.zachohara.percussionpacker.event.MouseEventSelfListener;
 import io.github.zachohara.percussionpacker.event.RegionResizeListener;
 import io.github.zachohara.percussionpacker.event.ResizeHandler;
 import io.github.zachohara.percussionpacker.graphic.BackingButton;
@@ -45,7 +45,6 @@ public class Card extends StackPane implements ResizeHandler, MouseHandler {
 	private BorderPane layoutPane;
 	
 	private RegionResizeListener resizeListener;
-	private MouseEventListener mouseListener;
 	
 	// used only in mouse dragging / reposisioning
 	private double lastMouseX;
@@ -58,8 +57,7 @@ public class Card extends StackPane implements ResizeHandler, MouseHandler {
 		this.setPrefHeight(Card.HEIGHT);
 		
 		// initialize handlers and listeners
-		this.mouseListener = new MouseEventListener(this);
-		this.mouseListener.addHandler(this);
+		new MouseEventSelfListener(this); // do not keep a reference here
 		this.resizeListener = new RegionResizeListener(this);
 		this.resizeListener.addHandler(this);
 		
