@@ -16,24 +16,38 @@
 
 package io.github.zachohara.percussionpacker.event;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.scene.layout.Region;
+import java.util.LinkedList;
+import java.util.List;
 
-public class RegionResizeListener extends EventListener<ResizeHandler> implements ChangeListener<Number> {
+public class EventListener<H> {
 	
-	public RegionResizeListener(Region r) {
-		super();
-		r.widthProperty().addListener(this);
-		r.heightProperty().addListener(this);
+	private List<H> handlers;
+	
+	public EventListener() {
+		this.handlers = new LinkedList<H>();
 	}
-
-	@Override
-	public void changed(ObservableValue<? extends Number> observable, Number oldValue,
-			Number newValue) {
-		for (ResizeHandler handler : this.getHandlerList()) {
-			handler.handleResize();
+	
+	protected List<H> getHandlerList() {
+		return this.handlers;
+	}
+	
+	public boolean addHandler(H handler) {
+		return this.handlers.add(handler);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public boolean addAll(H... handlers) {
+		boolean success = true;
+		for (H handler : handlers) {
+			if (!this.addHandler(handler)) {
+				success = false;
+			}
 		}
+		return success;
+	}
+	
+	public boolean removeHandler(H handler) {
+		return this.handlers.remove(handler);
 	}
 
 }
