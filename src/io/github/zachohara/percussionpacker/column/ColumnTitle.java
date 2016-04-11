@@ -14,47 +14,48 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package io.github.zachohara.percussionpacker.window;
+package io.github.zachohara.percussionpacker.column;
 
 import io.github.zachohara.percussionpacker.event.ResizeHandler;
 import io.github.zachohara.percussionpacker.graphic.BackingButton;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.TextAlignment;
 
 public class ColumnTitle extends StackPane implements ResizeHandler {
 	
-	public static final int TITLE_HEIGHT = 100; // in pixels
+	public static final int TITLE_HEIGHT = 80; // in pixels
 	public static final String TITLE_LABEL_STYLE = "-fx-font-size: 24; -fx-font-family: Arial; -fx-font-weight: bold"; 
+	
+	private Column parent;
 	
 	private Label titleText;
 	private Button baseButton;
 	
-	public ColumnTitle(String name) {
+	public ColumnTitle(Column parent, String name) {
 		super();
-		GridPane.setRowIndex(this, 0);
+		
+		this.parent = parent;
 		
 		this.titleText = new Label(name);
 		this.titleText.setStyle(TITLE_LABEL_STYLE);
-		
-		this.baseButton = new BackingButton(this);
-		
-		this.getChildren().addAll(this.baseButton, this.titleText);
-		
 		this.titleText.setAlignment(Pos.CENTER);
 		this.titleText.setTextAlignment(TextAlignment.CENTER);
 		
+		this.baseButton = new BackingButton(this);
+		
 		this.titleText.setPrefHeight(TITLE_HEIGHT);
 		this.setPrefHeight(TITLE_HEIGHT);
-		this.requestFocus();
+		this.setMaxHeight(TITLE_HEIGHT);
+		
+		this.getChildren().addAll(this.baseButton, this.titleText);
 	}
 
 	@Override
 	public void handleResize() {
-		double width = this.getScene().getWidth() / 4;
+		double width = this.parent.getWidth();
 		this.setPrefWidth(width);
 		this.titleText.setPrefWidth(width);
 	}
