@@ -27,11 +27,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 
-public class Card extends Pane implements ResizeHandler {
+public class Card extends StackPane implements ResizeHandler {
 	
 	public static final int HEIGHT = 40; // in pixels
 	public static final int MARGIN = 8; // in pixels
@@ -43,8 +41,9 @@ public class Card extends Pane implements ResizeHandler {
 	private NameLabel nameText;
 	private TextField nameField;
 	
-	StackPane stackPane;
-	BorderPane layoutPane;
+	private BorderPane layoutPane;
+	
+	private RegionResizeListener resizeListener;
 	
 	public Card() {
 		super();
@@ -52,35 +51,23 @@ public class Card extends Pane implements ResizeHandler {
 		
 		// initialize handlers and listeners
 		this.addEventHandler(MouseEvent.ANY, new CardMouseHandler());
-		new RegionResizeListener(this).addHandler(this);
+		this.resizeListener = new RegionResizeListener(this);
+		this.resizeListener.addHandler(this);
 		
-		// initialize the button used as a base
-		this.baseButton = new BackingButton(this);
-		
-		// initialize the title label
+		// initialize primary elements
+		this.baseButton = new BackingButton(this, this.resizeListener);
 		this.titleText = new TitleLabel(this);
-		
-		// initialize the name label
 		this.nameText = new NameLabel(this);
-		
-		// initialize the name text field
 		this.nameField = new NameField(this);
 		
 		// initialize the border pane (for primary layout)
 		this.layoutPane = new BorderPane();
 		this.layoutPane.setLeft(this.titleText);
 		this.layoutPane.setRight(this.nameText);
-		
-		// initialize the stack pane (for layering the button behind main elements)
-		this.stackPane = new StackPane();
-		this.stackPane.getChildren().addAll(this.baseButton, this.layoutPane);
-
-		// align all the elements
-		StackPane.setAlignment(this.baseButton, Pos.CENTER);
 		StackPane.setAlignment(this.layoutPane, Pos.CENTER);
 		
 		// finalize and clean up
-		this.getChildren().add(this.stackPane);
+		this.getChildren().addAll(this.baseButton, this.layoutPane);
 		this.handleResize();		
 		this.rename("");
 	}
@@ -112,15 +99,10 @@ public class Card extends Pane implements ResizeHandler {
 	
 	@Override
 	public void handleResize() {
-		this.resizeElement(this.stackPane, 0);
-		this.resizeElement(this.layoutPane, 0);
-	}
-	
-	private void resizeElement(Region e, int offset) {
-		e.setPrefHeight(this.getHeight() + offset);
-		e.setMaxHeight(this.getHeight() + offset);
-		e.setPrefWidth(this.getWidth());
-		e.setMaxWidth(this.getWidth());
+		this.layoutPane.setPrefHeight(this.getHeight());
+		this.layoutPane.setMaxHeight(this.getHeight());
+		this.layoutPane.setPrefWidth(this.getWidth());
+		this.layoutPane.setMaxWidth(this.getWidth());
 	}
 	
 	protected void promptRename() {
