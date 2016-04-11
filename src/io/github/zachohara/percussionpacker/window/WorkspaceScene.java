@@ -30,12 +30,14 @@ import javafx.scene.layout.Pane;
 
 public class WorkspaceScene extends Scene {
 	
+	public static final int COLUMNS_PER_SCENE = 4; // the number of columns in the workspace
+	
 	private Column[] columns;
 	
 	private Pane columnPane;
 	
 	private RegionResizeListener resizeListener;
-
+	
 	public WorkspaceScene() {
 		super(new HBox());
 		this.columnPane = (Pane) this.getRoot();
