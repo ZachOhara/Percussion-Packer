@@ -16,7 +16,8 @@
 
 package io.github.zachohara.percussionpacker.card;
 
-import javafx.event.EventHandler;
+import io.github.zachohara.percussionpacker.event.mouse.MouseEventSelfListener;
+import io.github.zachohara.percussionpacker.event.mouse.MouseHandler;
 import javafx.event.EventType;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -24,7 +25,7 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 
-public class NameLabel extends Label {
+public class NameLabel extends Label implements MouseHandler {
 
 	public static final String DEFAULT_NAME = "[name this]";
 	public static final String DEFAULT_STYLE = "-fx-background-radius: 7 7 7 7; -fx-font-size: 14px; "
@@ -34,10 +35,13 @@ public class NameLabel extends Label {
 	
 	private Card parent;
 	
+	// used in mouse handling
+	private boolean isDragging;
+	
 	public NameLabel(Card parent) {
 		super();
 		this.parent = parent;
-		this.addEventHandler(MouseEvent.ANY, new NameTextMouseHandler());
+		new MouseEventSelfListener(this); // do not keep a reference here
 		
 		BorderPane.setAlignment(this, Pos.CENTER_RIGHT);
 		BorderPane.setMargin(this, new Insets(Card.MARGIN));
@@ -54,25 +58,19 @@ public class NameLabel extends Label {
 		displayText = "  " + displayText + "  ";
 		this.setText(displayText);
 	}
-	
-	private class NameTextMouseHandler implements EventHandler<MouseEvent> {
-		
-		private boolean isDragging;
 
-		@Override
-		public void handle(MouseEvent event) {
-			EventType<? extends MouseEvent> type = event.getEventType();
-			if (type == MouseEvent.MOUSE_PRESSED) {
-				this.isDragging = false;
-			} else if (type == MouseEvent.MOUSE_DRAGGED) {
-				this.isDragging = true;
-			} else if (type == MouseEvent.MOUSE_CLICKED) {
-				if (!this.isDragging) {
-					NameLabel.this.parent.promptRename();
-				}
+	@Override
+	public void handleMouse(MouseEvent event) {
+		EventType<? extends MouseEvent> type = event.getEventType();
+		if (type == MouseEvent.MOUSE_PRESSED) {
+			this.isDragging = false;
+		} else if (type == MouseEvent.MOUSE_DRAGGED) {
+			this.isDragging = true;
+		} else if (type == MouseEvent.MOUSE_CLICKED) {
+			if (!this.isDragging) {
+				NameLabel.this.parent.promptRename();
 			}
 		}
-		
 	}
 
 }
