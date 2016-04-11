@@ -18,60 +18,52 @@ package io.github.zachohara.percussionpacker.window;
 
 import io.github.zachohara.percussionpacker.card.Card;
 import io.github.zachohara.percussionpacker.card.NameField;
+import io.github.zachohara.percussionpacker.column.Column;
 import io.github.zachohara.percussionpacker.event.RegionResizeListener;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 
 public class WorkspaceScene extends Scene {
 	
-	private ColumnTitle[] columnTitles;
+	private Column[] columns;
 	
-	private Pane primaryPane;
+	private Pane columnPane;
 	
 	private RegionResizeListener resizeListener;
 
 	public WorkspaceScene() {
-		super(new GridPane());
-		this.primaryPane = (Pane) this.getRoot();
-		this.primaryPane.setPrefSize(Window.DEFAULT_WIDTH, Window.DEFAULT_HEIGHT);
+		super(new HBox());
+		this.columnPane = (Pane) this.getRoot();
+
 		this.addEventHandler(MouseEvent.ANY, new MouseHandler());
 		this.resizeListener = new RegionResizeListener(this);
 		
-		this.initializeColumnTitles();
-	}
-	
-	//Old methods: only uncomment if absolutely necessary (they shouldn't be)
-	public Pane getPrimaryPane() {
-		return this.primaryPane;
-	}
-	
-	public boolean add(Node e) {
-		return this.getPrimaryPane().getChildren().add(e);
-	}
-	
-	public boolean addAll(Node... c) {
-		return this.getPrimaryPane().getChildren().addAll(c);
-	}
-	
-	private void initializeColumnTitles() {
-		// Create the titles
-		this.columnTitles = new ColumnTitle[4];
-		this.columnTitles[0] = new ColumnTitle("Song List");
-		this.columnTitles[1] = new ColumnTitle("Complete\nEquipment List");
-		this.columnTitles[2] = new ColumnTitle("Packing List");
-		this.columnTitles[3] = new ColumnTitle("Mallet List");
+		this.initializeColumns();
 		
-		for (int i = 0; i < 4; i++) {
-			GridPane.setColumnIndex(this.columnTitles[i], i);
-			this.resizeListener.addHandler(this.columnTitles[i]);
+		this.columnPane.setPrefHeight(Window.DEFAULT_HEIGHT);
+		this.columnPane.setPrefWidth(Window.DEFAULT_WIDTH);		
+	}
+	
+	private void initializeColumns() {
+		String[] columnNames = {
+				"Song List",
+				"Equipment List",
+				"Packing List",
+				"Mallet List",
+		};
+		
+		this.columns = new Column[4];
+		for (int i = 0; i < columnNames.length; i++) {
+			this.columns[i] = new Column(this.columnPane, columnNames[i]);
+			this.columnPane.getChildren().add(this.columns[i]);
+			this.resizeListener.addHandler(this.columns[i]);
 		}
-		this.primaryPane.getChildren().addAll(this.columnTitles);
-		this.primaryPane.requestFocus(); // take focus away from backing buttons
+		this.columnPane.requestFocus(); // take focus away from any backing buttons
 	}
 	
 	private class MouseHandler implements EventHandler<MouseEvent> {
@@ -84,7 +76,7 @@ public class WorkspaceScene extends Scene {
 				if (focusedObject instanceof NameField) {
 					Card activeCard = ((NameField) focusedObject).getCard();
 					if (!activeCard.containsScenePoint(event.getSceneX(), event.getSceneY())) {
-						WorkspaceScene.this.primaryPane.requestFocus();
+						WorkspaceScene.this.columnPane.requestFocus();
 					}
 				}
 			}
