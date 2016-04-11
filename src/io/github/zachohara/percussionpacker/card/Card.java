@@ -16,10 +16,11 @@
 
 package io.github.zachohara.percussionpacker.card;
 
+import io.github.zachohara.percussionpacker.event.MouseHandler;
+import io.github.zachohara.percussionpacker.event.MouseEventListener;
 import io.github.zachohara.percussionpacker.event.RegionResizeListener;
 import io.github.zachohara.percussionpacker.event.ResizeHandler;
 import io.github.zachohara.percussionpacker.graphic.BackingButton;
-import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -29,7 +30,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 
-public class Card extends StackPane implements ResizeHandler {
+public class Card extends StackPane implements ResizeHandler, MouseHandler {
 	
 	public static final int HEIGHT = 40; // in pixels
 	public static final int MARGIN = 8; // in pixels
@@ -44,13 +45,21 @@ public class Card extends StackPane implements ResizeHandler {
 	private BorderPane layoutPane;
 	
 	private RegionResizeListener resizeListener;
+	private MouseEventListener mouseListener;
+	
+	// used only in mouse dragging / reposisioning
+	private double lastMouseX;
+	private double lastMouseY;
+	private double lastCardPosX;
+	private double lastCardPosY;
 	
 	public Card() {
 		super();
 		this.setPrefHeight(Card.HEIGHT);
 		
 		// initialize handlers and listeners
-		this.addEventHandler(MouseEvent.ANY, new CardMouseHandler());
+		this.mouseListener = new MouseEventListener(this);
+		this.mouseListener.addHandler(this);
 		this.resizeListener = new RegionResizeListener(this);
 		this.resizeListener.addHandler(this);
 		
@@ -104,6 +113,27 @@ public class Card extends StackPane implements ResizeHandler {
 		this.layoutPane.setPrefWidth(this.getWidth());
 		this.layoutPane.setMaxWidth(this.getWidth());
 	}
+
+	@Override
+	public void handleMouse(MouseEvent event) {
+		EventType<? extends MouseEvent> type = event.getEventType();
+		if (type == MouseEvent.MOUSE_ENTERED) {
+			Card.this.baseButton.arm();
+		} else if (type == MouseEvent.MOUSE_EXITED) {
+			Card.this.baseButton.disarm();
+		} else if (type == MouseEvent.MOUSE_PRESSED) {
+			this.lastMouseX = event.getSceneX();
+			this.lastMouseY = event.getSceneY();
+			this.lastCardPosX = Card.this.getLayoutX();
+			this.lastCardPosY = Card.this.getLayoutY();
+			Card.this.baseButton.requestFocus();
+		} else if (type == MouseEvent.MOUSE_DRAGGED) {
+			Card.this.setLayoutX(this.lastCardPosX + (event.getSceneX() - this.lastMouseX));
+			Card.this.setLayoutY(this.lastCardPosY + (event.getSceneY() - this.lastMouseY));
+		} else if (type == MouseEvent.MOUSE_RELEASED) {
+			Card.this.requestFocus();
+		}
+	}
 	
 	protected void promptRename() {
 		this.layoutPane.setRight(this.nameField);
@@ -114,41 +144,6 @@ public class Card extends StackPane implements ResizeHandler {
 		this.name = name.trim();
 		this.nameText.handleRename(this.name);
 		this.layoutPane.setRight(this.nameText);
-	}
-	
-	private class CardMouseHandler implements EventHandler<MouseEvent> {
-		
-		private double lastMouseX;
-		private double lastMouseY;
-		private double lastCardPosX;
-		private double lastCardPosY;
-		
-		public CardMouseHandler() {
-			this.lastMouseX = 0;
-			this.lastMouseY = 0;
-		}
-
-		@Override
-		public void handle(MouseEvent event) {
-			EventType<? extends MouseEvent> type = event.getEventType();
-			if (type == MouseEvent.MOUSE_ENTERED) {
-				Card.this.baseButton.arm();
-			} else if (type == MouseEvent.MOUSE_EXITED) {
-				Card.this.baseButton.disarm();
-			} else if (type == MouseEvent.MOUSE_PRESSED) {
-				this.lastMouseX = event.getSceneX();
-				this.lastMouseY = event.getSceneY();
-				this.lastCardPosX = Card.this.getLayoutX();
-				this.lastCardPosY = Card.this.getLayoutY();
-				Card.this.baseButton.requestFocus();
-			} else if (type == MouseEvent.MOUSE_DRAGGED) {
-				Card.this.setLayoutX(this.lastCardPosX + (event.getSceneX() - this.lastMouseX));
-				Card.this.setLayoutY(this.lastCardPosY + (event.getSceneY() - this.lastMouseY));
-			} else if (type == MouseEvent.MOUSE_RELEASED) {
-				Card.this.requestFocus();
-			}
-		}
-		
 	}
 
 }
