@@ -16,7 +16,7 @@
 
 package io.github.zachohara.percussionpacker.column;
 
-import io.github.zachohara.percussionpacker.event.ResizeHandler;
+import io.github.zachohara.percussionpacker.event.resize.ResizeHandler;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 

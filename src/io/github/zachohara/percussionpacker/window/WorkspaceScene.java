@@ -18,8 +18,8 @@ package io.github.zachohara.percussionpacker.window;
 
 import io.github.zachohara.percussionpacker.card.Card;
 import io.github.zachohara.percussionpacker.card.NameField;
-import io.github.zachohara.percussionpacker.event.MouseHandler;
-import io.github.zachohara.percussionpacker.event.MouseEventSelfListener;
+import io.github.zachohara.percussionpacker.event.mouse.MouseEventSelfListener;
+import io.github.zachohara.percussionpacker.event.mouse.MouseHandler;
 import javafx.event.EventType;
 import javafx.scene.Node;
 import javafx.scene.Scene;

@@ -16,8 +16,8 @@
 
 package io.github.zachohara.percussionpacker.column;
 
-import io.github.zachohara.percussionpacker.event.RegionResizeListener;
-import io.github.zachohara.percussionpacker.event.ResizeHandler;
+import io.github.zachohara.percussionpacker.event.resize.RegionResizeListener;
+import io.github.zachohara.percussionpacker.event.resize.ResizeHandler;
 import io.github.zachohara.percussionpacker.window.ColumnPane;
 import javafx.scene.layout.VBox;
 

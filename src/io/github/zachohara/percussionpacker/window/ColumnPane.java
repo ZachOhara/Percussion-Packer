@@ -18,7 +18,7 @@ package io.github.zachohara.percussionpacker.window;
 
 import io.github.zachohara.percussionpacker.column.Column;
 import io.github.zachohara.percussionpacker.column.ColumnSeperator;
-import io.github.zachohara.percussionpacker.event.RegionResizeListener;
+import io.github.zachohara.percussionpacker.event.resize.RegionResizeListener;
 import javafx.scene.layout.HBox;
 
 public class ColumnPane extends HBox {

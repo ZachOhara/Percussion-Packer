@@ -16,7 +16,7 @@
 
 package io.github.zachohara.percussionpacker.column;
 
-import io.github.zachohara.percussionpacker.event.ResizeHandler;
+import io.github.zachohara.percussionpacker.event.resize.ResizeHandler;
 import io.github.zachohara.percussionpacker.graphic.BackingButton;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;

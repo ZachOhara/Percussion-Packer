@@ -16,10 +16,10 @@
 
 package io.github.zachohara.percussionpacker.card;
 
-import io.github.zachohara.percussionpacker.event.MouseHandler;
-import io.github.zachohara.percussionpacker.event.MouseEventSelfListener;
-import io.github.zachohara.percussionpacker.event.RegionResizeListener;
-import io.github.zachohara.percussionpacker.event.ResizeHandler;
+import io.github.zachohara.percussionpacker.event.mouse.MouseEventSelfListener;
+import io.github.zachohara.percussionpacker.event.mouse.MouseHandler;
+import io.github.zachohara.percussionpacker.event.resize.RegionResizeListener;
+import io.github.zachohara.percussionpacker.event.resize.ResizeHandler;
 import io.github.zachohara.percussionpacker.graphic.BackingButton;
 import javafx.event.EventType;
 import javafx.geometry.Pos;

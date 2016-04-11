@@ -14,29 +14,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package io.github.zachohara.percussionpacker.event;
+package io.github.zachohara.percussionpacker.event.resize;
 
-import javafx.scene.Node;
-import javafx.scene.Scene;
-
-public class MouseEventSelfListener extends MouseEventListener {
-
-	public MouseEventSelfListener(Node n) {
-		super(n);
-		addSelf(n);
-	}
-
-	public MouseEventSelfListener(Scene s) {
-		super(s);
-		addSelf(s);
-	}
+public interface ResizeHandler {
 	
-	private void addSelf(Object o) {
-		if (o instanceof MouseHandler) {
-			this.addHandler((MouseHandler) o);
-		} else {
-			throw new IllegalArgumentException("Event source must also be an event handler");
-		}
-	}
+	public void handleResize();
 
 }

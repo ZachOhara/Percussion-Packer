@@ -14,12 +14,31 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package io.github.zachohara.percussionpacker.event;
+package io.github.zachohara.percussionpacker.event.mouse;
 
+import io.github.zachohara.percussionpacker.event.EventListener;
+import javafx.event.EventHandler;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 
-public interface MouseHandler {
+public class MouseEventListener extends EventListener<MouseHandler> implements EventHandler<MouseEvent> {
 	
-	public void handleMouse(MouseEvent event);
+	public MouseEventListener(Node n) {
+		super();
+		n.addEventHandler(MouseEvent.ANY, this);
+	}
+	
+	public MouseEventListener(Scene s) {
+		super();
+		s.addEventHandler(MouseEvent.ANY, this);
+	}
+
+	@Override
+	public void handle(MouseEvent event) {
+		for (MouseHandler handler : this.getHandlerList()) {
+			handler.handleMouse(event);
+		}
+	}
 
 }

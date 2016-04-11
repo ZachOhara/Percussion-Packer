@@ -14,29 +14,26 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package io.github.zachohara.percussionpacker.event;
+package io.github.zachohara.percussionpacker.event.resize;
 
-import javafx.event.EventHandler;
-import javafx.scene.Node;
-import javafx.scene.Scene;
-import javafx.scene.input.MouseEvent;
+import io.github.zachohara.percussionpacker.event.EventListener;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.scene.layout.Region;
 
-public class MouseEventListener extends EventListener<MouseHandler> implements EventHandler<MouseEvent> {
+public class RegionResizeListener extends EventListener<ResizeHandler> implements ChangeListener<Number> {
 	
-	public MouseEventListener(Node n) {
+	public RegionResizeListener(Region r) {
 		super();
-		n.addEventHandler(MouseEvent.ANY, this);
-	}
-	
-	public MouseEventListener(Scene s) {
-		super();
-		s.addEventHandler(MouseEvent.ANY, this);
+		r.widthProperty().addListener(this);
+		r.heightProperty().addListener(this);
 	}
 
 	@Override
-	public void handle(MouseEvent event) {
-		for (MouseHandler handler : this.getHandlerList()) {
-			handler.handleMouse(event);
+	public void changed(ObservableValue<? extends Number> observable, Number oldValue,
+			Number newValue) {
+		for (ResizeHandler handler : this.getHandlerList()) {
+			handler.handleResize();
 		}
 	}
 

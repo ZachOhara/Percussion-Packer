@@ -16,8 +16,8 @@
 
 package io.github.zachohara.percussionpacker.graphic;
 
-import io.github.zachohara.percussionpacker.event.RegionResizeListener;
-import io.github.zachohara.percussionpacker.event.ResizeHandler;
+import io.github.zachohara.percussionpacker.event.resize.RegionResizeListener;
+import io.github.zachohara.percussionpacker.event.resize.ResizeHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Region;
