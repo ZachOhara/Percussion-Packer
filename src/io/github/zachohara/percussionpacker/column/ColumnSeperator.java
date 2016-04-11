@@ -32,9 +32,19 @@ public class ColumnSeperator extends Pane implements ResizeHandler, MouseHandler
 	
 	private Region parent;
 	
+	private Column leftColumn;
+	private Column rightColumn;
+	
+	private boolean isDragging;
+	private double dragStartPos;
+	private double dragLeftWidth;
+	private double dragRightWidth;
+	
 	public ColumnSeperator(Region parent, Column leftColumn, Column rightColumn) {
 		super();
 		this.parent = parent;
+		this.leftColumn = leftColumn;
+		this.rightColumn = rightColumn;
 		new MouseEventSelfListener(this); // do not keep a reference here
 		this.setStyle(DEFAULT_STYLE);
 		this.setPrefWidth(THICKNESS);
@@ -51,6 +61,21 @@ public class ColumnSeperator extends Pane implements ResizeHandler, MouseHandler
 			this.getScene().setCursor(Cursor.E_RESIZE);
 		} else if (type == MouseEvent.MOUSE_EXITED) {
 			this.getScene().setCursor(Cursor.DEFAULT);
+		} else if (type == MouseEvent.MOUSE_PRESSED) {
+			this.isDragging = false;
+			this.dragStartPos = event.getSceneX();
+			this.dragLeftWidth = this.leftColumn.getWidth();
+			this.dragRightWidth = this.rightColumn.getWidth();
+		} else if (type == MouseEvent.MOUSE_DRAGGED) {
+			this.isDragging = true;
+			double increment = event.getSceneX() - this.dragStartPos;
+			this.leftColumn.setPrefWidth(this.dragLeftWidth + increment);
+			this.rightColumn.setPrefWidth(this.dragRightWidth - increment);
+		} else if (type == MouseEvent.MOUSE_RELEASED) {
+			if (this.isDragging) {
+				this.leftColumn.finalizeDragResize();
+				this.rightColumn.finalizeDragResize();
+			}
 		}
 	}
 	

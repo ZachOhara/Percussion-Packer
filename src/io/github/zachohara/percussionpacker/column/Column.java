@@ -25,6 +25,8 @@ public class Column extends VBox implements ResizeHandler {
 	
 	private ColumnPane parent;
 	
+	private double widthFactor;
+	
 	private ColumnTitle titlePane;
 	
 	private RegionResizeListener resizeListener;
@@ -34,6 +36,8 @@ public class Column extends VBox implements ResizeHandler {
 		
 		this.parent = parent;
 		
+		this.widthFactor = 1;
+		
 		this.resizeListener = new RegionResizeListener(this);
 		this.resizeListener.addHandler(this);
 		
@@ -42,12 +46,15 @@ public class Column extends VBox implements ResizeHandler {
 		
 		this.getChildren().add(this.titlePane);
 	}
+	
+	public void finalizeDragResize() {
+		this.widthFactor = this.getWidth() / this.parent.getStandardColumnWidth();
+	}
 
 	@Override
 	public void handleResize() {
-		double width = this.parent.getStandardColumnWidth();
+		double width = this.widthFactor * this.parent.getStandardColumnWidth();
 		this.setPrefWidth(width);
-		this.setMinWidth(width);
 		this.setPrefHeight(this.parent.getHeight());
 	}
 
