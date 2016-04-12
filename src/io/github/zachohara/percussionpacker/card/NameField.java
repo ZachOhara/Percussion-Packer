@@ -16,7 +16,7 @@
 
 package io.github.zachohara.percussionpacker.card;
 
-import io.github.zachohara.percussionpacker.event.key.KeyEventSelfListener;
+import io.github.zachohara.percussionpacker.event.key.KeyEventListener;
 import io.github.zachohara.percussionpacker.event.key.KeyHandler;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -34,12 +34,16 @@ public class NameField extends TextField implements KeyHandler {
 	
 	private Card parent;
 	
+	private KeyEventListener keyListener;
+	
 	public NameField(Card parent) {
 		super();
 		this.parent = parent;
 		this.setPrefWidth(NAME_FIELD_WIDTH);
 		this.focusedProperty().addListener(new NameFieldFocusHandler());
-		new KeyEventSelfListener(this); // do not keep a reference here
+		
+		this.keyListener = new KeyEventListener(this);
+		this.keyListener.addHandler(this);
 		
 		BorderPane.setAlignment(this, Pos.CENTER_RIGHT);
 		BorderPane.setMargin(this, new Insets(Card.MARGIN));

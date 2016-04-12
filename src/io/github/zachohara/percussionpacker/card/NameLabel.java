@@ -16,7 +16,7 @@
 
 package io.github.zachohara.percussionpacker.card;
 
-import io.github.zachohara.percussionpacker.event.mouse.MouseEventSelfListener;
+import io.github.zachohara.percussionpacker.event.mouse.MouseEventListener;
 import io.github.zachohara.percussionpacker.event.mouse.MouseHandler;
 import javafx.event.EventType;
 import javafx.geometry.Insets;
@@ -34,6 +34,8 @@ public class NameLabel extends Label implements MouseHandler {
 			+ "-fx-text-fill: darkgreen; -fx-background-color: skyblue; -fx-font-weight:bold; ";
 	
 	private Card parent;
+
+	private MouseEventListener mouseListener;
 	
 	// used in mouse handling
 	private boolean isDragging;
@@ -41,7 +43,9 @@ public class NameLabel extends Label implements MouseHandler {
 	public NameLabel(Card parent) {
 		super();
 		this.parent = parent;
-		new MouseEventSelfListener(this); // do not keep a reference here
+		
+		this.mouseListener = new MouseEventListener(this);
+		this.mouseListener.addHandler(this);
 		
 		BorderPane.setAlignment(this, Pos.CENTER_RIGHT);
 		BorderPane.setMargin(this, new Insets(Card.MARGIN));

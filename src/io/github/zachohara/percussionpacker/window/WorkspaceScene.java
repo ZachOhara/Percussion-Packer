@@ -18,7 +18,7 @@ package io.github.zachohara.percussionpacker.window;
 
 import io.github.zachohara.percussionpacker.card.Card;
 import io.github.zachohara.percussionpacker.card.NameField;
-import io.github.zachohara.percussionpacker.event.mouse.MouseEventSelfListener;
+import io.github.zachohara.percussionpacker.event.mouse.MouseEventListener;
 import io.github.zachohara.percussionpacker.event.mouse.MouseHandler;
 import io.github.zachohara.percussionpacker.event.resize.RegionResizeListener;
 import io.github.zachohara.percussionpacker.event.resize.ResizeHandler;
@@ -34,6 +34,7 @@ public class WorkspaceScene extends Scene implements MouseHandler, ResizeHandler
 	private Pane columnPane;
 	
 	private RegionResizeListener resizeListener;
+	private MouseEventListener mouseListener;
 
 	public WorkspaceScene() {
 		super(new Pane());
@@ -44,7 +45,8 @@ public class WorkspaceScene extends Scene implements MouseHandler, ResizeHandler
 		this.resizeListener = new RegionResizeListener(this.rootPane);
 		this.resizeListener.addHandler(this);
 		
-		new MouseEventSelfListener(this); // do not keep a reference here
+		this.mouseListener = new MouseEventListener(this);
+		this.mouseListener.addHandler(this);
 		
 		this.rootPane.setPrefHeight(Window.DEFAULT_HEIGHT);
 		this.rootPane.setPrefWidth(Window.DEFAULT_WIDTH);
