@@ -18,44 +18,28 @@ package io.github.zachohara.percussionpacker.column;
 
 import io.github.zachohara.percussionpacker.event.resize.RegionResizeListener;
 import io.github.zachohara.percussionpacker.event.resize.ResizeHandler;
-import io.github.zachohara.percussionpacker.window.ColumnPane;
 import javafx.scene.layout.VBox;
 
 public class Column extends VBox implements ResizeHandler {
-	
-	private ColumnPane parent;
-	
-	private double widthFactor;
 	
 	private ColumnTitle titlePane;
 	
 	private RegionResizeListener resizeListener;
 	
-	public Column(ColumnPane parent, String title) {
+	public Column(String title) {
 		super();
-		
-		this.parent = parent;
-		
-		this.widthFactor = 1;
 		
 		this.resizeListener = new RegionResizeListener(this);
 		this.resizeListener.addHandler(this);
 		
-		this.titlePane = new ColumnTitle(this, title);
-		this.resizeListener.addHandler(this.titlePane);
+		this.titlePane = new ColumnTitle(title);
 		
 		this.getChildren().add(this.titlePane);
-	}
-	
-	public void finalizeDragResize() {
-		this.widthFactor = this.getWidth() / this.parent.getStandardColumnWidth();
 	}
 
 	@Override
 	public void handleResize() {
-		double width = this.widthFactor * this.parent.getStandardColumnWidth();
-		this.setPrefWidth(width);
-		this.setPrefHeight(this.parent.getHeight());
+		this.titlePane.setPrefWidth(this.getWidth());
 	}
 
 }

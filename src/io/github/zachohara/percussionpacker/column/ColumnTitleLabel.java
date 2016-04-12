@@ -18,41 +18,45 @@ package io.github.zachohara.percussionpacker.column;
 
 import io.github.zachohara.percussionpacker.event.resize.RegionResizeListener;
 import io.github.zachohara.percussionpacker.event.resize.ResizeHandler;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 
 public class ColumnTitleLabel extends Label implements ResizeHandler {
 
 	public static final String TITLE_FONT = "Arial Bold";
+	public static final int MAX_FONT_SIZE = 24;
 	public static final double FONT_SIZE_INCREMENT = 0.1;
-	public static final double WIDTH_BUFFER = 10; // in pixels
+	public static final double WIDTH_BUFFER = 5; // in pixels
 	
-	private int maxSize;
 	private Font font;
-	
 	private Text idealText;
 	
-	public ColumnTitleLabel(String text, int maxSize, RegionResizeListener resizeListener) {
+	private RegionResizeListener resizeListener;
+	
+	public ColumnTitleLabel(String text) {
 		super(text);
-		
-		this.maxSize = maxSize;
+		this.setAlignment(Pos.CENTER);
+		this.setTextAlignment(TextAlignment.CENTER);
 		
 		this.font = new Font(TITLE_FONT, 0);
-		
 		this.idealText = new Text(text);
+		this.setFontSize(MAX_FONT_SIZE);
 		
-		this.setFontSize(this.maxSize);
-		
-		resizeListener.addHandler(this);
+		this.resizeListener = new RegionResizeListener(this);
+		this.resizeListener.addHandler(this);
 	}
 
 	@Override
 	public void handleResize() {
-		while (this.idealText.prefWidth(0) > this.getWidth() - WIDTH_BUFFER && this.getWidth() != 0) {
+		while (this.idealText.prefWidth(0) > this.getWidth() - WIDTH_BUFFER
+				&& this.getWidth() != 0) {
 			this.incrementFontSize(-FONT_SIZE_INCREMENT);
 		}
-		while (this.idealText.prefWidth(0) < this.getWidth() - WIDTH_BUFFER && this.font.getSize() < this.maxSize) {
+		while (this.idealText.prefWidth(0) < this.getWidth() - WIDTH_BUFFER
+				&& this.font.getSize() < MAX_FONT_SIZE) {
 			this.incrementFontSize(FONT_SIZE_INCREMENT);
 		}
 	}
