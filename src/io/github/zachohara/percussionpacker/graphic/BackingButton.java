@@ -31,6 +31,7 @@ public class BackingButton extends Button implements ResizeHandler {
 	
 	public BackingButton(Region parent, RegionResizeListener parentListener) {
 		super();
+		this.setFocusTraversable(false);
 		this.parent = parent;
 		parentListener.addHandler(this);
 		StackPane.setAlignment(this, Pos.TOP_CENTER);
