@@ -25,10 +25,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 
-public class ColumnSeperator extends Pane implements ResizeHandler, MouseHandler {
+public class ColumnSeparator extends Pane implements ResizeHandler, MouseHandler {
 	
 	public static final String DEFAULT_STYLE = "-fx-background-color: black ;-fx-background-radius: 3 3 3 3";
 	public static final int THICKNESS = 3; // in pixels
+	public static final int MIN_COLUMN_SIZE_BUFFER = 0;
 	
 	private Region parent;
 	
@@ -40,7 +41,7 @@ public class ColumnSeperator extends Pane implements ResizeHandler, MouseHandler
 	private double dragLeftWidth;
 	private double dragRightWidth;
 	
-	public ColumnSeperator(Region parent, Column leftColumn, Column rightColumn) {
+	public ColumnSeparator(Region parent, Column leftColumn, Column rightColumn) {
 		super();
 		this.parent = parent;
 		this.leftColumn = leftColumn;
@@ -48,6 +49,7 @@ public class ColumnSeperator extends Pane implements ResizeHandler, MouseHandler
 		new MouseEventSelfListener(this); // do not keep a reference here
 		this.setStyle(DEFAULT_STYLE);
 		this.setPrefWidth(THICKNESS);
+		this.setMinWidth(THICKNESS);
 	}
 
 	@Override
@@ -69,12 +71,19 @@ public class ColumnSeperator extends Pane implements ResizeHandler, MouseHandler
 		} else if (type == MouseEvent.MOUSE_DRAGGED) {
 			this.isDragging = true;
 			double increment = event.getSceneX() - this.dragStartPos;
-			this.leftColumn.setPrefWidth(this.dragLeftWidth + increment);
-			this.rightColumn.setPrefWidth(this.dragRightWidth - increment);
+			double newLeftWidth = this.dragLeftWidth + increment;
+			double newRightWidth = this.dragRightWidth - increment;
+			if (newLeftWidth >= this.leftColumn.getMinWidth() + MIN_COLUMN_SIZE_BUFFER
+					&& newRightWidth >= this.rightColumn.getMinWidth() + MIN_COLUMN_SIZE_BUFFER) {
+				this.leftColumn.setPrefWidth(newLeftWidth);
+				this.rightColumn.setPrefWidth(newRightWidth);
+				//this.leftColumn.handleResize();
+				//this.rightColumn.handleResize();
+			}
 		} else if (type == MouseEvent.MOUSE_RELEASED) {
 			if (this.isDragging) {
-				this.leftColumn.finalizeDragResize();
-				this.rightColumn.finalizeDragResize();
+				//this.leftColumn.finalizeDragResize();
+				//this.rightColumn.finalizeDragResize();
 			}
 		}
 	}
