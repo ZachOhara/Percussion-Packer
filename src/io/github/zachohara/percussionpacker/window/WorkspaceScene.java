@@ -20,27 +20,37 @@ import io.github.zachohara.percussionpacker.card.Card;
 import io.github.zachohara.percussionpacker.card.NameField;
 import io.github.zachohara.percussionpacker.event.mouse.MouseEventSelfListener;
 import io.github.zachohara.percussionpacker.event.mouse.MouseHandler;
+import io.github.zachohara.percussionpacker.event.resize.RegionResizeListener;
+import io.github.zachohara.percussionpacker.event.resize.ResizeHandler;
 import javafx.event.EventType;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 
-public class WorkspaceScene extends Scene implements MouseHandler {
+public class WorkspaceScene extends Scene implements MouseHandler, ResizeHandler {
 	
+	private Pane rootPane;
 	private Pane columnPane;
-
 	
+	private RegionResizeListener resizeListener;
+
 	public WorkspaceScene() {
-		super(new ColumnPane());
-		this.columnPane = (Pane) this.getRoot();
+		super(new Pane());
+		
+		this.rootPane = (Pane) this.getRoot();
+		this.columnPane = new ColumnPane();
+		
+		this.resizeListener = new RegionResizeListener(this.rootPane);
+		this.resizeListener.addHandler(this);
 		
 		new MouseEventSelfListener(this); // do not keep a reference here
 		
-		this.columnPane.setPrefHeight(Window.DEFAULT_HEIGHT);
-		this.columnPane.setPrefWidth(Window.DEFAULT_WIDTH);	
+		this.rootPane.setPrefHeight(Window.DEFAULT_HEIGHT);
+		this.rootPane.setPrefWidth(Window.DEFAULT_WIDTH);
 		
-		this.columnPane.requestFocus(); // take focus away from any backing buttons
+		this.rootPane.getChildren().add(this.columnPane);
+		this.columnPane.requestFocus();
 	}
 
 	@Override
@@ -54,6 +64,12 @@ public class WorkspaceScene extends Scene implements MouseHandler {
 				}
 			}
 		}
+	}
+
+	@Override
+	public void handleResize() {
+		this.columnPane.setPrefWidth(this.rootPane.getWidth());
+		this.columnPane.setPrefHeight(this.rootPane.getHeight());
 	}
 
 }

@@ -22,12 +22,15 @@ import javafx.scene.layout.VBox;
 
 public class Column extends VBox implements ResizeHandler {
 	
+	public static final int MIN_COLUMN_WIDTH = 100;
+	
 	private ColumnTitle titlePane;
 	
 	private RegionResizeListener resizeListener;
 	
 	public Column(String title) {
 		super();
+		this.setMinWidth(MIN_COLUMN_WIDTH);
 		
 		this.resizeListener = new RegionResizeListener(this);
 		this.resizeListener.addHandler(this);

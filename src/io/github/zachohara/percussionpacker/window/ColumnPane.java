@@ -17,11 +17,12 @@
 package io.github.zachohara.percussionpacker.window;
 
 import io.github.zachohara.percussionpacker.column.Column;
-import io.github.zachohara.percussionpacker.column.ColumnSeperator;
+import io.github.zachohara.percussionpacker.column.ColumnSeparator;
 import io.github.zachohara.percussionpacker.event.resize.RegionResizeListener;
+import io.github.zachohara.percussionpacker.event.resize.ResizeHandler;
 import javafx.scene.layout.HBox;
 
-public class ColumnPane extends HBox {
+public class ColumnPane extends HBox implements ResizeHandler {
 	
 	public static final String[] columnNames = {
 			"Song List",
@@ -29,37 +30,64 @@ public class ColumnPane extends HBox {
 			"Packing List",
 			"Mallet List",
 	};
+	public static final int MIN_SIZE_BUFFER = 16; // in pixels
 	public static final int NUM_COLUMNS = 4; // the number of columns in the workspace
+	public static final int NUM_SEPARATORS = NUM_COLUMNS - 1;
 	
+	private double[] columnWidthRatio;
 	private Column[] columns;
-	private ColumnSeperator[] seperators;
+	private ColumnSeparator[] separators;
 	
 	private RegionResizeListener resizeListener;
 	
 	public ColumnPane() {
 		super();
+		this.columnWidthRatio = new double[NUM_COLUMNS];
+		this.columns = new Column[NUM_COLUMNS];
+		this.separators = new ColumnSeparator[NUM_SEPARATORS];
 		this.resizeListener = new RegionResizeListener(this);
+		this.resizeListener.addHandler(this);
 		this.initializeColumns();
 	}
 	
-	public double getStandardColumnWidth() {
-		return (this.getWidth() - ((NUM_COLUMNS - 1) * ColumnSeperator.THICKNESS))
-				/ NUM_COLUMNS;
+	private void initializeColumns() {
+		// initialize columns
+		for (int i = 0; i < NUM_COLUMNS; i++) {
+			this.columnWidthRatio[i] = 1.0 / NUM_COLUMNS;
+			this.columns[i] = new Column(columnNames[i]);
+		}
+		// initialize separators
+		for (int i = 0; i < NUM_SEPARATORS; i++) {
+			this.separators[i] = new ColumnSeparator(this, this.columns[i], this.columns[i + 1]);
+		}
+		// add all elements to this pane
+		for (int i = 0; i < NUM_COLUMNS; i++) {
+			this.getChildren().add(this.columns[i]);
+			if (i != NUM_COLUMNS - 1) {
+				this.getChildren().add(this.separators[i]);
+			}
+		}
+	}
+
+	@Override
+	public void handleResize() {
+		double availableSpace = this.getAvailableColumnSpace();
+		for(int i = 0; i < NUM_COLUMNS; i++) {
+			this.columns[i].setPrefWidth(availableSpace * this.columnWidthRatio[i]);
+			this.columns[i].setPrefHeight(this.getHeight());
+		}
+		for (ColumnSeparator cs : this.separators) {
+			cs.setPrefHeight(this.getHeight());
+		}
 	}
 	
-	private void initializeColumns() {
-		this.columns = new Column[NUM_COLUMNS];
-		this.seperators = new ColumnSeperator[NUM_COLUMNS - 1];
-		for (int i = 0; i < columnNames.length; i++) {
-			this.columns[i] = new Column(this, columnNames[i]);
-			if (i != 0) {
-				this.seperators[i-1] = new ColumnSeperator(this, this.columns[i-1], this.columns[i]);
-				this.resizeListener.addHandler(this.seperators[i-1]);
-				this.getChildren().add(this.seperators[i-1]);
-			}
-			this.getChildren().add(this.columns[i]);
-			this.resizeListener.addHandler(this.columns[i]);
-		}
+	private double getAvailableColumnSpace() {
+		return this.getWidth() - (NUM_SEPARATORS * ColumnSeparator.THICKNESS);
+	}
+	
+	public static double minColumnPaneWidth() {
+		return MIN_SIZE_BUFFER + ((NUM_COLUMNS * Column.MIN_COLUMN_WIDTH)
+				+ (NUM_SEPARATORS * ColumnSeparator.THICKNESS));
 	}
 
 }

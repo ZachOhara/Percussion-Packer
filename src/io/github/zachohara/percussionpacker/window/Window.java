@@ -29,12 +29,11 @@ public class Window extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		primaryStage.setTitle(WINDOW_TITLE);
-		
 		this.cardScene = new WorkspaceScene();
-		
+		primaryStage.setMinWidth(ColumnPane.minColumnPaneWidth());
+
+		primaryStage.setTitle(WINDOW_TITLE);
 		primaryStage.setScene(this.cardScene);
-		
 		primaryStage.show();
 	}
 	
