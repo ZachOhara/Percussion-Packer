@@ -49,6 +49,30 @@ public class ColumnPane extends HBox implements ResizeHandler {
 		this.resizeListener.addHandler(this);
 		this.initializeColumns();
 	}
+
+	@Override
+	public void handleResize() {
+		double availableSpace = this.getAvailableColumnSpace();
+		for (int i = 0; i < NUM_COLUMNS; i++) {
+			this.columns[i].setPrefWidth(availableSpace * this.columnWidthRatio[i]);
+			this.columns[i].setPrefHeight(this.getHeight());
+		}
+		for (ColumnSeparator cs : this.separators) {
+			cs.setPrefHeight(this.getHeight());
+		}
+	}
+	
+	public void finishColumnResizing() {
+		double availableSpace = this.getAvailableColumnSpace();
+		for (int i = 0; i < NUM_COLUMNS; i++) {
+			this.columnWidthRatio[i] = this.columns[i].getWidth() / availableSpace;
+		}
+		this.handleResize(); // necessary?
+	}
+	
+	private double getAvailableColumnSpace() {
+		return this.getWidth() - (NUM_SEPARATORS * ColumnSeparator.THICKNESS);
+	}
 	
 	private void initializeColumns() {
 		// initialize columns
@@ -67,22 +91,6 @@ public class ColumnPane extends HBox implements ResizeHandler {
 				this.getChildren().add(this.separators[i]);
 			}
 		}
-	}
-
-	@Override
-	public void handleResize() {
-		double availableSpace = this.getAvailableColumnSpace();
-		for(int i = 0; i < NUM_COLUMNS; i++) {
-			this.columns[i].setPrefWidth(availableSpace * this.columnWidthRatio[i]);
-			this.columns[i].setPrefHeight(this.getHeight());
-		}
-		for (ColumnSeparator cs : this.separators) {
-			cs.setPrefHeight(this.getHeight());
-		}
-	}
-	
-	private double getAvailableColumnSpace() {
-		return this.getWidth() - (NUM_SEPARATORS * ColumnSeparator.THICKNESS);
 	}
 	
 	public static double minColumnPaneWidth() {
