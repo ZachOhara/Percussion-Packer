@@ -29,7 +29,7 @@ public class ColumnTitleLabel extends Label implements ResizeHandler {
 	public static final String TITLE_FONT = "Arial Bold";
 	public static final int MAX_FONT_SIZE = 24;
 	public static final double FONT_SIZE_INCREMENT = 0.1;
-	public static final double WIDTH_BUFFER = 5; // in pixels
+	public static final double WIDTH_BUFFER = 8; // in pixels
 	
 	private Font font;
 	private Text idealText;
