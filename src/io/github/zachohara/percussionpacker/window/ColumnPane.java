@@ -40,14 +40,14 @@ public class ColumnPane extends HBox implements ResizeHandler {
 	
 	private RegionResizeListener resizeListener;
 	
-	public ColumnPane() {
+	public ColumnPane(CardSpacePane parent) {
 		super();
 		this.columnWidthRatio = new double[NUM_COLUMNS];
 		this.columns = new Column[NUM_COLUMNS];
 		this.separators = new ColumnSeparator[NUM_SEPARATORS];
 		this.resizeListener = new RegionResizeListener(this);
 		this.resizeListener.addHandler(this);
-		this.initializeColumns();
+		this.initializeColumns(parent);
 	}
 
 	@Override
@@ -74,11 +74,11 @@ public class ColumnPane extends HBox implements ResizeHandler {
 		return this.getWidth() - (NUM_SEPARATORS * ColumnSeparator.THICKNESS);
 	}
 	
-	private void initializeColumns() {
+	private void initializeColumns(CardSpacePane parent) {
 		// initialize columns
 		for (int i = 0; i < NUM_COLUMNS; i++) {
 			this.columnWidthRatio[i] = 1.0 / NUM_COLUMNS;
-			this.columns[i] = new Column(columnNames[i]);
+			this.columns[i] = new Column(parent, columnNames[i]);
 		}
 		// initialize separators
 		for (int i = 0; i < NUM_SEPARATORS; i++) {

@@ -20,10 +20,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.github.zachohara.percussionpacker.card.Card;
+import io.github.zachohara.percussionpacker.card.GhostCard;
 import io.github.zachohara.percussionpacker.event.mouse.MouseEventListener;
 import io.github.zachohara.percussionpacker.event.mouse.MouseHandler;
 import io.github.zachohara.percussionpacker.event.resize.RegionResizeListener;
 import io.github.zachohara.percussionpacker.event.resize.ResizeHandler;
+import io.github.zachohara.percussionpacker.window.CardSpacePane;
 import javafx.event.EventType;
 import javafx.geometry.Point2D;
 import javafx.scene.control.ScrollPane;
@@ -33,6 +35,9 @@ import javafx.scene.layout.VBox;
 
 public class CardList extends ScrollPane implements ResizeHandler, MouseHandler {
 	
+	private Column parent;
+	private CardSpacePane grandparent;
+	
 	private List<Card> cards;
 	
 	private Pane cardPane;
@@ -40,21 +45,24 @@ public class CardList extends ScrollPane implements ResizeHandler, MouseHandler 
 	private RegionResizeListener resizeListener;
 	private MouseEventListener mouseListener;
 	
-	public CardList() {
+	public CardList(CardSpacePane grandparent, Column parent) {
 		super();
 		this.setHbarPolicy(ScrollBarPolicy.NEVER);
 		this.setVbarPolicy(ScrollBarPolicy.AS_NEEDED);
 		this.setFitToWidth(true);
 		
+		this.grandparent = grandparent;
+		
 		this.cardPane = new VBox();
 		
 		this.cards = new ArrayList<Card>();
 		
-		/*// Test code
+		// Test code
 		for (int i = 0; i < 20; i++) {
 			this.addCard(new Card());
+			this.cards.get(i).setTitle("" + i);
 		}
-		*/
+		
 		
 		this.resizeListener = new RegionResizeListener(this);
 		this.resizeListener.addHandler(this);
@@ -85,9 +93,16 @@ public class CardList extends ScrollPane implements ResizeHandler, MouseHandler 
 			double localY = localPos.getY();
 			if (0 < localX && localX < this.cardPane.getWidth()) {
 				int cardIndex = (int) (localY / Card.HEIGHT);
+				this.handleCardClick(cardIndex);
 				this.cards.get(cardIndex).handleMouse(event, type);
 			}
 		}
+	}
+	
+	private void handleCardClick(int index) {
+		this.cardPane.getChildren().set(this.cardPane.getChildren().indexOf(this.cards.get(index)), new GhostCard());
+		this.grandparent.recieveCard(this.cards.get(index), this.parent.getLayoutX(),index * Card.HEIGHT);
+		this.cards.remove(index);
 	}
 
 }
