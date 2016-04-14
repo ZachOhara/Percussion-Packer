@@ -78,7 +78,7 @@ public class ColumnPane extends HBox implements ResizeHandler {
 		// initialize columns
 		for (int i = 0; i < NUM_COLUMNS; i++) {
 			this.columnWidthRatio[i] = 1.0 / NUM_COLUMNS;
-			this.columns[i] = new Column(parent, columnNames[i]);
+			this.columns[i] = new Column(columnNames[i]);
 		}
 		// initialize separators
 		for (int i = 0; i < NUM_SEPARATORS; i++) {

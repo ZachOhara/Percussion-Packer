@@ -31,7 +31,7 @@ import javafx.scene.layout.Pane;
 public class WorkspaceScene extends Scene implements MouseHandler, ResizeHandler {
 	
 	private Pane rootPane;
-	private Pane cardSpacePane;
+	private CardSpacePane cardSpacePane;
 	
 	private RegionResizeListener resizeListener;
 	private MouseEventListener mouseListener;
@@ -53,6 +53,10 @@ public class WorkspaceScene extends Scene implements MouseHandler, ResizeHandler
 		
 		this.rootPane.getChildren().add(this.cardSpacePane);
 		this.cardSpacePane.requestFocus();
+	}
+	
+	public CardSpacePane getCardSpace() {
+		return this.cardSpacePane;
 	}
 
 	@Override

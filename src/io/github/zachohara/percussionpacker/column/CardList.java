@@ -26,6 +26,7 @@ import io.github.zachohara.percussionpacker.event.mouse.MouseHandler;
 import io.github.zachohara.percussionpacker.event.resize.RegionResizeListener;
 import io.github.zachohara.percussionpacker.event.resize.ResizeHandler;
 import io.github.zachohara.percussionpacker.window.CardSpacePane;
+import io.github.zachohara.percussionpacker.window.Window;
 import javafx.event.EventType;
 import javafx.geometry.Point2D;
 import javafx.scene.control.ScrollPane;
@@ -35,8 +36,6 @@ import javafx.scene.layout.VBox;
 
 public class CardList extends ScrollPane implements ResizeHandler, MouseHandler {
 	
-	private CardSpacePane grandparent;
-	
 	private List<Card> cards;
 	
 	private Pane cardPane;
@@ -44,13 +43,11 @@ public class CardList extends ScrollPane implements ResizeHandler, MouseHandler 
 	private RegionResizeListener resizeListener;
 	private MouseEventListener mouseListener;
 	
-	public CardList(CardSpacePane grandparent) {
+	public CardList() {
 		super();
 		this.setHbarPolicy(ScrollBarPolicy.NEVER);
 		this.setVbarPolicy(ScrollBarPolicy.AS_NEEDED);
 		this.setFitToWidth(true);
-		
-		this.grandparent = grandparent;
 		
 		this.cardPane = new VBox();
 		
@@ -97,7 +94,7 @@ public class CardList extends ScrollPane implements ResizeHandler, MouseHandler 
 	}
 	
 	private void handleCardClick(int index) {
-		this.grandparent.recieveCard(this.cards.get(index));
+		this.getCardSpace().recieveCard(this.cards.get(index));
 	}
 	
 	private void updateCards() {
@@ -107,6 +104,10 @@ public class CardList extends ScrollPane implements ResizeHandler, MouseHandler 
 	
 	private double getScrollOffset() {
 		return this.getVvalue() * (this.cardPane.getHeight() - this.getHeight());
+	}
+	
+	private CardSpacePane getCardSpace() {
+		return Window.getPrimaryWindow().getWorkspace().getCardSpace();
 	}
 
 }

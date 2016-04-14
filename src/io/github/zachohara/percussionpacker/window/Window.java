@@ -25,10 +25,14 @@ public class Window extends Application {
 	public static final int DEFAULT_HEIGHT = 500; // in pixels
 	public static final int DEFAULT_WIDTH = 1100; // in pixels
 	
+	private static Window singleton;
+	
 	private WorkspaceScene cardScene;
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
+		Window.singleton = this;
+		
 		this.cardScene = new WorkspaceScene();
 		primaryStage.setMinWidth(ColumnPane.minColumnPaneWidth());
 
@@ -37,8 +41,16 @@ public class Window extends Application {
 		primaryStage.show();
 	}
 	
+	public WorkspaceScene getWorkspace() {
+		return this.cardScene;
+	}
+	
 	public static void main(String[] args) {
 		Application.launch(args);
+	}
+	
+	public static Window getPrimaryWindow() {
+		return Window.singleton;
 	}
 
 }

@@ -18,7 +18,6 @@ package io.github.zachohara.percussionpacker.column;
 
 import io.github.zachohara.percussionpacker.event.resize.RegionResizeListener;
 import io.github.zachohara.percussionpacker.event.resize.ResizeHandler;
-import io.github.zachohara.percussionpacker.window.CardSpacePane;
 import javafx.scene.layout.VBox;
 
 public class Column extends VBox implements ResizeHandler {
@@ -30,7 +29,7 @@ public class Column extends VBox implements ResizeHandler {
 	
 	private RegionResizeListener resizeListener;
 	
-	public Column(CardSpacePane parent, String title) {
+	public Column(String title) {
 		super();
 		this.setMinWidth(MIN_COLUMN_WIDTH);
 		
@@ -38,7 +37,7 @@ public class Column extends VBox implements ResizeHandler {
 		this.resizeListener.addHandler(this);
 		
 		this.titlePane = new ColumnTitle(title);
-		this.cardList = new CardList(parent);
+		this.cardList = new CardList();
 		
 		this.getChildren().addAll(this.titlePane, this.cardList);
 	}
