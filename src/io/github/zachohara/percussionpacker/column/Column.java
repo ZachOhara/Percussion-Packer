@@ -38,7 +38,7 @@ public class Column extends VBox implements ResizeHandler {
 		this.resizeListener.addHandler(this);
 		
 		this.titlePane = new ColumnTitle(title);
-		this.cardList = new CardList(parent, this);
+		this.cardList = new CardList(parent);
 		
 		this.getChildren().addAll(this.titlePane, this.cardList);
 	}

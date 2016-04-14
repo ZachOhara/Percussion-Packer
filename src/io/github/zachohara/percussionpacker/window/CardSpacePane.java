@@ -47,13 +47,11 @@ public class CardSpacePane extends Pane implements ResizeHandler {
 		this.columnPane.setPrefWidth(this.getWidth());
 	}
 	
-	public void recieveCard(Card c, double offsetX, double offsetY) {
-		System.out.println(c.localToScene(Point2D.ZERO) + " " + offsetX + " " + offsetY);
+	public void recieveCard(Card c) {
 		Point2D cardPos = this.sceneToLocal(c.localToScene(Point2D.ZERO));
 		this.getChildren().add(c);
-		c.setLayoutX(cardPos.getX() + offsetX);
-		c.setLayoutY(cardPos.getY() + offsetY);
-		// TODO incorporate extra params into this method
+		c.setLayoutX(cardPos.getX());
+		c.setLayoutY(cardPos.getY());
 	}
 
 }
