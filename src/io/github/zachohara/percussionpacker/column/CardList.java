@@ -60,9 +60,10 @@ public class CardList extends ScrollPane implements ResizeHandler, MouseHandler 
 		
 		// Test code
 		for (int i = 0; i < 20; i++) {
-			this.addCard(new Card());
+			this.cards.add(new Card());
 			this.cards.get(i).setTitle("" + i);
 		}
+		this.updateCards();
 		
 		
 		this.resizeListener = new RegionResizeListener(this);
@@ -71,11 +72,6 @@ public class CardList extends ScrollPane implements ResizeHandler, MouseHandler 
 		this.mouseListener.addHandler(this);
 		
 		this.setContent(this.cardPane);
-	}
-	
-	public boolean addCard(Card c) {
-		this.cardPane.getChildren().add(c);
-		return this.cards.add(c);
 	}
 
 	@Override
@@ -101,9 +97,14 @@ public class CardList extends ScrollPane implements ResizeHandler, MouseHandler 
 	}
 	
 	private void handleCardClick(int index) {
-		this.cardPane.getChildren().set(this.cardPane.getChildren().indexOf(this.cards.get(index)), new GhostCard());
-		this.grandparent.recieveCard(this.cards.get(index), this.parent.getLayoutX(), this.getLayoutY());
-		this.cards.remove(index);
+		this.grandparent.recieveCard(this.cards.get(index));
+		this.cards.set(index, new GhostCard());
+		this.updateCards();
+	}
+	
+	private void updateCards() {
+		this.cardPane.getChildren().clear();
+		this.cardPane.getChildren().addAll(this.cards);
 	}
 
 }
