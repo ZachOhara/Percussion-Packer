@@ -29,27 +29,20 @@ import io.github.zachohara.percussionpacker.window.CardSpacePane;
 import io.github.zachohara.percussionpacker.window.Window;
 import javafx.event.EventType;
 import javafx.geometry.Point2D;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
-public class CardList extends ScrollPane implements ResizeHandler, MouseHandler {
+public class CardList extends VBox implements ResizeHandler, MouseHandler {
+	
+	public static final int CARD_SPACING = 1; // pixels between each card
 	
 	private List<Card> cards;
-	
-	private Pane cardPane;
 	
 	private RegionResizeListener resizeListener;
 	private MouseEventListener mouseListener;
 	
 	public CardList() {
 		super();
-		this.setHbarPolicy(ScrollBarPolicy.NEVER);
-		this.setVbarPolicy(ScrollBarPolicy.AS_NEEDED);
-		this.setFitToWidth(true);
-		
-		this.cardPane = new VBox();
 		
 		this.cards = new ArrayList<Card>();
 		
@@ -65,8 +58,6 @@ public class CardList extends ScrollPane implements ResizeHandler, MouseHandler 
 		this.resizeListener.addHandler(this);
 		this.mouseListener = new MouseEventListener(this);
 		this.mouseListener.addHandler(this);
-		
-		this.setContent(this.cardPane);
 	}
 
 	@Override
@@ -83,8 +74,8 @@ public class CardList extends ScrollPane implements ResizeHandler, MouseHandler 
 			Point2D localPos = this.sceneToLocal(event.getSceneX(), event.getSceneY());
 			double localX = localPos.getX();
 			double localY = localPos.getY();
-			if (0 < localX && localX < this.cardPane.getWidth()) {
-				int cardIndex = (int) ((localY+ this.getScrollOffset()) / (Card.HEIGHT + 1));
+			if (0 < localX && localX < this.getWidth()) {
+				int cardIndex = (int) (localY / (Card.HEIGHT + CARD_SPACING));
 				this.handleCardClick(cardIndex);
 				this.cards.get(cardIndex).handleMouse(event, type);
 				this.cards.set(cardIndex, new GhostCard());
@@ -94,20 +85,16 @@ public class CardList extends ScrollPane implements ResizeHandler, MouseHandler 
 	}
 	
 	private void handleCardClick(int index) {
-		this.getCardSpace().recieveCard(this.cards.get(index));
+		this.getCardSpacePane().recieveCard(this.cards.get(index));
 	}
 	
 	private void updateCards() {
-		this.cardPane.getChildren().clear();
-		this.cardPane.getChildren().addAll(this.cards);
+		this.getChildren().clear();
+		this.getChildren().addAll(this.cards);
 	}
 	
-	private double getScrollOffset() {
-		return this.getVvalue() * (this.cardPane.getHeight() - this.getHeight());
-	}
-	
-	private CardSpacePane getCardSpace() {
-		return Window.getPrimaryWindow().getWorkspace().getCardSpace();
+	private CardSpacePane getCardSpacePane() {
+		return Window.getPrimaryWindow().getWorkspace().getCardSpacePane();
 	}
 
 }

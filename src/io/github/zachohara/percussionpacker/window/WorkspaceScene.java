@@ -55,7 +55,7 @@ public class WorkspaceScene extends Scene implements MouseHandler, ResizeHandler
 		this.cardSpacePane.requestFocus();
 	}
 	
-	public CardSpacePane getCardSpace() {
+	public CardSpacePane getCardSpacePane() {
 		return this.cardSpacePane;
 	}
 

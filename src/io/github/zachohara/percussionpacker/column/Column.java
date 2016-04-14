@@ -25,7 +25,7 @@ public class Column extends VBox implements ResizeHandler {
 	public static final int MIN_COLUMN_WIDTH = 100;
 	
 	private ColumnTitle titlePane;
-	private CardList cardList;
+	private CardScrollPane cardList;
 	
 	private RegionResizeListener resizeListener;
 	
@@ -37,7 +37,7 @@ public class Column extends VBox implements ResizeHandler {
 		this.resizeListener.addHandler(this);
 		
 		this.titlePane = new ColumnTitle(title);
-		this.cardList = new CardList();
+		this.cardList = new CardScrollPane();
 		
 		this.getChildren().addAll(this.titlePane, this.cardList);
 	}
