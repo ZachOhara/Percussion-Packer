@@ -117,20 +117,20 @@ public class Card extends StackPane implements ResizeHandler, MouseHandler {
 	@Override
 	public void handleMouse(MouseEvent event, EventType<? extends MouseEvent> type) {
 		if (type == MouseEvent.MOUSE_ENTERED) {
-			Card.this.baseButton.arm();
+			this.baseButton.arm();
 		} else if (type == MouseEvent.MOUSE_EXITED) {
-			Card.this.baseButton.disarm();
+			this.baseButton.disarm();
 		} else if (type == MouseEvent.MOUSE_PRESSED) {
 			this.lastMouseX = event.getSceneX();
 			this.lastMouseY = event.getSceneY();
-			this.lastCardPosX = Card.this.getLayoutX();
-			this.lastCardPosY = Card.this.getLayoutY();
-			Card.this.baseButton.requestFocus();
+			this.lastCardPosX = this.getLayoutX();
+			this.lastCardPosY = this.getLayoutY();
+			this.baseButton.requestFocus();
 		} else if (type == MouseEvent.MOUSE_DRAGGED) {
-			Card.this.setLayoutX(this.lastCardPosX + (event.getSceneX() - this.lastMouseX));
-			Card.this.setLayoutY(this.lastCardPosY + (event.getSceneY() - this.lastMouseY));
+			this.setLayoutX(this.lastCardPosX + (event.getSceneX() - this.lastMouseX));
+			this.setLayoutY(this.lastCardPosY + (event.getSceneY() - this.lastMouseY));
 		} else if (type == MouseEvent.MOUSE_RELEASED) {
-			Card.this.requestFocus();
+			this.requestFocus();
 		}
 	}
 	
