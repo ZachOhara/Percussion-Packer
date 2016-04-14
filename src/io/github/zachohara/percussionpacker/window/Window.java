@@ -16,6 +16,7 @@
 
 package io.github.zachohara.percussionpacker.window;
 
+import io.github.zachohara.percussionpacker.cardspace.ColumnPane;
 import javafx.application.Application;
 import javafx.stage.Stage;
 

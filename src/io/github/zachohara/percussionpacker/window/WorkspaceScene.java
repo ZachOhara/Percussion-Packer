@@ -18,6 +18,7 @@ package io.github.zachohara.percussionpacker.window;
 
 import io.github.zachohara.percussionpacker.card.Card;
 import io.github.zachohara.percussionpacker.card.NameField;
+import io.github.zachohara.percussionpacker.cardspace.CardSpacePane;
 import io.github.zachohara.percussionpacker.event.mouse.MouseEventListener;
 import io.github.zachohara.percussionpacker.event.mouse.MouseHandler;
 import io.github.zachohara.percussionpacker.event.resize.RegionResizeListener;

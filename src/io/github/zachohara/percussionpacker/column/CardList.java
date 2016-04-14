@@ -21,11 +21,11 @@ import java.util.List;
 
 import io.github.zachohara.percussionpacker.card.Card;
 import io.github.zachohara.percussionpacker.card.GhostCard;
+import io.github.zachohara.percussionpacker.cardspace.CardSpacePane;
 import io.github.zachohara.percussionpacker.event.mouse.MouseEventListener;
 import io.github.zachohara.percussionpacker.event.mouse.MouseHandler;
 import io.github.zachohara.percussionpacker.event.resize.RegionResizeListener;
 import io.github.zachohara.percussionpacker.event.resize.ResizeHandler;
-import io.github.zachohara.percussionpacker.window.CardSpacePane;
 import io.github.zachohara.percussionpacker.window.Window;
 import javafx.event.EventType;
 import javafx.geometry.Point2D;
@@ -76,16 +76,13 @@ public class CardList extends VBox implements ResizeHandler, MouseHandler {
 			double localY = localPos.getY();
 			if (0 < localX && localX < this.getWidth()) {
 				int cardIndex = (int) (localY / (Card.HEIGHT + CARD_SPACING));
-				this.handleCardClick(cardIndex);
-				this.cards.get(cardIndex).handleMouse(event, type);
+				Card clickedCard = this.cards.get(cardIndex);
+				this.getCardSpacePane().recieveCard(clickedCard);
+				clickedCard.handleMouse(event, type);
 				this.cards.set(cardIndex, new GhostCard());
 				this.updateCards();
 			}
 		}
-	}
-	
-	private void handleCardClick(int index) {
-		this.getCardSpacePane().recieveCard(this.cards.get(index));
 	}
 	
 	private void updateCards() {

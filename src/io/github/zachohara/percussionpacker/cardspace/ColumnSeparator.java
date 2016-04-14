@@ -14,11 +14,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package io.github.zachohara.percussionpacker.column;
+package io.github.zachohara.percussionpacker.cardspace;
 
+import io.github.zachohara.percussionpacker.column.Column;
 import io.github.zachohara.percussionpacker.event.mouse.MouseEventListener;
 import io.github.zachohara.percussionpacker.event.mouse.MouseHandler;
-import io.github.zachohara.percussionpacker.window.ColumnPane;
 import javafx.event.EventType;
 import javafx.scene.Cursor;
 import javafx.scene.input.MouseEvent;
