@@ -87,22 +87,26 @@ public class CardList extends ScrollPane implements ResizeHandler, MouseHandler 
 			double localX = localPos.getX();
 			double localY = localPos.getY();
 			if (0 < localX && localX < this.cardPane.getWidth()) {
-				int cardIndex = (int) (localY / Card.HEIGHT);
+				int cardIndex = (int) ((localY+ this.getScrollOffset()) / (Card.HEIGHT + 1));
 				this.handleCardClick(cardIndex);
 				this.cards.get(cardIndex).handleMouse(event, type);
+				this.cards.set(cardIndex, new GhostCard());
+				this.updateCards();
 			}
 		}
 	}
 	
 	private void handleCardClick(int index) {
 		this.grandparent.recieveCard(this.cards.get(index));
-		this.cards.set(index, new GhostCard());
-		this.updateCards();
 	}
 	
 	private void updateCards() {
 		this.cardPane.getChildren().clear();
 		this.cardPane.getChildren().addAll(this.cards);
+	}
+	
+	private double getScrollOffset() {
+		return this.getVvalue() * (this.cardPane.getHeight() - this.getHeight());
 	}
 
 }
