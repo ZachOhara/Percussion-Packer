@@ -44,8 +44,6 @@ public class Column extends VBox implements ResizeHandler {
 
 	@Override
 	public void handleResize() {
-		this.titlePane.setPrefWidth(this.getWidth());
-		this.cardList.setPrefWidth(this.getWidth());
 		this.cardList.setPrefHeight(this.getAvailableCardHeight());
 	}
 	

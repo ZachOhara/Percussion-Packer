@@ -56,9 +56,6 @@ public class ColumnPane extends HBox implements ResizeHandler {
 			this.columns[i].setPrefWidth(availableSpace * this.columnWidthRatio[i]);
 			this.columns[i].setPrefHeight(this.getHeight());
 		}
-		for (ColumnSeparator cs : this.separators) {
-			cs.setPrefHeight(this.getHeight());
-		}
 	}
 	
 	public void finishColumnResizing() {

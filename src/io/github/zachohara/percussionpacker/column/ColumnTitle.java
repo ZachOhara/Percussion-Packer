@@ -51,7 +51,6 @@ public class ColumnTitle extends StackPane implements ResizeHandler {
 	@Override
 	public void handleResize() {
 		this.titleText.setPrefWidth(this.getWidth());
-		this.titleText.setPrefHeight(this.getHeight());
 	}
 
 }

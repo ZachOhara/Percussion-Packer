@@ -24,21 +24,17 @@ import io.github.zachohara.percussionpacker.card.GhostCard;
 import io.github.zachohara.percussionpacker.cardspace.CardSpacePane;
 import io.github.zachohara.percussionpacker.event.mouse.MouseEventListener;
 import io.github.zachohara.percussionpacker.event.mouse.MouseHandler;
-import io.github.zachohara.percussionpacker.event.resize.RegionResizeListener;
-import io.github.zachohara.percussionpacker.event.resize.ResizeHandler;
 import io.github.zachohara.percussionpacker.window.Window;
 import javafx.event.EventType;
 import javafx.geometry.Point2D;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 
-public class CardList extends VBox implements ResizeHandler, MouseHandler {
+public class CardList extends VBox implements  MouseHandler {
 	
 	public static final int CARD_SPACING = 1; // pixels between each card
 	
 	private List<Card> cards;
-	
-	private RegionResizeListener resizeListener;
 	private MouseEventListener mouseListener;
 	
 	public CardList() {
@@ -53,18 +49,8 @@ public class CardList extends VBox implements ResizeHandler, MouseHandler {
 		}
 		this.updateCards();
 		
-		
-		this.resizeListener = new RegionResizeListener(this);
-		this.resizeListener.addHandler(this);
 		this.mouseListener = new MouseEventListener(this);
 		this.mouseListener.addHandler(this);
-	}
-
-	@Override
-	public void handleResize() {
-		for (Card c : this.cards) {
-			c.setPrefWidth(this.getWidth());
-		}
 	}
 
 	@Override
