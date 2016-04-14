@@ -52,6 +52,7 @@ public class CardList extends ScrollPane implements ResizeHandler, MouseHandler 
 		this.setFitToWidth(true);
 		
 		this.grandparent = grandparent;
+		this.parent = parent;
 		
 		this.cardPane = new VBox();
 		
@@ -101,7 +102,7 @@ public class CardList extends ScrollPane implements ResizeHandler, MouseHandler 
 	
 	private void handleCardClick(int index) {
 		this.cardPane.getChildren().set(this.cardPane.getChildren().indexOf(this.cards.get(index)), new GhostCard());
-		this.grandparent.recieveCard(this.cards.get(index), this.parent.getLayoutX(),index * Card.HEIGHT);
+		this.grandparent.recieveCard(this.cards.get(index), this.parent.getLayoutX(), this.getLayoutY());
 		this.cards.remove(index);
 	}
 
