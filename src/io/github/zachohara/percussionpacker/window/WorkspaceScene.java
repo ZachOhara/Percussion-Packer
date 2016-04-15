@@ -18,46 +18,32 @@ package io.github.zachohara.percussionpacker.window;
 
 import io.github.zachohara.percussionpacker.card.Card;
 import io.github.zachohara.percussionpacker.card.NameField;
-import io.github.zachohara.percussionpacker.cardspace.CardSpacePane;
 import io.github.zachohara.percussionpacker.event.mouse.MouseEventListener;
 import io.github.zachohara.percussionpacker.event.mouse.MouseHandler;
-import io.github.zachohara.percussionpacker.event.resize.RegionResizeListener;
-import io.github.zachohara.percussionpacker.event.resize.ResizeHandler;
 import javafx.event.EventType;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
 
-public class WorkspaceScene extends Scene implements MouseHandler, ResizeHandler {
+public class WorkspaceScene extends Scene implements MouseHandler {
 	
-	private Pane rootPane;
-	private CardSpacePane cardSpacePane;
+	private WorkspaceRootPane rootPane;
 	
-	private RegionResizeListener resizeListener;
 	private MouseEventListener mouseListener;
 
 	public WorkspaceScene() {
-		super(new Pane());
+		super(new WorkspaceRootPane());
 		
-		this.rootPane = (Pane) this.getRoot();
-		this.cardSpacePane = new CardSpacePane();
-		
-		this.resizeListener = new RegionResizeListener(this.rootPane);
-		this.resizeListener.addHandler(this);
-		
-		this.mouseListener = new MouseEventListener(this);
-		this.mouseListener.addHandler(this);
-		
+		this.rootPane = (WorkspaceRootPane) this.getRoot();
 		this.rootPane.setPrefHeight(Window.DEFAULT_HEIGHT);
 		this.rootPane.setPrefWidth(Window.DEFAULT_WIDTH);
 		
-		this.rootPane.getChildren().add(this.cardSpacePane);
-		this.cardSpacePane.requestFocus();
+		this.mouseListener = new MouseEventListener(this);
+		this.mouseListener.addHandler(this);
 	}
 	
-	public CardSpacePane getCardSpacePane() {
-		return this.cardSpacePane;
+	protected WorkspaceRootPane getWorkspaceRootPane() {
+		return this.rootPane;
 	}
 
 	@Override
@@ -67,16 +53,10 @@ public class WorkspaceScene extends Scene implements MouseHandler, ResizeHandler
 			if (focusedObject instanceof NameField) {
 				Card activeCard = ((NameField) focusedObject).getCard();
 				if (!activeCard.containsScenePoint(event.getSceneX(), event.getSceneY())) {
-					WorkspaceScene.this.cardSpacePane.requestFocus();
+					this.rootPane.requestFocus();
 				}
 			}
 		}
-	}
-
-	@Override
-	public void handleResize() {
-		this.cardSpacePane.setPrefWidth(this.rootPane.getWidth());
-		this.cardSpacePane.setPrefHeight(this.rootPane.getHeight());
 	}
 
 }

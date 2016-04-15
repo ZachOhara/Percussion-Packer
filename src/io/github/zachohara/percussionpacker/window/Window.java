@@ -16,6 +16,7 @@
 
 package io.github.zachohara.percussionpacker.window;
 
+import io.github.zachohara.percussionpacker.cardspace.CardSpacePane;
 import io.github.zachohara.percussionpacker.cardspace.ColumnPane;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -46,8 +47,8 @@ public class Window extends Application {
 		return this.workspaceScene;
 	}
 	
-	public static Window getPrimaryWindow() {
-		return Window.singleton;
+	public static CardSpacePane getCardSpacePane() {
+		return Window.singleton.getWorkspaceScene().getWorkspaceRootPane().getCardSpacePane();
 	}
 	
 	public static void main(String[] args) {

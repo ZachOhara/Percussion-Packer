@@ -77,7 +77,7 @@ public class CardList extends VBox implements  MouseHandler {
 	}
 	
 	private CardSpacePane getCardSpacePane() {
-		return Window.getPrimaryWindow().getWorkspaceScene().getCardSpacePane();
+		return Window.getCardSpacePane();
 	}
 
 }
