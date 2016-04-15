@@ -35,8 +35,6 @@ public class WorkspaceScene extends Scene implements MouseHandler {
 		super(new WorkspaceRootPane());
 		
 		this.rootPane = (WorkspaceRootPane) this.getRoot();
-		this.rootPane.setPrefHeight(Window.DEFAULT_HEIGHT);
-		this.rootPane.setPrefWidth(Window.DEFAULT_WIDTH);
 		
 		this.mouseListener = new MouseEventListener(this);
 		this.mouseListener.addHandler(this);

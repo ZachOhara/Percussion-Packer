@@ -23,58 +23,61 @@ import javafx.scene.layout.HBox;
 
 public class ColumnPane extends HBox implements ResizeHandler {
 	
-	public static final String[] columnNames = {
+	public static final String[] COLUMN_NAMES = {
 			"Song List",
 			"Equipment List",
 			"Packing List",
-			"Mallet List",
+			"Mallet List"
 	};
-	public static final int MIN_SIZE_BUFFER = 16; // in pixels
-	public static final int NUM_COLUMNS = 4; // the number of columns in the workspace
+	// the number of columns in the workspace; should not be adjusted here
+	public static final int NUM_COLUMNS = COLUMN_NAMES.length;
+	// the number of separators in the workspace; should not be adjusted
 	public static final int NUM_SEPARATORS = NUM_COLUMNS - 1;
 	
-	private double[] columnWidthRatio;
+	private double[] widthRatios;
 	private Column[] columns;
 	private ColumnSeparator[] separators;
 	
 	private RegionResizeListener resizeListener;
 	
-	public ColumnPane(CardSpacePane parent) {
+	public ColumnPane() {
 		super();
-		this.columnWidthRatio = new double[NUM_COLUMNS];
+		this.setMinWidth(ColumnPane.getMinPaneWidth());
+		this.setMinHeight(Column.MIN_COLUMN_HEIGHT);
+		
+		this.widthRatios = new double[NUM_COLUMNS];
 		this.columns = new Column[NUM_COLUMNS];
 		this.separators = new ColumnSeparator[NUM_SEPARATORS];
 		this.resizeListener = new RegionResizeListener(this);
 		this.resizeListener.addHandler(this);
-		this.initializeColumns(parent);
+		this.initializeColumns();
+	}
+	
+	public void finishColumnResizing() {
+		double availableSpace = this.getAvailableColumnSpace();
+		for (int i = 0; i < NUM_COLUMNS; i++) {
+			this.widthRatios[i] = this.columns[i].getWidth() / availableSpace;
+		}
 	}
 
 	@Override
 	public void handleResize() {
 		double availableSpace = this.getAvailableColumnSpace();
 		for (int i = 0; i < NUM_COLUMNS; i++) {
-			this.columns[i].setPrefWidth(availableSpace * this.columnWidthRatio[i]);
+			this.columns[i].setPrefWidth(availableSpace * this.widthRatios[i]);
 			this.columns[i].setPrefHeight(this.getHeight());
 		}
-	}
-	
-	public void finishColumnResizing() {
-		double availableSpace = this.getAvailableColumnSpace();
-		for (int i = 0; i < NUM_COLUMNS; i++) {
-			this.columnWidthRatio[i] = this.columns[i].getWidth() / availableSpace;
-		}
-		this.handleResize(); // necessary?
 	}
 	
 	private double getAvailableColumnSpace() {
 		return this.getWidth() - (NUM_SEPARATORS * ColumnSeparator.THICKNESS);
 	}
 	
-	private void initializeColumns(CardSpacePane parent) {
+	private void initializeColumns() {
 		// initialize columns
 		for (int i = 0; i < NUM_COLUMNS; i++) {
-			this.columnWidthRatio[i] = 1.0 / NUM_COLUMNS;
-			this.columns[i] = new Column(columnNames[i]);
+			this.widthRatios[i] = 1.0 / NUM_COLUMNS;
+			this.columns[i] = new Column(COLUMN_NAMES[i]);
 		}
 		// initialize separators
 		for (int i = 0; i < NUM_SEPARATORS; i++) {
@@ -89,9 +92,9 @@ public class ColumnPane extends HBox implements ResizeHandler {
 		}
 	}
 	
-	public static double minColumnPaneWidth() {
-		return MIN_SIZE_BUFFER + ((NUM_COLUMNS * Column.MIN_COLUMN_WIDTH)
-				+ (NUM_SEPARATORS * ColumnSeparator.THICKNESS));
+	private static double getMinPaneWidth() {
+		return (NUM_COLUMNS * Column.MIN_COLUMN_WIDTH)
+				+ (NUM_SEPARATORS * ColumnSeparator.THICKNESS);
 	}
 
 }

@@ -23,6 +23,7 @@ import javafx.scene.layout.VBox;
 public class Column extends VBox implements ResizeHandler {
 	
 	public static final int MIN_COLUMN_WIDTH = 100;
+	public static final int MIN_COLUMN_HEIGHT = 100;
 	
 	private ColumnTitle titlePane;
 	private CardScrollPane cardList;

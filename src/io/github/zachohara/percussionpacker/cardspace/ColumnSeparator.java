@@ -26,7 +26,8 @@ import javafx.scene.layout.Pane;
 
 public class ColumnSeparator extends Pane implements MouseHandler {
 	
-	public static final String DEFAULT_STYLE = "-fx-background-color: black ;-fx-background-radius: 3 3 3 3";
+	public static final String DEFAULT_STYLE = "-fx-background-color: black;"
+			+ "-fx-background-radius: 3 3 3 3";
 	public static final int THICKNESS = 3; // in pixels
 	
 	private ColumnPane parent;
@@ -61,7 +62,9 @@ public class ColumnSeparator extends Pane implements MouseHandler {
 		if (type == MouseEvent.MOUSE_ENTERED) {
 			this.getScene().setCursor(Cursor.E_RESIZE);
 		} else if (type == MouseEvent.MOUSE_EXITED) {
-			this.getScene().setCursor(Cursor.DEFAULT);
+			if (!this.isDragging) {
+				this.getScene().setCursor(Cursor.DEFAULT);
+			}
 		} else if (type == MouseEvent.MOUSE_PRESSED) {
 			this.isDragging = false;
 			this.dragStartPos = event.getSceneX();
@@ -80,7 +83,9 @@ public class ColumnSeparator extends Pane implements MouseHandler {
 		} else if (type == MouseEvent.MOUSE_RELEASED) {
 			if (this.isDragging) {
 				this.parent.finishColumnResizing();
+				this.getScene().setCursor(Cursor.DEFAULT);
 			}
+			this.isDragging = false;
 		}
 	}
 	

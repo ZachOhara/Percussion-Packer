@@ -17,7 +17,6 @@
 package io.github.zachohara.percussionpacker.window;
 
 import io.github.zachohara.percussionpacker.cardspace.CardSpacePane;
-import io.github.zachohara.percussionpacker.cardspace.ColumnPane;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -26,6 +25,10 @@ public class Window extends Application {
 	public static final String WINDOW_TITLE = "Percussion Packer by Zach Ohara";
 	public static final int DEFAULT_HEIGHT = 500; // in pixels
 	public static final int DEFAULT_WIDTH = 1100; // in pixels
+
+	// the pixel offset that is used to correctly setting the minimum width of the window
+	// accounts for the size of the window borders
+	public static final int MIN_SIZE_BUFFER = 16;
 	
 	private static Window singleton;
 	
@@ -36,7 +39,9 @@ public class Window extends Application {
 		Window.singleton = this;
 		
 		this.workspaceScene = new WorkspaceScene();
-		primaryStage.setMinWidth(ColumnPane.minColumnPaneWidth());
+		
+		primaryStage.setMinWidth(MIN_SIZE_BUFFER + this.workspaceScene.getWorkspaceRootPane().getMinWidth());
+		primaryStage.setMinHeight(MIN_SIZE_BUFFER + this.workspaceScene.getWorkspaceRootPane().getMinHeight());
 
 		primaryStage.setTitle(WINDOW_TITLE);
 		primaryStage.setScene(this.workspaceScene);
