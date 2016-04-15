@@ -28,30 +28,30 @@ public class Window extends Application {
 	
 	private static Window singleton;
 	
-	private WorkspaceScene cardScene;
+	private WorkspaceScene workspaceScene;
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		Window.singleton = this;
 		
-		this.cardScene = new WorkspaceScene();
+		this.workspaceScene = new WorkspaceScene();
 		primaryStage.setMinWidth(ColumnPane.minColumnPaneWidth());
 
 		primaryStage.setTitle(WINDOW_TITLE);
-		primaryStage.setScene(this.cardScene);
+		primaryStage.setScene(this.workspaceScene);
 		primaryStage.show();
 	}
 	
-	public WorkspaceScene getWorkspace() {
-		return this.cardScene;
-	}
-	
-	public static void main(String[] args) {
-		Application.launch(args);
+	public WorkspaceScene getWorkspaceScene() {
+		return this.workspaceScene;
 	}
 	
 	public static Window getPrimaryWindow() {
 		return Window.singleton;
+	}
+	
+	public static void main(String[] args) {
+		Application.launch(args);
 	}
 
 }
