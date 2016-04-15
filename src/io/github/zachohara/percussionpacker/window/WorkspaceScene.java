@@ -49,7 +49,7 @@ public class WorkspaceScene extends Scene implements MouseHandler {
 	@Override
 	public void handleMouse(MouseEvent event, EventType<? extends MouseEvent> type) {
 		if (type == MouseEvent.MOUSE_CLICKED) {
-			Node focusedObject = WorkspaceScene.this.getFocusOwner();
+			Node focusedObject = this.getFocusOwner();
 			if (focusedObject instanceof NameField) {
 				Card activeCard = ((NameField) focusedObject).getCard();
 				if (!activeCard.containsScenePoint(event.getSceneX(), event.getSceneY())) {

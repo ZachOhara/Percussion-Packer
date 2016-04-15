@@ -47,7 +47,7 @@ public class Card extends StackPane implements ResizeHandler, MouseHandler {
 	private RegionResizeListener resizeListener;
 	private MouseEventListener mouseListener;
 	
-	// used only in mouse dragging / reposisioning
+	// used only in mouse dragging / repositioning
 	private double lastMouseX;
 	private double lastMouseY;
 	private double lastCardPosX;
