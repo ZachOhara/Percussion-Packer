@@ -14,8 +14,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package io.github.zachohara.percussionpacker.window;
+package io.github.zachohara.percussionpacker;
 
+import io.github.zachohara.percussionpacker.window.PackingStage;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
