@@ -17,47 +17,49 @@
 package io.github.zachohara.percussionpacker.window;
 
 import io.github.zachohara.percussionpacker.cardspace.CardSpacePane;
-import javafx.application.Application;
 import javafx.stage.Stage;
 
-public class Window extends Application {
+public class PackingStage extends Stage {
 	
 	public static final String WINDOW_TITLE = "Percussion Packer by Zach Ohara";
 	public static final int DEFAULT_HEIGHT = 500; // in pixels
 	public static final int DEFAULT_WIDTH = 1100; // in pixels
-
-	// the pixel offset that is used to correctly setting the minimum width of the window
-	// accounts for the size of the window borders
-	public static final int MIN_SIZE_BUFFER = 16;
 	
-	private static Window singleton;
+	private static PackingStage singleton;
 	
 	private WorkspaceScene workspaceScene;
-
-	@Override
-	public void start(Stage primaryStage) throws Exception {
-		Window.singleton = this;
+	
+	public PackingStage() {
+		super();
+		PackingStage.singleton = this;
 		
 		this.workspaceScene = new WorkspaceScene();
 		
-		primaryStage.setMinWidth(MIN_SIZE_BUFFER + this.workspaceScene.getWorkspaceRootPane().getMinWidth());
-		primaryStage.setMinHeight(MIN_SIZE_BUFFER + this.workspaceScene.getWorkspaceRootPane().getMinHeight());
-
-		primaryStage.setTitle(WINDOW_TITLE);
-		primaryStage.setScene(this.workspaceScene);
-		primaryStage.show();
+		this.setTitle(WINDOW_TITLE);
+		this.setScene(this.workspaceScene);
+		this.show();
+		this.setMinSize();
 	}
 	
 	public WorkspaceScene getWorkspaceScene() {
 		return this.workspaceScene;
 	}
 	
-	public static CardSpacePane getCardSpacePane() {
-		return Window.singleton.getWorkspaceScene().getWorkspaceRootPane().getCardSpacePane();
+	private void setMinSize() {
+		this.setMinWidth(this.workspaceScene.getMinWidth() + this.getDecorationWidth());
+		this.setMinHeight(this.workspaceScene.getMinHeight() + this.getDecorationHeight());
 	}
 	
-	public static void main(String[] args) {
-		Application.launch(args);
+	private double getDecorationWidth() {
+		return this.getWidth() - this.getScene().getWidth();
+	}
+	
+	private double getDecorationHeight() {
+		return this.getHeight() - this.getScene().getHeight();
+	}
+	
+	public static CardSpacePane getCardSpacePane() {
+		return PackingStage.singleton.getWorkspaceScene().getWorkspaceRootPane().getCardSpacePane();
 	}
 
 }

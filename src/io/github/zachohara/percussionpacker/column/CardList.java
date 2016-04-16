@@ -24,7 +24,7 @@ import io.github.zachohara.percussionpacker.card.GhostCard;
 import io.github.zachohara.percussionpacker.cardspace.CardSpacePane;
 import io.github.zachohara.percussionpacker.event.mouse.MouseEventListener;
 import io.github.zachohara.percussionpacker.event.mouse.MouseHandler;
-import io.github.zachohara.percussionpacker.window.Window;
+import io.github.zachohara.percussionpacker.window.PackingStage;
 import javafx.event.EventType;
 import javafx.geometry.Point2D;
 import javafx.scene.input.MouseEvent;
@@ -77,7 +77,7 @@ public class CardList extends VBox implements  MouseHandler {
 	}
 	
 	private CardSpacePane getCardSpacePane() {
-		return Window.getCardSpacePane();
+		return PackingStage.getCardSpacePane();
 	}
 
 }

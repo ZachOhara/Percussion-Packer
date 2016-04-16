@@ -43,6 +43,14 @@ public class WorkspaceScene extends Scene implements MouseHandler {
 	protected WorkspaceRootPane getWorkspaceRootPane() {
 		return this.rootPane;
 	}
+	
+	public double getMinWidth() {
+		return this.rootPane.getMinWidth();
+	}
+	
+	public double getMinHeight() {
+		return this.rootPane.getMinHeight();
+	}
 
 	@Override
 	public void handleMouse(MouseEvent event, EventType<? extends MouseEvent> type) {

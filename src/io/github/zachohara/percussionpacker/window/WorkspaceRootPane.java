@@ -29,8 +29,8 @@ public class WorkspaceRootPane extends Pane implements ResizeHandler {
 	
 	public WorkspaceRootPane() {
 		super();
-		this.setPrefWidth(Window.DEFAULT_WIDTH);
-		this.setPrefHeight(Window.DEFAULT_HEIGHT);
+		this.setPrefWidth(PackingStage.DEFAULT_WIDTH);
+		this.setPrefHeight(PackingStage.DEFAULT_HEIGHT);
 		
 		this.cardPane = new CardSpacePane();
 		
