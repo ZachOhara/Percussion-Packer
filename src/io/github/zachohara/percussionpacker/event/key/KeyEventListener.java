@@ -20,13 +20,10 @@ import io.github.zachohara.percussionpacker.event.EventListener;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
 
-public class KeyEventListener extends EventListener<KeyHandler> implements EventHandler<KeyEvent> {
+public class KeyEventListener extends EventListener<KeyListenable, KeyHandler> implements EventHandler<KeyEvent> {
 	
 	public KeyEventListener(KeyListenable listenable) {
-		super();
-		listenable.setOnKeyPressed(this);
-		listenable.setOnKeyReleased(this);
-		listenable.setOnKeyTyped(this);
+		super(KeyListenable.class, listenable);
 	}
 
 	@Override

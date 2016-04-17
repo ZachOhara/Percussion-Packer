@@ -16,12 +16,29 @@
 
 package io.github.zachohara.percussionpacker.event;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.LinkedList;
 import java.util.List;
 
-public class EventListener<H> {
+public class EventListener<L, H> {
 	
 	private List<H> handlers;
+	
+	public EventListener(Class<L> type, L listenable) {
+		this();
+		for (Method method : type.getMethods()) {
+			Class<?>[] parameterTypes = method.getParameterTypes();
+			if (parameterTypes.length == 1 && parameterTypes[0].isAssignableFrom(this.getClass())) {
+				try {
+					method.invoke(listenable, this);
+				} catch (IllegalAccessException | IllegalArgumentException
+						| InvocationTargetException ignore) {
+					// take no action
+				}
+			}
+		}
+	}
 	
 	public EventListener() {
 		this.handlers = new LinkedList<H>();

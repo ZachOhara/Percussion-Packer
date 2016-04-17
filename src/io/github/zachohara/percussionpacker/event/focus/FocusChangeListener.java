@@ -20,11 +20,11 @@ import io.github.zachohara.percussionpacker.event.EventListener;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 
-public class FocusChangeListener extends EventListener<FocusHandler> implements ChangeListener<Boolean> {
+public class FocusChangeListener extends EventListener<FocusListenable, FocusHandler> implements ChangeListener<Boolean> {
 	
-	public FocusChangeListener(FocusListenable n) {
+	public FocusChangeListener(FocusListenable listenable) {
 		super();
-		n.focusedProperty().addListener(this);
+		listenable.focusedProperty().addListener(this);
 	}
 
 	@Override

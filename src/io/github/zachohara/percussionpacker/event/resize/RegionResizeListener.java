@@ -20,7 +20,7 @@ import io.github.zachohara.percussionpacker.event.EventListener;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 
-public class RegionResizeListener extends EventListener<ResizeHandler> implements ChangeListener<Number> {
+public class RegionResizeListener extends EventListener<ResizeListenable, ResizeHandler> implements ChangeListener<Number> {
 	
 	public RegionResizeListener(ResizeListenable listenable) {
 		super();
