@@ -40,7 +40,9 @@ public class CardSpacePane extends Pane implements ResizeHandler {
 		this.resizeListener.addHandler(this);
 		
 		this.getChildren().add(this.columnPane);
-		RegionUtil.setMinDimsFromChildren(this);
+
+		this.setMinWidth(RegionUtil.getCumulativeMinWidth(this));
+		this.setMinHeight(RegionUtil.getCumulativeMinHeight(this));
 	}
 
 	@Override

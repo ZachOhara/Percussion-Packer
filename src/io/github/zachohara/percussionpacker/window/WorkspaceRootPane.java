@@ -39,8 +39,9 @@ public class WorkspaceRootPane extends Pane implements ResizeHandler {
 		this.resizeListener.addAll(this);
 		
 		this.getChildren().add(this.cardPane);
-		
-		RegionUtil.setMinDimsFromChildren(this);
+
+		this.setMinWidth(RegionUtil.getCumulativeMinWidth(this));
+		this.setMinHeight(RegionUtil.getCumulativeMinHeight(this));
 	}
 	
 	protected CardSpacePane getCardSpacePane() {

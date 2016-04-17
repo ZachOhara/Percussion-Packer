@@ -53,7 +53,8 @@ public class ColumnPane extends HBox implements ResizeHandler {
 		
 		this.initializeColumns();
 		
-		RegionUtil.setMinDimsFromChildren(this);
+		this.setMinWidth(RegionUtil.getCumulativeMinWidth(this));
+		this.setMinHeight(this.columns[0].getMinHeight());
 	}
 	
 	protected void finishColumnResizing() {

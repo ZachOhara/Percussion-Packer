@@ -96,7 +96,7 @@ public class ShrinkableLabel extends BorderPane implements ResizeHandler {
 	}
 	
 	private boolean isTextUndersized() {
-		return this.font.getSize() < this.maxFontSize
+		return this.getFontSize() < this.maxFontSize
 				&& this.displayText.prefWidth(0) < this.getIdealTextWidth()
 				&& this.displayText.prefHeight(0) < this.getIdealTextHeight();
 	}

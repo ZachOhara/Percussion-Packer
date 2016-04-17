@@ -11,3 +11,4 @@
 * Make CardSpacePane handle the movement of cards by the mouse
 * Move styling to css files
 * Add window icons
+* Set a minimum height for the card scroll pane

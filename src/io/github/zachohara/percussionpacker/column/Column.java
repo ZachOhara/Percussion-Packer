@@ -52,7 +52,7 @@ public class Column extends VBox implements ResizeHandler {
 	}
 	
 	protected double getAvailableCardHeight() {
-		return this.getPrefHeight() - this.titlePane.getPrefHeight();
+		return Math.max(0, this.getHeight() - this.titlePane.getPrefHeight());
 	}
 
 }

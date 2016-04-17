@@ -26,11 +26,6 @@ public class RegionUtil {
 		// take no action
 	}
 	
-	public static void setMinDimsFromChildren(Region r) {
-		r.setMinWidth(RegionUtil.getCumulativeMinWidth(r));
-		r.setMinHeight(RegionUtil.getCumulativeMinHeight(r));
-	}
-	
 	public static double getCumulativeMinWidth(Parent p) {
 		double minWidth = 0;
 		for (Node n : p.getChildrenUnmodifiable()) {

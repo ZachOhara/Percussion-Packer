@@ -29,7 +29,7 @@ public class ColumnTitle extends StackPane implements ResizeHandler {
 	public static final double MAX_FONT_SIZE = 24;
 	
 	public static final int PREF_HEIGHT = 80; // in pixels
-	public static final int MIN_HEIGHT = 30; // in pixels
+	public static final int MIN_HEIGHT = 40; // in pixels
 	
 	private ShrinkableLabel titleText;
 	private Button baseButton;
