@@ -16,11 +16,14 @@
 
 package io.github.zachohara.percussionpacker.card;
 
+import io.github.zachohara.percussionpacker.event.resize.RegionResizeListener;
+import io.github.zachohara.percussionpacker.event.resize.ResizeSelfHandler;
+import io.github.zachohara.percussionpacker.util.EventUtil;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.layout.BorderPane;
 
-public class CardContentPane extends BorderPane {
+public class CardContentPane extends BorderPane implements ResizeSelfHandler {
 	
 	public static final double INSET_MARGIN = 8; // in pixels
 	
@@ -30,11 +33,15 @@ public class CardContentPane extends BorderPane {
 	public CardContentPane() {
 		super();
 		
+		EventUtil.createSelfListener(RegionResizeListener.class, this);
+		
 		this.title = new CardTitle();
+		this.title.setNotifyableParent(this);
 		BorderPane.setAlignment(this.title, Pos.CENTER_LEFT);
 		BorderPane.setMargin(this.title, new Insets(INSET_MARGIN));
 		
 		this.nameTag = new CardNameTag();
+		this.nameTag.setNotifyableParent(this);
 		BorderPane.setAlignment(this.nameTag, Pos.CENTER_RIGHT);
 		BorderPane.setMargin(this.nameTag, new Insets(INSET_MARGIN));		
 		
@@ -56,6 +63,16 @@ public class CardContentPane extends BorderPane {
 	
 	public void setName(String name) {
 		this.nameTag.setText(name);
+	}
+	
+	@Override
+	public void handleResize() {
+		double idealWidth = this.title.getIdealTextWidth() + this.nameTag.getIdealTextHeight() + 1;
+		double fractionAvailable = Math.min(1, (this.getWidth() - (INSET_MARGIN * 4)) / idealWidth);
+		this.title.setPrefWidth(this.title.getIdealTextWidth() * fractionAvailable);
+		this.nameTag.setPrefWidth(this.nameTag.getIdealTextWidth() * fractionAvailable);
+		this.title.setPrefHeight(Math.min(this.title.getIdealTextHeight(), this.getHeight()));
+		this.nameTag.setPrefHeight(Math.min(this.nameTag.getIdealTextHeight(), this.getHeight()));
 	}
 	
 }

@@ -21,6 +21,7 @@ import io.github.zachohara.percussionpacker.event.focus.FocusHandler;
 import io.github.zachohara.percussionpacker.event.mouse.MouseEventListener;
 import io.github.zachohara.percussionpacker.event.mouse.MouseHandler;
 import io.github.zachohara.percussionpacker.event.resize.RegionResizeListener;
+import io.github.zachohara.percussionpacker.event.resize.ResizeHandler;
 import io.github.zachohara.percussionpacker.event.resize.ResizeSelfHandler;
 import io.github.zachohara.percussionpacker.util.EventUtil;
 import javafx.event.EventType;
@@ -29,6 +30,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 
 public class ClickEditableText extends BorderPane implements FocusHandler, MouseHandler, ResizeSelfHandler  {
+	
+	private ResizeHandler notifyableParent;
 	
 	private String defaultText;
 	
@@ -55,6 +58,14 @@ public class ClickEditableText extends BorderPane implements FocusHandler, Mouse
 		this.finishRenaming();
 	}
 	
+	public double getIdealTextWidth() {
+		return displayLabel.getIdealTextWidth();
+	}
+
+	public double getIdealTextHeight() {
+		return displayLabel.getIdealTextHeight();
+	}
+
 	public String getText() {
 		return this.displayLabel.getText();
 	}
@@ -62,19 +73,24 @@ public class ClickEditableText extends BorderPane implements FocusHandler, Mouse
 	public void setText(String text) {
 		String displayText = text.trim();
 		if (displayText.length() > 0) {
-			displayText = " " + displayText + " ";
-			this.displayLabel.setText(displayText);
+			this.displayLabel.setText(" " + displayText + " ");
 			this.textField.setText(displayText);
 		} else {
-			displayText = " " + this.defaultText + " ";
-			this.displayLabel.setText(displayText);
+			displayText = this.defaultText;
+			this.displayLabel.setText(" " + this.defaultText + " ");
 			this.textField.setText("");
 		}
-		this.displayLabel.handleResize();
+		if (this.notifyableParent != null) {
+			this.notifyableParent.handleResize();
+		}
 	}
 	
 	public void setDisplayTextStyle(String style) {
 		this.displayLabel.setTextStyle(style);
+	}
+	
+	public void setNotifyableParent(ResizeHandler parent) {
+		this.notifyableParent = parent;
 	}
 
 	@Override

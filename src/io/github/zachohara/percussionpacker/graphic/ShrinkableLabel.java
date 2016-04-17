@@ -24,6 +24,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
 public class ShrinkableLabel extends BorderPane implements MouseListenable, ResizeSelfHandler {
@@ -82,7 +83,7 @@ public class ShrinkableLabel extends BorderPane implements MouseListenable, Resi
 	
 	public void setText(String text) {
 		this.displayText.setText(text);
-		//this.handleResize();
+		this.handleResize();
 	}
 	
 	public double getFontSize() {
@@ -91,6 +92,14 @@ public class ShrinkableLabel extends BorderPane implements MouseListenable, Resi
 	
 	public void setTextStyle(String style) {
 		this.displayText.setStyle(style);
+	}
+	
+	public double getIdealTextWidth() {
+		return this.getDuplicateText().prefWidth(0) + this.widthBuffer;
+	}
+	
+	public double getIdealTextHeight() {
+		return this.getDuplicateText().prefHeight(0) + this.heightBuffer;
 	}
 
 	@Override
@@ -143,6 +152,14 @@ public class ShrinkableLabel extends BorderPane implements MouseListenable, Resi
 	
 	private boolean textHasSize() {
 		return this.displayText.getWidth() != 0 && this.displayText.getHeight() != 0;
+	}
+	
+	private Text getDuplicateText() {
+		Text duplicate = new Text();
+		duplicate.setText(this.displayText.getText());
+		duplicate.setStyle(this.displayText.getStyle());
+		duplicate.setFont(new Font(this.font.getName(), this.maxFontSize));
+		return duplicate;
 	}
 	
 }

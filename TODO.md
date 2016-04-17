@@ -4,10 +4,10 @@
 * Add a 'reset column width' button
 * Create different types of cards (re-titleable, nameable, etc.)
 * Make CardSpacePane handle the movement of cards by the mouse
-* Move styling to css files
 * Add window icons
 * Set a minimum height for the card scroll pane
 * Make card backing buttons recieve focus on initial click
 * Make ClickEditableText objects adapt to ideal text width
-* Set custom width/height buffers for individual ShrinkableText objects
+* Fix cards oversizing to fit children
+* Fix the shaking caused by drag-resizing columns
 

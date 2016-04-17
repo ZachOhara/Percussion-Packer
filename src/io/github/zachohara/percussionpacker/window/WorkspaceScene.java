@@ -53,7 +53,7 @@ public class WorkspaceScene extends Scene implements MouseSelfHandler {
 
 	@Override
 	public void handleMouse(MouseEvent event, EventType<? extends MouseEvent> type) {
-		if (type == MouseEvent.MOUSE_CLICKED) {
+		if (type == MouseEvent.MOUSE_PRESSED) {
 			Node focusedObject = this.getFocusOwner();
 			if (focusedObject instanceof UnfocusableTextField) {
 				TextField textField = (TextField) focusedObject;
