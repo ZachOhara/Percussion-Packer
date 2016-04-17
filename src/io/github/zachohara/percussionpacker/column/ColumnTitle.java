@@ -25,8 +25,8 @@ import javafx.scene.layout.StackPane;
 
 public class ColumnTitle extends StackPane implements ResizeHandler {
 	
-	public static final int TITLE_HEIGHT = 80; // in pixels
-	public static final int MIN_TITLE_HEIGHT = 40; // in pixels
+	public static final int PREF_HEIGHT = 80; // in pixels
+	public static final int MIN_HEIGHT = 40; // in pixels
 	
 	private Label titleText;
 	private Button baseButton;
@@ -42,8 +42,8 @@ public class ColumnTitle extends StackPane implements ResizeHandler {
 		this.titleText = new ColumnTitleLabel(name);
 		this.baseButton = new BackingButton(this, this.resizeListener);
 		
-		this.setPrefHeight(TITLE_HEIGHT);
-		this.setMinHeight(MIN_TITLE_HEIGHT);
+		this.setPrefHeight(PREF_HEIGHT);
+		this.setMinHeight(MIN_HEIGHT);
 		
 		this.getChildren().addAll(this.baseButton, this.titleText);
 	}

@@ -44,7 +44,7 @@ public class ColumnPane extends HBox implements ResizeHandler {
 		super();
 		
 		this.setMinWidth(ColumnPane.getMinPaneWidth());
-		this.setMinHeight(Column.MIN_COLUMN_HEIGHT);
+		this.setMinHeight(Column.MIN_HEIGHT);
 		
 		this.widthRatios = new double[NUM_COLUMNS];
 		this.columns = new Column[NUM_COLUMNS];
@@ -96,7 +96,7 @@ public class ColumnPane extends HBox implements ResizeHandler {
 	}
 	
 	private static double getMinPaneWidth() {
-		return (NUM_COLUMNS * Column.MIN_COLUMN_WIDTH)
+		return (NUM_COLUMNS * Column.MIN_WIDTH)
 				+ (NUM_SEPARATORS * ColumnSeparator.THICKNESS);
 	}
 

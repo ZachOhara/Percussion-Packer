@@ -22,8 +22,8 @@ import javafx.scene.layout.VBox;
 
 public class Column extends VBox implements ResizeHandler {
 	
-	public static final int MIN_COLUMN_WIDTH = 100;
-	public static final int MIN_COLUMN_HEIGHT = 100;
+	public static final int MIN_WIDTH = 100;
+	public static final int MIN_HEIGHT = 100;
 	
 	private ColumnTitle titlePane;
 	private CardScrollPane cardList;
@@ -32,13 +32,13 @@ public class Column extends VBox implements ResizeHandler {
 	
 	public Column(String title) {
 		super();
-		this.setMinWidth(MIN_COLUMN_WIDTH);
-		
-		this.resizeListener = new RegionResizeListener(this);
-		this.resizeListener.addHandler(this);
+		this.setMinWidth(MIN_WIDTH);
 		
 		this.titlePane = new ColumnTitle(title);
 		this.cardList = new CardScrollPane();
+		
+		this.resizeListener = new RegionResizeListener(this);
+		this.resizeListener.addHandler(this);
 		
 		this.getChildren().addAll(this.titlePane, this.cardList);
 	}

@@ -38,6 +38,7 @@ public class ColumnTitleLabel extends Label implements ResizeHandler {
 	
 	public ColumnTitleLabel(String text) {
 		super(text);
+		
 		this.setAlignment(Pos.CENTER);
 		this.setTextAlignment(TextAlignment.CENTER);
 		

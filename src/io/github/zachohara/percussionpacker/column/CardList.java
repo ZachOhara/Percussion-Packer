@@ -42,12 +42,13 @@ public class CardList extends VBox implements  MouseHandler {
 		
 		this.cards = new ArrayList<Card>();
 		
-		// Test code
+		// --- Test code ---
 		for (int i = 0; i < 20; i++) {
 			this.cards.add(new Card());
 			this.cards.get(i).setTitle("" + i);
 		}
 		this.updateCards();
+		// -----------------
 		
 		this.mouseListener = new MouseEventListener(this);
 		this.mouseListener.addHandler(this);
