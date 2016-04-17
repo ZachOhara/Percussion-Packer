@@ -16,7 +16,7 @@
 
 package io.github.zachohara.percussionpacker.event.focus;
 
-public interface FocusChangeHandler {
+public interface FocusHandler {
 	
 	public void handleFocusChange(boolean hasFocus);
 
