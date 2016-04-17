@@ -16,14 +16,15 @@
 
 package io.github.zachohara.percussionpacker.window;
 
-import io.github.zachohara.percussionpacker.card.Card;
-import io.github.zachohara.percussionpacker.card.NameField;
 import io.github.zachohara.percussionpacker.event.mouse.MouseEventListener;
 import io.github.zachohara.percussionpacker.event.mouse.MouseSelfHandler;
+import io.github.zachohara.percussionpacker.graphic.UnfocusableTextField;
 import io.github.zachohara.percussionpacker.util.EventUtil;
 import javafx.event.EventType;
+import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
 public class WorkspaceScene extends Scene implements MouseSelfHandler {
@@ -54,9 +55,13 @@ public class WorkspaceScene extends Scene implements MouseSelfHandler {
 	public void handleMouse(MouseEvent event, EventType<? extends MouseEvent> type) {
 		if (type == MouseEvent.MOUSE_CLICKED) {
 			Node focusedObject = this.getFocusOwner();
-			if (focusedObject instanceof NameField) {
-				Card activeCard = ((NameField) focusedObject).getCard();
-				if (!activeCard.containsScenePoint(event.getSceneX(), event.getSceneY())) {
+			if (focusedObject instanceof UnfocusableTextField) {
+				TextField textField = (TextField) focusedObject;
+				Point2D textFieldPos = textField.localToScene(Point2D.ZERO);
+				double mouseX = event.getSceneX();
+				double mouseY = event.getSceneY();
+				if (!(textFieldPos.getX() <= mouseX && mouseX < textFieldPos.getX() + textField.getWidth())
+						&& textFieldPos.getY() <= mouseY && mouseY < textFieldPos.getY() + textField.getHeight()) {
 					this.rootPane.requestFocus();
 				}
 			}

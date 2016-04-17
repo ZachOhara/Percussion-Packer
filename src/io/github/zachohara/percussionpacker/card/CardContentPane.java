@@ -18,19 +18,44 @@ package io.github.zachohara.percussionpacker.card;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 
-public class TitleLabel extends Label {
+public class CardContentPane extends BorderPane {
 	
-	public static final String STYLE = "-fx-font-family: Roboto; -fx-font-size: 16";
+	public static final double INSET_MARGIN = 8; // in pixels
 	
-	public TitleLabel() {
+	private CardTitle title;
+	private CardNameTag nameTag;
+	
+	public CardContentPane() {
 		super();
-		this.setStyle(STYLE);
 		
-		BorderPane.setAlignment(this, Pos.CENTER_LEFT);
-		BorderPane.setMargin(this, new Insets(Card.INSET_MARGIN));
+		this.title = new CardTitle();
+		BorderPane.setAlignment(this.title, Pos.CENTER_LEFT);
+		BorderPane.setMargin(this.title, new Insets(INSET_MARGIN));
+		
+		this.nameTag = new CardNameTag();
+		BorderPane.setAlignment(this.nameTag, Pos.CENTER_RIGHT);
+		BorderPane.setMargin(this.nameTag, new Insets(INSET_MARGIN));		
+		
+		this.setLeft(this.title);
+		this.setRight(this.nameTag);
 	}
-
+	
+	public String getTitle() {
+		return this.title.getText();
+	}
+	
+	public void setTitle(String title) {
+		this.title.setText(title);
+	}
+	
+	public String getName() {
+		return this.nameTag.getText();
+	}
+	
+	public void setName(String name) {
+		this.nameTag.setText(name);
+	}
+	
 }

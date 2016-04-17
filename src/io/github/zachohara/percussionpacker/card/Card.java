@@ -16,135 +16,50 @@
 
 package io.github.zachohara.percussionpacker.card;
 
-import io.github.zachohara.percussionpacker.event.mouse.MouseEventListener;
-import io.github.zachohara.percussionpacker.event.mouse.MouseHandler;
-import io.github.zachohara.percussionpacker.event.mouse.MouseListenable;
 import io.github.zachohara.percussionpacker.event.resize.RegionResizeListener;
-import io.github.zachohara.percussionpacker.event.resize.ResizeHandler;
-import io.github.zachohara.percussionpacker.event.resize.ResizeListenable;
+import io.github.zachohara.percussionpacker.event.resize.ResizeSelfHandler;
 import io.github.zachohara.percussionpacker.graphic.BackingButton;
-import javafx.event.EventType;
-import javafx.geometry.Pos;
+import io.github.zachohara.percussionpacker.util.EventUtil;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 
-public class Card extends StackPane implements ResizeHandler, ResizeListenable, MouseHandler, MouseListenable {
+public class Card extends StackPane implements ResizeSelfHandler {
 	
-	public static final int HEIGHT = 40; // in pixels
-	public static final int INSET_MARGIN = 8; // in pixels
-	
-	private String name;
-	
-	private Button baseButton;
-	private Label titleText;
-	private NameLabel nameText;
-	private TextField nameField;
-	
-	private BorderPane layoutPane;
-	
-	private RegionResizeListener resizeListener;
-	private MouseEventListener mouseListener;
-	
-	// used only in mouse dragging / repositioning
-	private double lastMouseX;
-	private double lastMouseY;
-	private double lastCardPosX;
-	private double lastCardPosY;
+	private Button backingButton;
+	private CardContentPane contentPane;
 
 	public Card() {
 		super();
-		this.setPrefHeight(Card.HEIGHT);
 		
-		// initialize handlers and listeners
-		this.resizeListener = new RegionResizeListener(this);
-		this.resizeListener.addHandler(this);
-		this.mouseListener = new MouseEventListener(this);
-		this.mouseListener.addHandler(this);
+		RegionResizeListener resizeListener = EventUtil.createSelfListener(RegionResizeListener.class, this);
 		
-		// initialize primary elements
-		this.baseButton = new BackingButton(this, this.resizeListener);
-		this.titleText = new TitleLabel();
-		this.nameText = new NameLabel(this);
-		this.nameField = new NameField(this);
+		this.backingButton = new BackingButton(this, resizeListener);
 		
-		// initialize the border pane (for primary layout)
-		this.layoutPane = new BorderPane();
-		this.layoutPane.setLeft(this.titleText);
-		this.layoutPane.setRight(this.nameText);
-		StackPane.setAlignment(this.layoutPane, Pos.CENTER);
+		this.contentPane = new CardContentPane();
 		
-		// finalize and clean up
-		this.getChildren().addAll(this.baseButton, this.layoutPane);
-		this.handleResize();		
-		this.rename("");
-	}
-	
-	public double getCenterX() {
-		return this.getLayoutX() + (this.getWidth() / 2);
-	}
-	
-	public double getCenterY() {
-		return this.getLayoutY() + (this.getHeight() / 2);
+		this.getChildren().addAll(this.backingButton, this.contentPane);
 	}
 	
 	public String getTitle() {
-		return this.titleText.getText();
+		return contentPane.getTitle();
 	}
-	
+
+	public void setTitle(String title) {
+		contentPane.setTitle(title);
+	}
+
 	public String getName() {
-		return this.name;
+		return contentPane.getName();
 	}
-	
-	public void setTitle(String text) {
-		this.titleText.setText(text);
+
+	public void setName(String name) {
+		contentPane.setName(name);
 	}
-	
-	public boolean containsScenePoint(double x, double y) {
-		return x > this.getLayoutX() && x < this.getLayoutX() + this.getWidth()
-				&& y > this.getLayoutY() && y < this.getLayoutY() + this.getHeight();
-	}
-	
+
 	@Override
 	public void handleResize() {
-		this.layoutPane.setPrefHeight(this.getHeight());
-		this.layoutPane.setMaxHeight(this.getHeight());
-		this.layoutPane.setPrefWidth(this.getWidth());
-		this.layoutPane.setMaxWidth(this.getWidth());
-	}
-
-	@Override
-	public void handleMouse(MouseEvent event, EventType<? extends MouseEvent> type) {
-		if (type == MouseEvent.MOUSE_ENTERED) {
-			this.baseButton.arm();
-		} else if (type == MouseEvent.MOUSE_EXITED) {
-			this.baseButton.disarm();
-		} else if (type == MouseEvent.MOUSE_PRESSED) {
-			this.lastMouseX = event.getSceneX();
-			this.lastMouseY = event.getSceneY();
-			this.lastCardPosX = this.getLayoutX();
-			this.lastCardPosY = this.getLayoutY();
-			this.baseButton.requestFocus();
-		} else if (type == MouseEvent.MOUSE_DRAGGED) {
-			this.setLayoutX(this.lastCardPosX + (event.getSceneX() - this.lastMouseX));
-			this.setLayoutY(this.lastCardPosY + (event.getSceneY() - this.lastMouseY));
-		} else if (type == MouseEvent.MOUSE_RELEASED) {
-			this.requestFocus();
-		}
+		this.contentPane.setPrefWidth(this.getWidth());
+		this.contentPane.setPrefHeight(this.getHeight());
 	}
 	
-	protected void promptRename() {
-		this.layoutPane.setRight(this.nameField);
-		this.nameField.requestFocus();
-	}
-	
-	protected void rename(String name) {
-		this.name = name.trim();
-		this.nameText.handleRename(this.name);
-		this.layoutPane.setRight(this.nameText);
-	}
-
 }

@@ -44,7 +44,7 @@ public class CardList extends VBox implements MouseSelfHandler {
 		// --- Test code ---
 		for (int i = 0; i < 20; i++) {
 			this.cards.add(new Card());
-			this.cards.get(i).setTitle("" + i);
+			this.cards.get(i).setTitle(i + "-----------");
 		}
 		this.updateCards();
 		// -----------------
@@ -62,7 +62,7 @@ public class CardList extends VBox implements MouseSelfHandler {
 					double cardPosY = clickedCard.getLayoutY();
 					if (localY >= cardPosY && localY < cardPosY + clickedCard.getHeight()) {
 						this.getCardSpacePane().recieveCard(clickedCard);
-						clickedCard.handleMouse(event, type);
+						//clickedCard.handleMouse(event, type);
 						this.cards.set(i, new GhostCard());
 						this.updateCards();
 					}

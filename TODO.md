@@ -7,7 +7,7 @@
 * Move styling to css files
 * Add window icons
 * Set a minimum height for the card scroll pane
-* Break up Card
-* Make card implement MouseSelfHandler
 * Make card backing buttons recieve focus on initial click
+* Make text style carry to card name tags
+* Make ClickEditableText objects adapt to ideal text width
 
