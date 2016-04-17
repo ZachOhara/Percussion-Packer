@@ -16,11 +16,12 @@
 
 package io.github.zachohara.percussionpacker.card;
 
+import io.github.zachohara.percussionpacker.event.focus.FocusChangeListener;
 import io.github.zachohara.percussionpacker.event.focus.FocusHandler;
 import io.github.zachohara.percussionpacker.event.focus.FocusListenable;
-import io.github.zachohara.percussionpacker.event.focus.FocusChangeListener;
 import io.github.zachohara.percussionpacker.event.key.KeyEventListener;
 import io.github.zachohara.percussionpacker.event.key.KeyHandler;
+import io.github.zachohara.percussionpacker.event.key.KeyListenable;
 import javafx.event.EventType;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -29,7 +30,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 
-public class NameField extends TextField implements KeyHandler, FocusHandler, FocusListenable {
+public class NameField extends TextField implements KeyHandler, KeyListenable, FocusHandler, FocusListenable {
 	
 	public static final int NAME_FIELD_WIDTH = 70; // in pixels
 	
