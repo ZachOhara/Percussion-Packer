@@ -10,4 +10,5 @@
 * Make card backing buttons recieve focus on initial click
 * Make text style carry to card name tags
 * Make ClickEditableText objects adapt to ideal text width
+* Set custom width/height buffers for individual ShrinkableText objects
 
