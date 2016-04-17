@@ -19,12 +19,13 @@ package io.github.zachohara.percussionpacker.cardspace;
 import io.github.zachohara.percussionpacker.column.Column;
 import io.github.zachohara.percussionpacker.event.mouse.MouseEventListener;
 import io.github.zachohara.percussionpacker.event.mouse.MouseHandler;
+import io.github.zachohara.percussionpacker.event.mouse.MouseListenable;
 import javafx.event.EventType;
 import javafx.scene.Cursor;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 
-public class ColumnSeparator extends Pane implements MouseHandler {
+public class ColumnSeparator extends Pane implements MouseHandler, MouseListenable {
 	
 	public static final String STYLE = "-fx-background-color: black;"
 			+ "-fx-background-radius: 3 3 3 3";

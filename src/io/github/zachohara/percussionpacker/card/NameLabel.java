@@ -18,6 +18,7 @@ package io.github.zachohara.percussionpacker.card;
 
 import io.github.zachohara.percussionpacker.event.mouse.MouseEventListener;
 import io.github.zachohara.percussionpacker.event.mouse.MouseHandler;
+import io.github.zachohara.percussionpacker.event.mouse.MouseListenable;
 import javafx.event.EventType;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -25,7 +26,7 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 
-public class NameLabel extends Label implements MouseHandler {
+public class NameLabel extends Label implements MouseHandler, MouseListenable {
 
 	public static final String DEFAULT_NAME = "[name this]";
 	public static final String DEFAULT_STYLE = "-fx-background-radius: 7 7 7 7; -fx-font-size: 14px; "

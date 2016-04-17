@@ -24,13 +24,14 @@ import io.github.zachohara.percussionpacker.card.GhostCard;
 import io.github.zachohara.percussionpacker.cardspace.CardSpacePane;
 import io.github.zachohara.percussionpacker.event.mouse.MouseEventListener;
 import io.github.zachohara.percussionpacker.event.mouse.MouseHandler;
+import io.github.zachohara.percussionpacker.event.mouse.MouseListenable;
 import io.github.zachohara.percussionpacker.window.PackingStage;
 import javafx.event.EventType;
 import javafx.geometry.Point2D;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 
-public class CardList extends VBox implements  MouseHandler {
+public class CardList extends VBox implements MouseHandler, MouseListenable {
 	
 	public static final int CARD_SPACING = 1; // pixels between each card
 	
