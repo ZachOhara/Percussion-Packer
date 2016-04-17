@@ -19,6 +19,7 @@ package io.github.zachohara.percussionpacker.cardspace;
 import io.github.zachohara.percussionpacker.card.Card;
 import io.github.zachohara.percussionpacker.event.resize.RegionResizeListener;
 import io.github.zachohara.percussionpacker.event.resize.ResizeHandler;
+import io.github.zachohara.percussionpacker.util.RegionUtil;
 import javafx.geometry.Point2D;
 import javafx.scene.layout.Pane;
 
@@ -35,13 +36,11 @@ public class CardSpacePane extends Pane implements ResizeHandler {
 		this.columnPane.setLayoutX(0);
 		this.columnPane.setLayoutY(0);
 		
-		this.setMinWidth(this.columnPane.getMinWidth());
-		this.setMinHeight(this.columnPane.getMinHeight());
-		
 		this.resizeListener = new RegionResizeListener(this);
 		this.resizeListener.addHandler(this);
 		
 		this.getChildren().add(this.columnPane);
+		RegionUtil.setMinDimsFromChildren(this);
 	}
 
 	@Override

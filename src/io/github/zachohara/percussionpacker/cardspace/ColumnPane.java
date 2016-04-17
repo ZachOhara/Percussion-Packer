@@ -19,6 +19,7 @@ package io.github.zachohara.percussionpacker.cardspace;
 import io.github.zachohara.percussionpacker.column.Column;
 import io.github.zachohara.percussionpacker.event.resize.RegionResizeListener;
 import io.github.zachohara.percussionpacker.event.resize.ResizeHandler;
+import io.github.zachohara.percussionpacker.util.RegionUtil;
 import javafx.scene.layout.HBox;
 
 public class ColumnPane extends HBox implements ResizeHandler {
@@ -43,9 +44,6 @@ public class ColumnPane extends HBox implements ResizeHandler {
 	public ColumnPane() {
 		super();
 		
-		this.setMinWidth(ColumnPane.getMinPaneWidth());
-		this.setMinHeight(Column.MIN_HEIGHT);
-		
 		this.widthRatios = new double[NUM_COLUMNS];
 		this.columns = new Column[NUM_COLUMNS];
 		this.separators = new ColumnSeparator[NUM_SEPARATORS];
@@ -54,6 +52,8 @@ public class ColumnPane extends HBox implements ResizeHandler {
 		this.resizeListener.addHandler(this);
 		
 		this.initializeColumns();
+		
+		RegionUtil.setMinDimsFromChildren(this);
 	}
 	
 	protected void finishColumnResizing() {
@@ -93,11 +93,6 @@ public class ColumnPane extends HBox implements ResizeHandler {
 				this.getChildren().add(this.separators[i]);
 			}
 		}
-	}
-	
-	private static double getMinPaneWidth() {
-		return (NUM_COLUMNS * Column.MIN_WIDTH)
-				+ (NUM_SEPARATORS * ColumnSeparator.THICKNESS);
 	}
 
 }
