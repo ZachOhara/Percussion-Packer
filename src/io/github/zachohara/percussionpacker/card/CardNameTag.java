@@ -39,9 +39,9 @@ public class CardNameTag extends ClickEditableText {
 	public void setText(String text) {
 		String displayText = text.trim();
 		if (displayText.length() == 0) {
-			this.setStyle(UNNAMED_STYLE);
+			this.setDisplayTextStyle(UNNAMED_STYLE);
 		} else {
-			this.setStyle(NAMED_STYLE);
+			this.setDisplayTextStyle(NAMED_STYLE);
 		}
 		displayText = " " + displayText + " ";
 		super.setText(displayText);

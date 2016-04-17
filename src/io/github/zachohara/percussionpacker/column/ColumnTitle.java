@@ -29,8 +29,11 @@ public class ColumnTitle extends StackPane implements ResizeSelfHandler {
 	public static final String TITLE_FONT = "Arial Bold";
 	public static final double MAX_FONT_SIZE = 24;
 	
-	public static final int PREF_HEIGHT = 80; // in pixels
-	public static final int MIN_HEIGHT = 40; // in pixels
+	public static final double WIDTH_BUFFER = 8;
+	public static final double HEIGHT_BUFFER = 10;
+	
+	public static final double PREF_HEIGHT = 80; // in pixels
+	public static final double MIN_HEIGHT = 40; // in pixels
 	
 	private ShrinkableLabel titleText;
 	private Button baseButton;
@@ -42,6 +45,9 @@ public class ColumnTitle extends StackPane implements ResizeSelfHandler {
 		
 		this.titleText = new ShrinkableLabel(TITLE_FONT, MAX_FONT_SIZE);
 		this.titleText.setText(name);
+		this.titleText.setWidthBuffer(WIDTH_BUFFER);
+		this.titleText.setHeightBuffer(HEIGHT_BUFFER);
+		
 		this.baseButton = new BackingButton(this, resizeListener);
 		
 		this.setPrefHeight(PREF_HEIGHT);

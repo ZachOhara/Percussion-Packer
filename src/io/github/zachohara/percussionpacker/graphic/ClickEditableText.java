@@ -72,6 +72,10 @@ public class ClickEditableText extends BorderPane implements FocusHandler, Mouse
 		}
 		this.displayLabel.handleResize();
 	}
+	
+	public void setDisplayTextStyle(String style) {
+		this.displayLabel.setTextStyle(style);
+	}
 
 	@Override
 	public void handleFocusChange(boolean hasFocus) {

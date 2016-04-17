@@ -30,11 +30,13 @@ public class ShrinkableLabel extends BorderPane implements MouseListenable, Resi
 	
 	public static final double FONT_SIZE_INCREMENT = 0.1;
 	public static final double MIN_FONT_SIZE = 1;
-	public static final double WIDTH_BUFFER = 8; // in pixels
-	public static final double HEIGHT_BUFFER = 10; // in pixels
+	public static final double DEFAULT_WIDTH_BUFFER = 1; // in pixels
+	public static final double DEFAULT_HEIGHT_BUFFER = 2; // in pixels
 	
 	private double maxFontSize;
-	
+	private double widthBuffer;
+	private double heightBuffer;
+
 	private Font font;
 	private Label displayText;
 	
@@ -44,6 +46,8 @@ public class ShrinkableLabel extends BorderPane implements MouseListenable, Resi
 		EventUtil.createSelfListener(RegionResizeListener.class, this);
 		
 		this.maxFontSize = maxFontSize;
+		this.widthBuffer = DEFAULT_WIDTH_BUFFER;
+		this.heightBuffer = DEFAULT_HEIGHT_BUFFER;
 		
 		this.font = new Font(fontStyle, 0);
 		this.displayText = new Label();
@@ -54,6 +58,22 @@ public class ShrinkableLabel extends BorderPane implements MouseListenable, Resi
 		this.setFontSize(this.maxFontSize);
 		
 		this.setCenter(this.displayText);
+	}	
+	
+	public double getWidthBuffer() {
+		return widthBuffer;
+	}
+	
+	public void setWidthBuffer(double widthBuffer) {
+		this.widthBuffer = widthBuffer;
+	}
+
+	public double getHeightBuffer() {
+		return heightBuffer;
+	}
+	
+	public void setHeightBuffer(double heightBuffer) {
+		this.heightBuffer = heightBuffer;
 	}
 	
 	public String getText() {
@@ -62,15 +82,15 @@ public class ShrinkableLabel extends BorderPane implements MouseListenable, Resi
 	
 	public void setText(String text) {
 		this.displayText.setText(text);
+		//this.handleResize();
 	}
 	
 	public double getFontSize() {
 		return this.font.getSize();
 	}
 	
-	private void setFontSize(double size) {
-		this.font = new Font(this.font.getName(), size);
-		this.displayText.setFont(this.font);
+	public void setTextStyle(String style) {
+		this.displayText.setStyle(style);
 	}
 
 	@Override
@@ -89,23 +109,36 @@ public class ShrinkableLabel extends BorderPane implements MouseListenable, Resi
 		this.setFontSize(this.getFontSize() + increment);
 	}
 	
+	private void setFontSize(double size) {
+		this.font = new Font(this.font.getName(), size);
+		this.displayText.setFont(this.font);
+	}
+	
 	private boolean isTextOversized() {
-		return this.displayText.prefWidth(0) > this.getIdealTextWidth()
-				|| this.displayText.prefHeight(0) > this.getIdealTextHeight();
+		return this.getCurrentTextWidth() > this.getAvailableTextWidth()
+				|| this.getCurrentTextHeight() > this.getAvailableTextHeight();
 	}
 	
 	private boolean isTextUndersized() {
 		return this.getFontSize() < this.maxFontSize
-				&& this.displayText.prefWidth(0) < this.getIdealTextWidth()
-				&& this.displayText.prefHeight(0) < this.getIdealTextHeight();
+				&& this.getCurrentTextWidth() < this.getAvailableTextWidth()
+				&& this.getCurrentTextHeight() < this.getAvailableTextHeight();
 	}
 	
-	private double getIdealTextWidth() {
-		return this.getWidth() - WIDTH_BUFFER;
+	private double getCurrentTextWidth() {
+		return this.displayText.prefWidth(0);
 	}
 	
-	private double getIdealTextHeight() {
-		return this.getHeight() - HEIGHT_BUFFER;
+	private double getCurrentTextHeight() {
+		return this.displayText.prefHeight(0);
+	}
+	
+	private double getAvailableTextWidth() {
+		return this.getWidth() - this.widthBuffer;
+	}
+	
+	private double getAvailableTextHeight() {
+		return this.getHeight() - this.heightBuffer;
 	}
 	
 	private boolean textHasSize() {
