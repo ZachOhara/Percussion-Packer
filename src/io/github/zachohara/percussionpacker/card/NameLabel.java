@@ -44,11 +44,11 @@ public class NameLabel extends Label implements MouseHandler {
 		super();
 		this.parent = parent;
 		
+		BorderPane.setAlignment(this, Pos.CENTER_RIGHT);
+		BorderPane.setMargin(this, new Insets(Card.INSET_MARGIN));
+		
 		this.mouseListener = new MouseEventListener(this);
 		this.mouseListener.addHandler(this);
-		
-		BorderPane.setAlignment(this, Pos.CENTER_RIGHT);
-		BorderPane.setMargin(this, new Insets(Card.MARGIN));
 	}
 	
 	public void handleRename(String name) {
@@ -71,7 +71,7 @@ public class NameLabel extends Label implements MouseHandler {
 			this.isDragging = true;
 		} else if (type == MouseEvent.MOUSE_CLICKED) {
 			if (!this.isDragging) {
-				NameLabel.this.parent.promptRename();
+				this.parent.promptRename();
 			}
 		}
 	}

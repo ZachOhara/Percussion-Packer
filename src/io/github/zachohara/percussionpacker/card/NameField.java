@@ -42,11 +42,11 @@ public class NameField extends TextField implements KeyHandler {
 		this.setPrefWidth(NAME_FIELD_WIDTH);
 		this.focusedProperty().addListener(new NameFieldFocusHandler());
 		
+		BorderPane.setAlignment(this, Pos.CENTER_RIGHT);
+		BorderPane.setMargin(this, new Insets(Card.INSET_MARGIN));
+		
 		this.keyListener = new KeyEventListener(this);
 		this.keyListener.addHandler(this);
-		
-		BorderPane.setAlignment(this, Pos.CENTER_RIGHT);
-		BorderPane.setMargin(this, new Insets(Card.MARGIN));
 	}
 	
 	public boolean containsScenePoint(double x, double y) {

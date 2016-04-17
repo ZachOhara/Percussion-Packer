@@ -33,7 +33,7 @@ import javafx.scene.layout.StackPane;
 public class Card extends StackPane implements ResizeHandler, MouseHandler {
 	
 	public static final int HEIGHT = 40; // in pixels
-	public static final int MARGIN = 8; // in pixels
+	public static final int INSET_MARGIN = 8; // in pixels
 	
 	private String name;
 	
@@ -65,7 +65,7 @@ public class Card extends StackPane implements ResizeHandler, MouseHandler {
 		
 		// initialize primary elements
 		this.baseButton = new BackingButton(this, this.resizeListener);
-		this.titleText = new TitleLabel(this);
+		this.titleText = new TitleLabel();
 		this.nameText = new NameLabel(this);
 		this.nameField = new NameField(this);
 		

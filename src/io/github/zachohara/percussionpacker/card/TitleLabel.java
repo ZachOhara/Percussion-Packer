@@ -23,14 +23,14 @@ import javafx.scene.layout.BorderPane;
 
 public class TitleLabel extends Label {
 	
-	public static final String DEFAULT_STYLE = "-fx-font-family: Roboto; -fx-font-size: 16";
+	public static final String STYLE = "-fx-font-family: Roboto; -fx-font-size: 16";
 	
-	public TitleLabel(Card parent) {
+	public TitleLabel() {
 		super();
-		this.setStyle(DEFAULT_STYLE);
+		this.setStyle(STYLE);
 		
 		BorderPane.setAlignment(this, Pos.CENTER_LEFT);
-		BorderPane.setMargin(this, new Insets(Card.MARGIN));
+		BorderPane.setMargin(this, new Insets(Card.INSET_MARGIN));
 	}
 
 }
