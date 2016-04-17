@@ -10,3 +10,6 @@
 * Move styling to css files
 * Add window icons
 * Set a minimum height for the card scroll pane
+* Break up Card
+* Make card implement MouseSelfHandler
+
