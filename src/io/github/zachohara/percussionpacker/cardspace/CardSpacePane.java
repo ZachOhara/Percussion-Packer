@@ -19,11 +19,12 @@ package io.github.zachohara.percussionpacker.cardspace;
 import io.github.zachohara.percussionpacker.card.Card;
 import io.github.zachohara.percussionpacker.event.resize.RegionResizeListener;
 import io.github.zachohara.percussionpacker.event.resize.ResizeHandler;
+import io.github.zachohara.percussionpacker.event.resize.ResizeListenable;
 import io.github.zachohara.percussionpacker.util.RegionUtil;
 import javafx.geometry.Point2D;
 import javafx.scene.layout.Pane;
 
-public class CardSpacePane extends Pane implements ResizeHandler {
+public class CardSpacePane extends Pane implements ResizeHandler, ResizeListenable {
 	
 	private Pane columnPane;
 	

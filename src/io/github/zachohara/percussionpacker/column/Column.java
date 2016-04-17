@@ -18,10 +18,11 @@ package io.github.zachohara.percussionpacker.column;
 
 import io.github.zachohara.percussionpacker.event.resize.RegionResizeListener;
 import io.github.zachohara.percussionpacker.event.resize.ResizeHandler;
+import io.github.zachohara.percussionpacker.event.resize.ResizeListenable;
 import io.github.zachohara.percussionpacker.util.RegionUtil;
 import javafx.scene.layout.VBox;
 
-public class Column extends VBox implements ResizeHandler {
+public class Column extends VBox implements ResizeHandler, ResizeListenable {
 	
 	public static final int MIN_WIDTH = 120;
 	

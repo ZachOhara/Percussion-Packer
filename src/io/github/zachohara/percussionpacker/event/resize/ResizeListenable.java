@@ -16,24 +16,11 @@
 
 package io.github.zachohara.percussionpacker.event.resize;
 
-import io.github.zachohara.percussionpacker.event.EventListener;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import javafx.beans.property.ReadOnlyDoubleProperty;
 
-public class RegionResizeListener extends EventListener<ResizeHandler> implements ChangeListener<Number> {
+public interface ResizeListenable {
 	
-	public RegionResizeListener(ResizeListenable listenable) {
-		super();
-		listenable.widthProperty().addListener(this);
-		listenable.heightProperty().addListener(this);
-	}
-
-	@Override
-	public void changed(ObservableValue<? extends Number> observable, Number oldValue,
-			Number newValue) {
-		for (ResizeHandler handler : this.getHandlerList()) {
-			handler.handleResize();
-		}
-	}
+	public ReadOnlyDoubleProperty widthProperty();
+	public ReadOnlyDoubleProperty heightProperty();
 
 }

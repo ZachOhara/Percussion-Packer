@@ -19,10 +19,11 @@ package io.github.zachohara.percussionpacker.cardspace;
 import io.github.zachohara.percussionpacker.column.Column;
 import io.github.zachohara.percussionpacker.event.resize.RegionResizeListener;
 import io.github.zachohara.percussionpacker.event.resize.ResizeHandler;
+import io.github.zachohara.percussionpacker.event.resize.ResizeListenable;
 import io.github.zachohara.percussionpacker.util.RegionUtil;
 import javafx.scene.layout.HBox;
 
-public class ColumnPane extends HBox implements ResizeHandler {
+public class ColumnPane extends HBox implements ResizeHandler, ResizeListenable {
 	
 	public static final String[] COLUMN_NAMES = {
 			"Song List",

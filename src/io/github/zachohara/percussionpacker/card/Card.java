@@ -21,6 +21,7 @@ import io.github.zachohara.percussionpacker.event.mouse.MouseHandler;
 import io.github.zachohara.percussionpacker.event.mouse.MouseListenable;
 import io.github.zachohara.percussionpacker.event.resize.RegionResizeListener;
 import io.github.zachohara.percussionpacker.event.resize.ResizeHandler;
+import io.github.zachohara.percussionpacker.event.resize.ResizeListenable;
 import io.github.zachohara.percussionpacker.graphic.BackingButton;
 import javafx.event.EventType;
 import javafx.geometry.Pos;
@@ -31,7 +32,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 
-public class Card extends StackPane implements ResizeHandler, MouseHandler, MouseListenable {
+public class Card extends StackPane implements ResizeHandler, ResizeListenable, MouseHandler, MouseListenable {
 	
 	public static final int HEIGHT = 40; // in pixels
 	public static final int INSET_MARGIN = 8; // in pixels

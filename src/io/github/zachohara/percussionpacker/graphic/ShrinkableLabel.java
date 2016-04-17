@@ -18,13 +18,14 @@ package io.github.zachohara.percussionpacker.graphic;
 
 import io.github.zachohara.percussionpacker.event.resize.RegionResizeListener;
 import io.github.zachohara.percussionpacker.event.resize.ResizeHandler;
+import io.github.zachohara.percussionpacker.event.resize.ResizeListenable;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 
-public class ShrinkableLabel extends BorderPane implements ResizeHandler {
+public class ShrinkableLabel extends BorderPane implements ResizeHandler, ResizeListenable {
 	
 	public static final double FONT_SIZE_INCREMENT = 0.1;
 	public static final double MIN_FONT_SIZE = 1;
