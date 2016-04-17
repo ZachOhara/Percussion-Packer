@@ -31,7 +31,7 @@ public class ColumnPane extends HBox implements ResizeHandler {
 	};
 	// the number of columns in the workspace; should not be adjusted here
 	public static final int NUM_COLUMNS = COLUMN_NAMES.length;
-	// the number of separators in the workspace; should not be adjusted
+	// the number of separators in the workspace; should not be adjusted here
 	public static final int NUM_SEPARATORS = NUM_COLUMNS - 1;
 	
 	private double[] widthRatios;
@@ -42,18 +42,21 @@ public class ColumnPane extends HBox implements ResizeHandler {
 	
 	public ColumnPane() {
 		super();
+		
 		this.setMinWidth(ColumnPane.getMinPaneWidth());
 		this.setMinHeight(Column.MIN_COLUMN_HEIGHT);
 		
 		this.widthRatios = new double[NUM_COLUMNS];
 		this.columns = new Column[NUM_COLUMNS];
 		this.separators = new ColumnSeparator[NUM_SEPARATORS];
+		
 		this.resizeListener = new RegionResizeListener(this);
 		this.resizeListener.addHandler(this);
+		
 		this.initializeColumns();
 	}
 	
-	public void finishColumnResizing() {
+	protected void finishColumnResizing() {
 		double availableSpace = this.getAvailableColumnSpace();
 		for (int i = 0; i < NUM_COLUMNS; i++) {
 			this.widthRatios[i] = this.columns[i].getWidth() / availableSpace;
@@ -86,7 +89,7 @@ public class ColumnPane extends HBox implements ResizeHandler {
 		// add all elements to this pane
 		for (int i = 0; i < NUM_COLUMNS; i++) {
 			this.getChildren().add(this.columns[i]);
-			if (i != NUM_COLUMNS - 1) {
+			if (i < NUM_SEPARATORS) {
 				this.getChildren().add(this.separators[i]);
 			}
 		}

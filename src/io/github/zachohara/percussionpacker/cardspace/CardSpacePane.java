@@ -35,11 +35,12 @@ public class CardSpacePane extends Pane implements ResizeHandler {
 		this.columnPane.setLayoutX(0);
 		this.columnPane.setLayoutY(0);
 		
+		this.setMinWidth(this.columnPane.getMinWidth());
+		this.setMinHeight(this.columnPane.getMinHeight());
+		
 		this.resizeListener = new RegionResizeListener(this);
 		this.resizeListener.addHandler(this);
 		
-		this.setMinWidth(this.columnPane.getMinWidth());
-		this.setMinHeight(this.columnPane.getMinHeight());
 		this.getChildren().add(this.columnPane);
 	}
 

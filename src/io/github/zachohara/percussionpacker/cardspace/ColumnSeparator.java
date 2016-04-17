@@ -26,7 +26,7 @@ import javafx.scene.layout.Pane;
 
 public class ColumnSeparator extends Pane implements MouseHandler {
 	
-	public static final String DEFAULT_STYLE = "-fx-background-color: black;"
+	public static final String STYLE = "-fx-background-color: black;"
 			+ "-fx-background-radius: 3 3 3 3";
 	public static final int THICKNESS = 3; // in pixels
 	
@@ -45,16 +45,16 @@ public class ColumnSeparator extends Pane implements MouseHandler {
 	public ColumnSeparator(ColumnPane parent, Column leftColumn, Column rightColumn) {
 		super();
 		
+		this.setStyle(STYLE);
+		this.setPrefWidth(THICKNESS);
+		this.setMinWidth(THICKNESS);
+		
 		this.parent = parent;
 		this.leftColumn = leftColumn;
 		this.rightColumn = rightColumn;
 		
 		this.mouseListener = new MouseEventListener(this);
 		this.mouseListener.addHandler(this);
-		
-		this.setStyle(DEFAULT_STYLE);
-		this.setPrefWidth(THICKNESS);
-		this.setMinWidth(THICKNESS);
 	}
 
 	@Override
@@ -66,27 +66,39 @@ public class ColumnSeparator extends Pane implements MouseHandler {
 				this.getScene().setCursor(Cursor.DEFAULT);
 			}
 		} else if (type == MouseEvent.MOUSE_PRESSED) {
-			this.isDragging = false;
-			this.dragStartPos = event.getSceneX();
-			this.dragLeftWidth = this.leftColumn.getWidth();
-			this.dragRightWidth = this.rightColumn.getWidth();
+			this.startMouseDrag(event.getX());
 		} else if (type == MouseEvent.MOUSE_DRAGGED) {
-			this.isDragging = true;
-			double increment = event.getSceneX() - this.dragStartPos;
-			double newLeftWidth = this.dragLeftWidth + increment;
-			double newRightWidth = this.dragRightWidth - increment;
-			if (newLeftWidth >= this.leftColumn.getMinWidth()
-					&& newRightWidth >= this.rightColumn.getMinWidth()) {
-				this.leftColumn.setPrefWidth(newLeftWidth);
-				this.rightColumn.setPrefWidth(newRightWidth);
-			}
+			this.handleMouseDrag(event.getX());
 		} else if (type == MouseEvent.MOUSE_RELEASED) {
 			if (this.isDragging) {
-				this.parent.finishColumnResizing();
-				this.getScene().setCursor(Cursor.DEFAULT);
+				this.finishMouseDrag();
 			}
-			this.isDragging = false;
 		}
+	}
+	
+	private void startMouseDrag(double startPosX) {
+		this.isDragging = false;
+		this.dragStartPos = startPosX;
+		this.dragLeftWidth = this.leftColumn.getWidth();
+		this.dragRightWidth = this.rightColumn.getWidth();
+	}
+	
+	private void handleMouseDrag(double mousePosX) {
+		this.isDragging = true;
+		double increment = mousePosX - this.dragStartPos;
+		double newLeftWidth = this.dragLeftWidth + increment;
+		double newRightWidth = this.dragRightWidth - increment;
+		if (newLeftWidth >= this.leftColumn.getMinWidth()
+				&& newRightWidth >= this.rightColumn.getMinWidth()) {
+			this.leftColumn.setPrefWidth(newLeftWidth);
+			this.rightColumn.setPrefWidth(newRightWidth);
+		}
+	}
+	
+	private void finishMouseDrag() {
+		this.isDragging = false;
+		this.parent.finishColumnResizing();
+		this.getScene().setCursor(Cursor.DEFAULT);
 	}
 	
 }
