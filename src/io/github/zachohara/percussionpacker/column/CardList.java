@@ -27,13 +27,10 @@ import io.github.zachohara.percussionpacker.event.mouse.MouseSelfHandler;
 import io.github.zachohara.percussionpacker.util.EventUtil;
 import io.github.zachohara.percussionpacker.window.PackingStage;
 import javafx.event.EventType;
-import javafx.geometry.Point2D;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 
 public class CardList extends VBox implements MouseSelfHandler {
-	
-	public static final int CARD_SPACING = 1; // pixels between each card
 	
 	private List<Card> cards;
 	
@@ -57,16 +54,19 @@ public class CardList extends VBox implements MouseSelfHandler {
 	public void handleMouse(MouseEvent event,
 			EventType<? extends MouseEvent> type) {
 		if (type == MouseEvent.MOUSE_PRESSED) {
-			Point2D localPos = this.sceneToLocal(event.getSceneX(), event.getSceneY());
-			double localX = localPos.getX();
-			double localY = localPos.getY();
+			double localX = event.getX();
+			double localY = event.getY();
 			if (0 < localX && localX < this.getWidth()) {
-				int cardIndex = (int) (localY / (Card.HEIGHT + CARD_SPACING));
-				Card clickedCard = this.cards.get(cardIndex);
-				this.getCardSpacePane().recieveCard(clickedCard);
-				clickedCard.handleMouse(event, type);
-				this.cards.set(cardIndex, new GhostCard());
-				this.updateCards();
+				for (int i = 0; i < this.cards.size(); i++) {
+					Card clickedCard = this.cards.get(i);
+					double cardPosY = clickedCard.getLayoutY();
+					if (localY >= cardPosY && localY < cardPosY + clickedCard.getHeight()) {
+						this.getCardSpacePane().recieveCard(clickedCard);
+						clickedCard.handleMouse(event, type);
+						this.cards.set(i, new GhostCard());
+						this.updateCards();
+					}
+				}
 			}
 		}
 	}

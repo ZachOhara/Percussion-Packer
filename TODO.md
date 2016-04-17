@@ -2,8 +2,6 @@
 
 * Possibly add a glow effect to cards
 * Add a 'reset column width' button
-* Stop backing buttons from showing hovering effects or self-arming
-* Change CardList to calculate the clicked card based on position and height of each card
 * Create different types of cards (re-titleable, nameable, etc.)
 * Make CardSpacePane handle the movement of cards by the mouse
 * Move styling to css files
@@ -11,4 +9,5 @@
 * Set a minimum height for the card scroll pane
 * Break up Card
 * Make card implement MouseSelfHandler
+* Make card backing buttons recieve focus on initial click
 
