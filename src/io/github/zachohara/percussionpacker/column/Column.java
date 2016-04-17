@@ -17,28 +17,25 @@
 package io.github.zachohara.percussionpacker.column;
 
 import io.github.zachohara.percussionpacker.event.resize.RegionResizeListener;
-import io.github.zachohara.percussionpacker.event.resize.ResizeHandler;
-import io.github.zachohara.percussionpacker.event.resize.ResizeListenable;
+import io.github.zachohara.percussionpacker.event.resize.ResizeSelfHandler;
+import io.github.zachohara.percussionpacker.util.EventUtil;
 import io.github.zachohara.percussionpacker.util.RegionUtil;
 import javafx.scene.layout.VBox;
 
-public class Column extends VBox implements ResizeHandler, ResizeListenable {
+public class Column extends VBox implements ResizeSelfHandler {
 	
 	public static final int MIN_WIDTH = 120;
 	
 	private ColumnTitle titlePane;
 	private CardScrollPane cardList;
 	
-	private RegionResizeListener resizeListener;
-	
 	public Column(String title) {
 		super();
+
+		EventUtil.createSelfListener(RegionResizeListener.class, this);
 		
 		this.titlePane = new ColumnTitle(title);
 		this.cardList = new CardScrollPane();
-		
-		this.resizeListener = new RegionResizeListener(this);
-		this.resizeListener.addHandler(this);
 		
 		this.getChildren().addAll(this.titlePane, this.cardList);
 		

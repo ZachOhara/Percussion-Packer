@@ -18,14 +18,14 @@ package io.github.zachohara.percussionpacker.cardspace;
 
 import io.github.zachohara.percussionpacker.column.Column;
 import io.github.zachohara.percussionpacker.event.mouse.MouseEventListener;
-import io.github.zachohara.percussionpacker.event.mouse.MouseHandler;
-import io.github.zachohara.percussionpacker.event.mouse.MouseListenable;
+import io.github.zachohara.percussionpacker.event.mouse.MouseSelfHandler;
+import io.github.zachohara.percussionpacker.util.EventUtil;
 import javafx.event.EventType;
 import javafx.scene.Cursor;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 
-public class ColumnSeparator extends Pane implements MouseHandler, MouseListenable {
+public class ColumnSeparator extends Pane implements MouseSelfHandler {
 	
 	public static final String STYLE = "-fx-background-color: black;"
 			+ "-fx-background-radius: 3 3 3 3";
@@ -41,10 +41,10 @@ public class ColumnSeparator extends Pane implements MouseHandler, MouseListenab
 	private double dragLeftWidth;
 	private double dragRightWidth;
 	
-	private MouseEventListener mouseListener;
-	
 	public ColumnSeparator(ColumnPane parent, Column leftColumn, Column rightColumn) {
 		super();
+		
+		EventUtil.createSelfListener(MouseEventListener.class, this);
 		
 		this.setStyle(STYLE);
 		this.setPrefWidth(THICKNESS);
@@ -53,9 +53,6 @@ public class ColumnSeparator extends Pane implements MouseHandler, MouseListenab
 		this.parent = parent;
 		this.leftColumn = leftColumn;
 		this.rightColumn = rightColumn;
-		
-		this.mouseListener = new MouseEventListener(this);
-		this.mouseListener.addHandler(this);
 	}
 
 	@Override

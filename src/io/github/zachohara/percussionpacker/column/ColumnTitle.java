@@ -17,14 +17,14 @@
 package io.github.zachohara.percussionpacker.column;
 
 import io.github.zachohara.percussionpacker.event.resize.RegionResizeListener;
-import io.github.zachohara.percussionpacker.event.resize.ResizeHandler;
-import io.github.zachohara.percussionpacker.event.resize.ResizeListenable;
+import io.github.zachohara.percussionpacker.event.resize.ResizeSelfHandler;
 import io.github.zachohara.percussionpacker.graphic.BackingButton;
 import io.github.zachohara.percussionpacker.graphic.ShrinkableLabel;
+import io.github.zachohara.percussionpacker.util.EventUtil;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 
-public class ColumnTitle extends StackPane implements ResizeHandler, ResizeListenable {
+public class ColumnTitle extends StackPane implements ResizeSelfHandler {
 
 	public static final String TITLE_FONT = "Arial Bold";
 	public static final double MAX_FONT_SIZE = 24;
@@ -35,17 +35,14 @@ public class ColumnTitle extends StackPane implements ResizeHandler, ResizeListe
 	private ShrinkableLabel titleText;
 	private Button baseButton;
 	
-	private RegionResizeListener resizeListener;
-	
 	public ColumnTitle(String name) {
 		super();
 		
-		this.resizeListener = new RegionResizeListener(this);
-		this.resizeListener.addHandler(this);
+		RegionResizeListener resizeListener = EventUtil.createSelfListener(RegionResizeListener.class, this);
 		
 		this.titleText = new ShrinkableLabel(TITLE_FONT, MAX_FONT_SIZE);
 		this.titleText.setText(name);
-		this.baseButton = new BackingButton(this, this.resizeListener);
+		this.baseButton = new BackingButton(this, resizeListener);
 		
 		this.setPrefHeight(PREF_HEIGHT);
 		this.setMinHeight(MIN_HEIGHT);

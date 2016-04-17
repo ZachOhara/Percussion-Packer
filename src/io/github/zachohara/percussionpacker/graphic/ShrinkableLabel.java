@@ -17,15 +17,15 @@
 package io.github.zachohara.percussionpacker.graphic;
 
 import io.github.zachohara.percussionpacker.event.resize.RegionResizeListener;
-import io.github.zachohara.percussionpacker.event.resize.ResizeHandler;
-import io.github.zachohara.percussionpacker.event.resize.ResizeListenable;
+import io.github.zachohara.percussionpacker.event.resize.ResizeSelfHandler;
+import io.github.zachohara.percussionpacker.util.EventUtil;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 
-public class ShrinkableLabel extends BorderPane implements ResizeHandler, ResizeListenable {
+public class ShrinkableLabel extends BorderPane implements ResizeSelfHandler {
 	
 	public static final double FONT_SIZE_INCREMENT = 0.1;
 	public static final double MIN_FONT_SIZE = 1;
@@ -37,10 +37,10 @@ public class ShrinkableLabel extends BorderPane implements ResizeHandler, Resize
 	private Font font;
 	private Label displayText;
 	
-	private RegionResizeListener resizeListener;
-	
 	public ShrinkableLabel(String fontStyle, double maxFontSize) {
 		super();
+		
+		EventUtil.createSelfListener(RegionResizeListener.class, this);
 		
 		this.maxFontSize = maxFontSize;
 		
@@ -51,9 +51,6 @@ public class ShrinkableLabel extends BorderPane implements ResizeHandler, Resize
 		this.displayText.setTextAlignment(TextAlignment.CENTER);
 		
 		this.setFontSize(this.maxFontSize);
-		
-		this.resizeListener = new RegionResizeListener(this);
-		this.resizeListener.addHandler(this);
 		
 		this.setCenter(this.displayText);
 	}

@@ -18,27 +18,24 @@ package io.github.zachohara.percussionpacker.cardspace;
 
 import io.github.zachohara.percussionpacker.card.Card;
 import io.github.zachohara.percussionpacker.event.resize.RegionResizeListener;
-import io.github.zachohara.percussionpacker.event.resize.ResizeHandler;
-import io.github.zachohara.percussionpacker.event.resize.ResizeListenable;
+import io.github.zachohara.percussionpacker.event.resize.ResizeSelfHandler;
+import io.github.zachohara.percussionpacker.util.EventUtil;
 import io.github.zachohara.percussionpacker.util.RegionUtil;
 import javafx.geometry.Point2D;
 import javafx.scene.layout.Pane;
 
-public class CardSpacePane extends Pane implements ResizeHandler, ResizeListenable {
+public class CardSpacePane extends Pane implements ResizeSelfHandler {
 	
 	private Pane columnPane;
-	
-	private RegionResizeListener resizeListener;
 	
 	public CardSpacePane() {
 		super();
 		
+		EventUtil.createSelfListener(RegionResizeListener.class, this);
+		
 		this.columnPane = new ColumnPane();
 		this.columnPane.setLayoutX(0);
 		this.columnPane.setLayoutY(0);
-		
-		this.resizeListener = new RegionResizeListener(this);
-		this.resizeListener.addHandler(this);
 		
 		this.getChildren().add(this.columnPane);
 

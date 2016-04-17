@@ -18,12 +18,12 @@ package io.github.zachohara.percussionpacker.cardspace;
 
 import io.github.zachohara.percussionpacker.column.Column;
 import io.github.zachohara.percussionpacker.event.resize.RegionResizeListener;
-import io.github.zachohara.percussionpacker.event.resize.ResizeHandler;
-import io.github.zachohara.percussionpacker.event.resize.ResizeListenable;
+import io.github.zachohara.percussionpacker.event.resize.ResizeSelfHandler;
+import io.github.zachohara.percussionpacker.util.EventUtil;
 import io.github.zachohara.percussionpacker.util.RegionUtil;
 import javafx.scene.layout.HBox;
 
-public class ColumnPane extends HBox implements ResizeHandler, ResizeListenable {
+public class ColumnPane extends HBox implements ResizeSelfHandler {
 	
 	public static final String[] COLUMN_NAMES = {
 			"Song List",
@@ -40,17 +40,14 @@ public class ColumnPane extends HBox implements ResizeHandler, ResizeListenable 
 	private Column[] columns;
 	private ColumnSeparator[] separators;
 	
-	private RegionResizeListener resizeListener;
-	
 	public ColumnPane() {
 		super();
+		
+		EventUtil.createSelfListener(RegionResizeListener.class, this);
 		
 		this.widthRatios = new double[NUM_COLUMNS];
 		this.columns = new Column[NUM_COLUMNS];
 		this.separators = new ColumnSeparator[NUM_SEPARATORS];
-		
-		this.resizeListener = new RegionResizeListener(this);
-		this.resizeListener.addHandler(this);
 		
 		this.initializeColumns();
 		

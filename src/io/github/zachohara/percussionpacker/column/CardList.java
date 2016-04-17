@@ -23,23 +23,24 @@ import io.github.zachohara.percussionpacker.card.Card;
 import io.github.zachohara.percussionpacker.card.GhostCard;
 import io.github.zachohara.percussionpacker.cardspace.CardSpacePane;
 import io.github.zachohara.percussionpacker.event.mouse.MouseEventListener;
-import io.github.zachohara.percussionpacker.event.mouse.MouseHandler;
-import io.github.zachohara.percussionpacker.event.mouse.MouseListenable;
+import io.github.zachohara.percussionpacker.event.mouse.MouseSelfHandler;
+import io.github.zachohara.percussionpacker.util.EventUtil;
 import io.github.zachohara.percussionpacker.window.PackingStage;
 import javafx.event.EventType;
 import javafx.geometry.Point2D;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 
-public class CardList extends VBox implements MouseHandler, MouseListenable {
+public class CardList extends VBox implements MouseSelfHandler {
 	
 	public static final int CARD_SPACING = 1; // pixels between each card
 	
 	private List<Card> cards;
-	private MouseEventListener mouseListener;
 	
 	public CardList() {
 		super();
+		
+		EventUtil.createSelfListener(MouseEventListener.class, this);
 		
 		this.cards = new ArrayList<Card>();
 		
@@ -50,9 +51,6 @@ public class CardList extends VBox implements MouseHandler, MouseListenable {
 		}
 		this.updateCards();
 		// -----------------
-		
-		this.mouseListener = new MouseEventListener(this);
-		this.mouseListener.addHandler(this);
 	}
 
 	@Override

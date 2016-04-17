@@ -19,26 +19,23 @@ package io.github.zachohara.percussionpacker.window;
 import io.github.zachohara.percussionpacker.card.Card;
 import io.github.zachohara.percussionpacker.card.NameField;
 import io.github.zachohara.percussionpacker.event.mouse.MouseEventListener;
-import io.github.zachohara.percussionpacker.event.mouse.MouseHandler;
-import io.github.zachohara.percussionpacker.event.mouse.MouseListenable;
+import io.github.zachohara.percussionpacker.event.mouse.MouseSelfHandler;
+import io.github.zachohara.percussionpacker.util.EventUtil;
 import javafx.event.EventType;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 
-public class WorkspaceScene extends Scene implements MouseHandler, MouseListenable {
+public class WorkspaceScene extends Scene implements MouseSelfHandler {
 	
 	private WorkspaceRootPane rootPane;
-	
-	private MouseEventListener mouseListener;
 
 	public WorkspaceScene() {
 		super(new WorkspaceRootPane());
+
+		EventUtil.createSelfListener(MouseEventListener.class, this);
 		
 		this.rootPane = (WorkspaceRootPane) this.getRoot();
-		
-		this.mouseListener = new MouseEventListener(this);
-		this.mouseListener.addHandler(this);
 	}
 	
 	protected WorkspaceRootPane getWorkspaceRootPane() {
