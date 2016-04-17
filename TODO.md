@@ -11,4 +11,3 @@
 * Make CardSpacePane handle the movement of cards by the mouse
 * Create a standard 'shrinkable text' class
 * Move styling to css files
-* Add focus handler, and apply it to NameField

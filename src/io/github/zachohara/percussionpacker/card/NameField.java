@@ -16,10 +16,10 @@
 
 package io.github.zachohara.percussionpacker.card;
 
+import io.github.zachohara.percussionpacker.event.focus.FocusChangeHandler;
+import io.github.zachohara.percussionpacker.event.focus.FocusChangeListener;
 import io.github.zachohara.percussionpacker.event.key.KeyEventListener;
 import io.github.zachohara.percussionpacker.event.key.KeyHandler;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.EventType;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -28,23 +28,25 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 
-public class NameField extends TextField implements KeyHandler {
+public class NameField extends TextField implements KeyHandler, FocusChangeHandler {
 	
 	public static final int NAME_FIELD_WIDTH = 70; // in pixels
 	
 	private Card parent;
 	
+	private FocusChangeListener focusListener;
 	private KeyEventListener keyListener;
 	
 	public NameField(Card parent) {
 		super();
 		this.parent = parent;
 		this.setPrefWidth(NAME_FIELD_WIDTH);
-		this.focusedProperty().addListener(new NameFieldFocusHandler());
 		
 		BorderPane.setAlignment(this, Pos.CENTER_RIGHT);
 		BorderPane.setMargin(this, new Insets(Card.INSET_MARGIN));
 		
+		this.focusListener = new FocusChangeListener(this);
+		this.focusListener.addHandler(this);
 		this.keyListener = new KeyEventListener(this);
 		this.keyListener.addHandler(this);
 	}
@@ -76,16 +78,11 @@ public class NameField extends TextField implements KeyHandler {
 		}
 	}
 	
-	private class NameFieldFocusHandler implements ChangeListener<Boolean> {
-
-		@Override
-		public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue,
-				Boolean newValue) {
-			if (!newValue) {
-				NameField.this.parent.rename(NameField.this.getText());
-			}
+	@Override
+	public void handleFocusChange(boolean hasFocus) {
+		if (!hasFocus) {
+			this.parent.rename(this.getText());
 		}
-		
 	}
 
 }
