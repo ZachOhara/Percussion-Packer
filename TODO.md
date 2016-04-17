@@ -9,5 +9,5 @@
 * Change CardList to calculate the clicked card based on position and height of each card
 * Create different types of cards (re-titleable, nameable, etc.)
 * Make CardSpacePane handle the movement of cards by the mouse
-* Create a standard 'shrinkable text' class
 * Move styling to css files
+* Add window icons

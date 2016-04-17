@@ -19,16 +19,19 @@ package io.github.zachohara.percussionpacker.column;
 import io.github.zachohara.percussionpacker.event.resize.RegionResizeListener;
 import io.github.zachohara.percussionpacker.event.resize.ResizeHandler;
 import io.github.zachohara.percussionpacker.graphic.BackingButton;
+import io.github.zachohara.percussionpacker.graphic.ShrinkableLabel;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 
 public class ColumnTitle extends StackPane implements ResizeHandler {
+
+	public static final String TITLE_FONT = "Arial Bold";
+	public static final double MAX_FONT_SIZE = 24;
 	
 	public static final int PREF_HEIGHT = 80; // in pixels
-	public static final int MIN_HEIGHT = 40; // in pixels
+	public static final int MIN_HEIGHT = 30; // in pixels
 	
-	private Label titleText;
+	private ShrinkableLabel titleText;
 	private Button baseButton;
 	
 	private RegionResizeListener resizeListener;
@@ -39,7 +42,8 @@ public class ColumnTitle extends StackPane implements ResizeHandler {
 		this.resizeListener = new RegionResizeListener(this);
 		this.resizeListener.addHandler(this);
 		
-		this.titleText = new ColumnTitleLabel(name);
+		this.titleText = new ShrinkableLabel(TITLE_FONT, MAX_FONT_SIZE);
+		this.titleText.setText(name);
 		this.baseButton = new BackingButton(this, this.resizeListener);
 		
 		this.setPrefHeight(PREF_HEIGHT);
@@ -51,6 +55,7 @@ public class ColumnTitle extends StackPane implements ResizeHandler {
 	@Override
 	public void handleResize() {
 		this.titleText.setPrefWidth(this.getWidth());
+		this.titleText.setPrefHeight(this.getHeight());
 	}
 
 }
