@@ -4,7 +4,6 @@
 * Add a 'reset column width' button
 * Stop scroll panes from recieving focus
 * Stop backing buttons from showing hovering effects or self-arming
-* Add event util methods for creating self-handlers
 * Change CardList to calculate the clicked card based on position and height of each card
 * Create different types of cards (re-titleable, nameable, etc.)
 * Make CardSpacePane handle the movement of cards by the mouse

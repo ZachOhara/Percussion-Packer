@@ -21,7 +21,7 @@ import java.lang.reflect.Method;
 import java.util.LinkedList;
 import java.util.List;
 
-public class EventListener<L, H> {
+public abstract class EventListener<L, H> {
 	
 	private List<H> handlers;
 	
