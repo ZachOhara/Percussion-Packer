@@ -63,10 +63,10 @@ public class CardList extends VBox implements MouseSelfHandler, ResizeSelfHandle
 					Card clickedCard = this.cards.get(i);
 					double cardPosY = clickedCard.getLayoutY();
 					if (localY >= cardPosY && localY < cardPosY + clickedCard.getHeight()) {
-						this.getCardSpacePane().recieveCard(clickedCard);
+						//this.getCardSpacePane().recieveCard(clickedCard);
 						//clickedCard.handleMouse(event, type);
-						this.cards.set(i, new GhostCard());
-						this.updateCards();
+						//this.cards.set(i, new GhostCard());
+						//this.updateCards();
 					}
 				}
 			}
