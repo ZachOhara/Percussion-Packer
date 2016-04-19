@@ -23,7 +23,8 @@ import javafx.scene.input.KeyEvent;
 public class KeyEventListener extends EventListener<KeyListenable, KeyHandler> implements EventHandler<KeyEvent> {
 	
 	public KeyEventListener(KeyListenable listenable) {
-		super(KeyListenable.class, listenable);
+		super();
+		listenable.addEventHandler(KeyEvent.ANY, this);
 	}
 
 	@Override

@@ -23,7 +23,8 @@ import javafx.scene.input.MouseEvent;
 public class MouseEventListener extends EventListener<MouseListenable, MouseHandler> implements EventHandler<MouseEvent> {
 	
 	public MouseEventListener(MouseListenable listenable) {
-		super(MouseListenable.class, listenable);
+		super();
+		listenable.addEventHandler(MouseEvent.ANY, this);
 	}
 
 	@Override

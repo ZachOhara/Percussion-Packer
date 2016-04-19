@@ -16,13 +16,12 @@
 
 package io.github.zachohara.percussionpacker.event.key;
 
+import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.scene.input.KeyEvent;
+import javafx.event.EventType;
 
 public interface KeyListenable {
 	
-	public void setOnKeyPressed(EventHandler<? super KeyEvent> value);
-	public void setOnKeyReleased(EventHandler<? super KeyEvent> value);
-	public void setOnKeyTyped(EventHandler<? super KeyEvent> value);
+	public <T extends Event> void addEventHandler(EventType<T> eventType, EventHandler<? super T> eventHandler);
 
 }
