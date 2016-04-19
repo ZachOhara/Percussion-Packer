@@ -24,12 +24,14 @@ import io.github.zachohara.percussionpacker.card.GhostCard;
 import io.github.zachohara.percussionpacker.cardspace.CardSpacePane;
 import io.github.zachohara.percussionpacker.event.mouse.MouseEventListener;
 import io.github.zachohara.percussionpacker.event.mouse.MouseSelfHandler;
+import io.github.zachohara.percussionpacker.event.resize.RegionResizeListener;
+import io.github.zachohara.percussionpacker.event.resize.ResizeSelfHandler;
 import io.github.zachohara.percussionpacker.window.PackingStage;
 import javafx.event.EventType;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 
-public class CardList extends VBox implements MouseSelfHandler {
+public class CardList extends VBox implements MouseSelfHandler, ResizeSelfHandler {
 	
 	private List<Card> cards;
 	
@@ -37,6 +39,7 @@ public class CardList extends VBox implements MouseSelfHandler {
 		super();
 		
 		MouseEventListener.createSelfHandler(this);
+		RegionResizeListener.createSelfHandler(this);
 		
 		this.cards = new ArrayList<Card>();
 		
@@ -67,6 +70,13 @@ public class CardList extends VBox implements MouseSelfHandler {
 					}
 				}
 			}
+		}
+	}
+
+	@Override
+	public void handleResize() {
+		for (Card c : this.cards) {
+			c.setPrefWidth(this.getWidth());
 		}
 	}
 	

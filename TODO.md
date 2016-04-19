@@ -10,4 +10,4 @@
 * Make ClickEditableText objects adapt to ideal text width
 * Fix cards oversizing to fit children
 * Fix the shaking caused by drag-resizing columns
-
+* Fix the card elements resizing disproportionately

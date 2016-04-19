@@ -24,6 +24,8 @@ import javafx.scene.layout.StackPane;
 
 public class Card extends StackPane implements ResizeSelfHandler {
 	
+	public static final double DEFAULT_HEIGHT = 40; // in pixels
+	
 	private Button backingButton;
 	private CardContentPane contentPane;
 
@@ -32,9 +34,13 @@ public class Card extends StackPane implements ResizeSelfHandler {
 		
 		RegionResizeListener resizeListener = RegionResizeListener.createSelfHandler(this);
 		
+		this.setPrefHeight(DEFAULT_HEIGHT);
+		this.setMinHeight(DEFAULT_HEIGHT);
+		
 		this.backingButton = new BackingButton(this, resizeListener);
 		
 		this.contentPane = new CardContentPane();
+		this.contentPane.setMinWidth(0);
 		
 		this.getChildren().addAll(this.backingButton, this.contentPane);
 	}
