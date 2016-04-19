@@ -28,7 +28,7 @@ import javafx.geometry.Pos;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 
-public class ClickEditableText extends BorderPane implements FocusHandler, MouseHandler, ResizeSelfHandler  {
+public class ClickEditableText extends BorderPane implements FocusHandler, MouseHandler, ResizeSelfHandler {
 	
 	private ResizeHandler notifyableParent;
 	
@@ -47,6 +47,8 @@ public class ClickEditableText extends BorderPane implements FocusHandler, Mouse
 		this.defaultText = defaultText;
 		
 		this.displayLabel = new ShrinkableLabel(fontStyle, maxFontSize);
+		this.displayLabel.setWidthBuffer(0);
+		this.displayLabel.setHeightBuffer(0);
 		new MouseEventListener(this.displayLabel).addHandler(this);
 		BorderPane.setAlignment(this.displayLabel, Pos.CENTER);
 		
@@ -72,11 +74,10 @@ public class ClickEditableText extends BorderPane implements FocusHandler, Mouse
 	public void setText(String text) {
 		String displayText = text.trim();
 		if (displayText.length() > 0) {
-			this.displayLabel.setText(" " + displayText + " ");
+			this.displayLabel.setText(displayText);
 			this.textField.setText(displayText);
 		} else {
-			displayText = this.defaultText;
-			this.displayLabel.setText(" " + this.defaultText + " ");
+			this.displayLabel.setText(this.defaultText);
 			this.textField.setText("");
 		}
 		if (this.notifyableParent != null) {
@@ -86,6 +87,10 @@ public class ClickEditableText extends BorderPane implements FocusHandler, Mouse
 	
 	public void setDisplayTextStyle(String style) {
 		this.displayLabel.setTextStyle(style);
+	}
+	
+	public void setDisplayPaneStyle(String style) {
+		this.displayLabel.setStyle(style);
 	}
 	
 	public void setNotifyableParent(ResizeHandler parent) {

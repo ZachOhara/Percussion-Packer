@@ -25,26 +25,45 @@ public class CardNameTag extends ClickEditableText {
 	public static final String FONT_STYLE = "Segoe";
 	public static final double MAX_FONT_SIZE = 14;
 	
-	public static final String UNNAMED_STYLE = "-fx-background-radius: 7 7 7 7;"
-			+ "-fx-text-fill: seagreen; -fx-background-color: #CCCCCC";
-	public static final String NAMED_STYLE = "-fx-background-radius: 7 7 7 7;"
-			+ "-fx-text-fill: darkgreen; -fx-background-color: skyblue;"
-			+ "-fx-font-weight:bold; ";
+	public static final double BACKGROUND_WIDTH = 5;
+	public static final double BACKGROUND_HEIGHT = 0;
+	
+	public static final String BORDER_STYLE = "-fx-background-radius: 7 7 7 7;"
+			+ "-fx-background-size: " + BACKGROUND_WIDTH + "px " + BACKGROUND_HEIGHT + "px;";
+	
+	public static final String UNNAMED_PANE_STYLE = BORDER_STYLE
+			+ "-fx-background-color: #CCCCCC;";
+	public static final String UNNAMED_TEXT_STYLE = "-fx-text-fill: seagreen;";
+	
+	public static final String NAMED_PANE_STYLE = BORDER_STYLE
+			+ "-fx-background-color: skyblue;";
+	public static final String NAMED_TEXT_STYLE = "-fx-text-fill: darkgreen;"
+			+ "-fx-font-weight: bold;";
 	
 	public CardNameTag() {
 		super(DEFAULT_TEXT, FONT_STYLE, MAX_FONT_SIZE);
 	}
 	
 	@Override
+	public double getIdealTextWidth() {
+		return super.getIdealTextWidth() + (2 * BACKGROUND_WIDTH);
+	}
+	
+	@Override
+	public double getIdealTextHeight() {
+		return super.getIdealTextHeight() + (2 * BACKGROUND_HEIGHT);
+	}
+	
+	@Override
 	public void setText(String text) {
-		String displayText = text.trim();
-		if (displayText.length() == 0) {
-			this.setDisplayTextStyle(UNNAMED_STYLE);
+		if (text.trim().length() == 0) {
+			this.setDisplayTextStyle(UNNAMED_TEXT_STYLE);
+			this.setDisplayPaneStyle(UNNAMED_PANE_STYLE);
 		} else {
-			this.setDisplayTextStyle(NAMED_STYLE);
+			this.setDisplayTextStyle(NAMED_TEXT_STYLE);
+			this.setDisplayPaneStyle(NAMED_PANE_STYLE);
 		}
-		displayText = " " + displayText + " ";
-		super.setText(displayText);
+		super.setText(text);
 	}
 	
 }
