@@ -33,5 +33,11 @@ public class FocusChangeListener extends EventListener<FocusListenable, FocusHan
 			handler.handleFocusChange(newValue);
 		}
 	}
+	
+	public static FocusChangeListener createSelfHandler(FocusSelfHandler handler) {
+		FocusChangeListener listener = new FocusChangeListener(handler);
+		listener.addHandler(handler);
+		return listener;
+	}
 
 }

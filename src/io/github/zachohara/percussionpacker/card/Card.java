@@ -19,7 +19,6 @@ package io.github.zachohara.percussionpacker.card;
 import io.github.zachohara.percussionpacker.event.resize.RegionResizeListener;
 import io.github.zachohara.percussionpacker.event.resize.ResizeSelfHandler;
 import io.github.zachohara.percussionpacker.graphic.BackingButton;
-import io.github.zachohara.percussionpacker.util.EventUtil;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 
@@ -31,7 +30,7 @@ public class Card extends StackPane implements ResizeSelfHandler {
 	public Card() {
 		super();
 		
-		RegionResizeListener resizeListener = EventUtil.createSelfListener(RegionResizeListener.class, this);
+		RegionResizeListener resizeListener = RegionResizeListener.createSelfHandler(this);
 		
 		this.backingButton = new BackingButton(this, resizeListener);
 		

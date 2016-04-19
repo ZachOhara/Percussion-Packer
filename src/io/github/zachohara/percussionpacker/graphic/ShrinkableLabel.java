@@ -19,7 +19,6 @@ package io.github.zachohara.percussionpacker.graphic;
 import io.github.zachohara.percussionpacker.event.mouse.MouseListenable;
 import io.github.zachohara.percussionpacker.event.resize.RegionResizeListener;
 import io.github.zachohara.percussionpacker.event.resize.ResizeSelfHandler;
-import io.github.zachohara.percussionpacker.util.EventUtil;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
@@ -44,7 +43,7 @@ public class ShrinkableLabel extends BorderPane implements MouseListenable, Resi
 	public ShrinkableLabel(String fontStyle, double maxFontSize) {
 		super();
 		
-		EventUtil.createSelfListener(RegionResizeListener.class, this);
+		RegionResizeListener.createSelfHandler(this);
 		
 		this.maxFontSize = maxFontSize;
 		this.widthBuffer = DEFAULT_WIDTH_BUFFER;

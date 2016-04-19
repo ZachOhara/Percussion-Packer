@@ -19,7 +19,6 @@ package io.github.zachohara.percussionpacker.graphic;
 import io.github.zachohara.percussionpacker.event.focus.FocusListenable;
 import io.github.zachohara.percussionpacker.event.key.KeyEventListener;
 import io.github.zachohara.percussionpacker.event.key.KeySelfHandler;
-import io.github.zachohara.percussionpacker.util.EventUtil;
 import javafx.event.EventType;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -30,7 +29,7 @@ public class UnfocusableTextField extends TextField implements KeySelfHandler, F
 	public UnfocusableTextField() {
 		super();
 		
-		EventUtil.createSelfListener(KeyEventListener.class, this);
+		KeyEventListener.createSelfHandler(this);
 	}
 
 	@Override

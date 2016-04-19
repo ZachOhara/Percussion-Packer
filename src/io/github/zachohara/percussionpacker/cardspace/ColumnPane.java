@@ -19,7 +19,6 @@ package io.github.zachohara.percussionpacker.cardspace;
 import io.github.zachohara.percussionpacker.column.Column;
 import io.github.zachohara.percussionpacker.event.resize.RegionResizeListener;
 import io.github.zachohara.percussionpacker.event.resize.ResizeSelfHandler;
-import io.github.zachohara.percussionpacker.util.EventUtil;
 import io.github.zachohara.percussionpacker.util.RegionUtil;
 import javafx.scene.layout.HBox;
 
@@ -43,7 +42,7 @@ public class ColumnPane extends HBox implements ResizeSelfHandler {
 	public ColumnPane() {
 		super();
 		
-		EventUtil.createSelfListener(RegionResizeListener.class, this);
+		RegionResizeListener.createSelfHandler(this);
 		
 		this.widthRatios = new double[NUM_COLUMNS];
 		this.columns = new Column[NUM_COLUMNS];

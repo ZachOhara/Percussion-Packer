@@ -19,7 +19,6 @@ package io.github.zachohara.percussionpacker.window;
 import io.github.zachohara.percussionpacker.cardspace.CardSpacePane;
 import io.github.zachohara.percussionpacker.event.resize.RegionResizeListener;
 import io.github.zachohara.percussionpacker.event.resize.ResizeSelfHandler;
-import io.github.zachohara.percussionpacker.util.EventUtil;
 import io.github.zachohara.percussionpacker.util.RegionUtil;
 import javafx.scene.layout.Pane;
 
@@ -30,7 +29,7 @@ public class WorkspaceRootPane extends Pane implements ResizeSelfHandler {
 	public WorkspaceRootPane() {
 		super();
 		
-		EventUtil.createSelfListener(RegionResizeListener.class, this);
+		RegionResizeListener.createSelfHandler(this);
 		
 		this.setPrefWidth(PackingStage.DEFAULT_WIDTH);
 		this.setPrefHeight(PackingStage.DEFAULT_HEIGHT);

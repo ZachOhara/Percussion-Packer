@@ -24,7 +24,6 @@ import io.github.zachohara.percussionpacker.card.GhostCard;
 import io.github.zachohara.percussionpacker.cardspace.CardSpacePane;
 import io.github.zachohara.percussionpacker.event.mouse.MouseEventListener;
 import io.github.zachohara.percussionpacker.event.mouse.MouseSelfHandler;
-import io.github.zachohara.percussionpacker.util.EventUtil;
 import io.github.zachohara.percussionpacker.window.PackingStage;
 import javafx.event.EventType;
 import javafx.scene.input.MouseEvent;
@@ -37,7 +36,7 @@ public class CardList extends VBox implements MouseSelfHandler {
 	public CardList() {
 		super();
 		
-		EventUtil.createSelfListener(MouseEventListener.class, this);
+		MouseEventListener.createSelfHandler(this);
 		
 		this.cards = new ArrayList<Card>();
 		

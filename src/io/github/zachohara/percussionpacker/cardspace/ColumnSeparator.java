@@ -19,7 +19,6 @@ package io.github.zachohara.percussionpacker.cardspace;
 import io.github.zachohara.percussionpacker.column.Column;
 import io.github.zachohara.percussionpacker.event.mouse.MouseEventListener;
 import io.github.zachohara.percussionpacker.event.mouse.MouseSelfHandler;
-import io.github.zachohara.percussionpacker.util.EventUtil;
 import javafx.event.EventType;
 import javafx.scene.Cursor;
 import javafx.scene.input.MouseEvent;
@@ -44,7 +43,7 @@ public class ColumnSeparator extends Pane implements MouseSelfHandler {
 	public ColumnSeparator(ColumnPane parent, Column leftColumn, Column rightColumn) {
 		super();
 		
-		EventUtil.createSelfListener(MouseEventListener.class, this);
+		MouseEventListener.createSelfHandler(this);
 		
 		this.setStyle(STYLE);
 		this.setPrefWidth(THICKNESS);

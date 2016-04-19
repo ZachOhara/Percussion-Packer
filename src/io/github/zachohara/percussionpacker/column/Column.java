@@ -18,7 +18,6 @@ package io.github.zachohara.percussionpacker.column;
 
 import io.github.zachohara.percussionpacker.event.resize.RegionResizeListener;
 import io.github.zachohara.percussionpacker.event.resize.ResizeSelfHandler;
-import io.github.zachohara.percussionpacker.util.EventUtil;
 import io.github.zachohara.percussionpacker.util.RegionUtil;
 import javafx.scene.layout.VBox;
 
@@ -32,7 +31,7 @@ public class Column extends VBox implements ResizeSelfHandler {
 	public Column(String title) {
 		super();
 
-		EventUtil.createSelfListener(RegionResizeListener.class, this);
+		RegionResizeListener.createSelfHandler(this);
 		
 		this.titlePane = new ColumnTitle(title);
 		this.cardList = new CardScrollPane();

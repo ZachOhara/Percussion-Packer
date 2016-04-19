@@ -16,16 +16,6 @@
 
 package io.github.zachohara.percussionpacker.event.focus;
 
-import io.github.zachohara.percussionpacker.event.SelfHandler;
-
-public interface FocusSelfHandler extends SelfHandler<FocusListenable, FocusHandler>, FocusListenable, FocusHandler {
-	
-	public default Class<FocusListenable> getListenableType() {
-		return FocusListenable.class;
-	}
-	
-	public default Class<FocusHandler> getHandlerType() {
-		return FocusHandler.class;
-	}
+public interface FocusSelfHandler extends FocusListenable, FocusHandler {
 
 }

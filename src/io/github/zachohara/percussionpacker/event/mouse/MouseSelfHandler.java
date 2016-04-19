@@ -16,16 +16,6 @@
 
 package io.github.zachohara.percussionpacker.event.mouse;
 
-import io.github.zachohara.percussionpacker.event.SelfHandler;
-
-public interface MouseSelfHandler extends SelfHandler<MouseListenable, MouseHandler>, MouseListenable, MouseHandler {
+public interface MouseSelfHandler extends MouseListenable, MouseHandler {
 	
-	public default Class<MouseListenable> getListenableType() {
-		return MouseListenable.class;
-	}
-	
-	public default Class<MouseHandler> getHandlerType() {
-		return MouseHandler.class;
-	}
-
 }

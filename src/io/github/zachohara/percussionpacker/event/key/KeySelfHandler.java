@@ -16,16 +16,6 @@
 
 package io.github.zachohara.percussionpacker.event.key;
 
-import io.github.zachohara.percussionpacker.event.SelfHandler;
-
-public interface KeySelfHandler extends SelfHandler<KeyListenable, KeyHandler>, KeyListenable, KeyHandler {
-	
-	public default Class<KeyListenable> getListenableType() {
-		return KeyListenable.class;
-	}
-	
-	public default Class<KeyHandler> getHandlerType() {
-		return KeyHandler.class;
-	}
+public interface KeySelfHandler extends KeyListenable, KeyHandler {
 
 }

@@ -32,5 +32,11 @@ public class MouseEventListener extends EventListener<MouseListenable, MouseHand
 			handler.handleMouse(event, event.getEventType());
 		}
 	}
+	
+	public static MouseEventListener createSelfHandler(MouseSelfHandler handler) {
+		MouseEventListener listener = new MouseEventListener(handler);
+		listener.addHandler(handler);
+		return listener;
+	}
 
 }

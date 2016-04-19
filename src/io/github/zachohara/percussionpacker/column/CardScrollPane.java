@@ -18,7 +18,6 @@ package io.github.zachohara.percussionpacker.column;
 
 import io.github.zachohara.percussionpacker.event.focus.FocusChangeListener;
 import io.github.zachohara.percussionpacker.event.focus.FocusSelfHandler;
-import io.github.zachohara.percussionpacker.util.EventUtil;
 import javafx.scene.control.ScrollPane;
 
 public class CardScrollPane extends ScrollPane implements FocusSelfHandler {
@@ -28,7 +27,7 @@ public class CardScrollPane extends ScrollPane implements FocusSelfHandler {
 	public CardScrollPane() {
 		super();
 		
-		EventUtil.createSelfListener(FocusChangeListener.class, this);
+		FocusChangeListener.createSelfHandler(this);
 		
 		this.setHbarPolicy(ScrollBarPolicy.NEVER);
 		this.setVbarPolicy(ScrollBarPolicy.AS_NEEDED);

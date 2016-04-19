@@ -20,7 +20,6 @@ import io.github.zachohara.percussionpacker.event.resize.RegionResizeListener;
 import io.github.zachohara.percussionpacker.event.resize.ResizeSelfHandler;
 import io.github.zachohara.percussionpacker.graphic.BackingButton;
 import io.github.zachohara.percussionpacker.graphic.ShrinkableLabel;
-import io.github.zachohara.percussionpacker.util.EventUtil;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 
@@ -41,7 +40,7 @@ public class ColumnTitle extends StackPane implements ResizeSelfHandler {
 	public ColumnTitle(String name) {
 		super();
 		
-		RegionResizeListener resizeListener = EventUtil.createSelfListener(RegionResizeListener.class, this);
+		RegionResizeListener resizeListener = RegionResizeListener.createSelfHandler(this);
 		
 		this.titleText = new ShrinkableLabel(TITLE_FONT, MAX_FONT_SIZE);
 		this.titleText.setText(name);

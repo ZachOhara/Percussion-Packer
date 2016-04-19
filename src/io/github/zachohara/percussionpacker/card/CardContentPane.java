@@ -18,7 +18,6 @@ package io.github.zachohara.percussionpacker.card;
 
 import io.github.zachohara.percussionpacker.event.resize.RegionResizeListener;
 import io.github.zachohara.percussionpacker.event.resize.ResizeSelfHandler;
-import io.github.zachohara.percussionpacker.util.EventUtil;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.layout.BorderPane;
@@ -33,7 +32,7 @@ public class CardContentPane extends BorderPane implements ResizeSelfHandler {
 	public CardContentPane() {
 		super();
 		
-		EventUtil.createSelfListener(RegionResizeListener.class, this);
+		RegionResizeListener.createSelfHandler(this);
 		
 		this.title = new CardTitle();
 		this.title.setNotifyableParent(this);

@@ -23,7 +23,6 @@ import io.github.zachohara.percussionpacker.event.mouse.MouseHandler;
 import io.github.zachohara.percussionpacker.event.resize.RegionResizeListener;
 import io.github.zachohara.percussionpacker.event.resize.ResizeHandler;
 import io.github.zachohara.percussionpacker.event.resize.ResizeSelfHandler;
-import io.github.zachohara.percussionpacker.util.EventUtil;
 import javafx.event.EventType;
 import javafx.geometry.Pos;
 import javafx.scene.input.MouseEvent;
@@ -43,7 +42,7 @@ public class ClickEditableText extends BorderPane implements FocusHandler, Mouse
 	public ClickEditableText(String defaultText, String fontStyle, double maxFontSize) {
 		super();
 		
-		EventUtil.createSelfListener(RegionResizeListener.class, this);
+		RegionResizeListener.createSelfHandler(this);
 		
 		this.defaultText = defaultText;
 		

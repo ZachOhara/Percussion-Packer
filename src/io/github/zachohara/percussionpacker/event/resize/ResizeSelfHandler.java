@@ -16,16 +16,6 @@
 
 package io.github.zachohara.percussionpacker.event.resize;
 
-import io.github.zachohara.percussionpacker.event.SelfHandler;
-
-public interface ResizeSelfHandler extends SelfHandler<ResizeListenable, ResizeHandler>, ResizeListenable, ResizeHandler {
-	
-	public default Class<ResizeListenable> getListenableType() {
-		return ResizeListenable.class;
-	}
-	
-	public default Class<ResizeHandler> getHandlerType() {
-		return ResizeHandler.class;
-	}
+public interface ResizeSelfHandler extends ResizeListenable, ResizeHandler {
 
 }

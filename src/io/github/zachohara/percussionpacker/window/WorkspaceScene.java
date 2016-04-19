@@ -19,7 +19,6 @@ package io.github.zachohara.percussionpacker.window;
 import io.github.zachohara.percussionpacker.event.mouse.MouseEventListener;
 import io.github.zachohara.percussionpacker.event.mouse.MouseSelfHandler;
 import io.github.zachohara.percussionpacker.graphic.UnfocusableTextField;
-import io.github.zachohara.percussionpacker.util.EventUtil;
 import javafx.event.EventType;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
@@ -34,7 +33,7 @@ public class WorkspaceScene extends Scene implements MouseSelfHandler {
 	public WorkspaceScene() {
 		super(new WorkspaceRootPane());
 
-		EventUtil.createSelfListener(MouseEventListener.class, this);
+		MouseEventListener.createSelfHandler(this);
 		
 		this.rootPane = (WorkspaceRootPane) this.getRoot();
 	}

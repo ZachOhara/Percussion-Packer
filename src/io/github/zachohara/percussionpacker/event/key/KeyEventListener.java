@@ -32,5 +32,11 @@ public class KeyEventListener extends EventListener<KeyListenable, KeyHandler> i
 			handler.handleKey(event, event.getEventType(), event.getCode());
 		}
 	}
+	
+	public static KeyEventListener createSelfHandler(KeySelfHandler handler) {
+		KeyEventListener listener = new KeyEventListener(handler);
+		listener.addHandler(handler);
+		return listener;
+	}
 
 }
