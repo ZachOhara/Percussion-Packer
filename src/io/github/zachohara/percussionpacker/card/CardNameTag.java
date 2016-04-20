@@ -22,48 +22,50 @@ public class CardNameTag extends ClickEditableText {
 
 	public static final String DEFAULT_TEXT = "[name this]";
 	
-	public static final String FONT_STYLE = "Segoe";
 	public static final double MAX_FONT_SIZE = 14;
 	
 	public static final double BACKGROUND_WIDTH = 5;
 	public static final double BACKGROUND_HEIGHT = 0;
 	
-	public static final String BORDER_STYLE = "-fx-background-radius: 7 7 7 7;"
-			+ "-fx-background-size: " + BACKGROUND_WIDTH + "px " + BACKGROUND_HEIGHT + "px;";
+	public static final String BACKGROUND_STYLE = "-fx-background-radius: 7 7 7 7;";
 	
-	public static final String UNNAMED_PANE_STYLE = BORDER_STYLE
-			+ "-fx-background-color: #CCCCCC;";
-	public static final String UNNAMED_TEXT_STYLE = "-fx-text-fill: seagreen;";
+	public static final String UNNAMED_TEXT_STYLE = "-fx-text-fill: seagreen";
+	public static final String UNNAMED_FONT = "Arial";
+	public static final String UNNAMED_PANE_STYLE = BACKGROUND_STYLE
+			+ "-fx-background-color: #CCCCCC";
 	
-	public static final String NAMED_PANE_STYLE = BORDER_STYLE
-			+ "-fx-background-color: skyblue;";
-	public static final String NAMED_TEXT_STYLE = "-fx-text-fill: darkgreen;"
-			+ "-fx-font-weight: bold;";
-	
+	public static final String NAMED_TEXT_STYLE = "-fx-text-fill: darkgreen";
+	public static final String NAMED_FONT = "Arial Bold";
+	public static final String NAMED_PANE_STYLE = BACKGROUND_STYLE
+			+ "-fx-background-color: skyblue";
+
 	public CardNameTag() {
-		super(DEFAULT_TEXT, FONT_STYLE, MAX_FONT_SIZE);
-	}
-	
-	@Override
-	public double getIdealTextWidth() {
-		return super.getIdealTextWidth() + (2 * BACKGROUND_WIDTH);
-	}
-	
-	@Override
-	public double getIdealTextHeight() {
-		return super.getIdealTextHeight() + (2 * BACKGROUND_HEIGHT);
+		super(DEFAULT_TEXT, UNNAMED_FONT, MAX_FONT_SIZE);
+		
+		this.setWidthBuffer(getBackgroundHorizontalOffset());
+		this.setHeightBuffer(getBackgroundVerticalOffset());
 	}
 	
 	@Override
 	public void setText(String text) {
 		if (text.trim().length() == 0) {
 			this.setDisplayTextStyle(UNNAMED_TEXT_STYLE);
+			this.setDisplayFont(UNNAMED_FONT);
 			this.setDisplayPaneStyle(UNNAMED_PANE_STYLE);
 		} else {
 			this.setDisplayTextStyle(NAMED_TEXT_STYLE);
+			this.setDisplayFont(NAMED_FONT);
 			this.setDisplayPaneStyle(NAMED_PANE_STYLE);
 		}
 		super.setText(text);
+	}
+	
+	private static double getBackgroundHorizontalOffset() {
+		return 2 * BACKGROUND_WIDTH;
+	}
+	
+	private static double getBackgroundVerticalOffset() {
+		return 2 * BACKGROUND_HEIGHT;
 	}
 	
 }

@@ -47,8 +47,6 @@ public class ClickEditableText extends BorderPane implements FocusHandler, Mouse
 		this.defaultText = defaultText;
 		
 		this.displayLabel = new ShrinkableLabel(fontStyle, maxFontSize);
-		this.displayLabel.setWidthBuffer(0);
-		this.displayLabel.setHeightBuffer(0);
 		new MouseEventListener(this.displayLabel).addHandler(this);
 		BorderPane.setAlignment(this.displayLabel, Pos.CENTER);
 		
@@ -68,7 +66,11 @@ public class ClickEditableText extends BorderPane implements FocusHandler, Mouse
 	}
 
 	public String getText() {
-		return this.displayLabel.getText();
+		if (!this.displayLabel.getText().equals(this.defaultText)) {
+			return this.displayLabel.getText();
+		} else {
+			return "";
+		}
 	}
 	
 	public void setText(String text) {
@@ -83,6 +85,14 @@ public class ClickEditableText extends BorderPane implements FocusHandler, Mouse
 		if (this.notifyableParent != null) {
 			this.notifyableParent.handleResize();
 		}
+	}
+	
+	public void setWidthBuffer(double widthBuffer) {
+		this.displayLabel.setWidthBuffer(widthBuffer);
+	}
+	
+	public void setHeightBuffer(double heightBuffer) {
+		this.displayLabel.setHeightBuffer(heightBuffer);
 	}
 	
 	public void setDisplayTextStyle(String style) {

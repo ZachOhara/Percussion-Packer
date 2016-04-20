@@ -7,7 +7,6 @@
 * Add window icons
 * Set a minimum height for the card scroll pane
 * Make card backing buttons recieve focus on initial click
-* Make ClickEditableText objects adapt to ideal text width
 * Fix cards oversizing to fit children
 * Fix the shaking caused by drag-resizing columns
 * Fix the card elements resizing disproportionately

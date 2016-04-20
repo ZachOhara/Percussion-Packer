@@ -84,6 +84,7 @@ public class ShrinkableLabel extends BorderPane implements MouseListenable, Resi
 	
 	public void setFont(String font) {
 		this.font = new Font(font, this.getFontSize());
+		this.displayText.setFont(this.font);
 		this.handleResize();
 	}
 	
