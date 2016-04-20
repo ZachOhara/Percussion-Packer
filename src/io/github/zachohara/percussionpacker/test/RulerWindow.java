@@ -13,7 +13,7 @@ public class RulerWindow extends Application implements ChangeListener<Number> {
 	private Pane pane;
 	
 	@Override
-	public void start(Stage arg0) throws Exception {
+	public void start(Stage arg0) {
 		arg0 = new Stage(StageStyle.UTILITY);
 		pane = new Pane();
 		pane.setStyle("-fx-background-color: black");
@@ -26,12 +26,12 @@ public class RulerWindow extends Application implements ChangeListener<Number> {
 	}
 	
 	public static void main(String[] args) {
-		Application.launch(args);
+		Application.launch(RulerWindow.class, args);
 	}
 
 	@Override
 	public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number arg2) {
-		System.out.println("Ayy " + this.pane.getWidth() + " " + this.pane.getHeight());
+		System.out.println("Ruler " + this.pane.getWidth() + " " + this.pane.getHeight());
 	}
 
 }
