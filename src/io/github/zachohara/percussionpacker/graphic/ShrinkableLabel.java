@@ -27,11 +27,12 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
 public class ShrinkableLabel extends BorderPane implements MouseListenable, ResizeSelfHandler {
+
+	public static final double DEFAULT_WIDTH_BUFFER = 1; // in pixels
+	public static final double DEFAULT_HEIGHT_BUFFER = 2; // in pixels
 	
 	public static final double FONT_SIZE_INCREMENT = 0.1;
 	public static final double MIN_FONT_SIZE = 1;
-	public static final double DEFAULT_WIDTH_BUFFER = 1; // in pixels
-	public static final double DEFAULT_HEIGHT_BUFFER = 2; // in pixels
 	
 	private double maxFontSize;
 	private double widthBuffer;
@@ -58,18 +59,10 @@ public class ShrinkableLabel extends BorderPane implements MouseListenable, Resi
 		this.setFontSize(this.maxFontSize);
 		
 		this.setCenter(this.displayText);
-	}	
-	
-	public double getWidthBuffer() {
-		return widthBuffer;
 	}
 	
 	public void setWidthBuffer(double widthBuffer) {
 		this.widthBuffer = widthBuffer;
-	}
-
-	public double getHeightBuffer() {
-		return heightBuffer;
 	}
 	
 	public void setHeightBuffer(double heightBuffer) {
@@ -85,12 +78,13 @@ public class ShrinkableLabel extends BorderPane implements MouseListenable, Resi
 		this.handleResize();
 	}
 	
-	public double getFontSize() {
-		return this.font.getSize();
-	}
-	
 	public void setTextStyle(String style) {
 		this.displayText.setStyle(style);
+	}
+	
+	public void setFont(String font) {
+		this.font = new Font(font, this.getFontSize());
+		this.handleResize();
 	}
 	
 	public double getIdealTextWidth() {
@@ -107,7 +101,7 @@ public class ShrinkableLabel extends BorderPane implements MouseListenable, Resi
 			while (this.isTextUndersized()) {
 				this.incrementFontSize(FONT_SIZE_INCREMENT);
 			}
-			while (this.isTextOversized() && this.getFontSize() > MIN_FONT_SIZE) {
+			while (this.isTextOversized()) {
 				this.incrementFontSize(-FONT_SIZE_INCREMENT);
 			}
 		}
@@ -117,14 +111,19 @@ public class ShrinkableLabel extends BorderPane implements MouseListenable, Resi
 		this.setFontSize(this.getFontSize() + increment);
 	}
 	
+	private double getFontSize() {
+		return this.font.getSize();
+	}
+	
 	private void setFontSize(double size) {
 		this.font = new Font(this.font.getName(), size);
 		this.displayText.setFont(this.font);
 	}
 	
 	private boolean isTextOversized() {
-		return this.getCurrentTextWidth() > this.getAvailableTextWidth()
-				|| this.getCurrentTextHeight() > this.getAvailableTextHeight();
+		return this.getFontSize() > MIN_FONT_SIZE
+				&& (this.getCurrentTextWidth() > this.getAvailableTextWidth()
+						|| this.getCurrentTextHeight() > this.getAvailableTextHeight());
 	}
 	
 	private boolean isTextUndersized() {

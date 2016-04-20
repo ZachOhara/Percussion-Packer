@@ -89,6 +89,10 @@ public class ClickEditableText extends BorderPane implements FocusHandler, Mouse
 		this.displayLabel.setTextStyle(style);
 	}
 	
+	public void setDisplayFont(String font) {
+		this.displayLabel.setFont(font);
+	}
+	
 	public void setDisplayPaneStyle(String style) {
 		this.displayLabel.setStyle(style);
 	}
@@ -125,14 +129,14 @@ public class ClickEditableText extends BorderPane implements FocusHandler, Mouse
 		}
 	}
 	
-	private void finishRenaming() {
-		this.setText(this.textField.getText());
-		this.setCenter(this.displayLabel);
-	}
-	
 	private void startRenaming() {
 		this.setCenter(this.textField);
 		this.textField.requestFocus();
+	}
+	
+	private void finishRenaming() {
+		this.setText(this.textField.getText());
+		this.setCenter(this.displayLabel);
 	}
 	
 }
