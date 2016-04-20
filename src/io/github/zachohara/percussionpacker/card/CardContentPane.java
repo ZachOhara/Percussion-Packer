@@ -24,7 +24,8 @@ import javafx.scene.layout.BorderPane;
 
 public class CardContentPane extends BorderPane implements ResizeSelfHandler {
 	
-	public static final double INSET_MARGIN = 8; // in pixels
+	public static final double HORIZONTAL_INSET_MARGIN = 8; // in pixels
+	public static final double VERTICAL_INSET_MARGIN = 0;
 	
 	private CardTitle title;
 	private CardNameTag nameTag;
@@ -34,15 +35,17 @@ public class CardContentPane extends BorderPane implements ResizeSelfHandler {
 		
 		RegionResizeListener.createSelfHandler(this);
 		
+		this.setStyle("-fx-border-color: red");
+		
 		this.title = new CardTitle();
 		this.title.setNotifyableParent(this);
 		BorderPane.setAlignment(this.title, Pos.CENTER_LEFT);
-		BorderPane.setMargin(this.title, new Insets(INSET_MARGIN));
+		BorderPane.setMargin(this.title, getBorderInsets());
 		
 		this.nameTag = new CardNameTag();
 		this.nameTag.setNotifyableParent(this);
 		BorderPane.setAlignment(this.nameTag, Pos.CENTER_RIGHT);
-		BorderPane.setMargin(this.nameTag, new Insets(INSET_MARGIN));		
+		BorderPane.setMargin(this.nameTag, getBorderInsets());		
 		
 		this.setLeft(this.title);
 		this.setRight(this.nameTag);
@@ -67,7 +70,7 @@ public class CardContentPane extends BorderPane implements ResizeSelfHandler {
 	@Override
 	public void handleResize() {
 		double idealWidth = this.title.getIdealTextWidth() + this.nameTag.getIdealTextWidth() + 1;
-		double availableWidth = this.getWidth() - (INSET_MARGIN * 4);
+		double availableWidth = this.getWidth() - (HORIZONTAL_INSET_MARGIN * 4);
 		double fractionAvailable = Math.min(1, availableWidth / idealWidth);
 		
 		double titleWidth = this.title.getIdealTextWidth() * fractionAvailable;
@@ -76,7 +79,7 @@ public class CardContentPane extends BorderPane implements ResizeSelfHandler {
 		if (!this.title.isEditing()) {
 			this.title.setPrefWidth(titleWidth);
 		} else {
-			this.title.setPrefWidth(availableWidth - nameWidth);
+			this.title.setPrefWidth(availableWidth - nameWidth - 3);
 		}
 		if (!this.nameTag.isEditing()) {
 			this.nameTag.setPrefWidth(nameWidth);
@@ -84,8 +87,17 @@ public class CardContentPane extends BorderPane implements ResizeSelfHandler {
 			this.nameTag.setPrefWidth(availableWidth - titleWidth);
 		}
 		
-		this.title.setPrefHeight(Math.min(this.title.getIdealTextHeight(), this.getHeight()));
-		this.nameTag.setPrefHeight(Math.min(this.nameTag.getIdealTextHeight(), this.getHeight()));
+		double availableHeight = this.getHeight() - (VERTICAL_INSET_MARGIN * 2);
+
+		this.title.setPrefHeight(Math.min(this.title.getIdealTextHeight(), availableHeight));
+		this.title.setMaxHeight(Math.min(this.title.getIdealTextHeight(), availableHeight));
+		this.nameTag.setPrefHeight(Math.min(this.nameTag.getIdealTextHeight(), availableHeight));
+		this.nameTag.setMaxHeight(Math.min(this.nameTag.getIdealTextHeight(), availableHeight));
+	}
+	
+	private static Insets getBorderInsets() {
+		return new Insets(VERTICAL_INSET_MARGIN, HORIZONTAL_INSET_MARGIN,
+				VERTICAL_INSET_MARGIN, HORIZONTAL_INSET_MARGIN);
 	}
 	
 }
