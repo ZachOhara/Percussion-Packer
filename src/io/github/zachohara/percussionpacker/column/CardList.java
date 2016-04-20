@@ -43,13 +43,19 @@ public class CardList extends VBox implements MouseSelfHandler, ResizeSelfHandle
 		
 		this.cards = new ArrayList<Card>();
 		
-		// --- Test code ---
+		/*/ --- Test code --- //
 		for (int i = 0; i < 20; i++) {
 			this.cards.add(new Card());
 			this.cards.get(i).setTitle(i + "-----------");
 		}
 		this.updateCards();
-		// -----------------
+		// ----------------- /*/
+		
+		// --- Also test code --- //
+		this.cards.add(new Card());
+		this.cards.get(0).setTitle("0-----------");
+		this.updateCards();
+		// ---------------------- //
 	}
 
 	@Override
