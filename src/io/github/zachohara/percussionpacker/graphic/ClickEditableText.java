@@ -37,6 +37,7 @@ public class ClickEditableText extends BorderPane implements FocusHandler, Mouse
 	private ShrinkableLabel displayLabel;
 	private UnfocusableTextField textField;
 	
+	private boolean isEditing;
 	private boolean isDragging;
 	
 	public ClickEditableText(String defaultText, String fontStyle, double maxFontSize) {
@@ -64,6 +65,10 @@ public class ClickEditableText extends BorderPane implements FocusHandler, Mouse
 	public double getIdealTextHeight() {
 		return displayLabel.getIdealTextHeight();
 	}
+	
+	public boolean isEditing() {
+		return this.isEditing;
+	}
 
 	public String getText() {
 		if (!this.displayLabel.getText().equals(this.defaultText)) {
@@ -82,9 +87,7 @@ public class ClickEditableText extends BorderPane implements FocusHandler, Mouse
 			this.displayLabel.setText(this.defaultText);
 			this.textField.setText("");
 		}
-		if (this.notifyableParent != null) {
-			this.notifyableParent.handleResize();
-		}
+		this.notifyParent();
 	}
 	
 	public void setWidthBuffer(double widthBuffer) {
@@ -140,13 +143,23 @@ public class ClickEditableText extends BorderPane implements FocusHandler, Mouse
 	}
 	
 	private void startRenaming() {
+		this.isEditing = true;
+		this.notifyParent();
 		this.setCenter(this.textField);
 		this.textField.requestFocus();
 	}
 	
 	private void finishRenaming() {
+		this.isEditing = false;
+		this.notifyParent();
 		this.setText(this.textField.getText());
 		this.setCenter(this.displayLabel);
+	}
+	
+	private void notifyParent() {
+		if (this.notifyableParent != null) {
+			this.notifyableParent.handleResize();
+		}
 	}
 	
 }
