@@ -66,10 +66,16 @@ public class CardContentPane extends BorderPane implements ResizeSelfHandler {
 	
 	@Override
 	public void handleResize() {
-		double idealWidth = this.title.getIdealTextWidth() + this.nameTag.getIdealTextHeight() + 1;
-		double fractionAvailable = Math.min(1, (this.getWidth() - (INSET_MARGIN * 4)) / idealWidth);
-		this.title.setPrefWidth(this.title.getIdealTextWidth() * fractionAvailable);
-		this.nameTag.setPrefWidth(this.nameTag.getIdealTextWidth() * fractionAvailable);
+		double idealWidth = this.title.getIdealTextWidth() + this.nameTag.getIdealTextWidth() + 1;
+		double availableWidth = this.getWidth() - (INSET_MARGIN * 4);
+		double fractionAvailable = Math.min(1, availableWidth / idealWidth);
+		
+		double titleWidth = this.title.getIdealTextWidth() * fractionAvailable;
+		double nameWidth = this.nameTag.getIdealTextWidth() * fractionAvailable;
+		
+		this.title.setPrefWidth(titleWidth);
+		this.nameTag.setPrefWidth(nameWidth);
+		
 		this.title.setPrefHeight(Math.min(this.title.getIdealTextHeight(), this.getHeight()));
 		this.nameTag.setPrefHeight(Math.min(this.nameTag.getIdealTextHeight(), this.getHeight()));
 	}
