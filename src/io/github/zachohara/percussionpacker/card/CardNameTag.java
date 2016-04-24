@@ -25,7 +25,7 @@ public class CardNameTag extends ClickEditableText {
 	public static final double MAX_FONT_SIZE = 14;
 	
 	public static final double BACKGROUND_WIDTH = 5;
-	public static final double BACKGROUND_HEIGHT = 0;
+	public static final double BACKGROUND_HEIGHT = 5;
 	
 	public static final String BACKGROUND_STYLE = "-fx-background-radius: 7 7 7 7;";
 	

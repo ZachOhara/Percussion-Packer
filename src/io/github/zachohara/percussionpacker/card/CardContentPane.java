@@ -27,6 +27,10 @@ public class CardContentPane extends BorderPane implements ResizeSelfHandler {
 	public static final double HORIZONTAL_INSET_MARGIN = 8; // in pixels
 	public static final double VERTICAL_INSET_MARGIN = 0;
 	
+	// The margin between one element and the other element's text field
+	// Determined experimentally; do not change here
+	public static final double TEXT_FIELD_WIDTH_MARGIN = 3; // in pixels
+	
 	private CardTitle title;
 	private CardNameTag nameTag;
 	
@@ -79,7 +83,7 @@ public class CardContentPane extends BorderPane implements ResizeSelfHandler {
 		if (!this.title.isEditing()) {
 			this.title.setPrefWidth(titleWidth);
 		} else {
-			this.title.setPrefWidth(availableWidth - nameWidth - 3);
+			this.title.setPrefWidth(availableWidth - nameWidth - TEXT_FIELD_WIDTH_MARGIN);
 		}
 		if (!this.nameTag.isEditing()) {
 			this.nameTag.setPrefWidth(nameWidth);

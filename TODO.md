@@ -7,4 +7,3 @@
 * Add window icons
 * Set a minimum height for the card scroll pane
 * Make card backing buttons recieve focus on initial click
-* Fix the text fields assuming the same size as the labels
