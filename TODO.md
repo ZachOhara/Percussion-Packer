@@ -7,6 +7,4 @@
 * Add window icons
 * Set a minimum height for the card scroll pane
 * Make card backing buttons recieve focus on initial click
-* Fix cards oversizing to fit children
-* Fix the card elements resizing disproportionately
 * Fix the text fields assuming the same size as the labels
