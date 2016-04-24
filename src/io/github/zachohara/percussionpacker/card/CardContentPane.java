@@ -39,8 +39,6 @@ public class CardContentPane extends BorderPane implements ResizeSelfHandler {
 		
 		RegionResizeListener.createSelfHandler(this);
 		
-		this.setStyle("-fx-border-color: red");
-		
 		this.title = new CardTitle();
 		this.title.setNotifyableParent(this);
 		BorderPane.setAlignment(this.title, Pos.CENTER_LEFT);
