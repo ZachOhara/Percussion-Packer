@@ -63,9 +63,9 @@ public class ColumnSeparator extends Pane implements MouseSelfHandler {
 				this.getScene().setCursor(Cursor.DEFAULT);
 			}
 		} else if (type == MouseEvent.MOUSE_PRESSED) {
-			this.startMouseDrag(event.getX());
+			this.startMouseDrag(event.getSceneX());
 		} else if (type == MouseEvent.MOUSE_DRAGGED) {
-			this.handleMouseDrag(event.getX());
+			this.handleMouseDrag(event.getSceneX());
 		} else if (type == MouseEvent.MOUSE_RELEASED) {
 			if (this.isDragging) {
 				this.finishMouseDrag();
