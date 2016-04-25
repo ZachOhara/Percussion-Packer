@@ -16,6 +16,7 @@
 
 package io.github.zachohara.percussionpacker.util;
 
+import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.layout.Region;
@@ -44,6 +45,30 @@ public class RegionUtil {
 			}
 		}
 		return minHeight;
+	}
+	
+	public static double getRelativeX(Node base, Node pos) {
+		return getRelativePosition(base, pos).getX();
+	}
+	
+	public static double getRelativeY(Node base, Node pos) {
+		return getRelativePosition(base, pos).getY();
+	}
+	
+	public static Point2D getRelativePosition(Node base, Node pos) {
+		return base.sceneToLocal(getScenePosition(pos));
+	}
+	
+	public static double getSceneX(Node n) {
+		return getScenePosition(n).getX();
+	}
+	
+	public static double getSceneY(Node n) {
+		return getScenePosition(n).getY();
+	}
+	
+	public static Point2D getScenePosition(Node n) {
+		return n.localToScene(Point2D.ZERO);
 	}
 	
 }
