@@ -19,7 +19,7 @@ package io.github.zachohara.percussionpacker.window;
 import io.github.zachohara.percussionpacker.event.mouse.MouseEventListener;
 import io.github.zachohara.percussionpacker.event.mouse.MouseSelfHandler;
 import io.github.zachohara.percussionpacker.graphic.UnfocusableTextField;
-import io.github.zachohara.percussionpacker.util.RegionUtil;
+import io.github.zachohara.percussionpacker.util.GraphicsUtil;
 import javafx.event.EventType;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
@@ -57,7 +57,7 @@ public class WorkspaceScene extends Scene implements MouseSelfHandler {
 			Node focusedObject = this.getFocusOwner();
 			if (focusedObject instanceof UnfocusableTextField) {
 				Region textField = (Region) focusedObject;
-				Point2D textFieldPos = RegionUtil.getScenePosition(textField);
+				Point2D textFieldPos = GraphicsUtil.getScenePosition(textField);
 				double mouseX = event.getSceneX();
 				double mouseY = event.getSceneY();
 				if (!(textFieldPos.getX() <= mouseX && mouseX < textFieldPos.getX() + textField.getWidth())

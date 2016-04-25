@@ -21,9 +21,9 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.layout.Region;
 
-public class RegionUtil {
+public class GraphicsUtil {
 	
-	private RegionUtil() {
+	private GraphicsUtil() {
 		// take no action
 	}
 	

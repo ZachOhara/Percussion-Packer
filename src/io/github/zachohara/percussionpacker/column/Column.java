@@ -19,7 +19,7 @@ package io.github.zachohara.percussionpacker.column;
 import io.github.zachohara.percussionpacker.card.GhostCard;
 import io.github.zachohara.percussionpacker.event.resize.RegionResizeListener;
 import io.github.zachohara.percussionpacker.event.resize.ResizeSelfHandler;
-import io.github.zachohara.percussionpacker.util.RegionUtil;
+import io.github.zachohara.percussionpacker.util.GraphicsUtil;
 import javafx.geometry.Point2D;
 import javafx.scene.layout.VBox;
 
@@ -41,7 +41,7 @@ public class Column extends VBox implements ResizeSelfHandler {
 		this.getChildren().addAll(this.titlePane, this.cardList);
 		
 		this.setMinWidth(MIN_WIDTH);
-		this.setMinHeight(RegionUtil.getCumulativeMinHeight(this));
+		this.setMinHeight(GraphicsUtil.getCumulativeMinHeight(this));
 	}
 	
 	public void updateCardHoverPosition(GhostCard placeholder, Point2D localPoint) {

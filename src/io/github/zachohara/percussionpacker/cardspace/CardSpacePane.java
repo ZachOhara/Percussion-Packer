@@ -23,7 +23,7 @@ import io.github.zachohara.percussionpacker.event.mouse.MouseEventListener;
 import io.github.zachohara.percussionpacker.event.mouse.MouseSelfHandler;
 import io.github.zachohara.percussionpacker.event.resize.RegionResizeListener;
 import io.github.zachohara.percussionpacker.event.resize.ResizeSelfHandler;
-import io.github.zachohara.percussionpacker.util.RegionUtil;
+import io.github.zachohara.percussionpacker.util.GraphicsUtil;
 import javafx.event.EventType;
 import javafx.geometry.Point2D;
 import javafx.scene.input.MouseEvent;
@@ -57,15 +57,15 @@ public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfH
 		
 		this.getChildren().add(this.columnPane);
 
-		this.setMinWidth(RegionUtil.getCumulativeMinWidth(this));
-		this.setMinHeight(RegionUtil.getCumulativeMinHeight(this));
+		this.setMinWidth(GraphicsUtil.getCumulativeMinWidth(this));
+		this.setMinHeight(GraphicsUtil.getCumulativeMinHeight(this));
 	}
 	
 	public void recieveDraggingCard(Card card, GhostCard placeholder) {
 		this.draggingCard = card;
 		this.placeholderCard = placeholder;
-		this.lastCardX = RegionUtil.getRelativeX(this, this.draggingCard);
-		this.lastCardY = RegionUtil.getRelativeY(this, this.draggingCard);
+		this.lastCardX = GraphicsUtil.getRelativeX(this, this.draggingCard);
+		this.lastCardY = GraphicsUtil.getRelativeY(this, this.draggingCard);
 		this.getChildren().add(this.draggingCard);
 		this.updateCardPosition(0, 0);
 	}
