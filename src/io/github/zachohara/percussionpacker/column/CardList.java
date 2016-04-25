@@ -26,6 +26,7 @@ import io.github.zachohara.percussionpacker.event.mouse.MouseEventListener;
 import io.github.zachohara.percussionpacker.event.mouse.MouseSelfHandler;
 import io.github.zachohara.percussionpacker.event.resize.RegionResizeListener;
 import io.github.zachohara.percussionpacker.event.resize.ResizeSelfHandler;
+import io.github.zachohara.percussionpacker.util.MathUtil;
 import io.github.zachohara.percussionpacker.window.PackingStage;
 import javafx.event.EventType;
 import javafx.geometry.Point2D;
@@ -35,8 +36,6 @@ import javafx.scene.layout.VBox;
 public class CardList extends VBox implements MouseSelfHandler, ResizeSelfHandler {
 	
 	private List<Card> cards;
-	
-	//private GhostCard placeholder;
 	
 	public CardList() {
 		super();
@@ -52,28 +51,13 @@ public class CardList extends VBox implements MouseSelfHandler, ResizeSelfHandle
 			this.cards.get(i).setTitle(i + "-----------");
 		}
 		// ----------------- //
-		
-		/*/ --- Also test code --- //
-		this.add(new Card());
-		this.cards.get(0).setTitle("0-----------");
-		// ---------------------- /*/
 	}
 
 	@Override
 	public void handleMouse(MouseEvent event,
 			EventType<? extends MouseEvent> type) {
 		if (type == MouseEvent.MOUSE_PRESSED) {
-			double localX = event.getX();
-			double localY = event.getY();
-			if (0 < localX && localX < this.getWidth()) {
-				for (int i = 0; i < this.cards.size(); i++) {
-					Card clickedCard = this.cards.get(i);
-					double cardPosY = clickedCard.getLayoutY();
-					if (localY >= cardPosY && localY < cardPosY + clickedCard.getHeight()) {
-						this.handleCardClick(i);
-					}
-				}
-			}
+			this.handleMousePress(event.getX(), event.getY());
 		}
 	}
 
@@ -84,11 +68,22 @@ public class CardList extends VBox implements MouseSelfHandler, ResizeSelfHandle
 		}
 	}
 	
+	private void handleMousePress(double localX, double localY) {
+		if (0 < localX && localX < this.getWidth()) {
+			for (int i = 0; i < this.cards.size(); i++) {
+				Card clickedCard = this.cards.get(i);
+				double cardPosY = clickedCard.getLayoutY();
+				if (localY >= cardPosY && localY < cardPosY + clickedCard.getHeight()) {
+					this.handleCardClick(i);
+				}
+			}
+		}
+	}
+	
 	private void handleCardClick(int index) {
 		Card clickedCard = this.cards.get(index);
 		GhostCard placeholder = new GhostCard(clickedCard);
 		this.getCardSpacePane().recieveDraggingCard(clickedCard, placeholder);
-		this.remove(clickedCard);
 		this.remove(clickedCard);
 		this.getChildren().add(index, placeholder);
 	}
@@ -110,26 +105,15 @@ public class CardList extends VBox implements MouseSelfHandler, ResizeSelfHandle
 				cumulHeight += this.cards.get(i).getHeight();
 				offsets[i+1] = Math.abs(localY - (cumulHeight + placeholderOffset));
 			}
-			this.getChildren().add(minIndex(offsets), placeholder);
+			this.getChildren().add(MathUtil.minIndex(offsets), placeholder);
 		} else {
+			// remove all ghost cards
 			for (int i = this.getChildren().size() - 1; i >= 0; i--) {
 				if (this.getChildren().get(i) instanceof GhostCard) {
 					this.getChildren().remove(i);
 				}
 			}
 		}
-	}
-	
-	private static int minIndex(double[] array) {
-		int minIndex = -1;
-		double min = Double.MAX_VALUE;
-		for (int i = 0; i < array.length; i++) {
-			if (array[i] < min) {
-				minIndex = i;
-				min = array[i];
-			}
-		}
-		return minIndex;
 	}
 	
 	private void add(Card c) {
