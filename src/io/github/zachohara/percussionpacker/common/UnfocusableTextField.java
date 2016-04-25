@@ -14,7 +14,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package io.github.zachohara.percussionpacker.graphic;
+package io.github.zachohara.percussionpacker.common;
 
 import io.github.zachohara.percussionpacker.event.focus.FocusListenable;
 import io.github.zachohara.percussionpacker.event.key.KeyEventListener;

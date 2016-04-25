@@ -16,9 +16,9 @@
 
 package io.github.zachohara.percussionpacker.window;
 
+import io.github.zachohara.percussionpacker.common.UnfocusableTextField;
 import io.github.zachohara.percussionpacker.event.mouse.MouseEventListener;
 import io.github.zachohara.percussionpacker.event.mouse.MouseSelfHandler;
-import io.github.zachohara.percussionpacker.graphic.UnfocusableTextField;
 import io.github.zachohara.percussionpacker.util.GraphicsUtil;
 import javafx.event.EventType;
 import javafx.geometry.Point2D;

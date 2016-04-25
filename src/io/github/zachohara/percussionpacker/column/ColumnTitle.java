@@ -16,10 +16,10 @@
 
 package io.github.zachohara.percussionpacker.column;
 
+import io.github.zachohara.percussionpacker.common.BackingButton;
+import io.github.zachohara.percussionpacker.common.ShrinkableLabel;
 import io.github.zachohara.percussionpacker.event.resize.RegionResizeListener;
 import io.github.zachohara.percussionpacker.event.resize.ResizeSelfHandler;
-import io.github.zachohara.percussionpacker.graphic.BackingButton;
-import io.github.zachohara.percussionpacker.graphic.ShrinkableLabel;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 

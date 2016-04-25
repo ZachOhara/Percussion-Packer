@@ -16,7 +16,7 @@
 
 package io.github.zachohara.percussionpacker.card;
 
-import io.github.zachohara.percussionpacker.graphic.ClickEditableText;
+import io.github.zachohara.percussionpacker.common.ClickEditableText;
 
 public class CardTitle extends ClickEditableText {
 	
