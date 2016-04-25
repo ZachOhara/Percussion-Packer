@@ -52,19 +52,19 @@ public class Card extends StackPane implements MouseSelfHandler, ResizeSelfHandl
 	}
 	
 	public String getTitle() {
-		return contentPane.getTitle();
+		return this.contentPane.getTitle();
 	}
 
 	public void setTitle(String title) {
-		contentPane.setTitle(title);
+		this.contentPane.setTitle(title);
 	}
 
 	public String getName() {
-		return contentPane.getName();
+		return this.contentPane.getName();
 	}
 
 	public void setName(String name) {
-		contentPane.setName(name);
+		this.contentPane.setName(name);
 	}
 	
 	public Point2D getCenterPoint() {
