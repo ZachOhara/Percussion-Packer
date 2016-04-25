@@ -36,9 +36,9 @@ public class ColumnSeparator extends Pane implements MouseSelfHandler {
 	private Column rightColumn;
 	
 	private boolean isDragging;
-	private double dragStartPos;
-	private double dragLeftWidth;
-	private double dragRightWidth;
+	private double lastMouseX;
+	private double lastLeftWidth;
+	private double lastRightWidth;
 	
 	public ColumnSeparator(ColumnPane parent, Column leftColumn, Column rightColumn) {
 		super();
@@ -75,16 +75,16 @@ public class ColumnSeparator extends Pane implements MouseSelfHandler {
 	
 	private void startMouseDrag(double startPosX) {
 		this.isDragging = false;
-		this.dragStartPos = startPosX;
-		this.dragLeftWidth = this.leftColumn.getWidth();
-		this.dragRightWidth = this.rightColumn.getWidth();
+		this.lastMouseX = startPosX;
+		this.lastLeftWidth = this.leftColumn.getWidth();
+		this.lastRightWidth = this.rightColumn.getWidth();
 	}
 	
 	private void handleMouseDrag(double mousePosX) {
 		this.isDragging = true;
-		double increment = mousePosX - this.dragStartPos;
-		double newLeftWidth = this.dragLeftWidth + increment;
-		double newRightWidth = this.dragRightWidth - increment;
+		double mouseIncrement = mousePosX - this.lastMouseX;
+		double newLeftWidth = this.lastLeftWidth + mouseIncrement;
+		double newRightWidth = this.lastRightWidth - mouseIncrement;
 		if (newLeftWidth >= this.leftColumn.getMinWidth()
 				&& newRightWidth >= this.rightColumn.getMinWidth()) {
 			this.leftColumn.setPrefWidth(newLeftWidth);

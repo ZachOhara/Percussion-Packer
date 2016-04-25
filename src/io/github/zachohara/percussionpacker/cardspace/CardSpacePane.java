@@ -55,8 +55,6 @@ public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfH
 		this.columnPane.setLayoutX(0);
 		this.columnPane.setLayoutY(0);
 		
-		this.isDragging = false;
-		
 		this.getChildren().add(this.columnPane);
 
 		this.setMinWidth(RegionUtil.getCumulativeMinWidth(this));
@@ -70,7 +68,6 @@ public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfH
 		this.lastCardY = RegionUtil.getRelativeY(this, this.draggingCard);
 		this.getChildren().add(this.draggingCard);
 		this.updateCardPosition(0, 0);
-		//this.updatePlaceholderPosition();
 	}
 
 	@Override
@@ -78,20 +75,25 @@ public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfH
 		if (type == MouseEvent.MOUSE_PRESSED) {
 			this.lastMouseX = event.getSceneX();
 			this.lastMouseY = event.getSceneY();
+			this.isDragging = false;
 		} else if (type == MouseEvent.MOUSE_DRAGGED) {
-			if (this.hasDraggingCard()) {
-				double dx = event.getSceneX() - this.lastMouseX;
-				double dy = event.getSceneY() - this.lastMouseY;
-				if (this.isOverThreshold(dx, dy)) {
-					this.isDragging = true;
-				}
-				if (this.isDragging) {
-					this.updateCardPosition(dx, dy);
-					this.updatePlaceholderPosition();
-				}
+			if (this.draggingCard != null) {
+				this.handleMouseDrag(event.getSceneX(), event.getSceneY());
 			}
 		} if (type == MouseEvent.MOUSE_RELEASED) {
 			this.isDragging = false;
+		}
+	}
+	
+	private void handleMouseDrag(double x, double y) {
+		double dx = x - this.lastMouseX;
+		double dy = y - this.lastMouseY;
+		if (this.isOverThreshold(dx, dy)) {
+			this.isDragging = true;
+		}
+		if (this.isDragging) {
+			this.updateCardPosition(dx, dy);
+			this.updatePlaceholderPosition();
 		}
 	}
 
@@ -126,10 +128,6 @@ public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfH
 	private void updateCardPosition(double dx, double dy) {
 		this.draggingCard.setLayoutX(this.lastCardX + dx);
 		this.draggingCard.setLayoutY(this.lastCardY + dy);
-	}
-	
-	private boolean hasDraggingCard() {
-		return this.draggingCard != null;
 	}
 	
 	private boolean isOverThreshold(double dx, double dy) {

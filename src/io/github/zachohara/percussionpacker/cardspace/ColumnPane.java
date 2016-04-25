@@ -30,6 +30,7 @@ public class ColumnPane extends HBox implements ResizeSelfHandler {
 			"Packing List",
 			"Mallet List"
 	};
+	
 	// the number of columns in the workspace; should not be adjusted here
 	public static final int NUM_COLUMNS = COLUMN_NAMES.length;
 	// the number of separators in the workspace; should not be adjusted here
