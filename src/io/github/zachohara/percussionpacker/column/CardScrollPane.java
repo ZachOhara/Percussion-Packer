@@ -16,13 +16,15 @@
 
 package io.github.zachohara.percussionpacker.column;
 
+import io.github.zachohara.percussionpacker.card.GhostCard;
 import io.github.zachohara.percussionpacker.event.focus.FocusChangeListener;
 import io.github.zachohara.percussionpacker.event.focus.FocusSelfHandler;
+import javafx.geometry.Point2D;
 import javafx.scene.control.ScrollPane;
 
 public class CardScrollPane extends ScrollPane implements FocusSelfHandler {
 	
-	private CardList cardPane;
+	private CardList cardList;
 	
 	public CardScrollPane() {
 		super();
@@ -33,8 +35,12 @@ public class CardScrollPane extends ScrollPane implements FocusSelfHandler {
 		this.setVbarPolicy(ScrollBarPolicy.AS_NEEDED);
 		this.setFitToWidth(true);
 		
-		this.cardPane = new CardList();
-		this.setContent(this.cardPane);
+		this.cardList = new CardList();
+		this.setContent(this.cardList);
+	}
+	
+	public void updateCardHoverPosition(GhostCard placeholder, Point2D localPoint) {
+		this.cardList.updateCardHoverPosition(placeholder, this.cardList.parentToLocal(localPoint));
 	}
 
 	@Override

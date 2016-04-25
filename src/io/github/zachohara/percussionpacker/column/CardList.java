@@ -28,6 +28,7 @@ import io.github.zachohara.percussionpacker.event.resize.RegionResizeListener;
 import io.github.zachohara.percussionpacker.event.resize.ResizeSelfHandler;
 import io.github.zachohara.percussionpacker.window.PackingStage;
 import javafx.event.EventType;
+import javafx.geometry.Point2D;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 
@@ -35,7 +36,7 @@ public class CardList extends VBox implements MouseSelfHandler, ResizeSelfHandle
 	
 	private List<Card> cards;
 	
-	private GhostCard placeholder;
+	//private GhostCard placeholder;
 	
 	public CardList() {
 		super();
@@ -45,19 +46,17 @@ public class CardList extends VBox implements MouseSelfHandler, ResizeSelfHandle
 		
 		this.cards = new ArrayList<Card>();
 		
-		/*/ --- Test code --- //
+		// --- Test code --- //
 		for (int i = 0; i < 20; i++) {
-			this.cards.add(new Card());
+			this.add(new Card());
 			this.cards.get(i).setTitle(i + "-----------");
 		}
-		this.updateCards();
-		// ----------------- /*/
+		// ----------------- //
 		
-		// --- Also test code --- //
-		this.cards.add(new Card());
+		/*/ --- Also test code --- //
+		this.add(new Card());
 		this.cards.get(0).setTitle("0-----------");
-		this.updateCards();
-		// ---------------------- //
+		// ---------------------- /*/
 	}
 
 	@Override
@@ -87,19 +86,60 @@ public class CardList extends VBox implements MouseSelfHandler, ResizeSelfHandle
 	
 	private void handleCardClick(int index) {
 		Card clickedCard = this.cards.get(index);
-		this.getCardSpacePane().recieveDraggingCard(clickedCard);
-		this.placeholder = new GhostCard(clickedCard);
-		this.cards.set(index, this.placeholder);
-		this.updateCards();
-	}
-	
-	private void updateCards() {
-		this.getChildren().clear();
-		this.getChildren().addAll(this.cards);
+		GhostCard placeholder = new GhostCard(clickedCard);
+		this.getCardSpacePane().recieveDraggingCard(clickedCard, placeholder);
+		this.remove(clickedCard);
+		this.remove(clickedCard);
+		this.getChildren().add(index, placeholder);
 	}
 	
 	private CardSpacePane getCardSpacePane() {
 		return PackingStage.getCardSpacePane();
+	}
+
+	public void updateCardHoverPosition(GhostCard placeholder, Point2D localPoint) {
+		if (placeholder != null) {
+			this.getChildren().remove(placeholder);
+			final double localY = localPoint.getY();
+			final double placeholderOffset = (placeholder.getHeight() / 2);
+			double cumulHeight = 0;
+			double[] offsets = new double[this.cards.size() + 1];
+			
+			offsets[0] = Math.abs(localY - placeholderOffset);
+			for (int i = 0; i < this.cards.size(); i++) {
+				cumulHeight += this.cards.get(i).getHeight();
+				offsets[i+1] = Math.abs(localY - (cumulHeight + placeholderOffset));
+			}
+			this.getChildren().add(minIndex(offsets), placeholder);
+		} else {
+			for (int i = this.getChildren().size() - 1; i >= 0; i--) {
+				if (this.getChildren().get(i) instanceof GhostCard) {
+					this.getChildren().remove(i);
+				}
+			}
+		}
+	}
+	
+	private static int minIndex(double[] array) {
+		int minIndex = -1;
+		double min = Double.MAX_VALUE;
+		for (int i = 0; i < array.length; i++) {
+			if (array[i] < min) {
+				minIndex = i;
+				min = array[i];
+			}
+		}
+		return minIndex;
+	}
+	
+	private void add(Card c) {
+		this.cards.add(c);
+		this.getChildren().add(c);
+	}
+	
+	private void remove(Card c) {
+		this.cards.remove(c);
+		this.getChildren().remove(c);
 	}
 
 }

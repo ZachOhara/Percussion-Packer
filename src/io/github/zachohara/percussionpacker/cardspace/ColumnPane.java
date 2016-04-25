@@ -60,6 +60,10 @@ public class ColumnPane extends HBox implements ResizeSelfHandler {
 			this.widthRatios[i] = this.columns[i].getWidth() / availableSpace;
 		}
 	}
+	
+	protected Column[] getColumns() {
+		return this.columns;
+	}
 
 	@Override
 	public void handleResize() {

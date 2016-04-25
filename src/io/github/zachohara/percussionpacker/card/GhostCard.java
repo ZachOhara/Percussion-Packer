@@ -9,6 +9,9 @@ public class GhostCard extends Card {
 		super();
 		this.copySizing(sizingCard);
 		this.hideChildren();
+		
+		// for testing
+		this.setStyle("-fx-background-color: pink");
 	}
 	
 	private void copySizing(Region copyFrom) {

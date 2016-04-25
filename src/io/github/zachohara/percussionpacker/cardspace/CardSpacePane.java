@@ -17,6 +17,8 @@
 package io.github.zachohara.percussionpacker.cardspace;
 
 import io.github.zachohara.percussionpacker.card.Card;
+import io.github.zachohara.percussionpacker.card.GhostCard;
+import io.github.zachohara.percussionpacker.column.Column;
 import io.github.zachohara.percussionpacker.event.mouse.MouseEventListener;
 import io.github.zachohara.percussionpacker.event.mouse.MouseSelfHandler;
 import io.github.zachohara.percussionpacker.event.resize.RegionResizeListener;
@@ -31,8 +33,10 @@ public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfH
 	
 	public static final double DRAG_DIFFERENCE_THRESHOLD = 10;
 	
-	private Pane columnPane;
+	private ColumnPane columnPane;
+	
 	private Card draggingCard;
+	private GhostCard placeholderCard;
 	
 	private boolean isDragging;
 	
@@ -59,13 +63,14 @@ public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfH
 		this.setMinHeight(RegionUtil.getCumulativeMinHeight(this));
 	}
 	
-	public void recieveDraggingCard(Card card) {
+	public void recieveDraggingCard(Card card, GhostCard placeholder) {
 		this.draggingCard = card;
-		Point2D cardPos = this.sceneToLocal(this.draggingCard.localToScene(Point2D.ZERO));
-		this.lastCardX = cardPos.getX();
-		this.lastCardY = cardPos.getY();
+		this.placeholderCard = placeholder;
+		this.lastCardX = RegionUtil.getRelativeX(this, this.draggingCard);
+		this.lastCardY = RegionUtil.getRelativeY(this, this.draggingCard);
 		this.getChildren().add(this.draggingCard);
 		this.updateCardPosition(0, 0);
+		//this.updatePlaceholderPosition();
 	}
 
 	@Override
@@ -82,6 +87,7 @@ public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfH
 				}
 				if (this.isDragging) {
 					this.updateCardPosition(dx, dy);
+					this.updatePlaceholderPosition();
 				}
 			}
 		} if (type == MouseEvent.MOUSE_RELEASED) {
@@ -93,6 +99,28 @@ public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfH
 	public void handleResize() {
 		this.columnPane.setPrefHeight(this.getHeight());
 		this.columnPane.setPrefWidth(this.getWidth());
+	}
+	
+	private void updatePlaceholderPosition() {
+		Point2D localPoint = this.columnPane.sceneToLocal(this.localToScene(this.draggingCard.getCenterPoint()));
+		Column hoveringColumn = this.getHoveringColumn(localPoint.getX());
+		if (hoveringColumn != null) {
+			hoveringColumn.updateCardHoverPosition(this.placeholderCard, localPoint);
+		}
+		for (Column c : this.columnPane.getColumns()) {
+			if (c != hoveringColumn) {
+				c.updateCardHoverPosition(null, Point2D.ZERO);
+			}
+		}
+	}
+	
+	private Column getHoveringColumn(double x) {
+		for (Column c : this.columnPane.getColumns()) {
+			if (c.getLayoutX() <= x && x < c.getLayoutX() + c.getWidth()) {
+				return c;
+			}
+		}
+		return null;
 	}
 	
 	private void updateCardPosition(double dx, double dy) {
