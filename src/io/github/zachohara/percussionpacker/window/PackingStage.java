@@ -41,10 +41,6 @@ public class PackingStage extends Stage {
 		this.setMinSize();
 	}
 	
-	public WorkspaceScene getWorkspaceScene() {
-		return this.workspaceScene;
-	}
-	
 	private void setMinSize() {
 		this.setMinWidth(this.workspaceScene.getMinWidth() + this.getDecorationWidth());
 		this.setMinHeight(this.workspaceScene.getMinHeight() + this.getDecorationHeight());
@@ -59,7 +55,7 @@ public class PackingStage extends Stage {
 	}
 	
 	public static CardSpacePane getCardSpacePane() {
-		return PackingStage.singleton.getWorkspaceScene().getWorkspaceRootPane().getCardSpacePane();
+		return PackingStage.singleton.workspaceScene.getWorkspaceRootPane().getCardSpacePane();
 	}
 
 }
