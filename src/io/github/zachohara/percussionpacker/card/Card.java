@@ -19,6 +19,7 @@ package io.github.zachohara.percussionpacker.card;
 import io.github.zachohara.percussionpacker.event.resize.RegionResizeListener;
 import io.github.zachohara.percussionpacker.event.resize.ResizeSelfHandler;
 import io.github.zachohara.percussionpacker.graphic.BackingButton;
+import javafx.geometry.Point2D;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 
@@ -59,6 +60,11 @@ public class Card extends StackPane implements ResizeSelfHandler {
 
 	public void setName(String name) {
 		contentPane.setName(name);
+	}
+	
+	public Point2D getCenterPoint() {
+		return new Point2D(this.getLayoutX() + (this.getWidth() / 2),
+				this.getLayoutY() + (this.getHeight() / 2));
 	}
 
 	@Override
