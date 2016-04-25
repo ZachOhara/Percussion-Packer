@@ -6,4 +6,9 @@
 * Make CardSpacePane handle the movement of cards by the mouse
 * Add window icons
 * Set a minimum height for the card scroll pane
+* Create different types of columns
 * Make card backing buttons recieve focus on initial click
+* Make columns assume the current ratios after resizing the window
+* Add a velocity to moving cards
+* Make dragging cards resize to the current hovering column (with a velocity)
+* Make cards seat back into columns
