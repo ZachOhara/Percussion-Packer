@@ -16,14 +16,18 @@
 
 package io.github.zachohara.percussionpacker.card;
 
+import io.github.zachohara.percussionpacker.event.mouse.MouseEventListener;
+import io.github.zachohara.percussionpacker.event.mouse.MouseSelfHandler;
 import io.github.zachohara.percussionpacker.event.resize.RegionResizeListener;
 import io.github.zachohara.percussionpacker.event.resize.ResizeSelfHandler;
 import io.github.zachohara.percussionpacker.graphic.BackingButton;
+import javafx.event.EventType;
 import javafx.geometry.Point2D;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 
-public class Card extends StackPane implements ResizeSelfHandler {
+public class Card extends StackPane implements MouseSelfHandler, ResizeSelfHandler {
 	
 	public static final double DEFAULT_HEIGHT = 40; // in pixels
 	
@@ -33,6 +37,7 @@ public class Card extends StackPane implements ResizeSelfHandler {
 	public Card() {
 		super();
 		
+		MouseEventListener.createSelfHandler(this);
 		RegionResizeListener resizeListener = RegionResizeListener.createSelfHandler(this);
 		
 		this.setPrefHeight(DEFAULT_HEIGHT);
@@ -65,6 +70,15 @@ public class Card extends StackPane implements ResizeSelfHandler {
 	public Point2D getCenterPoint() {
 		return new Point2D(this.getLayoutX() + (this.getWidth() / 2),
 				this.getLayoutY() + (this.getHeight() / 2));
+	}
+
+	@Override
+	public void handleMouse(MouseEvent event, EventType<? extends MouseEvent> type) {
+		if (type == MouseEvent.MOUSE_ENTERED) {
+			this.backingButton.arm();
+		} else if (type == MouseEvent.MOUSE_EXITED) {
+			this.backingButton.disarm();
+		}
 	}
 
 	@Override
