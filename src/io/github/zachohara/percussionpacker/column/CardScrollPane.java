@@ -16,7 +16,7 @@
 
 package io.github.zachohara.percussionpacker.column;
 
-import io.github.zachohara.percussionpacker.card.GhostCard;
+import io.github.zachohara.percussionpacker.card.Card;
 import io.github.zachohara.percussionpacker.event.focus.FocusChangeListener;
 import io.github.zachohara.percussionpacker.event.focus.FocusSelfHandler;
 import javafx.geometry.Point2D;
@@ -39,8 +39,8 @@ public class CardScrollPane extends ScrollPane implements FocusSelfHandler {
 		this.setContent(this.cardList);
 	}
 	
-	public void updateCardHoverPosition(GhostCard placeholder, Point2D localPoint) {
-		this.cardList.updateCardHoverPosition(placeholder, this.cardList.parentToLocal(localPoint));
+	public void dropCard(Card draggingCard, Point2D scenePoint) {
+		this.cardList.dropCard(draggingCard, scenePoint);
 	}
 
 	@Override

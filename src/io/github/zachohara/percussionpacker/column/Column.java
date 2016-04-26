@@ -16,7 +16,7 @@
 
 package io.github.zachohara.percussionpacker.column;
 
-import io.github.zachohara.percussionpacker.card.GhostCard;
+import io.github.zachohara.percussionpacker.card.Card;
 import io.github.zachohara.percussionpacker.event.resize.RegionResizeListener;
 import io.github.zachohara.percussionpacker.event.resize.ResizeSelfHandler;
 import io.github.zachohara.percussionpacker.util.GraphicsUtil;
@@ -44,8 +44,8 @@ public class Column extends VBox implements ResizeSelfHandler {
 		this.setMinHeight(GraphicsUtil.getCumulativeMinHeight(this));
 	}
 	
-	public void updateCardHoverPosition(GhostCard placeholder, Point2D localPoint) {
-		this.cardList.updateCardHoverPosition(placeholder, this.cardList.parentToLocal(localPoint));
+	public void dropCard(Card draggingCard, Point2D scenePoint) {
+		this.cardList.dropCard(draggingCard, scenePoint);
 	}
 
 	@Override

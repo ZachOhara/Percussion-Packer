@@ -18,7 +18,6 @@ package io.github.zachohara.percussionpacker.cardspace;
 
 import io.github.zachohara.percussionpacker.card.Card;
 import io.github.zachohara.percussionpacker.card.GhostCard;
-import io.github.zachohara.percussionpacker.column.Column;
 import io.github.zachohara.percussionpacker.event.mouse.MouseEventListener;
 import io.github.zachohara.percussionpacker.event.mouse.MouseSelfHandler;
 import io.github.zachohara.percussionpacker.event.resize.RegionResizeListener;
@@ -82,6 +81,9 @@ public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfH
 			}
 		} if (type == MouseEvent.MOUSE_RELEASED) {
 			this.isDragging = false;
+			if (this.draggingCard != null) {
+				this.columnPane.dropCard(this.draggingCard, this.getSceneCardCenter());
+			}
 		}
 	}
 	
@@ -93,7 +95,7 @@ public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfH
 		}
 		if (this.isDragging) {
 			this.updateCardPosition(dx, dy);
-			this.updatePlaceholderPosition();
+			this.columnPane.dropCard(this.placeholderCard, this.getSceneCardCenter());
 		}
 	}
 
@@ -103,31 +105,13 @@ public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfH
 		this.columnPane.setPrefWidth(this.getWidth());
 	}
 	
-	private void updatePlaceholderPosition() {
-		Point2D localPoint = this.columnPane.sceneToLocal(this.localToScene(this.draggingCard.getCenterPoint()));
-		Column hoveringColumn = this.getHoveringColumn(localPoint.getX());
-		if (hoveringColumn != null) {
-			hoveringColumn.updateCardHoverPosition(this.placeholderCard, localPoint);
-		}
-		for (Column c : this.columnPane.getColumns()) {
-			if (c != hoveringColumn) {
-				c.updateCardHoverPosition(null, Point2D.ZERO);
-			}
-		}
-	}
-	
-	private Column getHoveringColumn(double x) {
-		for (Column c : this.columnPane.getColumns()) {
-			if (c.getLayoutX() <= x && x < c.getLayoutX() + c.getWidth()) {
-				return c;
-			}
-		}
-		return null;
-	}
-	
 	private void updateCardPosition(double dx, double dy) {
 		this.draggingCard.setLayoutX(this.lastCardX + dx);
 		this.draggingCard.setLayoutY(this.lastCardY + dy);
+	}
+	
+	private Point2D getSceneCardCenter() {
+		return this.localToScene(this.draggingCard.getCenterPoint());
 	}
 	
 	private boolean isOverThreshold(double dx, double dy) {

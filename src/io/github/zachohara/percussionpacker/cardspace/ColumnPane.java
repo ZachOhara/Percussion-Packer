@@ -16,10 +16,12 @@
 
 package io.github.zachohara.percussionpacker.cardspace;
 
+import io.github.zachohara.percussionpacker.card.Card;
 import io.github.zachohara.percussionpacker.column.Column;
 import io.github.zachohara.percussionpacker.event.resize.RegionResizeListener;
 import io.github.zachohara.percussionpacker.event.resize.ResizeSelfHandler;
 import io.github.zachohara.percussionpacker.util.GraphicsUtil;
+import javafx.geometry.Point2D;
 import javafx.scene.layout.HBox;
 
 public class ColumnPane extends HBox implements ResizeSelfHandler {
@@ -55,15 +57,33 @@ public class ColumnPane extends HBox implements ResizeSelfHandler {
 		this.setMinHeight(this.columns[0].getMinHeight());
 	}
 	
+	public void dropCard(Card draggingCard, Point2D scenePoint) {
+		Point2D localPoint = this.sceneToLocal(scenePoint);
+		Column hoveringColumn = this.getHoveringColumn(localPoint.getX());
+		if (hoveringColumn != null) {
+			hoveringColumn.dropCard(draggingCard, scenePoint);
+		}
+		for (Column c : this.columns) {
+			if (c != hoveringColumn) {
+				c.dropCard(null, Point2D.ZERO);
+			}
+		}
+	}
+	
+	private Column getHoveringColumn(double localX) {
+		for (Column c : this.columns) {
+			if (c.getLayoutX() <= localX && localX < c.getLayoutX() + c.getWidth()) {
+				return c;
+			}
+		}
+		return null;
+	}
+	
 	protected void finishColumnResizing() {
 		double availableSpace = this.getAvailableColumnSpace();
 		for (int i = 0; i < NUM_COLUMNS; i++) {
 			this.widthRatios[i] = this.columns[i].getWidth() / availableSpace;
 		}
-	}
-	
-	protected Column[] getColumns() {
-		return this.columns;
 	}
 
 	@Override

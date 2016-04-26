@@ -85,45 +85,61 @@ public class CardList extends VBox implements MouseSelfHandler, ResizeSelfHandle
 		GhostCard placeholder = new GhostCard(clickedCard);
 		this.getCardSpacePane().recieveDraggingCard(clickedCard, placeholder);
 		this.remove(clickedCard);
-		this.getChildren().add(index, placeholder);
+		this.add(index, placeholder);
 	}
 	
 	private CardSpacePane getCardSpacePane() {
 		return PackingStage.getCardSpacePane();
 	}
 
-	public void updateCardHoverPosition(GhostCard placeholder, Point2D localPoint) {
-		if (placeholder != null) {
-			this.getChildren().remove(placeholder);
-			final double localY = localPoint.getY();
-			final double placeholderOffset = (placeholder.getHeight() / 2);
-			double cumulHeight = 0;
-			double[] offsets = new double[this.cards.size() + 1];
-			
-			offsets[0] = Math.abs(localY - placeholderOffset);
-			for (int i = 0; i < this.cards.size(); i++) {
-				cumulHeight += this.cards.get(i).getHeight();
-				offsets[i+1] = Math.abs(localY - (cumulHeight + placeholderOffset));
-			}
-			this.getChildren().add(MathUtil.minIndex(offsets), placeholder);
-		} else {
-			// remove all ghost cards
-			for (int i = this.getChildren().size() - 1; i >= 0; i--) {
-				if (this.getChildren().get(i) instanceof GhostCard) {
-					this.getChildren().remove(i);
-				}
+	public void dropCard(Card draggingCard, Point2D scenePoint) {
+		Point2D localPoint = this.sceneToLocal(scenePoint);
+		this.removeGhostCards();
+		if (draggingCard != null) {
+			int insertIndex = getDragCardIndex(localPoint.getY(), draggingCard.getHeight());
+			this.add(insertIndex, draggingCard);
+		}
+	}
+	
+	private int getDragCardIndex(double localY, double cardHeight) {
+		final double heightOffset = cardHeight / 2;
+		double cumulHeight = 0;
+		double[] offsets = new double[this.cards.size() + 1];
+		
+		offsets[0] = Math.abs(localY - heightOffset);
+		for (int i = 0; i < this.cards.size(); i++) {
+			cumulHeight += this.cards.get(i).getHeight();
+			offsets[i+1] = Math.abs(localY - (cumulHeight + heightOffset));
+		}
+		return MathUtil.minIndex(offsets);
+	}
+	
+	private void removeGhostCards() {
+		for (int i = this.cards.size() - 1; i >= 0; i--) {
+			if (this.cards.get(i) instanceof GhostCard) {
+				this.remove(i);
 			}
 		}
 	}
 	
-	private void add(Card c) {
-		this.cards.add(c);
-		this.getChildren().add(c);
+	private void add(Card element) {
+		this.cards.add(element);
+		this.getChildren().add(element);
 	}
 	
-	private void remove(Card c) {
-		this.cards.remove(c);
-		this.getChildren().remove(c);
+	private void add(int index, Card element) {
+		this.cards.add(index, element);
+		this.getChildren().add(index, element);
+	}
+	
+	private void remove(Card element) {
+		this.cards.remove(element);
+		this.getChildren().remove(element);
+	}
+	
+	private void remove(int index) {
+		this.cards.remove(index);
+		this.getChildren().remove(index);
 	}
 
 }
