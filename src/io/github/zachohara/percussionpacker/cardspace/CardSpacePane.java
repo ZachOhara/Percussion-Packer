@@ -60,13 +60,17 @@ public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfH
 		this.setMinHeight(GraphicsUtil.getCumulativeMinHeight(this));
 	}
 	
-	public void recieveDraggingCard(Card card, GhostCard placeholder) {
-		this.draggingCard = card;
+	public void recieveDraggingCard(Card draggingCard, GhostCard placeholder) {
+		this.draggingCard = draggingCard;
 		this.placeholderCard = placeholder;
 		this.lastCardX = GraphicsUtil.getRelativeX(this, this.draggingCard);
 		this.lastCardY = GraphicsUtil.getRelativeY(this, this.draggingCard);
 		this.getChildren().add(this.draggingCard);
 		this.updateCardPosition(0, 0);
+	}
+	
+	public void recieveSlidingCard(Card slidingCard) {
+		
 	}
 
 	@Override

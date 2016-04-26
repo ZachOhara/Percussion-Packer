@@ -19,7 +19,7 @@ package io.github.zachohara.percussionpacker.column;
 import io.github.zachohara.percussionpacker.card.Card;
 import io.github.zachohara.percussionpacker.event.resize.RegionResizeListener;
 import io.github.zachohara.percussionpacker.event.resize.ResizeSelfHandler;
-import io.github.zachohara.percussionpacker.slide.SliderThread;
+import io.github.zachohara.percussionpacker.slide.IncrementalChangeThread;
 import io.github.zachohara.percussionpacker.util.GraphicsUtil;
 import javafx.geometry.Point2D;
 import javafx.scene.layout.Pane;
@@ -30,14 +30,14 @@ public class CardVelocityPane extends Pane implements ResizeSelfHandler {
 	
 	private CardList cardList;
 	
-	private SliderThread sliderThread;
+	private IncrementalChangeThread sliderThread;
 		
 	public CardVelocityPane() {
 		RegionResizeListener.createSelfHandler(this);
 		
-		this.cardList = new CardList(this);
+		this.cardList = new CardList();
 		
-		this.sliderThread = new SliderThread(this);
+		this.sliderThread = new IncrementalChangeThread(this);
 		this.sliderThread.start();
 		
 		this.getChildren().add(this.cardList);

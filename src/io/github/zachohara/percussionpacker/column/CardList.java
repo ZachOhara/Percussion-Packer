@@ -35,17 +35,13 @@ import javafx.scene.layout.VBox;
 
 public class CardList extends VBox implements MouseSelfHandler, ResizeSelfHandler {
 	
-	private CardVelocityPane parent;
-	
 	private List<Card> cards;
 	
-	public CardList(CardVelocityPane parent) {
+	public CardList() {
 		super();
 		
 		MouseEventListener.createSelfHandler(this);
 		RegionResizeListener.createSelfHandler(this);
-		
-		this.parent = parent;
 		this.cards = new ArrayList<Card>();
 		
 		// --- Test code --- //
