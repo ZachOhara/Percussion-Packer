@@ -12,5 +12,5 @@
 * Add a velocity to moving cards
 * Make dragging cards resize to the current hovering column (with a velocity)
 * Make cards seat back into columns
-* Make a single, universal sliding thread and pane system
+* Make a single, universal sliding thread and pane system (potentially use card space pane)
 * Resolve duplicate method copySizing in GhostCard and SpaceRegion

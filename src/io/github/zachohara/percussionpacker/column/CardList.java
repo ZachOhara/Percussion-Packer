@@ -26,7 +26,6 @@ import io.github.zachohara.percussionpacker.event.mouse.MouseEventListener;
 import io.github.zachohara.percussionpacker.event.mouse.MouseSelfHandler;
 import io.github.zachohara.percussionpacker.event.resize.RegionResizeListener;
 import io.github.zachohara.percussionpacker.event.resize.ResizeSelfHandler;
-import io.github.zachohara.percussionpacker.util.GraphicsUtil;
 import io.github.zachohara.percussionpacker.util.MathUtil;
 import io.github.zachohara.percussionpacker.window.PackingStage;
 import javafx.event.EventType;
