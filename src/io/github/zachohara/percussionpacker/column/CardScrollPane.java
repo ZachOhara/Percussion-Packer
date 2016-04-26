@@ -43,6 +43,10 @@ public class CardScrollPane extends ScrollPane implements FocusSelfHandler {
 		this.cardList.dropCard(draggingCard, scenePoint);
 	}
 
+	public void finishSlidingCard(Card slidingCard) {
+		this.cardList.finishSlidingCard(slidingCard);
+	}
+
 	@Override
 	public void handleFocusChange(boolean hasFocus) {
 		this.setFocused(false);

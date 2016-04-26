@@ -28,6 +28,7 @@ public class SlidableEntry implements IncrementalChangeEntry<Node> {
 	
 	public SlidableEntry(IncrementalProgressListener<Node> parent, Node slidingNode, double distanceX, double distanceY, long duration) {
 		this.notifyableParent = parent;
+		this.slidingNode = slidingNode;
 		double x = slidingNode.getLayoutX();
 		double y = slidingNode.getLayoutY();
 		this.positionX = new TimeChangeableQuantity(x, x + distanceX, duration);

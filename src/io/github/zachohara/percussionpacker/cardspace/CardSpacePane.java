@@ -22,17 +22,25 @@ import io.github.zachohara.percussionpacker.event.mouse.MouseEventListener;
 import io.github.zachohara.percussionpacker.event.mouse.MouseSelfHandler;
 import io.github.zachohara.percussionpacker.event.resize.RegionResizeListener;
 import io.github.zachohara.percussionpacker.event.resize.ResizeSelfHandler;
+import io.github.zachohara.percussionpacker.slide.IncrementalChangeThread;
+import io.github.zachohara.percussionpacker.slide.IncrementalProgressListener;
 import io.github.zachohara.percussionpacker.util.GraphicsUtil;
+import javafx.application.Platform;
 import javafx.event.EventType;
 import javafx.geometry.Point2D;
+import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 
-public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfHandler {
+public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfHandler, IncrementalProgressListener<Node> {
 	
 	public static final double DRAG_DIFFERENCE_THRESHOLD = 10;
+	public static final long SLIDE_DURATION = 1;
+	public static final long RESIZE_DURATION = 1;
 	
 	private ColumnPane columnPane;
+	
+	private IncrementalChangeThread sliderThread;
 	
 	private Card draggingCard;
 	private GhostCard placeholderCard;
@@ -54,6 +62,9 @@ public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfH
 		this.columnPane.setLayoutX(0);
 		this.columnPane.setLayoutY(0);
 		
+		this.sliderThread = new IncrementalChangeThread();
+		this.sliderThread.start();
+		
 		this.getChildren().add(this.columnPane);
 
 		this.setMinWidth(GraphicsUtil.getCumulativeMinWidth(this));
@@ -69,8 +80,22 @@ public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfH
 		this.updateCardPosition(0, 0);
 	}
 	
-	public void recieveSlidingCard(Card slidingCard) {
-		
+	public void recieveSlidingCard(Card slidingCard, double distanceY) {
+		Point2D localPoint = GraphicsUtil.getRelativePosition(this, slidingCard);
+		getChildren().add(slidingCard);
+		slidingCard.setLayoutX(localPoint.getX());
+		slidingCard.setLayoutY(localPoint.getY());
+		this.sliderThread.startSlidingNode(this, slidingCard, 0, distanceY, SLIDE_DURATION);
+	}
+	
+	@Override
+	public void finishIncrementalChange(Node slidingNode) {
+		if (slidingNode instanceof Card) {
+			Card slidingCard = (Card) slidingNode;
+			Platform.runLater(new Runnable() { public void run() {
+				columnPane.finishSlidingCard(slidingCard);
+			}});
+		}
 	}
 
 	@Override
