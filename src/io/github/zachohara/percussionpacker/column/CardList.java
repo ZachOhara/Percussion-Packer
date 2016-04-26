@@ -117,7 +117,7 @@ public class CardList extends VBox implements MouseSelfHandler, ResizeSelfHandle
 	private void removeGhostCards() {
 		for (int i = this.cards.size() - 1; i >= 0; i--) {
 			if (this.cards.get(i) instanceof GhostCard) {
-				this.remove(i);
+				this.remove(this.cards.get(i));
 			}
 		}
 	}
@@ -135,11 +135,6 @@ public class CardList extends VBox implements MouseSelfHandler, ResizeSelfHandle
 	private void remove(Card element) {
 		this.cards.remove(element);
 		this.getChildren().remove(element);
-	}
-	
-	private void remove(int index) {
-		this.cards.remove(index);
-		this.getChildren().remove(index);
 	}
 
 }
