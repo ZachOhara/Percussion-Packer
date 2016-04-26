@@ -111,20 +111,25 @@ public class CardList extends VBox implements MouseSelfHandler, ResizeSelfHandle
 			for (int i = 0; i < this.cards.size(); i++) {
 				if (oldPlaceholderIndex < i && i <= newPlaceholderIndex) {
 					Card slidingCard = this.cards.get(i);
-					this.getCardSpacePane().recieveSlidingCard(slidingCard, -draggingCard.getHeight());
-					this.remove(slidingCard);
+					slidingCard.setStyle("-fx-border-color: blue");
+					//this.getCardSpacePane().recieveSlidingCard(slidingCard, -draggingCard.getHeight());
+					//this.remove(slidingCard);
 					GhostCard ghost = new GhostCard(slidingCard);
 					ghost.setVisible(false);
-					this.add(i, ghost);
+					//this.add(i, ghost);
 				} else if (newPlaceholderIndex <= i && i < oldPlaceholderIndex) {
 					Card slidingCard = this.cards.get(i);
-					this.remove(slidingCard);
-					this.getCardSpacePane().recieveSlidingCard(slidingCard, draggingCard.getHeight());
+					slidingCard.setStyle("-fx-border-color: blue");
+					//this.getCardSpaceP
+					//this.remove(slidingCard);ane().recieveSlidingCard(slidingCard, draggingCard.getHeight());
 					GhostCard ghost = new GhostCard(slidingCard);
 					ghost.setVisible(false);
-					this.add(i, ghost);
+					//this.add(i, ghost);
+				} else {
+					this.cards.get(i).setStyle("");
 				}
 			}
+			// TODO: add the placeholder here
 		}
 	}
 
