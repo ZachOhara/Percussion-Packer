@@ -11,4 +11,4 @@
 * Make columns assume the current ratios after resizing the window
 * Add a velocity to moving cards
 * Make dragging cards resize to the current hovering column (with a velocity)
-* Make cards seat back into columns
+* Hover over top / bottom of scroll pane while dragging should cause scroll
