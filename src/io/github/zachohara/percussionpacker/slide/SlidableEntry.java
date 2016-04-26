@@ -18,22 +18,29 @@ package io.github.zachohara.percussionpacker.slide;
 
 import javafx.scene.Node;
 
-public class SlidableEntry implements Runnable {
+public class SlidableEntry implements IncrementalChangeEntry<Node> {
 	
+	private IncrementalProgressListener<Node> notifyableParent;
 	private Node slidingNode;
 	
 	private TimeChangeableQuantity positionX;
 	private TimeChangeableQuantity positionY;
 	
-	public SlidableEntry(Node slidingNode, double distanceX, double distanceY, long duration) {
+	public SlidableEntry(IncrementalProgressListener<Node> parent, Node slidingNode, double distanceX, double distanceY, long duration) {
+		this.notifyableParent = parent;
 		double x = slidingNode.getLayoutX();
 		double y = slidingNode.getLayoutY();
 		this.positionX = new TimeChangeableQuantity(x, x + distanceX, duration);
 		this.positionY = new TimeChangeableQuantity(y, y + distanceY, duration);
 	}
 	
-	public Node getNode() {
+	public Node getChangedObject() {
 		return this.slidingNode;
+	}
+
+	@Override
+	public IncrementalProgressListener<Node> getNotifyableParent() {
+		return this.notifyableParent;
 	}
 	
 	@Override
@@ -44,6 +51,10 @@ public class SlidableEntry implements Runnable {
 	public void doIncrementalChange() {
 		this.slidingNode.setLayoutX(this.positionX.getCurrentValue());
 		this.slidingNode.setLayoutY(this.positionY.getCurrentValue());
+	}
+	
+	public boolean isFinished() {
+		return this.positionX.isFinished() && this.positionY.isFinished();
 	}
 	
 }
