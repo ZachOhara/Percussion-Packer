@@ -26,6 +26,7 @@ import io.github.zachohara.percussionpacker.event.mouse.MouseEventListener;
 import io.github.zachohara.percussionpacker.event.mouse.MouseSelfHandler;
 import io.github.zachohara.percussionpacker.event.resize.RegionResizeListener;
 import io.github.zachohara.percussionpacker.event.resize.ResizeSelfHandler;
+import io.github.zachohara.percussionpacker.util.GraphicsUtil;
 import io.github.zachohara.percussionpacker.util.MathUtil;
 import io.github.zachohara.percussionpacker.window.PackingStage;
 import javafx.event.EventType;
@@ -35,14 +36,17 @@ import javafx.scene.layout.VBox;
 
 public class CardList extends VBox implements MouseSelfHandler, ResizeSelfHandler {
 	
+	private CardVelocityPane parent;
+	
 	private List<Card> cards;
 	
-	public CardList() {
+	public CardList(CardVelocityPane parent) {
 		super();
 		
 		MouseEventListener.createSelfHandler(this);
 		RegionResizeListener.createSelfHandler(this);
 		
+		this.parent = parent;
 		this.cards = new ArrayList<Card>();
 		
 		// --- Test code --- //
@@ -91,8 +95,42 @@ public class CardList extends VBox implements MouseSelfHandler, ResizeSelfHandle
 	private CardSpacePane getCardSpacePane() {
 		return PackingStage.getCardSpacePane();
 	}
-
+	
 	public void dropCard(Card draggingCard, Point2D scenePoint) {
+		Point2D localPoint = this.sceneToLocal(scenePoint);
+		if (draggingCard instanceof GhostCard) {
+			int oldPlaceholderIndex;
+			if (this.cards.contains(draggingCard)) {
+				oldPlaceholderIndex = this.cards.indexOf(draggingCard);
+			} else {
+				oldPlaceholderIndex = this.cards.size();
+			}
+			int newPlaceholderIndex = getDragCardIndex(localPoint.getY(), draggingCard.getHeight());
+			for (int i = 0; i < this.cards.size(); i++) {
+				if (oldPlaceholderIndex < i && i <= newPlaceholderIndex) {
+					Card slidingCard = this.cards.get(i);
+					this.parent.recieveSlidingCard(slidingCard, -draggingCard.getHeight());
+					GhostCard ghost = new GhostCard(slidingCard);
+					ghost.setVisible(false);
+					this.add(i, ghost);
+				} else if (newPlaceholderIndex <= i && i < oldPlaceholderIndex) {
+					Card slidingCard = this.cards.get(i);
+					this.parent.recieveSlidingCard(this.cards.get(i), draggingCard.getHeight());
+					GhostCard ghost = new GhostCard(slidingCard);
+					ghost.setVisible(false);
+					this.add(i, ghost);
+				}
+			}
+		}
+	}
+	
+	public void recieveFinishedSlidingCard(Card slidingCard, Point2D scenePoint) {
+		Point2D localPoint = this.sceneToLocal(scenePoint);
+		int insertIndex = this.getDragCardIndex(localPoint.getY(), slidingCard.getHeight());
+		this.set(insertIndex, slidingCard);
+	}
+
+	public void dropCardOld(Card draggingCard, Point2D scenePoint) {
 		Point2D localPoint = this.sceneToLocal(scenePoint);
 		this.removeGhostCards();
 		if (draggingCard != null) {
@@ -135,6 +173,11 @@ public class CardList extends VBox implements MouseSelfHandler, ResizeSelfHandle
 	private void remove(Card element) {
 		this.cards.remove(element);
 		this.getChildren().remove(element);
+	}
+	
+	private void set(int index, Card element) {
+		this.cards.set(index, element);
+		this.getChildren().set(index, element);
 	}
 
 }

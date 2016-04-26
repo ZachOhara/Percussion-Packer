@@ -24,7 +24,7 @@ import javafx.scene.control.ScrollPane;
 
 public class CardScrollPane extends ScrollPane implements FocusSelfHandler {
 	
-	private CardList cardList;
+	private CardVelocityPane cardListPane;
 	
 	public CardScrollPane() {
 		super();
@@ -35,12 +35,12 @@ public class CardScrollPane extends ScrollPane implements FocusSelfHandler {
 		this.setVbarPolicy(ScrollBarPolicy.AS_NEEDED);
 		this.setFitToWidth(true);
 		
-		this.cardList = new CardList();
-		this.setContent(this.cardList);
+		this.cardListPane = new CardVelocityPane();
+		this.setContent(this.cardListPane);
 	}
 	
 	public void dropCard(Card draggingCard, Point2D scenePoint) {
-		this.cardList.dropCard(draggingCard, scenePoint);
+		this.cardListPane.dropCard(draggingCard, scenePoint);
 	}
 
 	@Override
