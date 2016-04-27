@@ -139,71 +139,16 @@ public class CardList extends VBox implements MouseSelfHandler, ResizeSelfHandle
 	
 	private void slideCard(int cardIndex, double distance) {
 		Card slidingCard = this.cards.get(cardIndex);
-		System.out.println(slidingCard);
 		this.getCardSpacePane().recieveSlidingCard(slidingCard, distance);
 		this.remove(slidingCard);
 		GhostCard spacer = new SpaceCard(slidingCard);
 		this.add(cardIndex, spacer);
-	}
-	
-	public void dropCardOld2(Card draggingCard, Point2D scenePoint) {
-		Point2D localPoint = this.sceneToLocal(scenePoint);
-		if (draggingCard instanceof GhostCard || (draggingCard == null && this.findGhostCard() != -1)) {
-			int oldPlaceholderIndex;
-			int newPlaceholderIndex;
-			if (draggingCard instanceof GhostCard) {
-				if (this.cards.contains(draggingCard)) {
-					oldPlaceholderIndex = this.cards.indexOf(draggingCard);
-				} else {
-					oldPlaceholderIndex = this.cards.size();
-				}
-				newPlaceholderIndex = getDragCardIndex(localPoint.getY(), draggingCard.getHeight());
-			} else { // draggingCard == null
-				oldPlaceholderIndex = this.findGhostCard();
-				newPlaceholderIndex = this.cards.size();
-			}
-			for (int i = 0; i < this.cards.size(); i++) {
-				if (oldPlaceholderIndex < i && i <= newPlaceholderIndex) {
-					Card slidingCard = this.cards.get(i);
-					//slidingCard.setStyle("-fx-border-color: blue");
-					this.getCardSpacePane().recieveSlidingCard(slidingCard, -draggingCard.getHeight());
-					this.remove(slidingCard);
-					GhostCard ghost = new GhostCard(slidingCard);
-					ghost.setVisible(false);
-					this.add(i, ghost);
-				} else if (newPlaceholderIndex <= i && i < oldPlaceholderIndex) {
-					Card slidingCard = this.cards.get(i);
-					//slidingCard.setStyle("-fx-border-color: blue");
-					this.getCardSpacePane().recieveSlidingCard(slidingCard, draggingCard.getHeight());
-					this.remove(slidingCard);
-					GhostCard ghost = new GhostCard(slidingCard);
-					ghost.setVisible(false);
-					this.add(i, ghost);
-				} else {
-					//this.cards.get(i).setStyle("");
-				}
-			}
-		}
-		this.removeGhostCards();
-		if (draggingCard != null) {
-			int insertIndex = this.getDragCardIndex(localPoint.getY(), draggingCard.getHeight());
-			this.add(insertIndex, draggingCard);
-		}
 	}
 
 	public void finishSlidingCard(Card slidingCard) {
 		Point2D localPoint = GraphicsUtil.getRelativePosition(this, slidingCard);
 		int insertIndex = this.getDragCardIndex(localPoint.getY(), slidingCard.getHeight());
 		this.set(insertIndex, slidingCard);
-	}
-
-	public void dropCardOld(Card draggingCard, Point2D scenePoint) {
-		Point2D localPoint = this.sceneToLocal(scenePoint);
-		this.removeGhostCards();
-		if (draggingCard != null) {
-			int insertIndex = getDragCardIndex(localPoint.getY(), draggingCard.getHeight());
-			this.add(insertIndex, draggingCard);
-		}
 	}
 	
 	private int getDragCardIndex(double localY, double cardHeight) {
