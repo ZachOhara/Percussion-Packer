@@ -71,6 +71,7 @@ public class IncrementalChangeThread extends Thread {
 	}
 	
 	private <T> void removeAndNotify(IncrementalChangeEntry<T> entry) {
+		this.changeEntries.remove(entry);
 		entry.getNotifyableParent().finishIncrementalChange(entry.getChangedObject());
 	}
 	
