@@ -18,7 +18,6 @@ package io.github.zachohara.percussionpacker;
 
 import io.github.zachohara.percussionpacker.window.PackingStage;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.stage.Stage;
 
 public class PercussionPacker extends Application {
@@ -28,14 +27,8 @@ public class PercussionPacker extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		this.mainStage = new PackingStage();
-		this.mainStage.setOnCloseRequest(e -> close());
 		this.mainStage.show();
 		// use our own stage, and leave the given stage to the garbage collector
-	}
-	
-	public void close() {
-		Platform.exit();
-		System.exit(0);
 	}
 	
 	public static void main(String[] args) {
