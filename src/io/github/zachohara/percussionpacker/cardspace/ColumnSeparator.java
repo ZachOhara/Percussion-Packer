@@ -16,9 +16,9 @@
 
 package io.github.zachohara.percussionpacker.cardspace;
 
+import io.github.zachohara.fxeventcommon.mouse.MouseEventListener;
+import io.github.zachohara.fxeventcommon.mouse.MouseSelfHandler;
 import io.github.zachohara.percussionpacker.column.Column;
-import io.github.zachohara.percussionpacker.event.mouse.MouseEventListener;
-import io.github.zachohara.percussionpacker.event.mouse.MouseSelfHandler;
 import javafx.event.EventType;
 import javafx.scene.Cursor;
 import javafx.scene.input.MouseEvent;

@@ -16,10 +16,15 @@
 
 package io.github.zachohara.percussionpacker.window;
 
+import io.github.zachohara.fxeventcommon.window.WindowEventListener;
+import io.github.zachohara.fxeventcommon.window.WindowSelfHandler;
 import io.github.zachohara.percussionpacker.cardspace.CardSpacePane;
+import javafx.application.Platform;
+import javafx.event.EventType;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
-public class PackingStage extends Stage {
+public class PackingStage extends Stage implements WindowSelfHandler {
 	
 	public static final String WINDOW_TITLE = "Percussion Packer by Zach Ohara";
 	public static final int DEFAULT_HEIGHT = 500; // in pixels
@@ -31,6 +36,9 @@ public class PackingStage extends Stage {
 	
 	public PackingStage() {
 		super();
+		
+		WindowEventListener.createSelfHandler(this);
+		
 		PackingStage.singleton = this;
 		
 		this.workspaceScene = new WorkspaceScene();
@@ -56,6 +64,14 @@ public class PackingStage extends Stage {
 	
 	public static CardSpacePane getCardSpacePane() {
 		return PackingStage.singleton.workspaceScene.getWorkspaceRootPane().getCardSpacePane();
+	}
+
+	@Override
+	public void handleWindowEvent(WindowEvent event, EventType<? extends WindowEvent> type) {
+		if (type == WindowEvent.WINDOW_CLOSE_REQUEST) {
+			Platform.exit();
+			System.exit(0);
+		}
 	}
 
 }

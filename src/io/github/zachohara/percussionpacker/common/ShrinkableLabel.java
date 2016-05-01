@@ -16,9 +16,9 @@
 
 package io.github.zachohara.percussionpacker.common;
 
-import io.github.zachohara.percussionpacker.event.mouse.MouseListenable;
-import io.github.zachohara.percussionpacker.event.resize.RegionResizeListener;
-import io.github.zachohara.percussionpacker.event.resize.ResizeSelfHandler;
+import io.github.zachohara.fxeventcommon.mouse.MouseListenable;
+import io.github.zachohara.fxeventcommon.resize.RegionResizeListener;
+import io.github.zachohara.fxeventcommon.resize.ResizeSelfHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;

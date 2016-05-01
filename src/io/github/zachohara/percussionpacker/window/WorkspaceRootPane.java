@@ -16,9 +16,9 @@
 
 package io.github.zachohara.percussionpacker.window;
 
+import io.github.zachohara.fxeventcommon.resize.RegionResizeListener;
+import io.github.zachohara.fxeventcommon.resize.ResizeSelfHandler;
 import io.github.zachohara.percussionpacker.cardspace.CardSpacePane;
-import io.github.zachohara.percussionpacker.event.resize.RegionResizeListener;
-import io.github.zachohara.percussionpacker.event.resize.ResizeSelfHandler;
 import io.github.zachohara.percussionpacker.util.GraphicsUtil;
 import javafx.scene.layout.Pane;
 
