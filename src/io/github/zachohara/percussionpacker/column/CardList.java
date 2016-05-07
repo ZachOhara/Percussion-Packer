@@ -17,7 +17,9 @@
 package io.github.zachohara.percussionpacker.column;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import io.github.zachohara.fxeventcommon.mouse.MouseEventListener;
 import io.github.zachohara.fxeventcommon.mouse.MouseSelfHandler;
@@ -27,7 +29,6 @@ import io.github.zachohara.percussionpacker.card.Card;
 import io.github.zachohara.percussionpacker.card.GhostCard;
 import io.github.zachohara.percussionpacker.card.SpaceCard;
 import io.github.zachohara.percussionpacker.cardspace.CardSpacePane;
-import io.github.zachohara.percussionpacker.util.GraphicsUtil;
 import io.github.zachohara.percussionpacker.util.MathUtil;
 import io.github.zachohara.percussionpacker.window.PackingStage;
 import javafx.event.EventType;
@@ -39,12 +40,15 @@ public class CardList extends VBox implements MouseSelfHandler, ResizeSelfHandle
 	
 	private List<Card> cards;
 	
+	private Map<Card, SpaceCard> spaceCardMap;
+	
 	public CardList() {
 		super();
 		
 		MouseEventListener.createSelfHandler(this);
 		RegionResizeListener.createSelfHandler(this);
 		this.cards = new ArrayList<Card>();
+		this.spaceCardMap = new HashMap<Card, SpaceCard>();
 		
 		// --- Test code --- //
 		for (int i = 0; i < 20; i++) {
@@ -113,6 +117,7 @@ public class CardList extends VBox implements MouseSelfHandler, ResizeSelfHandle
 	private void slideOtherCards(Card draggingCard, int insertIndex) {
 		int oldPlaceholderIndex;
 		int newPlaceholderIndex;
+		double draggingCardHeight;
 		if (draggingCard instanceof GhostCard) {
 			newPlaceholderIndex = insertIndex;
 			if (this.cards.contains(draggingCard)) {
@@ -120,18 +125,18 @@ public class CardList extends VBox implements MouseSelfHandler, ResizeSelfHandle
 			} else {
 				oldPlaceholderIndex = this.cards.size();
 			}
-		} else {
+			draggingCardHeight = draggingCard.getHeight();
+		} else { // draggingCard is null
 			oldPlaceholderIndex = this.findGhostCard();
 			newPlaceholderIndex = this.cards.size();
+			draggingCardHeight = this.cards.get(this.findGhostCard()).getHeight();
 		}
 		for (int i = 0; i < this.cards.size(); i++) {
 			if (!(this.cards.get(i) instanceof SpaceCard)) {
 				if (oldPlaceholderIndex < i && i <= newPlaceholderIndex) {
-					this.slideCard(i, -draggingCard.getHeight());
-					this.cards.get(i).setStyle("-fx-border-color: blue");
+					this.slideCard(i, -draggingCardHeight);
 				} else if (newPlaceholderIndex <= i && i < oldPlaceholderIndex) {
-					this.slideCard(i, draggingCard.getHeight());
-					this.cards.get(i).setStyle("-fx-border-color: green");
+					this.slideCard(i, draggingCardHeight);
 				}
 			}
 		}
@@ -139,15 +144,30 @@ public class CardList extends VBox implements MouseSelfHandler, ResizeSelfHandle
 	
 	private void slideCard(int cardIndex, double distance) {
 		Card slidingCard = this.cards.get(cardIndex);
+		SpaceCard spacer = new SpaceCard(slidingCard);
+		//Point2D oldPoint = GraphicsUtil.getRelativePosition(getCardSpacePane(), slidingCard);
+		//this.getCardSpacePane().getChildren().add(slidingCard);
 		this.getCardSpacePane().recieveSlidingCard(slidingCard, distance);
 		this.remove(slidingCard);
-		GhostCard spacer = new SpaceCard(slidingCard);
 		this.add(cardIndex, spacer);
+		//slidingCard.setVisible(true);
+		//slidingCard.setLayoutX(oldPoint.getX());
+		//slidingCard.setLayoutY(oldPoint.getY());
+		//for (int i = 0; i < Math.abs(distance); i++) {
+		//	slidingCard.setLayoutY(slidingCard.getLayoutY() + Math.signum(distance));
+			//System.out.println(slidingCard.getLayoutY());
+			//try { Thread.sleep(1); } catch (InterruptedException e) { e.printStackTrace(); }
+		//}
+		this.spaceCardMap.put(slidingCard, spacer);
+		//this.finishSlidingCard(slidingCard);
 	}
 
 	public void finishSlidingCard(Card slidingCard) {
-		Point2D localPoint = GraphicsUtil.getRelativePosition(this, slidingCard);
-		int insertIndex = this.getDragCardIndex(localPoint.getY(), slidingCard.getHeight());
+		//Point2D localPoint = GraphicsUtil.getRelativePosition(this, slidingCard);
+		SpaceCard spacer = this.spaceCardMap.remove(slidingCard);		
+		int insertIndex = this.cards.indexOf(spacer);
+		//slidingCard.setLayoutX(localPoint.getX());
+		//slidingCard.setLayoutY(localPoint.getY());
 		this.set(insertIndex, slidingCard);
 	}
 	
