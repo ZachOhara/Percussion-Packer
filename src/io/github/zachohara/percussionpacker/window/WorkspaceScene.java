@@ -61,9 +61,9 @@ public class WorkspaceScene extends Scene implements MouseSelfHandler {
 				double mouseX = event.getSceneX();
 				double mouseY = event.getSceneY();
 				if (!(textFieldPos.getX() <= mouseX
-						&& mouseX < textFieldPos.getX() + textField.getWidth())
+						&& mouseX < textFieldPos.getX() + textField.getWidth()
 						&& textFieldPos.getY() <= mouseY
-						&& mouseY < textFieldPos.getY() + textField.getHeight()) {
+						&& mouseY < textFieldPos.getY() + textField.getHeight())) {
 					this.rootPane.requestFocus();
 				}
 			}
