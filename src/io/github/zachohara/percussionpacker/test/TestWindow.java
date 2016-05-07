@@ -17,6 +17,7 @@
 package io.github.zachohara.percussionpacker.test;
 
 import io.github.zachohara.percussionpacker.card.Card;
+import io.github.zachohara.percussionpacker.cardtype.TestCard;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -64,7 +65,7 @@ public class TestWindow extends Application {
 
 		stage.show();
 
-		Card c = new Card();
+		Card c = new TestCard();
 		c.setTitle("Ayy Lmao Ayy");
 		c.setLayoutX(100);
 		c.setLayoutY(100);

@@ -40,7 +40,7 @@ public class CardNameTag extends ClickEditableText {
 			+ "-fx-background-color: skyblue";
 
 	public CardNameTag() {
-		super(DEFAULT_TEXT, UNNAMED_FONT, MAX_FONT_SIZE);
+		super(DEFAULT_TEXT, UNNAMED_FONT, MAX_FONT_SIZE, true);
 
 		this.setWidthBuffer(CardNameTag.getBackgroundHorizontalOffset());
 		this.setHeightBuffer(CardNameTag.getBackgroundVerticalOffset());

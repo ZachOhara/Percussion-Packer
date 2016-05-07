@@ -24,8 +24,9 @@ import io.github.zachohara.fxeventcommon.mouse.MouseSelfHandler;
 import io.github.zachohara.fxeventcommon.resize.RegionResizeListener;
 import io.github.zachohara.fxeventcommon.resize.ResizeSelfHandler;
 import io.github.zachohara.percussionpacker.card.Card;
-import io.github.zachohara.percussionpacker.card.GhostCard;
 import io.github.zachohara.percussionpacker.cardspace.CardSpacePane;
+import io.github.zachohara.percussionpacker.cardtype.GhostCard;
+import io.github.zachohara.percussionpacker.cardtype.TestCard;
 import io.github.zachohara.percussionpacker.util.MathUtil;
 import io.github.zachohara.percussionpacker.window.PackingStage;
 import javafx.event.EventType;
@@ -47,7 +48,7 @@ public class CardList extends VBox implements MouseSelfHandler, ResizeSelfHandle
 
 		// --- Test code --- //
 		for (int i = 0; i < 20; i++) {
-			this.add(new Card());
+			this.add(new TestCard());
 			this.cards.get(i).setTitle(i + "-----------");
 		}
 		// ----------------- //

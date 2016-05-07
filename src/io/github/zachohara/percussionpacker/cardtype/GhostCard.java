@@ -1,12 +1,13 @@
-package io.github.zachohara.percussionpacker.card;
+package io.github.zachohara.percussionpacker.cardtype;
 
+import io.github.zachohara.percussionpacker.card.Card;
 import javafx.scene.Node;
 import javafx.scene.layout.Region;
 
 public class GhostCard extends Card {
 
 	public GhostCard(Card sizingCard) {
-		super();
+		super(sizingCard.getHeight(), false, false);
 		this.copySizing(sizingCard);
 		this.hideChildren();
 

@@ -33,6 +33,7 @@ public class ClickEditableText extends BorderPane implements FocusHandler, Mouse
 	private ResizeHandler notifyableParent;
 
 	private String defaultText;
+	private boolean isEditable;
 
 	private ShrinkableLabel displayLabel;
 	private UnfocusableTextField textField;
@@ -40,12 +41,13 @@ public class ClickEditableText extends BorderPane implements FocusHandler, Mouse
 	private boolean isEditing;
 	private boolean isDragging;
 
-	public ClickEditableText(String defaultText, String fontStyle, double maxFontSize) {
+	public ClickEditableText(String defaultText, String fontStyle, double maxFontSize, boolean isEditable) {
 		super();
 
 		RegionResizeListener.createSelfHandler(this);
 
 		this.defaultText = defaultText;
+		this.isEditable = isEditable;
 
 		this.displayLabel = new ShrinkableLabel(fontStyle, maxFontSize);
 		new MouseEventListener(this.displayLabel).addHandler(this);
@@ -135,8 +137,8 @@ public class ClickEditableText extends BorderPane implements FocusHandler, Mouse
 			this.isDragging = false;
 		} else if (type == MouseEvent.MOUSE_DRAGGED) {
 			this.isDragging = true;
-		} else if (type == MouseEvent.MOUSE_CLICKED) {
-			if (!this.isDragging) {
+		} else if (type == MouseEvent.MOUSE_RELEASED) {
+			if (this.isEditable && !this.isDragging) {
 				this.startRenaming();
 			}
 		}

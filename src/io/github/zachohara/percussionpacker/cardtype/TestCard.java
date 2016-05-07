@@ -14,19 +14,17 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package io.github.zachohara.percussionpacker.card;
+package io.github.zachohara.percussionpacker.cardtype;
 
-import io.github.zachohara.percussionpacker.common.ClickEditableText;
+import io.github.zachohara.percussionpacker.card.Card;
 
-public class CardTitle extends ClickEditableText {
 
-	public static final String DEFAULT_TEXT = "[enter a title]";
+public class TestCard extends Card {
 
-	public static final String FONT_STYLE = "Roboto";
-	public static final double MAX_FONT_SIZE = 16;
-
-	public CardTitle(boolean isEditable) {
-		super(DEFAULT_TEXT, FONT_STYLE, MAX_FONT_SIZE, isEditable);
+	public static final double DEFAULT_HEIGHT = 40; // in pixels
+	
+	public TestCard() {
+		super(DEFAULT_HEIGHT, true, true);
 	}
-
+	
 }
