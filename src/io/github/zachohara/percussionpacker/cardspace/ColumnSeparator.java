@@ -44,9 +44,9 @@ public class ColumnSeparator extends Pane implements MouseSelfHandler {
 
 		MouseEventListener.createSelfHandler(this);
 
-		this.setStyle(ColumnSeparator.STYLE);
-		this.setPrefWidth(ColumnSeparator.THICKNESS);
-		this.setMinWidth(ColumnSeparator.THICKNESS);
+		this.setStyle(STYLE);
+		this.setPrefWidth(THICKNESS);
+		this.setMinWidth(THICKNESS);
 
 		this.parent = parent;
 		this.leftColumn = leftColumn;

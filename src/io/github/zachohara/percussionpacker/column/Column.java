@@ -40,7 +40,7 @@ public class Column extends VBox implements ResizeSelfHandler {
 
 		this.getChildren().addAll(this.titlePane, this.cardList);
 
-		this.setMinWidth(Column.MIN_WIDTH);
+		this.setMinWidth(MIN_WIDTH);
 		this.setMinHeight(GraphicsUtil.getCumulativeMinHeight(this));
 	}
 

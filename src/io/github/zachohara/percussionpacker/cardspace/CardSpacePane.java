@@ -118,7 +118,7 @@ public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfH
 	}
 
 	private static boolean isOverThreshold(double dx, double dy) {
-		return Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2)) >= CardSpacePane.DRAG_DIFFERENCE_THRESHOLD;
+		return Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2)) >= DRAG_DIFFERENCE_THRESHOLD;
 	}
 
 }

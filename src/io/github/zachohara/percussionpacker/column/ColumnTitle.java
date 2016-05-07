@@ -42,15 +42,15 @@ public class ColumnTitle extends StackPane implements ResizeSelfHandler {
 
 		RegionResizeListener resizeListener = RegionResizeListener.createSelfHandler(this);
 
-		this.titleText = new ShrinkableLabel(ColumnTitle.TITLE_FONT, ColumnTitle.MAX_FONT_SIZE);
+		this.titleText = new ShrinkableLabel(TITLE_FONT, MAX_FONT_SIZE);
 		this.titleText.setText(name);
-		this.titleText.setWidthBuffer(ColumnTitle.WIDTH_BUFFER);
-		this.titleText.setHeightBuffer(ColumnTitle.HEIGHT_BUFFER);
+		this.titleText.setWidthBuffer(WIDTH_BUFFER);
+		this.titleText.setHeightBuffer(HEIGHT_BUFFER);
 
 		this.baseButton = new BackingButton(this, resizeListener);
 
-		this.setPrefHeight(ColumnTitle.PREF_HEIGHT);
-		this.setMinHeight(ColumnTitle.MIN_HEIGHT);
+		this.setPrefHeight(PREF_HEIGHT);
+		this.setMinHeight(MIN_HEIGHT);
 
 		this.getChildren().addAll(this.baseButton, this.titleText);
 	}

@@ -72,7 +72,7 @@ public class CardContentPane extends BorderPane implements ResizeSelfHandler {
 	@Override
 	public void handleResize() {
 		double idealWidth = this.title.getIdealTextWidth() + this.nameTag.getIdealTextWidth() + 1;
-		double availableWidth = this.getWidth() - (CardContentPane.HORIZONTAL_INSET_MARGIN * 4);
+		double availableWidth = this.getWidth() - (HORIZONTAL_INSET_MARGIN * 4);
 		double fractionAvailable = Math.min(1, availableWidth / idealWidth);
 
 		double titleWidth = this.title.getIdealTextWidth() * fractionAvailable;
@@ -81,7 +81,7 @@ public class CardContentPane extends BorderPane implements ResizeSelfHandler {
 		if (!this.title.isEditing()) {
 			this.title.setPrefWidth(titleWidth);
 		} else {
-			this.title.setPrefWidth(availableWidth - nameWidth - CardContentPane.TEXT_FIELD_WIDTH_MARGIN);
+			this.title.setPrefWidth(availableWidth - nameWidth - TEXT_FIELD_WIDTH_MARGIN);
 		}
 		if (!this.nameTag.isEditing()) {
 			this.nameTag.setPrefWidth(nameWidth);
@@ -89,7 +89,7 @@ public class CardContentPane extends BorderPane implements ResizeSelfHandler {
 			this.nameTag.setPrefWidth(availableWidth - titleWidth);
 		}
 
-		double availableHeight = this.getHeight() - (CardContentPane.VERTICAL_INSET_MARGIN * 2);
+		double availableHeight = this.getHeight() - (VERTICAL_INSET_MARGIN * 2);
 
 		this.title.setPrefHeight(Math.min(this.title.getIdealTextHeight(), availableHeight));
 		this.title.setMaxHeight(Math.min(this.title.getIdealTextHeight(), availableHeight));
@@ -98,8 +98,8 @@ public class CardContentPane extends BorderPane implements ResizeSelfHandler {
 	}
 
 	private static Insets getBorderInsets() {
-		return new Insets(CardContentPane.VERTICAL_INSET_MARGIN, CardContentPane.HORIZONTAL_INSET_MARGIN,
-				CardContentPane.VERTICAL_INSET_MARGIN, CardContentPane.HORIZONTAL_INSET_MARGIN);
+		return new Insets(VERTICAL_INSET_MARGIN, HORIZONTAL_INSET_MARGIN,
+				VERTICAL_INSET_MARGIN, HORIZONTAL_INSET_MARGIN);
 	}
 
 }

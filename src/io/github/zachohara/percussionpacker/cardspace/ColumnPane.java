@@ -36,9 +36,9 @@ public class ColumnPane extends HBox implements ResizeSelfHandler {
 	// @formatter:on
 
 	// the number of columns in the workspace; should not be adjusted here
-	public static final int NUM_COLUMNS = ColumnPane.COLUMN_NAMES.length;
+	public static final int NUM_COLUMNS = COLUMN_NAMES.length;
 	// the number of separators in the workspace; should not be adjusted here
-	public static final int NUM_SEPARATORS = ColumnPane.NUM_COLUMNS - 1;
+	public static final int NUM_SEPARATORS = NUM_COLUMNS - 1;
 
 	private double[] widthRatios;
 	private Column[] columns;
@@ -49,9 +49,9 @@ public class ColumnPane extends HBox implements ResizeSelfHandler {
 
 		RegionResizeListener.createSelfHandler(this);
 
-		this.widthRatios = new double[ColumnPane.NUM_COLUMNS];
-		this.columns = new Column[ColumnPane.NUM_COLUMNS];
-		this.separators = new ColumnSeparator[ColumnPane.NUM_SEPARATORS];
+		this.widthRatios = new double[NUM_COLUMNS];
+		this.columns = new Column[NUM_COLUMNS];
+		this.separators = new ColumnSeparator[NUM_SEPARATORS];
 
 		this.initializeColumns();
 
@@ -123,23 +123,23 @@ public class ColumnPane extends HBox implements ResizeSelfHandler {
 	}
 
 	private double getAvailableColumnSpace() {
-		return this.getWidth() - (ColumnPane.NUM_SEPARATORS * ColumnSeparator.THICKNESS);
+		return this.getWidth() - (NUM_SEPARATORS * ColumnSeparator.THICKNESS);
 	}
 
 	private void initializeColumns() {
 		// initialize columns
-		for (int i = 0; i < ColumnPane.NUM_COLUMNS; i++) {
-			this.widthRatios[i] = 1.0 / ColumnPane.NUM_COLUMNS;
-			this.columns[i] = new Column(ColumnPane.COLUMN_NAMES[i]);
+		for (int i = 0; i < NUM_COLUMNS; i++) {
+			this.widthRatios[i] = 1.0 / NUM_COLUMNS;
+			this.columns[i] = new Column(COLUMN_NAMES[i]);
 		}
 		// initialize separators
-		for (int i = 0; i < ColumnPane.NUM_SEPARATORS; i++) {
+		for (int i = 0; i < NUM_SEPARATORS; i++) {
 			this.separators[i] = new ColumnSeparator(this, this.columns[i], this.columns[i + 1]);
 		}
 		// add all elements to this pane
-		for (int i = 0; i < ColumnPane.NUM_COLUMNS; i++) {
+		for (int i = 0; i < NUM_COLUMNS; i++) {
 			this.getChildren().add(this.columns[i]);
-			if (i < ColumnPane.NUM_SEPARATORS) {
+			if (i < NUM_SEPARATORS) {
 				this.getChildren().add(this.separators[i]);
 			}
 		}

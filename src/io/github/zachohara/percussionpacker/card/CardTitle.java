@@ -26,7 +26,7 @@ public class CardTitle extends ClickEditableText {
 	public static final double MAX_FONT_SIZE = 16;
 
 	public CardTitle() {
-		super(CardTitle.DEFAULT_TEXT, CardTitle.FONT_STYLE, CardTitle.MAX_FONT_SIZE);
+		super(DEFAULT_TEXT, FONT_STYLE, MAX_FONT_SIZE);
 	}
 
 }

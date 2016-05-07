@@ -39,7 +39,7 @@ public class BackingButton extends Button implements ResizeHandler {
 
 	@Override
 	public void handleResize() {
-		this.setPrefHeight(this.parent.getHeight() - BackingButton.HEIGHT_OFFSET);
+		this.setPrefHeight(this.parent.getHeight() - HEIGHT_OFFSET);
 		this.setPrefWidth(this.parent.getWidth());
 	}
 

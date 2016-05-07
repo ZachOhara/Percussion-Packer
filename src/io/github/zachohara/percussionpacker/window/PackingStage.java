@@ -43,7 +43,7 @@ public class PackingStage extends Stage implements WindowSelfHandler {
 
 		this.workspaceScene = new WorkspaceScene();
 
-		this.setTitle(PackingStage.WINDOW_TITLE);
+		this.setTitle(WINDOW_TITLE);
 		this.setScene(this.workspaceScene);
 		this.show();
 		this.setMinSize();

@@ -40,8 +40,8 @@ public class Card extends StackPane implements MouseSelfHandler, ResizeSelfHandl
 		MouseEventListener.createSelfHandler(this);
 		RegionResizeListener resizeListener = RegionResizeListener.createSelfHandler(this);
 
-		this.setPrefHeight(Card.DEFAULT_HEIGHT);
-		this.setMinHeight(Card.DEFAULT_HEIGHT);
+		this.setPrefHeight(DEFAULT_HEIGHT);
+		this.setMinHeight(DEFAULT_HEIGHT);
 
 		this.backingButton = new BackingButton(this, resizeListener);
 

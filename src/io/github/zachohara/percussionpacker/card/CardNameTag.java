@@ -31,16 +31,16 @@ public class CardNameTag extends ClickEditableText {
 
 	public static final String UNNAMED_TEXT_STYLE = "-fx-text-fill: seagreen";
 	public static final String UNNAMED_FONT = "Arial";
-	public static final String UNNAMED_PANE_STYLE =
-			CardNameTag.BACKGROUND_STYLE + "-fx-background-color: #CCCCCC";
+	public static final String UNNAMED_PANE_STYLE = BACKGROUND_STYLE
+			+ "-fx-background-color: #CCCCCC";
 			
 	public static final String NAMED_TEXT_STYLE = "-fx-text-fill: darkgreen";
 	public static final String NAMED_FONT = "Arial Bold";
-	public static final String NAMED_PANE_STYLE =
-			CardNameTag.BACKGROUND_STYLE + "-fx-background-color: skyblue";
+	public static final String NAMED_PANE_STYLE = BACKGROUND_STYLE
+			+ "-fx-background-color: skyblue";
 			
 	public CardNameTag() {
-		super(CardNameTag.DEFAULT_TEXT, CardNameTag.UNNAMED_FONT, CardNameTag.MAX_FONT_SIZE);
+		super(DEFAULT_TEXT, UNNAMED_FONT, MAX_FONT_SIZE);
 
 		this.setWidthBuffer(CardNameTag.getBackgroundHorizontalOffset());
 		this.setHeightBuffer(CardNameTag.getBackgroundVerticalOffset());
@@ -49,23 +49,23 @@ public class CardNameTag extends ClickEditableText {
 	@Override
 	public void setText(String text) {
 		if (text.trim().length() == 0) {
-			this.setDisplayTextStyle(CardNameTag.UNNAMED_TEXT_STYLE);
-			this.setDisplayFont(CardNameTag.UNNAMED_FONT);
-			this.setDisplayPaneStyle(CardNameTag.UNNAMED_PANE_STYLE);
+			this.setDisplayTextStyle(UNNAMED_TEXT_STYLE);
+			this.setDisplayFont(UNNAMED_FONT);
+			this.setDisplayPaneStyle(UNNAMED_PANE_STYLE);
 		} else {
-			this.setDisplayTextStyle(CardNameTag.NAMED_TEXT_STYLE);
-			this.setDisplayFont(CardNameTag.NAMED_FONT);
-			this.setDisplayPaneStyle(CardNameTag.NAMED_PANE_STYLE);
+			this.setDisplayTextStyle(NAMED_TEXT_STYLE);
+			this.setDisplayFont(NAMED_FONT);
+			this.setDisplayPaneStyle(NAMED_PANE_STYLE);
 		}
 		super.setText(text);
 	}
 
 	private static double getBackgroundHorizontalOffset() {
-		return 2 * CardNameTag.BACKGROUND_WIDTH;
+		return 2 * BACKGROUND_WIDTH;
 	}
 
 	private static double getBackgroundVerticalOffset() {
-		return 2 * CardNameTag.BACKGROUND_HEIGHT;
+		return 2 * BACKGROUND_HEIGHT;
 	}
 
 }
