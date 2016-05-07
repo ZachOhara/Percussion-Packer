@@ -93,7 +93,7 @@ public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfH
 	private void handleMouseDrag(double x, double y) {
 		double dx = x - this.lastMouseX;
 		double dy = y - this.lastMouseY;
-		if (this.isOverThreshold(dx, dy)) {
+		if (CardSpacePane.isOverThreshold(dx, dy)) {
 			this.isDragging = true;
 		}
 		if (this.isDragging) {
@@ -117,7 +117,7 @@ public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfH
 		return this.localToScene(this.draggingCard.getCenterPoint());
 	}
 	
-	private boolean isOverThreshold(double dx, double dy) {
+	private static boolean isOverThreshold(double dx, double dy) {
 		return Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2)) >= DRAG_DIFFERENCE_THRESHOLD;
 	}
 
