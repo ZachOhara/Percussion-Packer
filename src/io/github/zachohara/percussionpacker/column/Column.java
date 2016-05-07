@@ -23,14 +23,14 @@ import io.github.zachohara.percussionpacker.util.GraphicsUtil;
 import javafx.geometry.Point2D;
 import javafx.scene.layout.VBox;
 
-public class Column extends VBox implements ResizeSelfHandler {
+public abstract class Column extends VBox implements ResizeSelfHandler {
 
 	public static final int MIN_WIDTH = 120;
 
 	private ColumnTitle titlePane;
 	private CardScrollPane cardList;
 
-	public Column(String title) {
+	protected Column(String title) {
 		super();
 
 		RegionResizeListener.createSelfHandler(this);

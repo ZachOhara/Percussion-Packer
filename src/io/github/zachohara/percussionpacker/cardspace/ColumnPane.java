@@ -20,24 +20,17 @@ import io.github.zachohara.fxeventcommon.resize.RegionResizeListener;
 import io.github.zachohara.fxeventcommon.resize.ResizeSelfHandler;
 import io.github.zachohara.percussionpacker.card.Card;
 import io.github.zachohara.percussionpacker.column.Column;
+import io.github.zachohara.percussionpacker.columntype.EquipmentColumn;
+import io.github.zachohara.percussionpacker.columntype.MalletColumn;
+import io.github.zachohara.percussionpacker.columntype.PackingColumn;
+import io.github.zachohara.percussionpacker.columntype.SongColumn;
 import io.github.zachohara.percussionpacker.util.GraphicsUtil;
 import javafx.geometry.Point2D;
 import javafx.scene.layout.HBox;
 
 public class ColumnPane extends HBox implements ResizeSelfHandler {
 
-	// @formatter:off
-	public static final String[] COLUMN_NAMES = {
-			"Song List",
-			"Equipment List",
-			"Packing List",
-			"Mallet List"
-	};
-	// @formatter:on
-
-	// the number of columns in the workspace; should not be adjusted here
-	public static final int NUM_COLUMNS = COLUMN_NAMES.length;
-	// the number of separators in the workspace; should not be adjusted here
+	public static final int NUM_COLUMNS = 4;
 	public static final int NUM_SEPARATORS = NUM_COLUMNS - 1;
 
 	private double[] widthRatios;
@@ -128,9 +121,12 @@ public class ColumnPane extends HBox implements ResizeSelfHandler {
 
 	private void initializeColumns() {
 		// initialize columns
+		this.columns[0] = new SongColumn();
+		this.columns[1] = new EquipmentColumn();
+		this.columns[2] = new PackingColumn();
+		this.columns[3] = new MalletColumn();
 		for (int i = 0; i < NUM_COLUMNS; i++) {
 			this.widthRatios[i] = 1.0 / NUM_COLUMNS;
-			this.columns[i] = new Column(COLUMN_NAMES[i]);
 		}
 		// initialize separators
 		for (int i = 0; i < NUM_SEPARATORS; i++) {
