@@ -23,22 +23,22 @@ import javafx.geometry.Point2D;
 import javafx.scene.control.ScrollPane;
 
 public class CardScrollPane extends ScrollPane implements FocusSelfHandler {
-	
+
 	private CardList cardList;
-	
+
 	public CardScrollPane() {
 		super();
-		
+
 		FocusChangeListener.createSelfHandler(this);
-		
+
 		this.setHbarPolicy(ScrollBarPolicy.NEVER);
 		this.setVbarPolicy(ScrollBarPolicy.AS_NEEDED);
 		this.setFitToWidth(true);
-		
+
 		this.cardList = new CardList();
 		this.setContent(this.cardList);
 	}
-	
+
 	public void dropCard(Card draggingCard, Point2D scenePoint) {
 		this.cardList.dropCard(draggingCard, scenePoint);
 	}

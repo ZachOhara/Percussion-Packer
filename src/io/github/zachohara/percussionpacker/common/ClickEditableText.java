@@ -29,43 +29,43 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 
 public class ClickEditableText extends BorderPane implements FocusHandler, MouseHandler, ResizeSelfHandler {
-	
+
 	private ResizeHandler notifyableParent;
-	
+
 	private String defaultText;
-	
+
 	private ShrinkableLabel displayLabel;
 	private UnfocusableTextField textField;
-	
+
 	private boolean isEditing;
 	private boolean isDragging;
-	
+
 	public ClickEditableText(String defaultText, String fontStyle, double maxFontSize) {
 		super();
-		
+
 		RegionResizeListener.createSelfHandler(this);
-		
+
 		this.defaultText = defaultText;
-		
+
 		this.displayLabel = new ShrinkableLabel(fontStyle, maxFontSize);
 		new MouseEventListener(this.displayLabel).addHandler(this);
 		BorderPane.setAlignment(this.displayLabel, Pos.CENTER);
-		
+
 		this.textField = new UnfocusableTextField();
 		new FocusChangeListener(this.textField).addHandler(this);
 		BorderPane.setAlignment(this.textField, Pos.CENTER);
-		
+
 		this.finishRenaming();
 	}
-	
+
 	public double getIdealTextWidth() {
-		return displayLabel.getIdealTextWidth();
+		return this.displayLabel.getIdealTextWidth();
 	}
 
 	public double getIdealTextHeight() {
-		return displayLabel.getIdealTextHeight();
+		return this.displayLabel.getIdealTextHeight();
 	}
-	
+
 	public boolean isEditing() {
 		return this.isEditing;
 	}
@@ -77,7 +77,7 @@ public class ClickEditableText extends BorderPane implements FocusHandler, Mouse
 			return "";
 		}
 	}
-	
+
 	public void setText(String text) {
 		String displayText = text.trim();
 		if (displayText.length() > 0) {
@@ -89,27 +89,27 @@ public class ClickEditableText extends BorderPane implements FocusHandler, Mouse
 		}
 		this.notifyParent();
 	}
-	
+
 	public void setWidthBuffer(double widthBuffer) {
 		this.displayLabel.setWidthBuffer(widthBuffer);
 	}
-	
+
 	public void setHeightBuffer(double heightBuffer) {
 		this.displayLabel.setHeightBuffer(heightBuffer);
 	}
-	
+
 	public void setDisplayTextStyle(String style) {
 		this.displayLabel.setTextStyle(style);
 	}
-	
+
 	public void setDisplayFont(String font) {
 		this.displayLabel.setFont(font);
 	}
-	
+
 	public void setDisplayPaneStyle(String style) {
 		this.displayLabel.setStyle(style);
 	}
-	
+
 	public void setNotifyableParent(ResizeHandler parent) {
 		this.notifyableParent = parent;
 	}
@@ -141,25 +141,25 @@ public class ClickEditableText extends BorderPane implements FocusHandler, Mouse
 			}
 		}
 	}
-	
+
 	private void startRenaming() {
 		this.isEditing = true;
 		this.notifyParent();
 		this.setCenter(this.textField);
 		this.textField.requestFocus();
 	}
-	
+
 	private void finishRenaming() {
 		this.isEditing = false;
 		this.notifyParent();
 		this.setText(this.textField.getText());
 		this.setCenter(this.displayLabel);
 	}
-	
+
 	private void notifyParent() {
 		if (this.notifyableParent != null) {
 			this.notifyableParent.handleResize();
 		}
 	}
-	
+
 }

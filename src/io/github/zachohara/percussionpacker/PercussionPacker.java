@@ -21,7 +21,7 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 
 public class PercussionPacker extends Application {
-	
+
 	private Stage mainStage;
 
 	@Override
@@ -30,7 +30,7 @@ public class PercussionPacker extends Application {
 		this.mainStage.show();
 		// use our own stage, and leave the given stage to the garbage collector
 	}
-	
+
 	public static void main(String[] args) {
 		Application.launch(args);
 	}

@@ -4,16 +4,16 @@ import javafx.scene.Node;
 import javafx.scene.layout.Region;
 
 public class GhostCard extends Card {
-	
+
 	public GhostCard(Card sizingCard) {
 		super();
 		this.copySizing(sizingCard);
 		this.hideChildren();
-		
+
 		// for testing
 		this.setStyle("-fx-background-color: pink");
 	}
-	
+
 	private void copySizing(Region copyFrom) {
 		this.setMinWidth(copyFrom.getMinWidth());
 		this.setMinHeight(copyFrom.getMinHeight());
@@ -22,7 +22,7 @@ public class GhostCard extends Card {
 		this.setMaxWidth(copyFrom.getMaxWidth());
 		this.setMaxHeight(copyFrom.getMaxHeight());
 	}
-	
+
 	private void hideChildren() {
 		for (Node n : this.getChildren()) {
 			n.setVisible(false);

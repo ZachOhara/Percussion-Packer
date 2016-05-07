@@ -25,43 +25,43 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 public class PackingStage extends Stage implements WindowSelfHandler {
-	
+
 	public static final String WINDOW_TITLE = "Percussion Packer by Zach Ohara";
 	public static final int DEFAULT_HEIGHT = 500; // in pixels
 	public static final int DEFAULT_WIDTH = 1100; // in pixels
-	
+
 	private static PackingStage singleton;
-	
+
 	private WorkspaceScene workspaceScene;
-	
+
 	public PackingStage() {
 		super();
-		
+
 		WindowEventListener.createSelfHandler(this);
-		
+
 		PackingStage.singleton = this;
-		
+
 		this.workspaceScene = new WorkspaceScene();
-		
-		this.setTitle(WINDOW_TITLE);
+
+		this.setTitle(PackingStage.WINDOW_TITLE);
 		this.setScene(this.workspaceScene);
 		this.show();
 		this.setMinSize();
 	}
-	
+
 	private void setMinSize() {
 		this.setMinWidth(this.workspaceScene.getMinWidth() + this.getDecorationWidth());
 		this.setMinHeight(this.workspaceScene.getMinHeight() + this.getDecorationHeight());
 	}
-	
+
 	private double getDecorationWidth() {
 		return this.getWidth() - this.getScene().getWidth();
 	}
-	
+
 	private double getDecorationHeight() {
 		return this.getHeight() - this.getScene().getHeight();
 	}
-	
+
 	public static CardSpacePane getCardSpacePane() {
 		return PackingStage.singleton.workspaceScene.getWorkspaceRootPane().getCardSpacePane();
 	}

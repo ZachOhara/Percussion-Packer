@@ -17,7 +17,7 @@
 package io.github.zachohara.percussionpacker.util;
 
 public class MathUtil {
-	
+
 	private MathUtil() {
 		// take no action
 	}
@@ -33,5 +33,5 @@ public class MathUtil {
 		}
 		return minIndex;
 	}
-	
+
 }

@@ -22,11 +22,11 @@ import javafx.scene.Parent;
 import javafx.scene.layout.Region;
 
 public class GraphicsUtil {
-	
+
 	private GraphicsUtil() {
 		// take no action
 	}
-	
+
 	public static double getCumulativeMinWidth(Parent p) {
 		double minWidth = 0;
 		for (Node n : p.getChildrenUnmodifiable()) {
@@ -36,7 +36,7 @@ public class GraphicsUtil {
 		}
 		return minWidth;
 	}
-	
+
 	public static double getCumulativeMinHeight(Parent p) {
 		double minHeight = 0;
 		for (Node n : p.getChildrenUnmodifiable()) {
@@ -46,29 +46,29 @@ public class GraphicsUtil {
 		}
 		return minHeight;
 	}
-	
+
 	public static double getRelativeX(Node base, Node pos) {
-		return getRelativePosition(base, pos).getX();
+		return GraphicsUtil.getRelativePosition(base, pos).getX();
 	}
-	
+
 	public static double getRelativeY(Node base, Node pos) {
-		return getRelativePosition(base, pos).getY();
+		return GraphicsUtil.getRelativePosition(base, pos).getY();
 	}
-	
+
 	public static Point2D getRelativePosition(Node base, Node pos) {
-		return base.sceneToLocal(getScenePosition(pos));
+		return base.sceneToLocal(GraphicsUtil.getScenePosition(pos));
 	}
-	
+
 	public static double getSceneX(Node n) {
-		return getScenePosition(n).getX();
+		return GraphicsUtil.getScenePosition(n).getX();
 	}
-	
+
 	public static double getSceneY(Node n) {
-		return getScenePosition(n).getY();
+		return GraphicsUtil.getScenePosition(n).getY();
 	}
-	
+
 	public static Point2D getScenePosition(Node n) {
 		return n.localToScene(Point2D.ZERO);
 	}
-	
+
 }

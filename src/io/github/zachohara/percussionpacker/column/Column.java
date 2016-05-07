@@ -24,26 +24,26 @@ import javafx.geometry.Point2D;
 import javafx.scene.layout.VBox;
 
 public class Column extends VBox implements ResizeSelfHandler {
-	
+
 	public static final int MIN_WIDTH = 120;
-	
+
 	private ColumnTitle titlePane;
 	private CardScrollPane cardList;
-	
+
 	public Column(String title) {
 		super();
 
 		RegionResizeListener.createSelfHandler(this);
-		
+
 		this.titlePane = new ColumnTitle(title);
 		this.cardList = new CardScrollPane();
-		
+
 		this.getChildren().addAll(this.titlePane, this.cardList);
-		
-		this.setMinWidth(MIN_WIDTH);
+
+		this.setMinWidth(Column.MIN_WIDTH);
 		this.setMinHeight(GraphicsUtil.getCumulativeMinHeight(this));
 	}
-	
+
 	public void dropCard(Card draggingCard, Point2D scenePoint) {
 		this.cardList.dropCard(draggingCard, scenePoint);
 	}
@@ -53,7 +53,7 @@ public class Column extends VBox implements ResizeSelfHandler {
 		this.titlePane.setPrefWidth(this.getWidth());
 		this.cardList.setPrefHeight(this.getAvailableCardHeight());
 	}
-	
+
 	protected double getAvailableCardHeight() {
 		return Math.max(0, this.getHeight() - this.titlePane.getPrefHeight());
 	}

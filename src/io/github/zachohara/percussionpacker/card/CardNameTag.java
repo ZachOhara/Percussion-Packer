@@ -21,51 +21,51 @@ import io.github.zachohara.percussionpacker.common.ClickEditableText;
 public class CardNameTag extends ClickEditableText {
 
 	public static final String DEFAULT_TEXT = "[name this]";
-	
+
 	public static final double MAX_FONT_SIZE = 14;
-	
+
 	public static final double BACKGROUND_WIDTH = 5;
 	public static final double BACKGROUND_HEIGHT = 5;
-	
+
 	public static final String BACKGROUND_STYLE = "-fx-background-radius: 7 7 7 7;";
-	
+
 	public static final String UNNAMED_TEXT_STYLE = "-fx-text-fill: seagreen";
 	public static final String UNNAMED_FONT = "Arial";
-	public static final String UNNAMED_PANE_STYLE = BACKGROUND_STYLE
-			+ "-fx-background-color: #CCCCCC";
-	
+	public static final String UNNAMED_PANE_STYLE =
+			CardNameTag.BACKGROUND_STYLE + "-fx-background-color: #CCCCCC";
+			
 	public static final String NAMED_TEXT_STYLE = "-fx-text-fill: darkgreen";
 	public static final String NAMED_FONT = "Arial Bold";
-	public static final String NAMED_PANE_STYLE = BACKGROUND_STYLE
-			+ "-fx-background-color: skyblue";
-
+	public static final String NAMED_PANE_STYLE =
+			CardNameTag.BACKGROUND_STYLE + "-fx-background-color: skyblue";
+			
 	public CardNameTag() {
-		super(DEFAULT_TEXT, UNNAMED_FONT, MAX_FONT_SIZE);
-		
-		this.setWidthBuffer(getBackgroundHorizontalOffset());
-		this.setHeightBuffer(getBackgroundVerticalOffset());
+		super(CardNameTag.DEFAULT_TEXT, CardNameTag.UNNAMED_FONT, CardNameTag.MAX_FONT_SIZE);
+
+		this.setWidthBuffer(CardNameTag.getBackgroundHorizontalOffset());
+		this.setHeightBuffer(CardNameTag.getBackgroundVerticalOffset());
 	}
-	
+
 	@Override
 	public void setText(String text) {
 		if (text.trim().length() == 0) {
-			this.setDisplayTextStyle(UNNAMED_TEXT_STYLE);
-			this.setDisplayFont(UNNAMED_FONT);
-			this.setDisplayPaneStyle(UNNAMED_PANE_STYLE);
+			this.setDisplayTextStyle(CardNameTag.UNNAMED_TEXT_STYLE);
+			this.setDisplayFont(CardNameTag.UNNAMED_FONT);
+			this.setDisplayPaneStyle(CardNameTag.UNNAMED_PANE_STYLE);
 		} else {
-			this.setDisplayTextStyle(NAMED_TEXT_STYLE);
-			this.setDisplayFont(NAMED_FONT);
-			this.setDisplayPaneStyle(NAMED_PANE_STYLE);
+			this.setDisplayTextStyle(CardNameTag.NAMED_TEXT_STYLE);
+			this.setDisplayFont(CardNameTag.NAMED_FONT);
+			this.setDisplayPaneStyle(CardNameTag.NAMED_PANE_STYLE);
 		}
 		super.setText(text);
 	}
-	
+
 	private static double getBackgroundHorizontalOffset() {
-		return 2 * BACKGROUND_WIDTH;
+		return 2 * CardNameTag.BACKGROUND_WIDTH;
 	}
-	
+
 	private static double getBackgroundVerticalOffset() {
-		return 2 * BACKGROUND_HEIGHT;
+		return 2 * CardNameTag.BACKGROUND_HEIGHT;
 	}
-	
+
 }

@@ -11,20 +11,20 @@ import javafx.stage.StageStyle;
 public class RulerWindow extends Application implements ChangeListener<Number> {
 
 	private Pane pane;
-	
+
 	@Override
 	public void start(Stage arg0) {
 		arg0 = new Stage(StageStyle.UTILITY);
-		pane = new Pane();
-		pane.setStyle("-fx-background-color: black");
-		pane.widthProperty().addListener(this);
-		pane.heightProperty().addListener(this);
-		Scene s = new Scene(pane);
+		this.pane = new Pane();
+		this.pane.setStyle("-fx-background-color: black");
+		this.pane.widthProperty().addListener(this);
+		this.pane.heightProperty().addListener(this);
+		Scene s = new Scene(this.pane);
 		arg0.setScene(s);
-		
+
 		arg0.show();
 	}
-	
+
 	public static void main(String[] args) {
 		Application.launch(RulerWindow.class, args);
 	}

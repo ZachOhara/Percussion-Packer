@@ -25,38 +25,40 @@ import javafx.geometry.Point2D;
 import javafx.scene.layout.HBox;
 
 public class ColumnPane extends HBox implements ResizeSelfHandler {
-	
+
+	// @formatter:off
 	public static final String[] COLUMN_NAMES = {
 			"Song List",
 			"Equipment List",
 			"Packing List",
 			"Mallet List"
 	};
-	
+	// @formatter:on
+
 	// the number of columns in the workspace; should not be adjusted here
-	public static final int NUM_COLUMNS = COLUMN_NAMES.length;
+	public static final int NUM_COLUMNS = ColumnPane.COLUMN_NAMES.length;
 	// the number of separators in the workspace; should not be adjusted here
-	public static final int NUM_SEPARATORS = NUM_COLUMNS - 1;
-	
+	public static final int NUM_SEPARATORS = ColumnPane.NUM_COLUMNS - 1;
+
 	private double[] widthRatios;
 	private Column[] columns;
 	private ColumnSeparator[] separators;
-	
+
 	public ColumnPane() {
 		super();
-		
+
 		RegionResizeListener.createSelfHandler(this);
-		
-		this.widthRatios = new double[NUM_COLUMNS];
-		this.columns = new Column[NUM_COLUMNS];
-		this.separators = new ColumnSeparator[NUM_SEPARATORS];
-		
+
+		this.widthRatios = new double[ColumnPane.NUM_COLUMNS];
+		this.columns = new Column[ColumnPane.NUM_COLUMNS];
+		this.separators = new ColumnSeparator[ColumnPane.NUM_SEPARATORS];
+
 		this.initializeColumns();
-		
+
 		this.setMinWidth(GraphicsUtil.getCumulativeMinWidth(this));
 		this.setMinHeight(this.columns[0].getMinHeight());
 	}
-	
+
 	public void dropCard(Card draggingCard, Point2D scenePoint) {
 		Point2D localPoint = this.sceneToLocal(scenePoint);
 		Column hoveringColumn = this.getHoveringColumn(localPoint.getX());
@@ -69,26 +71,26 @@ public class ColumnPane extends HBox implements ResizeSelfHandler {
 			}
 		}
 	}
-	
+
 	private Column getHoveringColumn(double localX) {
 		// check if too far left
 		if (localX < this.columns[0].getLayoutX()) {
 			return this.columns[0];
 		}
-		
+
 		// check if too far right
 		Column lastColumn = this.columns[this.columns.length - 1];
 		if (localX >= lastColumn.getLayoutX() + lastColumn.getWidth()) {
 			return lastColumn;
 		}
-		
+
 		// check if the point is in a column
 		for (Column c : this.columns) {
 			if (c.getLayoutX() <= localX && localX < c.getLayoutX() + c.getWidth()) {
 				return c;
 			}
 		}
-		
+
 		// check if the point is on a boundary
 		for (int i = 0; i < this.separators.length; i++) {
 			ColumnSeparator sep = this.separators[i];
@@ -100,13 +102,13 @@ public class ColumnPane extends HBox implements ResizeSelfHandler {
 				}
 			}
 		}
-		
+
 		throw new IllegalArgumentException("X-Coordinate could not be placed to a column");
 	}
-	
+
 	protected void finishColumnResizing() {
 		double availableSpace = this.getAvailableColumnSpace();
-		for (int i = 0; i < NUM_COLUMNS; i++) {
+		for (int i = 0; i < ColumnPane.NUM_COLUMNS; i++) {
 			this.widthRatios[i] = this.columns[i].getWidth() / availableSpace;
 		}
 	}
@@ -114,30 +116,30 @@ public class ColumnPane extends HBox implements ResizeSelfHandler {
 	@Override
 	public void handleResize() {
 		double availableSpace = this.getAvailableColumnSpace();
-		for (int i = 0; i < NUM_COLUMNS; i++) {
+		for (int i = 0; i < ColumnPane.NUM_COLUMNS; i++) {
 			this.columns[i].setPrefWidth(availableSpace * this.widthRatios[i]);
 			this.columns[i].setPrefHeight(this.getHeight());
 		}
 	}
-	
+
 	private double getAvailableColumnSpace() {
-		return this.getWidth() - (NUM_SEPARATORS * ColumnSeparator.THICKNESS);
+		return this.getWidth() - (ColumnPane.NUM_SEPARATORS * ColumnSeparator.THICKNESS);
 	}
-	
+
 	private void initializeColumns() {
 		// initialize columns
-		for (int i = 0; i < NUM_COLUMNS; i++) {
-			this.widthRatios[i] = 1.0 / NUM_COLUMNS;
-			this.columns[i] = new Column(COLUMN_NAMES[i]);
+		for (int i = 0; i < ColumnPane.NUM_COLUMNS; i++) {
+			this.widthRatios[i] = 1.0 / ColumnPane.NUM_COLUMNS;
+			this.columns[i] = new Column(ColumnPane.COLUMN_NAMES[i]);
 		}
 		// initialize separators
-		for (int i = 0; i < NUM_SEPARATORS; i++) {
+		for (int i = 0; i < ColumnPane.NUM_SEPARATORS; i++) {
 			this.separators[i] = new ColumnSeparator(this, this.columns[i], this.columns[i + 1]);
 		}
 		// add all elements to this pane
-		for (int i = 0; i < NUM_COLUMNS; i++) {
+		for (int i = 0; i < ColumnPane.NUM_COLUMNS; i++) {
 			this.getChildren().add(this.columns[i]);
-			if (i < NUM_SEPARATORS) {
+			if (i < ColumnPane.NUM_SEPARATORS) {
 				this.getChildren().add(this.separators[i]);
 			}
 		}

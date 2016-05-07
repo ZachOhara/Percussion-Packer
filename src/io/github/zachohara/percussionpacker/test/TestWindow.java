@@ -26,8 +26,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class TestWindow extends Application {
-	
-	
+
 	public TestWindow() {
 		super();
 	}
@@ -35,45 +34,46 @@ public class TestWindow extends Application {
 	@Override
 	public void start(Stage stage) throws Exception {
 		stage.setTitle("Test window");
-		
+
 		Button b = new Button("");
-		
+
 		Pane p2 = new Pane();
 		p2.setPrefSize(100, 50);
 		p2.getChildren().add(b);
-		
+
 		p2.setLayoutX(400);
 		p2.setLayoutY(300);
 
-		b.setPrefHeight(((Pane)(b.getParent())).getPrefHeight());
-		b.setPrefWidth(((Pane)(b.getParent())).getPrefWidth());
-		
+		b.setPrefHeight(((Pane) (b.getParent())).getPrefHeight());
+		b.setPrefWidth(((Pane) (b.getParent())).getPrefWidth());
+
 		b.setOnAction(new EventHandler<ActionEvent>() {
+
 			@Override
 			public void handle(ActionEvent event) {
 				b.getParent().setLayoutX(b.getParent().getLayoutX() - 5);
 				b.getParent().setLayoutY(b.getParent().getLayoutY() - 5);
 			}
 		});
-		
+
 		Pane p = new Pane();
 		p.setPrefSize(500, 500);
 		Scene s = new Scene(p);
-		
+
 		stage.setScene(s);
-		
+
 		stage.show();
-		
+
 		Card c = new Card();
 		c.setTitle("Ayy Lmao Ayy");
 		c.setLayoutX(100);
 		c.setLayoutY(100);
 		c.setPrefWidth(225);
-		
+
 		p.getChildren().addAll(p2, c);
-		
+
 	}
-	
+
 	public static void main(String[] args) {
 		Application.launch(args);
 	}

@@ -28,25 +28,25 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
 
 public class WorkspaceScene extends Scene implements MouseSelfHandler {
-	
+
 	private WorkspaceRootPane rootPane;
 
 	public WorkspaceScene() {
 		super(new WorkspaceRootPane());
 
 		MouseEventListener.createSelfHandler(this);
-		
+
 		this.rootPane = (WorkspaceRootPane) this.getRoot();
 	}
-	
+
 	protected WorkspaceRootPane getWorkspaceRootPane() {
 		return this.rootPane;
 	}
-	
+
 	public double getMinWidth() {
 		return this.rootPane.getMinWidth();
 	}
-	
+
 	public double getMinHeight() {
 		return this.rootPane.getMinHeight();
 	}
@@ -61,7 +61,8 @@ public class WorkspaceScene extends Scene implements MouseSelfHandler {
 				double mouseX = event.getSceneX();
 				double mouseY = event.getSceneY();
 				if (!(textFieldPos.getX() <= mouseX && mouseX < textFieldPos.getX() + textField.getWidth())
-						&& textFieldPos.getY() <= mouseY && mouseY < textFieldPos.getY() + textField.getHeight()) {
+						&& textFieldPos.getY() <= mouseY
+						&& mouseY < textFieldPos.getY() + textField.getHeight()) {
 					this.rootPane.requestFocus();
 				}
 			}

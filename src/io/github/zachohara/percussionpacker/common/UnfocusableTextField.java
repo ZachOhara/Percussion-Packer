@@ -25,10 +25,10 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 public class UnfocusableTextField extends TextField implements KeySelfHandler, FocusListenable {
-	
+
 	public UnfocusableTextField() {
 		super();
-		
+
 		KeyEventListener.createSelfHandler(this);
 	}
 
@@ -40,5 +40,5 @@ public class UnfocusableTextField extends TextField implements KeySelfHandler, F
 			}
 		}
 	}
-	
+
 }

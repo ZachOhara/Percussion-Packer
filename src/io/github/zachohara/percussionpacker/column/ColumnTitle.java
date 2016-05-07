@@ -27,31 +27,31 @@ public class ColumnTitle extends StackPane implements ResizeSelfHandler {
 
 	public static final String TITLE_FONT = "Arial Bold";
 	public static final double MAX_FONT_SIZE = 24;
-	
+
 	public static final double WIDTH_BUFFER = 8;
 	public static final double HEIGHT_BUFFER = 10;
-	
+
 	public static final double PREF_HEIGHT = 80; // in pixels
 	public static final double MIN_HEIGHT = 40; // in pixels
-	
+
 	private ShrinkableLabel titleText;
 	private Button baseButton;
-	
+
 	public ColumnTitle(String name) {
 		super();
-		
+
 		RegionResizeListener resizeListener = RegionResizeListener.createSelfHandler(this);
-		
-		this.titleText = new ShrinkableLabel(TITLE_FONT, MAX_FONT_SIZE);
+
+		this.titleText = new ShrinkableLabel(ColumnTitle.TITLE_FONT, ColumnTitle.MAX_FONT_SIZE);
 		this.titleText.setText(name);
-		this.titleText.setWidthBuffer(WIDTH_BUFFER);
-		this.titleText.setHeightBuffer(HEIGHT_BUFFER);
-		
+		this.titleText.setWidthBuffer(ColumnTitle.WIDTH_BUFFER);
+		this.titleText.setHeightBuffer(ColumnTitle.HEIGHT_BUFFER);
+
 		this.baseButton = new BackingButton(this, resizeListener);
-		
-		this.setPrefHeight(PREF_HEIGHT);
-		this.setMinHeight(MIN_HEIGHT);
-		
+
+		this.setPrefHeight(ColumnTitle.PREF_HEIGHT);
+		this.setMinHeight(ColumnTitle.MIN_HEIGHT);
+
 		this.getChildren().addAll(this.baseButton, this.titleText);
 	}
 

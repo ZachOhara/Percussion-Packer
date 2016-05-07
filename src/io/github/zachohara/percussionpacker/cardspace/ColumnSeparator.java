@@ -25,30 +25,29 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 
 public class ColumnSeparator extends Pane implements MouseSelfHandler {
-	
-	public static final String STYLE = "-fx-background-color: black;"
-			+ "-fx-background-radius: 3 3 3 3";
+
+	public static final String STYLE = "-fx-background-color: black;" + "-fx-background-radius: 3 3 3 3";
 	public static final double THICKNESS = 3; // in pixels
-	
+
 	private ColumnPane parent;
-	
+
 	private Column leftColumn;
 	private Column rightColumn;
-	
+
 	private boolean isDragging;
 	private double lastMouseX;
 	private double lastLeftWidth;
 	private double lastRightWidth;
-	
+
 	public ColumnSeparator(ColumnPane parent, Column leftColumn, Column rightColumn) {
 		super();
-		
+
 		MouseEventListener.createSelfHandler(this);
-		
-		this.setStyle(STYLE);
-		this.setPrefWidth(THICKNESS);
-		this.setMinWidth(THICKNESS);
-		
+
+		this.setStyle(ColumnSeparator.STYLE);
+		this.setPrefWidth(ColumnSeparator.THICKNESS);
+		this.setMinWidth(ColumnSeparator.THICKNESS);
+
 		this.parent = parent;
 		this.leftColumn = leftColumn;
 		this.rightColumn = rightColumn;
@@ -72,14 +71,14 @@ public class ColumnSeparator extends Pane implements MouseSelfHandler {
 			}
 		}
 	}
-	
+
 	private void startMouseDrag(double startPosX) {
 		this.isDragging = false;
 		this.lastMouseX = startPosX;
 		this.lastLeftWidth = this.leftColumn.getWidth();
 		this.lastRightWidth = this.rightColumn.getWidth();
 	}
-	
+
 	private void handleMouseDrag(double mousePosX) {
 		this.isDragging = true;
 		double mouseIncrement = mousePosX - this.lastMouseX;
@@ -91,11 +90,11 @@ public class ColumnSeparator extends Pane implements MouseSelfHandler {
 			this.rightColumn.setPrefWidth(newRightWidth);
 		}
 	}
-	
+
 	private void finishMouseDrag() {
 		this.isDragging = false;
 		this.parent.finishColumnResizing();
 		this.getScene().setCursor(Cursor.DEFAULT);
 	}
-	
+
 }

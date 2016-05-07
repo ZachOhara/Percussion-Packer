@@ -29,37 +29,37 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 
 public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfHandler {
-	
+
 	public static final double DRAG_DIFFERENCE_THRESHOLD = 10;
-	
+
 	private ColumnPane columnPane;
-	
+
 	private Card draggingCard;
 	private GhostCard placeholderCard;
-	
+
 	private boolean isDragging;
-	
+
 	private double lastMouseX;
 	private double lastMouseY;
 	private double lastCardX;
 	private double lastCardY;
-	
+
 	public CardSpacePane() {
 		super();
-		
+
 		MouseEventListener.createSelfHandler(this);
 		RegionResizeListener.createSelfHandler(this);
-		
+
 		this.columnPane = new ColumnPane();
 		this.columnPane.setLayoutX(0);
 		this.columnPane.setLayoutY(0);
-		
+
 		this.getChildren().add(this.columnPane);
 
 		this.setMinWidth(GraphicsUtil.getCumulativeMinWidth(this));
 		this.setMinHeight(GraphicsUtil.getCumulativeMinHeight(this));
 	}
-	
+
 	public void recieveDraggingCard(Card card, GhostCard placeholder) {
 		this.draggingCard = card;
 		this.placeholderCard = placeholder;
@@ -79,7 +79,7 @@ public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfH
 			if (this.draggingCard != null) {
 				this.handleMouseDrag(event.getSceneX(), event.getSceneY());
 			}
-		} if (type == MouseEvent.MOUSE_RELEASED) {
+		} else if (type == MouseEvent.MOUSE_RELEASED) {
 			this.isDragging = false;
 			if (this.draggingCard != null) {
 				this.columnPane.dropCard(this.draggingCard, this.getSceneCardCenter());
@@ -89,7 +89,7 @@ public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfH
 			}
 		}
 	}
-	
+
 	private void handleMouseDrag(double x, double y) {
 		double dx = x - this.lastMouseX;
 		double dy = y - this.lastMouseY;
@@ -107,18 +107,18 @@ public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfH
 		this.columnPane.setPrefHeight(this.getHeight());
 		this.columnPane.setPrefWidth(this.getWidth());
 	}
-	
+
 	private void updateCardPosition(double dx, double dy) {
 		this.draggingCard.setLayoutX(this.lastCardX + dx);
 		this.draggingCard.setLayoutY(this.lastCardY + dy);
 	}
-	
+
 	private Point2D getSceneCardCenter() {
 		return this.localToScene(this.draggingCard.getCenterPoint());
 	}
-	
+
 	private static boolean isOverThreshold(double dx, double dy) {
-		return Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2)) >= DRAG_DIFFERENCE_THRESHOLD;
+		return Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2)) >= CardSpacePane.DRAG_DIFFERENCE_THRESHOLD;
 	}
 
 }
