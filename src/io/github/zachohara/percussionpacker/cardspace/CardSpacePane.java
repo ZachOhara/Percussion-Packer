@@ -25,7 +25,7 @@ import io.github.zachohara.percussionpacker.card.GhostCard;
 import io.github.zachohara.percussionpacker.slide.IncrementalChangeThread;
 import io.github.zachohara.percussionpacker.slide.IncrementalProgressListener;
 import io.github.zachohara.percussionpacker.util.GraphicsUtil;
-import javafx.application.Platform;
+import io.github.zachohara.percussionpacker.util.RunLaterList;
 import javafx.event.EventType;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
@@ -35,12 +35,13 @@ import javafx.scene.layout.Pane;
 public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfHandler, IncrementalProgressListener<Node> {
 	
 	public static final double DRAG_DIFFERENCE_THRESHOLD = 10;
-	public static final long SLIDE_DURATION = 1;
+	public static final long SLIDE_DURATION = 100;
 	public static final long RESIZE_DURATION = 1;
 	
 	private ColumnPane columnPane;
 	
 	private IncrementalChangeThread sliderThread;
+	private RunLaterList runLaterList;
 	
 	private Card draggingCard;
 	private GhostCard placeholderCard;
@@ -62,7 +63,9 @@ public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfH
 		this.columnPane.setLayoutX(0);
 		this.columnPane.setLayoutY(0);
 		
-		this.sliderThread = new IncrementalChangeThread();
+		this.runLaterList = new RunLaterList();
+		
+		this.sliderThread = new IncrementalChangeThread(this.runLaterList);
 		this.sliderThread.start();
 		
 		this.getChildren().add(this.columnPane);
@@ -92,7 +95,7 @@ public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfH
 	public void finishIncrementalChange(Node slidingNode) {
 		if (slidingNode instanceof Card) {
 			Card slidingCard = (Card) slidingNode;
-			Platform.runLater(new Runnable() { public void run() {
+			this.runLaterList.add(new Runnable() { public void run() {
 				columnPane.finishSlidingCard(slidingCard);
 			}});
 		}
@@ -114,6 +117,7 @@ public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfH
 				this.columnPane.dropCard(this.draggingCard, this.getSceneCardCenter());
 			}
 		}
+		this.runLaterList.runAll();
 	}
 	
 	private void handleMouseDrag(double x, double y) {

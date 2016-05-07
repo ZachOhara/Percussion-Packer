@@ -19,16 +19,19 @@ package io.github.zachohara.percussionpacker.slide;
 import java.util.LinkedList;
 import java.util.List;
 
-import javafx.application.Platform;
+import io.github.zachohara.percussionpacker.util.RunLaterList;
 import javafx.scene.Node;
 import javafx.scene.layout.Region;
 
 public class IncrementalChangeThread extends Thread {
 	
+	private RunLaterList runLaterList;
+	
 	private List<IncrementalChangeEntry<?>> changeEntries;
 	
-	public IncrementalChangeThread() {
+	public IncrementalChangeThread(RunLaterList runLaterList) {
 		super();
+		this.runLaterList = runLaterList;
 		this.changeEntries = new LinkedList<IncrementalChangeEntry<?>>();
 	}
 	
@@ -55,7 +58,7 @@ public class IncrementalChangeThread extends Thread {
 	private void doAllMovements() {
 		synchronized (this.changeEntries) {
 			for (IncrementalChangeEntry<?> entry : this.changeEntries) {
-				Platform.runLater(entry);
+				this.runLaterList.add(entry);
 			}
 		}
 	}
