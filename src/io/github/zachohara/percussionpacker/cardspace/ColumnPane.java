@@ -71,12 +71,37 @@ public class ColumnPane extends HBox implements ResizeSelfHandler {
 	}
 	
 	private Column getHoveringColumn(double localX) {
+		// check if too far left
+		if (localX < this.columns[0].getLayoutX()) {
+			return this.columns[0];
+		}
+		
+		// check if too far right
+		Column lastColumn = this.columns[this.columns.length - 1];
+		if (localX >= lastColumn.getLayoutX() + lastColumn.getWidth()) {
+			return lastColumn;
+		}
+		
+		// check if the point is in a column
 		for (Column c : this.columns) {
 			if (c.getLayoutX() <= localX && localX < c.getLayoutX() + c.getWidth()) {
 				return c;
 			}
 		}
-		return null;
+		
+		// check if the point is on a boundary
+		for (int i = 0; i < this.separators.length; i++) {
+			ColumnSeparator sep = this.separators[i];
+			if (sep.getLayoutX() <= localX && localX < sep.getLayoutX() + sep.getWidth()) {
+				if (localX < sep.getLayoutX() + (sep.getWidth() / 2)) {
+					return this.columns[i];
+				} else {
+					return this.columns[i + 1];
+				}
+			}
+		}
+		
+		throw new IllegalArgumentException("X-Coordinate could not be placed to a column");
 	}
 	
 	protected void finishColumnResizing() {

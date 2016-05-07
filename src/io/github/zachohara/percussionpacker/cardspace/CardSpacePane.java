@@ -83,6 +83,9 @@ public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfH
 			this.isDragging = false;
 			if (this.draggingCard != null) {
 				this.columnPane.dropCard(this.draggingCard, this.getSceneCardCenter());
+				this.draggingCard = null;
+				this.placeholderCard = null;
+				this.isDragging = false;
 			}
 		}
 	}
