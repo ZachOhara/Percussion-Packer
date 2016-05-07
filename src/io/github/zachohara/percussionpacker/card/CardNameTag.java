@@ -33,12 +33,12 @@ public class CardNameTag extends ClickEditableText {
 	public static final String UNNAMED_FONT = "Arial";
 	public static final String UNNAMED_PANE_STYLE = BACKGROUND_STYLE
 			+ "-fx-background-color: #CCCCCC";
-			
+
 	public static final String NAMED_TEXT_STYLE = "-fx-text-fill: darkgreen";
 	public static final String NAMED_FONT = "Arial Bold";
 	public static final String NAMED_PANE_STYLE = BACKGROUND_STYLE
 			+ "-fx-background-color: skyblue";
-			
+
 	public CardNameTag() {
 		super(DEFAULT_TEXT, UNNAMED_FONT, MAX_FONT_SIZE);
 

@@ -26,7 +26,8 @@ import javafx.scene.layout.Pane;
 
 public class ColumnSeparator extends Pane implements MouseSelfHandler {
 
-	public static final String STYLE = "-fx-background-color: black;" + "-fx-background-radius: 3 3 3 3";
+	public static final String STYLE = "-fx-background-color: black;"
+			+ "-fx-background-radius: 3 3 3 3";
 	public static final double THICKNESS = 3; // in pixels
 
 	private ColumnPane parent;
