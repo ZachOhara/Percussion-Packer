@@ -19,6 +19,7 @@ package io.github.zachohara.percussionpacker.window;
 import io.github.zachohara.fxeventcommon.window.WindowEventListener;
 import io.github.zachohara.fxeventcommon.window.WindowSelfHandler;
 import io.github.zachohara.percussionpacker.cardspace.CardSpacePane;
+import io.github.zachohara.percussionpacker.util.RunLaterList;
 import javafx.application.Platform;
 import javafx.event.EventType;
 import javafx.stage.Stage;
@@ -34,8 +35,12 @@ public class PackingStage extends Stage implements WindowSelfHandler {
 	
 	private WorkspaceScene workspaceScene;
 	
+	private RunLaterList runLaterList;
+	
 	public PackingStage() {
 		super();
+		
+		this.runLaterList = new RunLaterList();
 		
 		WindowEventListener.createSelfHandler(this);
 		
@@ -47,6 +52,10 @@ public class PackingStage extends Stage implements WindowSelfHandler {
 		this.setScene(this.workspaceScene);
 		this.show();
 		this.setMinSize();
+	}
+	
+	public static RunLaterList getRunLaterList() {
+		return PackingStage.singleton.runLaterList;
 	}
 	
 	private void setMinSize() {

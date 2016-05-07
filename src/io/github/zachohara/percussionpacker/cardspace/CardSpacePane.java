@@ -26,6 +26,7 @@ import io.github.zachohara.percussionpacker.slide.IncrementalChangeThread;
 import io.github.zachohara.percussionpacker.slide.IncrementalProgressListener;
 import io.github.zachohara.percussionpacker.util.GraphicsUtil;
 import io.github.zachohara.percussionpacker.util.RunLaterList;
+import io.github.zachohara.percussionpacker.window.PackingStage;
 import javafx.event.EventType;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
@@ -63,7 +64,7 @@ public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfH
 		this.columnPane.setLayoutX(0);
 		this.columnPane.setLayoutY(0);
 		
-		this.runLaterList = new RunLaterList();
+		this.runLaterList = PackingStage.getRunLaterList();
 		
 		this.sliderThread = new IncrementalChangeThread(this.runLaterList);
 		this.sliderThread.start();
