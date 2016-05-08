@@ -20,10 +20,12 @@ import io.github.zachohara.fxeventcommon.mouse.MouseEventListener;
 import io.github.zachohara.fxeventcommon.mouse.MouseSelfHandler;
 import io.github.zachohara.fxeventcommon.resize.RegionResizeListener;
 import io.github.zachohara.fxeventcommon.resize.ResizeSelfHandler;
+import io.github.zachohara.percussionpacker.animation.CenteredWidthTransition;
 import io.github.zachohara.percussionpacker.animation.SlideCompletionListener;
 import io.github.zachohara.percussionpacker.animation.VerticalSlideTransition;
 import io.github.zachohara.percussionpacker.card.Card;
 import io.github.zachohara.percussionpacker.card.GhostCard;
+import io.github.zachohara.percussionpacker.column.Column;
 import io.github.zachohara.percussionpacker.util.GraphicsUtil;
 import javafx.event.EventType;
 import javafx.geometry.Point2D;
@@ -89,9 +91,6 @@ public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfH
 			this.columnPane.finishSlidingCard((Card) slidingNode);
 		}
 	}
-	
-	// TODO: end the transision
-	// columnPane.finishSlidingCard()
 
 	@Override
 	public void handleMouse(MouseEvent event, EventType<? extends MouseEvent> type) {
@@ -119,7 +118,15 @@ public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfH
 		}
 		if (this.isDragging) {
 			this.updateCardPosition(dx, dy);
-			this.columnPane.dropCard(this.placeholderCard, this.getSceneCardCenter());
+			Column droppedColumn = this.columnPane.dropCard(this.placeholderCard, this.getSceneCardCenter());
+			this.handleDraggingCardResize(droppedColumn);
+		}
+	}
+	
+	private void handleDraggingCardResize(Column droppedColumn) {
+		if (this.draggingCard.getWidth() != droppedColumn.getWidth()) {
+			new CenteredWidthTransition(this.draggingCard, droppedColumn.getWidth()).play();
+			// TODO: potentially update the holding position
 		}
 	}
 

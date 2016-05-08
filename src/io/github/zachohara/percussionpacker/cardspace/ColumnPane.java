@@ -57,7 +57,7 @@ public class ColumnPane extends HBox implements ResizeSelfHandler {
 		this.setMinHeight(this.columns[0].getMinHeight());
 	}
 	
-	public void dropCard(Card draggingCard, Point2D scenePoint) {
+	public Column dropCard(Card draggingCard, Point2D scenePoint) {
 		Point2D localPoint = this.sceneToLocal(scenePoint);
 		Column hoveringColumn = this.getHoveringColumn(localPoint.getX());
 		if (hoveringColumn != null) {
@@ -68,6 +68,7 @@ public class ColumnPane extends HBox implements ResizeSelfHandler {
 				c.dropCard(null, Point2D.ZERO);
 			}
 		}
+		return hoveringColumn;
 	}
 	
 	protected void finishSlidingCard(Card slidingCard) {
