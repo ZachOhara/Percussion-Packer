@@ -202,7 +202,7 @@ public class CardList extends VBox implements MouseSelfHandler, ResizeSelfHandle
 		return -1;
 	}
 
-	private void add(Card element) {
+	protected void add(Card element) {
 		this.cards.add(element);
 		this.getChildren().add(element);
 	}

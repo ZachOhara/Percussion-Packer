@@ -42,6 +42,9 @@ public class CardScrollPane extends ScrollPane implements FocusSelfHandler {
 		
 		this.setMinHeight(MIN_HEIGHT);
 	}
+	public void addCard(Card card) {
+		this.cardList.add(card);
+	}
 
 	public void dropCard(Card draggingCard, Point2D scenePoint) {
 		this.cardList.dropCard(draggingCard, scenePoint);
