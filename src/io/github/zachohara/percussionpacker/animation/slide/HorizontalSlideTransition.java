@@ -14,26 +14,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package io.github.zachohara.percussionpacker.animation;
+package io.github.zachohara.percussionpacker.animation.slide;
 
-import javafx.animation.Transition;
+import javafx.scene.Node;
 
-public abstract class ResizingTransition extends Transition {
+public class HorizontalSlideTransition extends SlideTransition {
 
-	public static final double DURATION = 500; // in milliseconds
-
-	private InterpolatedQuantity interpolater;
-
-	public ResizingTransition(double startDim, double finalDim) {
-		super();
-		this.interpolater = new InterpolatedQuantity(startDim, finalDim - startDim);
-	}
-
-	protected abstract void setCurrentDim(double currentDim);
-
-	@Override
-	protected void interpolate(double fraction) {
-		this.setCurrentDim(this.interpolater.getInterpolatedValue(fraction));
+	public HorizontalSlideTransition(Node slidingNode, double distance) {
+		super(slidingNode, slidingNode.layoutXProperty(), distance);
 	}
 
 }

@@ -14,14 +14,27 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package io.github.zachohara.percussionpacker.animation;
+package io.github.zachohara.percussionpacker.animation.resize;
 
-import javafx.scene.Node;
+import io.github.zachohara.percussionpacker.animation.InterpolatedQuantity;
+import javafx.animation.Transition;
 
-public class VerticalSlideTransition extends SlideTransition {
+public abstract class ResizingTransition extends Transition {
 
-	public VerticalSlideTransition(Node slidingNode, double distance) {
-		super(slidingNode, slidingNode.layoutYProperty(), distance);
+	public static final double DURATION = 500; // in milliseconds
+
+	private InterpolatedQuantity interpolater;
+
+	public ResizingTransition(double startDim, double finalDim) {
+		super();
+		this.interpolater = new InterpolatedQuantity(startDim, finalDim - startDim);
+	}
+
+	protected abstract void setCurrentDim(double currentDim);
+
+	@Override
+	protected void interpolate(double fraction) {
+		this.setCurrentDim(this.interpolater.getInterpolatedValue(fraction));
 	}
 
 }

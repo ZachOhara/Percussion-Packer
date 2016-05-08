@@ -30,7 +30,7 @@ public class PropertyTransition extends Transition {
 	}
 
 	@Override
-	protected void interpolate(double fraction) {
+	public void interpolate(double fraction) {
 		this.property.set(this.interpolator.getInterpolatedValue(fraction));
 	}
 

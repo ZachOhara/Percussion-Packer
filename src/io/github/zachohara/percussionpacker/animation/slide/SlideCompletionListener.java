@@ -14,14 +14,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package io.github.zachohara.percussionpacker.animation;
+package io.github.zachohara.percussionpacker.animation.slide;
 
 import javafx.scene.Node;
 
-public class HorizontalSlideTransition extends SlideTransition {
+public interface SlideCompletionListener {
 
-	public HorizontalSlideTransition(Node slidingNode, double distance) {
-		super(slidingNode, slidingNode.layoutXProperty(), distance);
-	}
+	public void finishSlidingNode(Node slidingNode);
 
 }

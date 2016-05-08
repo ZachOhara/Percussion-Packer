@@ -20,9 +20,9 @@ import io.github.zachohara.fxeventcommon.mouse.MouseEventListener;
 import io.github.zachohara.fxeventcommon.mouse.MouseSelfHandler;
 import io.github.zachohara.fxeventcommon.resize.RegionResizeListener;
 import io.github.zachohara.fxeventcommon.resize.ResizeSelfHandler;
-import io.github.zachohara.percussionpacker.animation.CenteredWidthTransition;
-import io.github.zachohara.percussionpacker.animation.SlideCompletionListener;
-import io.github.zachohara.percussionpacker.animation.VerticalSlideTransition;
+import io.github.zachohara.percussionpacker.animation.resize.CenteredWidthTransition;
+import io.github.zachohara.percussionpacker.animation.slide.SlideCompletionListener;
+import io.github.zachohara.percussionpacker.animation.slide.VerticalSlideTransition;
 import io.github.zachohara.percussionpacker.card.Card;
 import io.github.zachohara.percussionpacker.cardtype.GhostCard;
 import io.github.zachohara.percussionpacker.column.Column;
@@ -86,7 +86,7 @@ public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfH
 	}
 
 	@Override
-	public void finishSlidingCard(Node slidingNode) {
+	public void finishSlidingNode(Node slidingNode) {
 		if (slidingNode instanceof Card) {
 			this.columnPane.finishSlidingCard((Card) slidingNode);
 		}

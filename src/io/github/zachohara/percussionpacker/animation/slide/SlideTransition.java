@@ -14,8 +14,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package io.github.zachohara.percussionpacker.animation;
+package io.github.zachohara.percussionpacker.animation.slide;
 
+import io.github.zachohara.percussionpacker.animation.PropertyTransition;
 import javafx.beans.property.DoubleProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -49,7 +50,7 @@ public abstract class SlideTransition extends PropertyTransition implements Even
 	@Override
 	public void handle(ActionEvent event) {
 		if (this.completionListener != null) {
-			this.completionListener.finishSlidingCard(this.slidingNode);
+			this.completionListener.finishSlidingNode(this.slidingNode);
 		}
 	}
 

@@ -14,8 +14,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package io.github.zachohara.percussionpacker.animation;
+package io.github.zachohara.percussionpacker.animation.resize;
 
+import io.github.zachohara.percussionpacker.animation.slide.HorizontalSlideTransition;
 import javafx.scene.layout.Region;
 
 public class CenteredWidthTransition extends WidthTransition {
