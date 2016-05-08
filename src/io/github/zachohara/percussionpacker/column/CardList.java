@@ -52,12 +52,12 @@ public class CardList extends VBox implements MouseSelfHandler, ResizeSelfHandle
 		this.cards = new ArrayList<Card>();
 		this.spaceCardMap = new HashMap<Card, SpaceCard>();
 
-		/*/ --- Test code --- //
+		// --- Test code --- //
 		for (int i = 0; i < 20; i++) {
 			this.add(new TestCard());
 			this.cards.get(i).setTitle(i + "-----------");
 		}
-		// ----------------- /*/
+		// ----------------- //
 	}
 
 	@Override
@@ -146,29 +146,15 @@ public class CardList extends VBox implements MouseSelfHandler, ResizeSelfHandle
 	private void slideCard(int cardIndex, double distance) {
 		Card slidingCard = this.cards.get(cardIndex);
 		SpaceCard spacer = new SpaceCard(slidingCard);
-		//Point2D oldPoint = GraphicsUtil.getRelativePosition(getCardSpacePane(), slidingCard);
-		//this.getCardSpacePane().getChildren().add(slidingCard);
 		this.getCardSpacePane().recieveSlidingCard(slidingCard, distance);
 		this.remove(slidingCard);
 		this.add(cardIndex, spacer);
-		//slidingCard.setVisible(true);
-		//slidingCard.setLayoutX(oldPoint.getX());
-		//slidingCard.setLayoutY(oldPoint.getY());
-		//for (int i = 0; i < Math.abs(distance); i++) {
-		//	slidingCard.setLayoutY(slidingCard.getLayoutY() + Math.signum(distance));
-			//System.out.println(slidingCard.getLayoutY());
-			//try { Thread.sleep(1); } catch (InterruptedException e) { e.printStackTrace(); }
-		//}
 		this.spaceCardMap.put(slidingCard, spacer);
-		//this.finishSlidingCard(slidingCard);
 	}
 
 	public void finishSlidingCard(Card slidingCard) {
-		//Point2D localPoint = GraphicsUtil.getRelativePosition(this, slidingCard);
 		SpaceCard spacer = this.spaceCardMap.remove(slidingCard);		
 		int insertIndex = this.cards.indexOf(spacer);
-		//slidingCard.setLayoutX(localPoint.getX());
-		//slidingCard.setLayoutY(localPoint.getY());
 		this.set(insertIndex, slidingCard);
 	}
 	
