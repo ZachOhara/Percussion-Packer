@@ -16,3 +16,6 @@
 * Resolve duplicate method copySizing in GhostCard and SpaceRegion
 * Hover over top / bottom of scroll pane while dragging should cause scroll
 * Visually differentiate functional buttons and backing buttons
+* Fix the inter-column resizing exception
+* Possibly redesign the column placement system
+* Fix the multiple cards animating when dragging a card down
