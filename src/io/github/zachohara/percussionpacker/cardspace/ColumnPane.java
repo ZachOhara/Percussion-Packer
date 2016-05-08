@@ -49,7 +49,7 @@ public class ColumnPane extends HBox implements ResizeSelfHandler {
 		this.initializeColumns();
 
 		this.setMinWidth(GraphicsUtil.getCumulativeMinWidth(this));
-		this.setMinHeight(this.columns[0].getMinHeight());
+		this.setMinHeight(GraphicsUtil.getMaximumMinHeight(this));
 	}
 
 	public void dropCard(Card draggingCard, Point2D scenePoint) {

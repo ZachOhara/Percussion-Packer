@@ -23,6 +23,8 @@ import javafx.geometry.Point2D;
 import javafx.scene.control.ScrollPane;
 
 public class CardScrollPane extends ScrollPane implements FocusSelfHandler {
+	
+	public static final double MIN_HEIGHT = 40;
 
 	private CardList cardList;
 
@@ -37,6 +39,8 @@ public class CardScrollPane extends ScrollPane implements FocusSelfHandler {
 
 		this.cardList = new CardList();
 		this.setContent(this.cardList);
+		
+		this.setMinHeight(MIN_HEIGHT);
 	}
 
 	public void dropCard(Card draggingCard, Point2D scenePoint) {

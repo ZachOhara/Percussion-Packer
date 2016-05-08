@@ -17,7 +17,6 @@
 package io.github.zachohara.percussionpacker.columntype;
 
 import io.github.zachohara.percussionpacker.column.Column;
-import io.github.zachohara.percussionpacker.util.GraphicsUtil;
 import javafx.scene.control.Button;
 
 
@@ -36,7 +35,6 @@ public class SongColumn extends Column {
 		this.addSongButton.setPrefHeight(BUTTON_HEIGHT);
 		this.addSongButton.setStyle(BUTTON_STYLE);
 		this.getChildren().add(this.addSongButton);
-		this.setMinHeight(GraphicsUtil.getCumulativeMinHeight(this));
 	}
 	
 	@Override

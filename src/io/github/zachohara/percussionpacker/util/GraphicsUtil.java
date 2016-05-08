@@ -26,6 +26,16 @@ public class GraphicsUtil {
 	private GraphicsUtil() {
 		// take no action
 	}
+	
+	public static double getMaximumMinWidth(Parent p) {
+		double max = -1;
+		for (Node n : p.getChildrenUnmodifiable()) {
+			if (n instanceof Region) {
+				max = Math.max(max, ((Region) n).getMinWidth());
+			}
+		}
+		return max;
+	}
 
 	public static double getCumulativeMinWidth(Parent p) {
 		double minWidth = 0;
@@ -35,6 +45,16 @@ public class GraphicsUtil {
 			}
 		}
 		return minWidth;
+	}
+	
+	public static double getMaximumMinHeight(Parent p) {
+		double max = -1;
+		for (Node n : p.getChildrenUnmodifiable()) {
+			if (n instanceof Region) {
+				max = Math.max(max, ((Region) n).getMinHeight());
+			}
+		}
+		return max;
 	}
 
 	public static double getCumulativeMinHeight(Parent p) {
