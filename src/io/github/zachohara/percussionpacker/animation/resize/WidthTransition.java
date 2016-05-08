@@ -18,18 +18,15 @@ package io.github.zachohara.percussionpacker.animation.resize;
 
 import javafx.scene.layout.Region;
 
-public class WidthTransition extends ResizingTransition {
-
-	private Region resizingRegion;
+public class WidthTransition extends ResizeTransition {
 
 	public WidthTransition(Region resizing, double newWidth) {
-		super(resizing.getWidth(), newWidth);
-		this.resizingRegion = resizing;
+		super(resizing, resizing.getWidth(), newWidth);
 	}
 
 	@Override
 	protected void setCurrentDim(double currentValue) {
-		this.resizingRegion.setPrefWidth(currentValue);
+		this.getResizingRegion().setPrefWidth(currentValue);
 	}
 
 }

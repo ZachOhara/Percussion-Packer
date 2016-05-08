@@ -21,6 +21,8 @@ import io.github.zachohara.fxeventcommon.mouse.MouseSelfHandler;
 import io.github.zachohara.fxeventcommon.resize.RegionResizeListener;
 import io.github.zachohara.fxeventcommon.resize.ResizeSelfHandler;
 import io.github.zachohara.percussionpacker.animation.resize.CenteredWidthTransition;
+import io.github.zachohara.percussionpacker.animation.resize.ResizeCompletionListener;
+import io.github.zachohara.percussionpacker.animation.resize.WidthTransition;
 import io.github.zachohara.percussionpacker.animation.slide.SlideCompletionListener;
 import io.github.zachohara.percussionpacker.animation.slide.VerticalSlideTransition;
 import io.github.zachohara.percussionpacker.card.Card;
@@ -32,8 +34,9 @@ import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
 
-public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfHandler, SlideCompletionListener {
+public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfHandler, SlideCompletionListener, ResizeCompletionListener {
 
 	public static final double DRAG_DIFFERENCE_THRESHOLD = 10;
 
@@ -44,6 +47,7 @@ public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfH
 
 	private boolean isDragging;
 
+	private boolean isCardResizing;
 	private double lastMouseX;
 	private double lastMouseY;
 	private double lastCardX;
@@ -121,17 +125,27 @@ public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfH
 		}
 		if (this.isDragging) {
 			this.updateCardPosition(dx, dy);
-			Column droppedColumn =
-					this.columnPane.dropCard(this.placeholderCard, this.getSceneCardCenter());
-			this.handleDraggingCardResize(droppedColumn);
+			if (!this.isCardResizing) {
+				Column droppedColumn =
+						this.columnPane.dropCard(this.placeholderCard, this.getSceneCardCenter());
+				this.handleDraggingCardResize(droppedColumn);
+			}
 		}
 	}
 
 	private void handleDraggingCardResize(Column droppedColumn) {
-		if (this.draggingCard.getWidth() != droppedColumn.getWidth()) {
-			new CenteredWidthTransition(this.draggingCard, droppedColumn.getWidth()).play();
+		if (this.draggingCard.getWidth() != droppedColumn.getAvailableCardWidth()) {
+			WidthTransition transition = new CenteredWidthTransition(this.draggingCard, droppedColumn.getAvailableCardWidth());
+			transition.setListener(this);
+			this.isCardResizing = true;
+			transition.play();
 			// TODO: potentially update the holding position
 		}
+	}
+
+	@Override
+	public void finishResizingRegion(Region r) {
+		this.isCardResizing = false;
 	}
 
 	@Override

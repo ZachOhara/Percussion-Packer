@@ -18,16 +18,37 @@ package io.github.zachohara.percussionpacker.animation.resize;
 
 import io.github.zachohara.percussionpacker.animation.InterpolatedQuantity;
 import javafx.animation.Transition;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.layout.Region;
+import javafx.util.Duration;
 
-public abstract class ResizingTransition extends Transition {
+public abstract class ResizeTransition extends Transition implements EventHandler<ActionEvent> {
 
 	public static final double DURATION = 500; // in milliseconds
+	
+	private Region resizingRegion;
+	private ResizeCompletionListener completionListener;
 
 	private InterpolatedQuantity interpolater;
 
-	public ResizingTransition(double startDim, double finalDim) {
+	public ResizeTransition(Region resizingRegion, double startDim, double finalDim) {
 		super();
+		
+		this.resizingRegion = resizingRegion;
+		
 		this.interpolater = new InterpolatedQuantity(startDim, finalDim - startDim);
+		
+		this.setCycleDuration(Duration.millis(DURATION));
+		this.setOnFinished(this);
+	}
+	
+	public void setListener(ResizeCompletionListener completionListener) {
+		this.completionListener = completionListener;
+	}
+	
+	protected Region getResizingRegion() {
+		return this.resizingRegion;
 	}
 
 	protected abstract void setCurrentDim(double currentDim);
@@ -35,6 +56,13 @@ public abstract class ResizingTransition extends Transition {
 	@Override
 	protected void interpolate(double fraction) {
 		this.setCurrentDim(this.interpolater.getInterpolatedValue(fraction));
+	}
+	
+	@Override
+	public void handle(ActionEvent event) {
+		if (this.completionListener != null) {
+			this.completionListener.finishResizingRegion(this.resizingRegion);
+		}
 	}
 
 }
