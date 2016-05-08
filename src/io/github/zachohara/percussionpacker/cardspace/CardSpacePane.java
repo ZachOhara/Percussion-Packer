@@ -74,7 +74,8 @@ public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfH
 	
 	public void recieveSlidingCard(Card slidingCard, double distanceY) {
 		Point2D localPoint = GraphicsUtil.getRelativePosition(this, slidingCard);
-		getChildren().add(slidingCard);
+		this.getChildren().add(slidingCard);
+		this.draggingCard.toFront();
 		slidingCard.setLayoutX(localPoint.getX());
 		slidingCard.setLayoutY(localPoint.getY());
 		VerticalSlideTransition transition = new VerticalSlideTransition(slidingCard, distanceY);
