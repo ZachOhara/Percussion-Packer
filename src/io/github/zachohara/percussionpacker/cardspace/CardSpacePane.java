@@ -20,8 +20,10 @@ import io.github.zachohara.fxeventcommon.mouse.MouseEventListener;
 import io.github.zachohara.fxeventcommon.mouse.MouseSelfHandler;
 import io.github.zachohara.fxeventcommon.resize.RegionResizeListener;
 import io.github.zachohara.fxeventcommon.resize.ResizeSelfHandler;
+import io.github.zachohara.percussionpacker.animation.InterpolatedQuantity;
 import io.github.zachohara.percussionpacker.animation.resize.CenteredWidthTransition;
 import io.github.zachohara.percussionpacker.animation.resize.ResizeCompletionListener;
+import io.github.zachohara.percussionpacker.animation.resize.ResizeProgressListener;
 import io.github.zachohara.percussionpacker.animation.resize.WidthTransition;
 import io.github.zachohara.percussionpacker.animation.slide.SlideCompletionListener;
 import io.github.zachohara.percussionpacker.animation.slide.VerticalSlideTransition;
@@ -36,7 +38,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 
-public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfHandler, SlideCompletionListener, ResizeCompletionListener {
+public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfHandler,
+		SlideCompletionListener, ResizeProgressListener, ResizeCompletionListener {
 
 	public static final double DRAG_DIFFERENCE_THRESHOLD = 10;
 
@@ -44,6 +47,8 @@ public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfH
 
 	private Card draggingCard;
 	private GhostCard placeholderCard;
+	
+	private InterpolatedQuantity interpolatedLastX;
 
 	private boolean isDragging;
 
@@ -85,7 +90,7 @@ public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfH
 		slidingCard.setLayoutX(localPoint.getX());
 		slidingCard.setLayoutY(localPoint.getY());
 		VerticalSlideTransition transition = new VerticalSlideTransition(slidingCard, distanceY);
-		transition.setListener(this);
+		transition.setCompletionListener(this);
 		transition.play();
 	}
 
@@ -125,22 +130,30 @@ public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfH
 		}
 		if (this.isDragging) {
 			this.updateCardPosition(dx, dy);
-			if (!this.isCardResizing) {
+			//if (!this.isCardResizing) {
 				Column droppedColumn =
 						this.columnPane.dropCard(this.placeholderCard, this.getSceneCardCenter());
 				this.handleDraggingCardResize(droppedColumn);
-			}
+			//}
 		}
 	}
 
 	private void handleDraggingCardResize(Column droppedColumn) {
-		if (this.draggingCard.getWidth() != droppedColumn.getAvailableCardWidth()) {
-			WidthTransition transition = new CenteredWidthTransition(this.draggingCard, droppedColumn.getAvailableCardWidth());
-			transition.setListener(this);
+		double targetWidth = droppedColumn.getAvailableCardWidth();
+		if (!this.isCardResizing && this.draggingCard.getWidth() != targetWidth) {
+			WidthTransition transition = new CenteredWidthTransition(this.draggingCard, targetWidth);
+			transition.setCompletionListener(this);
+			transition.setProgressListener(this);
 			this.isCardResizing = true;
+			this.interpolatedLastX = new InterpolatedQuantity(this.lastCardX, -(targetWidth - this.draggingCard.getWidth()) / 2);
 			transition.play();
-			// TODO: potentially update the holding position
 		}
+	}
+
+	@Override
+	public void progressRegionResize(Region r, double fraction) {
+		this.lastCardX = this.interpolatedLastX.getInterpolatedValue(fraction);
+		System.out.println(this.lastCardX);
 	}
 
 	@Override

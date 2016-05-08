@@ -39,7 +39,7 @@ public abstract class SlideTransition extends PropertyTransition implements Even
 		this.setOnFinished(this);
 	}
 
-	public void setListener(SlideCompletionListener completionListener) {
+	public void setCompletionListener(SlideCompletionListener completionListener) {
 		this.completionListener = completionListener;
 	}
 

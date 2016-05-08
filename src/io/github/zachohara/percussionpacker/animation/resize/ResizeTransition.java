@@ -28,6 +28,7 @@ public abstract class ResizeTransition extends Transition implements EventHandle
 	public static final double DURATION = 500; // in milliseconds
 	
 	private Region resizingRegion;
+	private ResizeProgressListener progressListener;
 	private ResizeCompletionListener completionListener;
 
 	private InterpolatedQuantity interpolater;
@@ -43,7 +44,11 @@ public abstract class ResizeTransition extends Transition implements EventHandle
 		this.setOnFinished(this);
 	}
 	
-	public void setListener(ResizeCompletionListener completionListener) {
+	public void setProgressListener(ResizeProgressListener progressListener) {
+		this.progressListener = progressListener;
+	}
+	
+	public void setCompletionListener(ResizeCompletionListener completionListener) {
 		this.completionListener = completionListener;
 	}
 	
@@ -56,6 +61,9 @@ public abstract class ResizeTransition extends Transition implements EventHandle
 	@Override
 	protected void interpolate(double fraction) {
 		this.setCurrentDim(this.interpolater.getInterpolatedValue(fraction));
+		if (this.progressListener != null) {
+			this.progressListener.progressRegionResize(this.resizingRegion, fraction);
+		}
 	}
 	
 	@Override
