@@ -31,8 +31,6 @@ import javafx.scene.layout.Pane;
 public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfHandler {
 	
 	public static final double DRAG_DIFFERENCE_THRESHOLD = 10;
-	public static final long SLIDE_DURATION = 100;
-	public static final long RESIZE_DURATION = 1;
 	
 	private ColumnPane columnPane;
 	
