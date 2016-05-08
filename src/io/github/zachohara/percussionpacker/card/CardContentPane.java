@@ -74,6 +74,10 @@ public class CardContentPane extends BorderPane implements ResizeSelfHandler {
 	public void setName(String name) {
 		this.nameTag.setText(name);
 	}
+	
+	public void promptRetitle() {
+		this.title.startRenaming();
+	}
 
 	@Override
 	public void handleResize() {

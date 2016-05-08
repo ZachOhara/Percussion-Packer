@@ -144,7 +144,7 @@ public class ClickEditableText extends BorderPane implements FocusHandler, Mouse
 		}
 	}
 
-	private void startRenaming() {
+	public void startRenaming() {
 		this.isEditing = true;
 		this.notifyParent();
 		this.setCenter(this.textField);

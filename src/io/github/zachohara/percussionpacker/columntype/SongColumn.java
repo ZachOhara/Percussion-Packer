@@ -16,11 +16,15 @@
 
 package io.github.zachohara.percussionpacker.columntype;
 
+import io.github.zachohara.fxeventcommon.button.ButtonHandler;
+import io.github.zachohara.fxeventcommon.button.ButtonPressListener;
+import io.github.zachohara.percussionpacker.card.Card;
+import io.github.zachohara.percussionpacker.cardtype.SongNameCard;
 import io.github.zachohara.percussionpacker.column.Column;
 import javafx.scene.control.Button;
 
 
-public class SongColumn extends Column {
+public class SongColumn extends Column implements ButtonHandler {
 	
 	public static final String TITLE = "Song List";
 	public static final String BUTTON_TEXT = "Add a song";
@@ -34,6 +38,7 @@ public class SongColumn extends Column {
 		this.addSongButton = new Button(BUTTON_TEXT);
 		this.addSongButton.setPrefHeight(BUTTON_HEIGHT);
 		this.addSongButton.setStyle(BUTTON_STYLE);
+		new ButtonPressListener(this.addSongButton).addHandler(this);
 		this.getChildren().add(this.addSongButton);
 	}
 	
@@ -41,6 +46,13 @@ public class SongColumn extends Column {
 	public void handleResize() {
 		super.handleResize();
 		this.addSongButton.setPrefWidth(this.getWidth());
+	}
+
+	@Override
+	public void handleButtonPress() {
+		Card c = new SongNameCard();
+		this.addCard(c);
+		c.promptRetitle();
 	}
 	
 	@Override

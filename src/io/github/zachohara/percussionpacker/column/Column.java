@@ -42,6 +42,10 @@ public abstract class Column extends VBox implements ResizeSelfHandler {
 		this.setMinWidth(MIN_WIDTH);
 		this.setMinHeight(this.calculateMinHeight());
 	}
+	
+	public void addCard(Card card) {
+		this.cardList.addCard(card);
+	}
 
 	public void dropCard(Card draggingCard, Point2D scenePoint) {
 		this.cardList.dropCard(draggingCard, scenePoint);
