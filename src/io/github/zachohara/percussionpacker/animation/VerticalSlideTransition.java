@@ -23,5 +23,5 @@ public class VerticalSlideTransition extends SlideTransition {
 	public VerticalSlideTransition(Node slidingNode, double distance) {
 		super(slidingNode, slidingNode.layoutYProperty(), distance);
 	}
-	
+
 }

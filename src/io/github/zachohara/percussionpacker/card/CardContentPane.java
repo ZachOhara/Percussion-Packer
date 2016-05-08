@@ -33,7 +33,7 @@ public class CardContentPane extends BorderPane implements ResizeSelfHandler {
 
 	private CardTitle title;
 	private CardNameTag nameTag;
-	
+
 	private boolean nameable;
 
 	public CardContentPane(boolean retitleable, boolean nameable) {
@@ -50,7 +50,7 @@ public class CardContentPane extends BorderPane implements ResizeSelfHandler {
 		this.nameTag.setNotifyableParent(this);
 		BorderPane.setAlignment(this.nameTag, Pos.CENTER_RIGHT);
 		BorderPane.setMargin(this.nameTag, CardContentPane.getBorderInsets());
-		
+
 		this.nameable = nameable;
 
 		this.setLeft(this.title);
@@ -74,7 +74,7 @@ public class CardContentPane extends BorderPane implements ResizeSelfHandler {
 	public void setName(String name) {
 		this.nameTag.setText(name);
 	}
-	
+
 	public void promptRetitle() {
 		this.title.startRenaming();
 	}
@@ -106,7 +106,7 @@ public class CardContentPane extends BorderPane implements ResizeSelfHandler {
 		this.nameTag.setPrefHeight(Math.min(this.nameTag.getIdealTextHeight(), availableHeight));
 		this.nameTag.setMaxHeight(Math.min(this.nameTag.getIdealTextHeight(), availableHeight));
 	}
-	
+
 	private double getNameWidth() {
 		if (this.nameable) {
 			return this.nameTag.getIdealTextWidth();
@@ -114,7 +114,7 @@ public class CardContentPane extends BorderPane implements ResizeSelfHandler {
 			return 0;
 		}
 	}
-	
+
 	private double getHorizontalInsetTotal() {
 		if (this.nameable) {
 			return HORIZONTAL_INSET_MARGIN * 4;

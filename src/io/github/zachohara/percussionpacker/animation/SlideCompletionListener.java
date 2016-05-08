@@ -19,7 +19,7 @@ package io.github.zachohara.percussionpacker.animation;
 import javafx.scene.Node;
 
 public interface SlideCompletionListener {
-	
+
 	public void finishSlidingCard(Node slidingNode);
 
 }

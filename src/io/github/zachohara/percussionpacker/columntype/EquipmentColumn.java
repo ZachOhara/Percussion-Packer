@@ -19,11 +19,11 @@ package io.github.zachohara.percussionpacker.columntype;
 import io.github.zachohara.percussionpacker.column.Column;
 
 public class EquipmentColumn extends Column {
-	
+
 	public static final String TITLE = "Equipment List";
-	
+
 	public EquipmentColumn() {
 		super(TITLE);
 	}
-	
+
 }

@@ -23,25 +23,25 @@ import javafx.scene.Node;
 import javafx.util.Duration;
 
 public abstract class SlideTransition extends PropertyTransition implements EventHandler<ActionEvent> {
-	
+
 	public static final double DURATION = 300; // milliseconds
-	
+
 	private Node slidingNode;
 	private SlideCompletionListener completionListener;
 
 	public SlideTransition(Node slidingNode, DoubleProperty changingProperty, double distance) {
 		super(changingProperty, distance);
-		
+
 		this.slidingNode = slidingNode;
-		
+
 		this.setCycleDuration(Duration.millis(DURATION));
 		this.setOnFinished(this);
 	}
-	
+
 	public void setListener(SlideCompletionListener completionListener) {
 		this.completionListener = completionListener;
 	}
-	
+
 	protected Node getSlidingNode() {
 		return this.slidingNode;
 	}
@@ -52,5 +52,5 @@ public abstract class SlideTransition extends PropertyTransition implements Even
 			this.completionListener.finishSlidingCard(this.slidingNode);
 		}
 	}
-	
+
 }

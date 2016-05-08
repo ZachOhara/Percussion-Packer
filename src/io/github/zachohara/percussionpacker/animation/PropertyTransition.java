@@ -20,18 +20,18 @@ import javafx.animation.Transition;
 import javafx.beans.property.DoubleProperty;
 
 public class PropertyTransition extends Transition {
-	
+
 	private DoubleProperty property;
 	private InterpolatedQuantity interpolator;
-	
+
 	public PropertyTransition(DoubleProperty property, double difference) {
 		this.property = property;
 		this.interpolator = new InterpolatedQuantity(property.get(), difference);
 	}
-	
+
 	@Override
 	protected void interpolate(double fraction) {
 		this.property.set(this.interpolator.getInterpolatedValue(fraction));
 	}
-	
+
 }

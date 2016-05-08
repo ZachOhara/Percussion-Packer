@@ -26,7 +26,7 @@ public class GraphicsUtil {
 	private GraphicsUtil() {
 		// take no action
 	}
-	
+
 	public static double getMaximumMinWidth(Parent p) {
 		double max = -1;
 		for (Node n : p.getChildrenUnmodifiable()) {
@@ -46,7 +46,7 @@ public class GraphicsUtil {
 		}
 		return minWidth;
 	}
-	
+
 	public static double getMaximumMinHeight(Parent p) {
 		double max = -1;
 		for (Node n : p.getChildrenUnmodifiable()) {

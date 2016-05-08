@@ -19,10 +19,10 @@ package io.github.zachohara.percussionpacker.card;
 import io.github.zachohara.percussionpacker.cardtype.GhostCard;
 
 public class SpaceCard extends GhostCard {
-	
+
 	public SpaceCard(Card sizingCard) {
 		super(sizingCard);
 		this.setStyle("-fx-background-color: lightblue");
 	}
-	
+
 }

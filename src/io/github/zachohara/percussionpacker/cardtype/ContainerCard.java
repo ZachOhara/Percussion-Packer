@@ -19,11 +19,11 @@ package io.github.zachohara.percussionpacker.cardtype;
 import io.github.zachohara.percussionpacker.card.Card;
 
 public class ContainerCard extends Card {
-	
+
 	public static final double HEIGHT = 40; // in pixels
-	
+
 	public ContainerCard() {
 		super(HEIGHT, true, true);
 	}
-	
+
 }

@@ -41,7 +41,8 @@ public class ClickEditableText extends BorderPane implements FocusHandler, Mouse
 	private boolean isEditing;
 	private boolean isDragging;
 
-	public ClickEditableText(String defaultText, String fontStyle, double maxFontSize, boolean isEditable) {
+	public ClickEditableText(String defaultText, String fontStyle, double maxFontSize,
+			boolean isEditable) {
 		super();
 
 		RegionResizeListener.createSelfHandler(this);

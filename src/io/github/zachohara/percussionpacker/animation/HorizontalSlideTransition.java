@@ -23,5 +23,5 @@ public class HorizontalSlideTransition extends SlideTransition {
 	public HorizontalSlideTransition(Node slidingNode, double distance) {
 		super(slidingNode, slidingNode.layoutXProperty(), distance);
 	}
-	
+
 }

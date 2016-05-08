@@ -17,17 +17,17 @@
 package io.github.zachohara.percussionpacker.animation;
 
 public class InterpolatedQuantity {
-	
+
 	private double startValue;
 	private double difference;
-	
+
 	public InterpolatedQuantity(double startValue, double difference) {
 		this.startValue = startValue;
 		this.difference = difference;
 	}
-	
+
 	public double getInterpolatedValue(double fraction) {
 		return this.startValue + (fraction * this.difference);
 	}
-	
+
 }

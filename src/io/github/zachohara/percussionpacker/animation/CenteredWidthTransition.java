@@ -19,19 +19,20 @@ package io.github.zachohara.percussionpacker.animation;
 import javafx.scene.layout.Region;
 
 public class CenteredWidthTransition extends WidthTransition {
-	
+
 	private HorizontalSlideTransition slideTransition;
 
 	public CenteredWidthTransition(Region resizing, double newWidth) {
 		super(resizing, newWidth);
-		
-		this.slideTransition = new HorizontalSlideTransition(resizing, (newWidth - resizing.getWidth()) / 2);
+
+		this.slideTransition =
+				new HorizontalSlideTransition(resizing, (newWidth - resizing.getWidth()) / 2);
 	}
-	
+
 	@Override
 	public void interpolate(double fraction) {
 		super.interpolate(fraction);
 		this.slideTransition.interpolate(fraction);
 	}
-	
+
 }

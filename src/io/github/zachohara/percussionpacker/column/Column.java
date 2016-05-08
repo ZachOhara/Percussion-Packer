@@ -42,7 +42,7 @@ public abstract class Column extends VBox implements ResizeSelfHandler {
 		this.setMinWidth(MIN_WIDTH);
 		this.setMinHeight(this.calculateMinHeight());
 	}
-	
+
 	public void addCard(Card card) {
 		this.cardList.addCard(card);
 	}
@@ -64,7 +64,7 @@ public abstract class Column extends VBox implements ResizeSelfHandler {
 	protected double getAvailableCardHeight() {
 		return Math.max(0, this.getHeight() - this.titlePane.getPrefHeight());
 	}
-	
+
 	protected double calculateMinHeight() {
 		return this.titlePane.getMinHeight() + this.cardList.getMinHeight();
 	}

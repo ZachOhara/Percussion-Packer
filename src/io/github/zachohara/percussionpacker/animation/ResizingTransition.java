@@ -19,21 +19,21 @@ package io.github.zachohara.percussionpacker.animation;
 import javafx.animation.Transition;
 
 public abstract class ResizingTransition extends Transition {
-	
+
 	public static final double DURATION = 500; // in milliseconds
-	
+
 	private InterpolatedQuantity interpolater;
-	
+
 	public ResizingTransition(double startDim, double finalDim) {
 		super();
 		this.interpolater = new InterpolatedQuantity(startDim, finalDim - startDim);
 	}
-	
+
 	protected abstract void setCurrentDim(double currentDim);
 
 	@Override
 	protected void interpolate(double fraction) {
 		this.setCurrentDim(this.interpolater.getInterpolatedValue(fraction));
 	}
-	
+
 }

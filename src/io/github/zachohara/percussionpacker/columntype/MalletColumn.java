@@ -19,11 +19,11 @@ package io.github.zachohara.percussionpacker.columntype;
 import io.github.zachohara.percussionpacker.column.Column;
 
 public class MalletColumn extends Column {
-	
+
 	public static final String TITLE = "Mallet List";
-	
+
 	public MalletColumn() {
 		super(TITLE);
 	}
-	
+
 }

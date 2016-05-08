@@ -31,7 +31,7 @@ public abstract class Card extends StackPane implements MouseSelfHandler, Resize
 
 	private Button backingButton;
 	private CardContentPane contentPane;
-	
+
 	private boolean retitleable;
 	private boolean nameable;
 
@@ -45,7 +45,7 @@ public abstract class Card extends StackPane implements MouseSelfHandler, Resize
 		this.setMinHeight(height);
 
 		this.backingButton = new BackingButton(this, resizeListener);
-		
+
 		this.retitleable = retitleable;
 		this.nameable = nameable;
 
@@ -75,7 +75,7 @@ public abstract class Card extends StackPane implements MouseSelfHandler, Resize
 		return new Point2D(this.getLayoutX() + (this.getWidth() / 2),
 				this.getLayoutY() + (this.getHeight() / 2));
 	}
-	
+
 	public void promptRetitle() {
 		this.contentPane.promptRetitle();
 	}
