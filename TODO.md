@@ -12,3 +12,4 @@
 * Add a velocity to moving cards
 * Make dragging cards resize to the current hovering column (with a velocity)
 * Hover over top / bottom of scroll pane while dragging should cause scroll
+* Visually differentiate functional buttons and backing buttons
