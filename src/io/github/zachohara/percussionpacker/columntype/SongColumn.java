@@ -17,15 +17,42 @@
 package io.github.zachohara.percussionpacker.columntype;
 
 import io.github.zachohara.percussionpacker.column.Column;
+import io.github.zachohara.percussionpacker.util.GraphicsUtil;
+import javafx.scene.control.Button;
 
 
 public class SongColumn extends Column {
 	
 	public static final String TITLE = "Song List";
+	public static final String BUTTON_TEXT = "Add a song";
+	public static final double BUTTON_HEIGHT = 60;
+	public static final String BUTTON_STYLE = "-fx-font-size: 16";
 	
-
+	private Button addSongButton;
+	
 	public SongColumn() {
 		super(TITLE);
+		this.addSongButton = new Button(BUTTON_TEXT);
+		this.addSongButton.setPrefHeight(BUTTON_HEIGHT);
+		this.addSongButton.setStyle(BUTTON_STYLE);
+		this.getChildren().add(this.addSongButton);
+		this.setMinHeight(GraphicsUtil.getCumulativeMinHeight(this));
+	}
+	
+	@Override
+	public void handleResize() {
+		super.handleResize();
+		this.addSongButton.setPrefWidth(this.getWidth());
+	}
+	
+	@Override
+	protected double getAvailableCardHeight() {
+		return super.getAvailableCardHeight() - BUTTON_HEIGHT;
+	}
+	
+	@Override
+	protected double calculateMinHeight() {
+		return super.calculateMinHeight() + BUTTON_HEIGHT;
 	}
 	
 }
