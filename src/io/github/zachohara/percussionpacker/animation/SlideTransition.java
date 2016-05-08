@@ -24,7 +24,7 @@ import javafx.util.Duration;
 
 public abstract class SlideTransition extends PropertyTransition implements EventHandler<ActionEvent> {
 	
-	public static final double DURATION = 500; // milliseconds
+	public static final double DURATION = 300; // milliseconds
 	
 	private Node slidingNode;
 	private SlideCompletionListener completionListener;
