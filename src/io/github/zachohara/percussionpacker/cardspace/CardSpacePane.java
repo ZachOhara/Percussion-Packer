@@ -22,27 +22,19 @@ import io.github.zachohara.fxeventcommon.resize.RegionResizeListener;
 import io.github.zachohara.fxeventcommon.resize.ResizeSelfHandler;
 import io.github.zachohara.percussionpacker.card.Card;
 import io.github.zachohara.percussionpacker.card.GhostCard;
-import io.github.zachohara.percussionpacker.slide.IncrementalChangeThread;
-import io.github.zachohara.percussionpacker.slide.IncrementalProgressListener;
 import io.github.zachohara.percussionpacker.util.GraphicsUtil;
-import io.github.zachohara.percussionpacker.util.RunLaterList;
-import io.github.zachohara.percussionpacker.window.PackingStage;
 import javafx.event.EventType;
 import javafx.geometry.Point2D;
-import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 
-public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfHandler, IncrementalProgressListener<Node> {
+public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfHandler {
 	
 	public static final double DRAG_DIFFERENCE_THRESHOLD = 10;
 	public static final long SLIDE_DURATION = 100;
 	public static final long RESIZE_DURATION = 1;
 	
 	private ColumnPane columnPane;
-	
-	private IncrementalChangeThread sliderThread;
-	private RunLaterList runLaterList;
 	
 	private Card draggingCard;
 	private GhostCard placeholderCard;
@@ -64,11 +56,6 @@ public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfH
 		this.columnPane.setLayoutX(0);
 		this.columnPane.setLayoutY(0);
 		
-		this.runLaterList = PackingStage.getRunLaterList();
-		
-		this.sliderThread = new IncrementalChangeThread(this.runLaterList);
-		this.sliderThread.start();
-		
 		this.getChildren().add(this.columnPane);
 
 		this.setMinWidth(GraphicsUtil.getCumulativeMinWidth(this));
@@ -89,18 +76,11 @@ public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfH
 		getChildren().add(slidingCard);
 		slidingCard.setLayoutX(localPoint.getX());
 		slidingCard.setLayoutY(localPoint.getY());
-		this.sliderThread.startSlidingNode(this, slidingCard, 0, distanceY, SLIDE_DURATION);
+		// TODO: start the actual transision
 	}
 	
-	@Override
-	public void finishIncrementalChange(Node slidingNode) {
-		if (slidingNode instanceof Card) {
-			Card slidingCard = (Card) slidingNode;
-			this.runLaterList.add(new Runnable() { public void run() {
-				columnPane.finishSlidingCard(slidingCard);
-			}});
-		}
-	}
+	// TODO: end the transision
+	// columnPane.finishSlidingCard()
 
 	@Override
 	public void handleMouse(MouseEvent event, EventType<? extends MouseEvent> type) {
@@ -118,7 +98,6 @@ public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfH
 				this.columnPane.dropCard(this.draggingCard, this.getSceneCardCenter());
 			}
 		}
-		this.runLaterList.runAll();
 	}
 	
 	private void handleMouseDrag(double x, double y) {
