@@ -19,14 +19,14 @@ package io.github.zachohara.percussionpacker.card;
 import io.github.zachohara.percussionpacker.common.ClickEditableText;
 
 public class CardTitle extends ClickEditableText {
-	
+
 	public static final String DEFAULT_TEXT = "[enter a title]";
-	
+
 	public static final String FONT_STYLE = "Roboto";
 	public static final double MAX_FONT_SIZE = 16;
-	
-	public CardTitle() {
-		super(DEFAULT_TEXT, FONT_STYLE, MAX_FONT_SIZE);
+
+	public CardTitle(boolean isEditable) {
+		super(DEFAULT_TEXT, FONT_STYLE, MAX_FONT_SIZE, isEditable);
 	}
-	
+
 }

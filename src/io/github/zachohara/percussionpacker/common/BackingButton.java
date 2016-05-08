@@ -24,11 +24,11 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 
 public class BackingButton extends Button implements ResizeHandler {
-	
-	public static final int HEIGHT_OFFSET = 1; //in pixels
-	
+
+	public static final int HEIGHT_OFFSET = 1; // in pixels
+
 	private Region parent;
-	
+
 	public BackingButton(Region parent, RegionResizeListener parentListener) {
 		super();
 		this.setFocusTraversable(false);
@@ -39,7 +39,7 @@ public class BackingButton extends Button implements ResizeHandler {
 
 	@Override
 	public void handleResize() {
-		this.setPrefHeight(this.parent.getHeight() - BackingButton.HEIGHT_OFFSET);
+		this.setPrefHeight(this.parent.getHeight() - HEIGHT_OFFSET);
 		this.setPrefWidth(this.parent.getWidth());
 	}
 

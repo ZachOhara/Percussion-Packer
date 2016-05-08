@@ -24,7 +24,7 @@ import io.github.zachohara.percussionpacker.animation.CenteredWidthTransition;
 import io.github.zachohara.percussionpacker.animation.SlideCompletionListener;
 import io.github.zachohara.percussionpacker.animation.VerticalSlideTransition;
 import io.github.zachohara.percussionpacker.card.Card;
-import io.github.zachohara.percussionpacker.card.GhostCard;
+import io.github.zachohara.percussionpacker.cardtype.GhostCard;
 import io.github.zachohara.percussionpacker.column.Column;
 import io.github.zachohara.percussionpacker.util.GraphicsUtil;
 import javafx.event.EventType;
@@ -34,31 +34,31 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 
 public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfHandler, SlideCompletionListener {
-	
+
 	public static final double DRAG_DIFFERENCE_THRESHOLD = 10;
-	
+
 	private ColumnPane columnPane;
-	
+
 	private Card draggingCard;
 	private GhostCard placeholderCard;
-	
+
 	private boolean isDragging;
-	
+
 	private double lastMouseX;
 	private double lastMouseY;
 	private double lastCardX;
 	private double lastCardY;
-	
+
 	public CardSpacePane() {
 		super();
-		
+
 		MouseEventListener.createSelfHandler(this);
 		RegionResizeListener.createSelfHandler(this);
-		
+
 		this.columnPane = new ColumnPane();
 		this.columnPane.setLayoutX(0);
 		this.columnPane.setLayoutY(0);
-		
+
 		this.getChildren().add(this.columnPane);
 
 		this.setMinWidth(GraphicsUtil.getCumulativeMinWidth(this));
@@ -102,18 +102,21 @@ public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfH
 			if (this.draggingCard != null) {
 				this.handleMouseDrag(event.getSceneX(), event.getSceneY());
 			}
-		} if (type == MouseEvent.MOUSE_RELEASED) {
+		} else if (type == MouseEvent.MOUSE_RELEASED) {
 			this.isDragging = false;
 			if (this.draggingCard != null) {
 				this.columnPane.dropCard(this.draggingCard, this.getSceneCardCenter());
+				this.draggingCard = null;
+				this.placeholderCard = null;
+				this.isDragging = false;
 			}
 		}
 	}
-	
+
 	private void handleMouseDrag(double x, double y) {
 		double dx = x - this.lastMouseX;
 		double dy = y - this.lastMouseY;
-		if (this.isOverThreshold(dx, dy)) {
+		if (CardSpacePane.isOverThreshold(dx, dy)) {
 			this.isDragging = true;
 		}
 		if (this.isDragging) {
@@ -135,17 +138,17 @@ public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfH
 		this.columnPane.setPrefHeight(this.getHeight());
 		this.columnPane.setPrefWidth(this.getWidth());
 	}
-	
+
 	private void updateCardPosition(double dx, double dy) {
 		this.draggingCard.setLayoutX(this.lastCardX + dx);
 		this.draggingCard.setLayoutY(this.lastCardY + dy);
 	}
-	
+
 	private Point2D getSceneCardCenter() {
 		return this.localToScene(this.draggingCard.getCenterPoint());
 	}
-	
-	private boolean isOverThreshold(double dx, double dy) {
+
+	private static boolean isOverThreshold(double dx, double dy) {
 		return Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2)) >= DRAG_DIFFERENCE_THRESHOLD;
 	}
 

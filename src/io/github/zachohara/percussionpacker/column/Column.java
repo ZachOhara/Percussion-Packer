@@ -19,31 +19,30 @@ package io.github.zachohara.percussionpacker.column;
 import io.github.zachohara.fxeventcommon.resize.RegionResizeListener;
 import io.github.zachohara.fxeventcommon.resize.ResizeSelfHandler;
 import io.github.zachohara.percussionpacker.card.Card;
-import io.github.zachohara.percussionpacker.util.GraphicsUtil;
 import javafx.geometry.Point2D;
 import javafx.scene.layout.VBox;
 
-public class Column extends VBox implements ResizeSelfHandler {
-	
+public abstract class Column extends VBox implements ResizeSelfHandler {
+
 	public static final int MIN_WIDTH = 120;
-	
+
 	private ColumnTitle titlePane;
 	private CardScrollPane cardList;
-	
-	public Column(String title) {
+
+	protected Column(String title) {
 		super();
 
 		RegionResizeListener.createSelfHandler(this);
-		
+
 		this.titlePane = new ColumnTitle(title);
 		this.cardList = new CardScrollPane();
-		
+
 		this.getChildren().addAll(this.titlePane, this.cardList);
-		
+
 		this.setMinWidth(MIN_WIDTH);
-		this.setMinHeight(GraphicsUtil.getCumulativeMinHeight(this));
+		this.setMinHeight(this.calculateMinHeight());
 	}
-	
+
 	public void dropCard(Card draggingCard, Point2D scenePoint) {
 		this.cardList.dropCard(draggingCard, scenePoint);
 	}
@@ -57,9 +56,13 @@ public class Column extends VBox implements ResizeSelfHandler {
 		this.titlePane.setPrefWidth(this.getWidth());
 		this.cardList.setPrefHeight(this.getAvailableCardHeight());
 	}
-	
+
 	protected double getAvailableCardHeight() {
 		return Math.max(0, this.getHeight() - this.titlePane.getPrefHeight());
+	}
+	
+	protected double calculateMinHeight() {
+		return this.titlePane.getMinHeight() + this.cardList.getMinHeight();
 	}
 
 }

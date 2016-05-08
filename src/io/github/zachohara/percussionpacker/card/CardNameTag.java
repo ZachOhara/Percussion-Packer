@@ -21,31 +21,31 @@ import io.github.zachohara.percussionpacker.common.ClickEditableText;
 public class CardNameTag extends ClickEditableText {
 
 	public static final String DEFAULT_TEXT = "[name this]";
-	
+
 	public static final double MAX_FONT_SIZE = 14;
-	
+
 	public static final double BACKGROUND_WIDTH = 5;
 	public static final double BACKGROUND_HEIGHT = 5;
-	
+
 	public static final String BACKGROUND_STYLE = "-fx-background-radius: 7 7 7 7;";
-	
+
 	public static final String UNNAMED_TEXT_STYLE = "-fx-text-fill: seagreen";
 	public static final String UNNAMED_FONT = "Arial";
 	public static final String UNNAMED_PANE_STYLE = BACKGROUND_STYLE
 			+ "-fx-background-color: #CCCCCC";
-	
+
 	public static final String NAMED_TEXT_STYLE = "-fx-text-fill: darkgreen";
 	public static final String NAMED_FONT = "Arial Bold";
 	public static final String NAMED_PANE_STYLE = BACKGROUND_STYLE
 			+ "-fx-background-color: skyblue";
 
 	public CardNameTag() {
-		super(DEFAULT_TEXT, UNNAMED_FONT, MAX_FONT_SIZE);
-		
-		this.setWidthBuffer(getBackgroundHorizontalOffset());
-		this.setHeightBuffer(getBackgroundVerticalOffset());
+		super(DEFAULT_TEXT, UNNAMED_FONT, MAX_FONT_SIZE, true);
+
+		this.setWidthBuffer(CardNameTag.getBackgroundHorizontalOffset());
+		this.setHeightBuffer(CardNameTag.getBackgroundVerticalOffset());
 	}
-	
+
 	@Override
 	public void setText(String text) {
 		if (text.trim().length() == 0) {
@@ -59,13 +59,13 @@ public class CardNameTag extends ClickEditableText {
 		}
 		super.setText(text);
 	}
-	
+
 	private static double getBackgroundHorizontalOffset() {
 		return 2 * BACKGROUND_WIDTH;
 	}
-	
+
 	private static double getBackgroundVerticalOffset() {
 		return 2 * BACKGROUND_HEIGHT;
 	}
-	
+
 }

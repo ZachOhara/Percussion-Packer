@@ -14,15 +14,17 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package io.github.zachohara.percussionpacker.card;
+package io.github.zachohara.percussionpacker.cardtype;
 
-import io.github.zachohara.percussionpacker.cardtype.GhostCard;
+import io.github.zachohara.percussionpacker.card.Card;
 
-public class SpaceCard extends GhostCard {
+
+public class TestCard extends Card {
+
+	public static final double DEFAULT_HEIGHT = 40; // in pixels
 	
-	public SpaceCard(Card sizingCard) {
-		super(sizingCard);
-		this.setStyle("-fx-background-color: lightblue");
+	public TestCard() {
+		super(DEFAULT_HEIGHT, true, true);
 	}
 	
 }

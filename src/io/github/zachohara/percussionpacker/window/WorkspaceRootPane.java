@@ -23,25 +23,25 @@ import io.github.zachohara.percussionpacker.util.GraphicsUtil;
 import javafx.scene.layout.Pane;
 
 public class WorkspaceRootPane extends Pane implements ResizeSelfHandler {
-	
+
 	private CardSpacePane cardPane;
-	
+
 	public WorkspaceRootPane() {
 		super();
-		
+
 		RegionResizeListener.createSelfHandler(this);
-		
+
 		this.setPrefWidth(PackingStage.DEFAULT_WIDTH);
 		this.setPrefHeight(PackingStage.DEFAULT_HEIGHT);
-		
+
 		this.cardPane = new CardSpacePane();
-		
+
 		this.getChildren().add(this.cardPane);
 
 		this.setMinWidth(GraphicsUtil.getCumulativeMinWidth(this));
 		this.setMinHeight(GraphicsUtil.getCumulativeMinHeight(this));
 	}
-	
+
 	protected CardSpacePane getCardSpacePane() {
 		return this.cardPane;
 	}

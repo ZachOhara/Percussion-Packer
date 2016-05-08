@@ -15,3 +15,4 @@
 * Make a single, universal sliding thread and pane system (potentially use card space pane)
 * Resolve duplicate method copySizing in GhostCard and SpaceRegion
 * Hover over top / bottom of scroll pane while dragging should cause scroll
+* Visually differentiate functional buttons and backing buttons

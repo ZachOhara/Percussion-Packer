@@ -20,41 +20,36 @@ import io.github.zachohara.fxeventcommon.resize.RegionResizeListener;
 import io.github.zachohara.fxeventcommon.resize.ResizeSelfHandler;
 import io.github.zachohara.percussionpacker.card.Card;
 import io.github.zachohara.percussionpacker.column.Column;
+import io.github.zachohara.percussionpacker.columntype.EquipmentColumn;
+import io.github.zachohara.percussionpacker.columntype.MalletColumn;
+import io.github.zachohara.percussionpacker.columntype.PackingColumn;
+import io.github.zachohara.percussionpacker.columntype.SongColumn;
 import io.github.zachohara.percussionpacker.util.GraphicsUtil;
 import javafx.geometry.Point2D;
 import javafx.scene.layout.HBox;
 
 public class ColumnPane extends HBox implements ResizeSelfHandler {
-	
-	public static final String[] COLUMN_NAMES = {
-			"Song List",
-			"Equipment List",
-			"Packing List",
-			"Mallet List"
-	};
-	
-	// the number of columns in the workspace; should not be adjusted here
-	public static final int NUM_COLUMNS = COLUMN_NAMES.length;
-	// the number of separators in the workspace; should not be adjusted here
+
+	public static final int NUM_COLUMNS = 4;
 	public static final int NUM_SEPARATORS = NUM_COLUMNS - 1;
-	
+
 	private double[] widthRatios;
 	private Column[] columns;
 	private ColumnSeparator[] separators;
-	
+
 	public ColumnPane() {
 		super();
-		
+
 		RegionResizeListener.createSelfHandler(this);
-		
+
 		this.widthRatios = new double[NUM_COLUMNS];
 		this.columns = new Column[NUM_COLUMNS];
 		this.separators = new ColumnSeparator[NUM_SEPARATORS];
-		
+
 		this.initializeColumns();
-		
+
 		this.setMinWidth(GraphicsUtil.getCumulativeMinWidth(this));
-		this.setMinHeight(this.columns[0].getMinHeight());
+		this.setMinHeight(GraphicsUtil.getMaximumMinHeight(this));
 	}
 	
 	public Column dropCard(Card draggingCard, Point2D scenePoint) {
@@ -76,19 +71,44 @@ public class ColumnPane extends HBox implements ResizeSelfHandler {
 		Column hoveringColumn = this.getHoveringColumn(localPoint.getX());
 		hoveringColumn.finishSlidingCard(slidingCard);
 	}
-	
+
 	private Column getHoveringColumn(double localX) {
+		// check if too far left
+		if (localX < this.columns[0].getLayoutX()) {
+			return this.columns[0];
+		}
+
+		// check if too far right
+		Column lastColumn = this.columns[this.columns.length - 1];
+		if (localX >= lastColumn.getLayoutX() + lastColumn.getWidth()) {
+			return lastColumn;
+		}
+
+		// check if the point is in a column
 		for (Column c : this.columns) {
 			if (c.getLayoutX() <= localX && localX < c.getLayoutX() + c.getWidth()) {
 				return c;
 			}
 		}
-		return null;
+
+		// check if the point is on a boundary
+		for (int i = 0; i < this.separators.length; i++) {
+			ColumnSeparator sep = this.separators[i];
+			if (sep.getLayoutX() <= localX && localX < sep.getLayoutX() + sep.getWidth()) {
+				if (localX < sep.getLayoutX() + (sep.getWidth() / 2)) {
+					return this.columns[i];
+				} else {
+					return this.columns[i + 1];
+				}
+			}
+		}
+
+		throw new IllegalArgumentException("X-Coordinate could not be placed to a column");
 	}
-	
+
 	protected void finishColumnResizing() {
 		double availableSpace = this.getAvailableColumnSpace();
-		for (int i = 0; i < NUM_COLUMNS; i++) {
+		for (int i = 0; i < ColumnPane.NUM_COLUMNS; i++) {
 			this.widthRatios[i] = this.columns[i].getWidth() / availableSpace;
 		}
 	}
@@ -96,21 +116,24 @@ public class ColumnPane extends HBox implements ResizeSelfHandler {
 	@Override
 	public void handleResize() {
 		double availableSpace = this.getAvailableColumnSpace();
-		for (int i = 0; i < NUM_COLUMNS; i++) {
+		for (int i = 0; i < ColumnPane.NUM_COLUMNS; i++) {
 			this.columns[i].setPrefWidth(availableSpace * this.widthRatios[i]);
 			this.columns[i].setPrefHeight(this.getHeight());
 		}
 	}
-	
+
 	private double getAvailableColumnSpace() {
 		return this.getWidth() - (NUM_SEPARATORS * ColumnSeparator.THICKNESS);
 	}
-	
+
 	private void initializeColumns() {
 		// initialize columns
+		this.columns[0] = new SongColumn();
+		this.columns[1] = new EquipmentColumn();
+		this.columns[2] = new PackingColumn();
+		this.columns[3] = new MalletColumn();
 		for (int i = 0; i < NUM_COLUMNS; i++) {
 			this.widthRatios[i] = 1.0 / NUM_COLUMNS;
-			this.columns[i] = new Column(COLUMN_NAMES[i]);
 		}
 		// initialize separators
 		for (int i = 0; i < NUM_SEPARATORS; i++) {

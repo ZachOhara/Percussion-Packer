@@ -23,61 +23,67 @@ import javafx.geometry.Pos;
 import javafx.scene.layout.BorderPane;
 
 public class CardContentPane extends BorderPane implements ResizeSelfHandler {
-	
+
 	public static final double HORIZONTAL_INSET_MARGIN = 8; // in pixels
 	public static final double VERTICAL_INSET_MARGIN = 0;
-	
+
 	// The margin between one element and the other element's text field
 	// Determined experimentally; do not change here
 	public static final double TEXT_FIELD_WIDTH_MARGIN = 3; // in pixels
-	
+
 	private CardTitle title;
 	private CardNameTag nameTag;
 	
-	public CardContentPane() {
+	private boolean nameable;
+
+	public CardContentPane(boolean retitleable, boolean nameable) {
 		super();
-		
+
 		RegionResizeListener.createSelfHandler(this);
-		
-		this.title = new CardTitle();
+
+		this.title = new CardTitle(retitleable);
 		this.title.setNotifyableParent(this);
 		BorderPane.setAlignment(this.title, Pos.CENTER_LEFT);
-		BorderPane.setMargin(this.title, getBorderInsets());
-		
+		BorderPane.setMargin(this.title, CardContentPane.getBorderInsets());
+
 		this.nameTag = new CardNameTag();
 		this.nameTag.setNotifyableParent(this);
 		BorderPane.setAlignment(this.nameTag, Pos.CENTER_RIGHT);
-		BorderPane.setMargin(this.nameTag, getBorderInsets());		
+		BorderPane.setMargin(this.nameTag, CardContentPane.getBorderInsets());
 		
+		this.nameable = nameable;
+
 		this.setLeft(this.title);
-		this.setRight(this.nameTag);
+		if (this.nameable) {
+			this.setRight(this.nameTag);
+		}
 	}
-	
+
 	public String getTitle() {
 		return this.title.getText();
 	}
-	
+
 	public void setTitle(String title) {
 		this.title.setText(title);
 	}
-	
+
 	public String getName() {
 		return this.nameTag.getText();
 	}
-	
+
 	public void setName(String name) {
 		this.nameTag.setText(name);
 	}
-	
+
 	@Override
 	public void handleResize() {
-		double idealWidth = this.title.getIdealTextWidth() + this.nameTag.getIdealTextWidth() + 1;
-		double availableWidth = this.getWidth() - (HORIZONTAL_INSET_MARGIN * 4);
+		double idealWidth = this.title.getIdealTextWidth() + this.getNameWidth() + 1;
+		double availableWidth = this.getWidth() - this.getHorizontalInsetTotal();
 		double fractionAvailable = Math.min(1, availableWidth / idealWidth);
-		
+
 		double titleWidth = this.title.getIdealTextWidth() * fractionAvailable;
-		double nameWidth = this.nameTag.getIdealTextWidth() * fractionAvailable;
-		
+		double nameWidth = this.getNameWidth() * fractionAvailable;
+
 		if (!this.title.isEditing()) {
 			this.title.setPrefWidth(titleWidth);
 		} else {
@@ -88,7 +94,7 @@ public class CardContentPane extends BorderPane implements ResizeSelfHandler {
 		} else {
 			this.nameTag.setPrefWidth(availableWidth - titleWidth);
 		}
-		
+
 		double availableHeight = this.getHeight() - (VERTICAL_INSET_MARGIN * 2);
 
 		this.title.setPrefHeight(Math.min(this.title.getIdealTextHeight(), availableHeight));
@@ -97,9 +103,25 @@ public class CardContentPane extends BorderPane implements ResizeSelfHandler {
 		this.nameTag.setMaxHeight(Math.min(this.nameTag.getIdealTextHeight(), availableHeight));
 	}
 	
+	private double getNameWidth() {
+		if (this.nameable) {
+			return this.nameTag.getIdealTextWidth();
+		} else {
+			return 0;
+		}
+	}
+	
+	private double getHorizontalInsetTotal() {
+		if (this.nameable) {
+			return HORIZONTAL_INSET_MARGIN * 4;
+		} else {
+			return HORIZONTAL_INSET_MARGIN * 2;
+		}
+	}
+
 	private static Insets getBorderInsets() {
 		return new Insets(VERTICAL_INSET_MARGIN, HORIZONTAL_INSET_MARGIN,
 				VERTICAL_INSET_MARGIN, HORIZONTAL_INSET_MARGIN);
 	}
-	
+
 }

@@ -27,30 +27,34 @@ import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 
-public class Card extends StackPane implements MouseSelfHandler, ResizeSelfHandler {
-	
-	public static final double DEFAULT_HEIGHT = 40; // in pixels
-	
+public abstract class Card extends StackPane implements MouseSelfHandler, ResizeSelfHandler {
+
 	private Button backingButton;
 	private CardContentPane contentPane;
+	
+	private boolean retitleable;
+	private boolean nameable;
 
-	public Card() {
+	protected Card(double height, boolean retitleable, boolean nameable) {
 		super();
-		
+
 		MouseEventListener.createSelfHandler(this);
 		RegionResizeListener resizeListener = RegionResizeListener.createSelfHandler(this);
-		
-		this.setPrefHeight(DEFAULT_HEIGHT);
-		this.setMinHeight(DEFAULT_HEIGHT);
-		
+
+		this.setPrefHeight(height);
+		this.setMinHeight(height);
+
 		this.backingButton = new BackingButton(this, resizeListener);
 		
-		this.contentPane = new CardContentPane();
+		this.retitleable = retitleable;
+		this.nameable = nameable;
+
+		this.contentPane = new CardContentPane(this.retitleable, this.nameable);
 		this.contentPane.setMinWidth(0);
-		
+
 		this.getChildren().addAll(this.backingButton, this.contentPane);
 	}
-	
+
 	public String getTitle() {
 		return this.contentPane.getTitle();
 	}
@@ -66,7 +70,7 @@ public class Card extends StackPane implements MouseSelfHandler, ResizeSelfHandl
 	public void setName(String name) {
 		this.contentPane.setName(name);
 	}
-	
+
 	public Point2D getCenterPoint() {
 		return new Point2D(this.getLayoutX() + (this.getWidth() / 2),
 				this.getLayoutY() + (this.getHeight() / 2));
@@ -86,5 +90,5 @@ public class Card extends StackPane implements MouseSelfHandler, ResizeSelfHandl
 		this.contentPane.setPrefWidth(this.getWidth());
 		this.contentPane.setPrefHeight(this.getHeight());
 	}
-	
+
 }

@@ -14,15 +14,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package io.github.zachohara.percussionpacker.card;
+package io.github.zachohara.percussionpacker.columntype;
 
-import io.github.zachohara.percussionpacker.cardtype.GhostCard;
+import io.github.zachohara.percussionpacker.column.Column;
 
-public class SpaceCard extends GhostCard {
+public class MalletColumn extends Column {
 	
-	public SpaceCard(Card sizingCard) {
-		super(sizingCard);
-		this.setStyle("-fx-background-color: lightblue");
+	public static final String TITLE = "Mallet List";
+	
+	public MalletColumn() {
+		super(TITLE);
 	}
 	
 }
