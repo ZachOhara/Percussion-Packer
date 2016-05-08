@@ -14,9 +14,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package io.github.zachohara.percussionpacker.card;
+package io.github.zachohara.percussionpacker.cardtype;
 
-import io.github.zachohara.percussionpacker.cardtype.GhostCard;
+import io.github.zachohara.percussionpacker.card.Card;
 
 public class SpaceCard extends GhostCard {
 
