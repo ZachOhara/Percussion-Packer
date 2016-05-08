@@ -20,15 +20,18 @@ import io.github.zachohara.fxeventcommon.mouse.MouseEventListener;
 import io.github.zachohara.fxeventcommon.mouse.MouseSelfHandler;
 import io.github.zachohara.fxeventcommon.resize.RegionResizeListener;
 import io.github.zachohara.fxeventcommon.resize.ResizeSelfHandler;
+import io.github.zachohara.percussionpacker.animation.SlideCompletionListener;
+import io.github.zachohara.percussionpacker.animation.VerticalSlideTransition;
 import io.github.zachohara.percussionpacker.card.Card;
 import io.github.zachohara.percussionpacker.card.GhostCard;
 import io.github.zachohara.percussionpacker.util.GraphicsUtil;
 import javafx.event.EventType;
 import javafx.geometry.Point2D;
+import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 
-public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfHandler {
+public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfHandler, SlideCompletionListener {
 	
 	public static final double DRAG_DIFFERENCE_THRESHOLD = 10;
 	
@@ -74,7 +77,16 @@ public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfH
 		getChildren().add(slidingCard);
 		slidingCard.setLayoutX(localPoint.getX());
 		slidingCard.setLayoutY(localPoint.getY());
-		// TODO: start the actual transision
+		VerticalSlideTransition transition = new VerticalSlideTransition(slidingCard, distanceY);
+		transition.setListener(this);
+		transition.play();
+	}
+
+	@Override
+	public void finishSlidingCard(Node slidingNode) {
+		if (slidingNode instanceof Card) {
+			this.columnPane.finishSlidingCard((Card) slidingNode);
+		}
 	}
 	
 	// TODO: end the transision

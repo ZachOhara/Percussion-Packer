@@ -70,7 +70,7 @@ public class ColumnPane extends HBox implements ResizeSelfHandler {
 		}
 	}
 	
-	public void finishSlidingCard(Card slidingCard) {
+	protected void finishSlidingCard(Card slidingCard) {
 		Point2D localPoint = this.sceneToLocal(slidingCard.getCenterPoint());
 		Column hoveringColumn = this.getHoveringColumn(localPoint.getX());
 		hoveringColumn.finishSlidingCard(slidingCard);
