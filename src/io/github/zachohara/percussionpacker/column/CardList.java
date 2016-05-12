@@ -133,15 +133,20 @@ public class CardList extends VBox implements MouseSelfHandler, ResizeSelfHandle
 			newPlaceholderIndex = this.cards.size();
 			draggingCardHeight = this.cards.get(this.findGhostCard()).getHeight();
 		}
-		for (int i = 0; i < this.cards.size(); i++) {
-			if (!(this.cards.get(i) instanceof SpaceCard)) {
-				if (oldPlaceholderIndex < i && i <= newPlaceholderIndex) {
-					this.slideCard(i, -draggingCardHeight);
-				} else if (newPlaceholderIndex <= i && i < oldPlaceholderIndex) {
-					this.slideCard(i, draggingCardHeight);
-				}
+		for (int i = newPlaceholderIndex; i > oldPlaceholderIndex; i--) {
+			if (i < this.cards.size() && !this.isCardIndexSpacer(i)) {
+				this.slideCard(i, -draggingCardHeight);
 			}
 		}
+		for (int i = newPlaceholderIndex; i < oldPlaceholderIndex; i++) {
+			if (!this.isCardIndexSpacer(i)) {
+				this.slideCard(i, draggingCardHeight);
+			}
+		}
+	}
+	
+	private boolean isCardIndexSpacer(int index) {
+		return this.cards.get(index) instanceof SpaceCard;
 	}
 
 	private void slideCard(int cardIndex, double distance) {
