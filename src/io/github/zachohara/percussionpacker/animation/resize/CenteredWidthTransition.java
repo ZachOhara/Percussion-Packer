@@ -21,10 +21,19 @@ import javafx.scene.layout.Region;
 
 public class CenteredWidthTransition extends WidthTransition {
 
+	private Region resizing;
+	
+	private double offsetX;
+	private double offsetY;
+	
 	private HorizontalSlideTransition slideTransition;
 
 	public CenteredWidthTransition(Region resizing, double newWidth) {
 		super(resizing, newWidth);
+		
+		this.resizing = resizing;
+		this.offsetX = 0;
+		this.offsetY = 0;
 
 		this.slideTransition =
 				new HorizontalSlideTransition(resizing, -(newWidth - resizing.getWidth()) / 2);
@@ -34,6 +43,14 @@ public class CenteredWidthTransition extends WidthTransition {
 	public void interpolate(double fraction) {
 		super.interpolate(fraction);
 		this.slideTransition.interpolate(fraction);
+		this.resizing.setLayoutX(this.resizing.getLayoutX() + this.offsetX);
+	}
+	
+	public void setPositionOffset(double offsetX, double offsetY) {
+		this.offsetX = offsetX;
+		this.resizing.setLayoutY(this.resizing.getLayoutY() - this.offsetY);
+		this.offsetY = offsetY;
+		this.resizing.setLayoutY(this.resizing.getLayoutY() + this.offsetY);
 	}
 
 }

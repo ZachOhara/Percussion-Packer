@@ -25,7 +25,7 @@ import javafx.util.Duration;
 
 public abstract class ResizeTransition extends Transition implements EventHandler<ActionEvent> {
 
-	public static final double DURATION = 500; // in milliseconds
+	public static final double DURATION = 100; // in milliseconds
 	
 	private Region resizingRegion;
 	private ResizeProgressListener progressListener;

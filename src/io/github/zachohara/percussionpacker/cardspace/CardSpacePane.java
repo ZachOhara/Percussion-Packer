@@ -27,7 +27,6 @@ import io.github.zachohara.percussionpacker.animation.InterpolatedQuantity;
 import io.github.zachohara.percussionpacker.animation.resize.CenteredWidthTransition;
 import io.github.zachohara.percussionpacker.animation.resize.ResizeCompletionListener;
 import io.github.zachohara.percussionpacker.animation.resize.ResizeProgressListener;
-import io.github.zachohara.percussionpacker.animation.resize.WidthTransition;
 import io.github.zachohara.percussionpacker.animation.slide.SlideCompletionListener;
 import io.github.zachohara.percussionpacker.animation.slide.VerticalSlideTransition;
 import io.github.zachohara.percussionpacker.card.Card;
@@ -52,6 +51,7 @@ public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfH
 	private GhostCard placeholderCard;
 	
 	private Map<Card, VerticalSlideTransition> slideTransitions;
+	private CenteredWidthTransition resizeTransition;
 	
 	private InterpolatedQuantity interpolatedLastX;
 
@@ -152,7 +152,11 @@ public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfH
 			this.isDragging = true;
 		}
 		if (this.isDragging) {
-			this.updateCardPosition(dx, dy);
+			if (!this.isCardResizing) {
+				this.updateCardPosition(dx, dy);
+			} else {
+				this.resizeTransition.setPositionOffset(dx, dy);
+			}
 			Column droppedColumn =
 					this.columnPane.dropCard(this.placeholderCard, this.getSceneCardCenter());
 			this.handleDraggingCardResize(droppedColumn);
@@ -162,12 +166,13 @@ public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfH
 	private void handleDraggingCardResize(Column droppedColumn) {
 		double targetWidth = droppedColumn.getAvailableCardWidth();
 		if (!this.isCardResizing && this.draggingCard.getWidth() != targetWidth) {
-			WidthTransition transition = new CenteredWidthTransition(this.draggingCard, targetWidth);
-			transition.setCompletionListener(this);
-			transition.setProgressListener(this);
+			this.resetDragStartValues();
+			this.resizeTransition = new CenteredWidthTransition(this.draggingCard, targetWidth);
+			this.resizeTransition.setCompletionListener(this);
+			this.resizeTransition.setProgressListener(this);
 			this.isCardResizing = true;
 			this.interpolatedLastX = new InterpolatedQuantity(this.lastCardX, -(targetWidth - this.draggingCard.getWidth()) / 2);
-			transition.play();
+			this.resizeTransition.play();
 		}
 	}
 
@@ -178,13 +183,22 @@ public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfH
 
 	@Override
 	public void finishResizingRegion(Region r) {
+		this.resetDragStartValues();
 		this.isCardResizing = false;
+		this.resizeTransition = null;
 	}
 
 	@Override
 	public void handleResize() {
 		this.columnPane.setPrefHeight(this.getHeight());
 		this.columnPane.setPrefWidth(this.getWidth());
+	}
+	
+	private void resetDragStartValues() {
+		this.lastMouseX = this.lastMouseX + (this.draggingCard.getLayoutX() - this.lastCardX);
+		this.lastMouseY = this.lastMouseY + (this.draggingCard.getLayoutY() - this.lastCardY);
+		this.lastCardX = this.draggingCard.getLayoutX();
+		this.lastCardY = this.draggingCard.getLayoutY();
 	}
 
 	private void updateCardPosition(double dx, double dy) {
