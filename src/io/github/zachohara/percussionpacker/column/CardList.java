@@ -141,11 +141,15 @@ public class CardList extends VBox implements MouseSelfHandler, ResizeSelfHandle
 		for (int i = newPlaceholderIndex; i > oldPlaceholderIndex; i--) {
 			if (!this.isCardIndexSpacer(i)) {
 				this.slideCard(i, -draggingCardHeight);
+			} else {
+				this.changeCardDestination(i, -draggingCardHeight);
 			}
 		}
 		for (int i = newPlaceholderIndex; i < oldPlaceholderIndex; i++) {
 			if (!this.isCardIndexSpacer(i)) {
 				this.slideCard(i, draggingCardHeight);
+			} else {
+				this.changeCardDestination(i, draggingCardHeight);
 			}
 		}
 	}
@@ -162,6 +166,21 @@ public class CardList extends VBox implements MouseSelfHandler, ResizeSelfHandle
 		this.getCardSpacePane().recieveSlidingCard(slidingCard, scenePoint, distance);
 		this.add(cardIndex, spacer);
 		this.spaceCardMap.put(slidingCard, spacer);
+	}
+	
+	private void changeCardDestination(int cardIndex, double distance) {
+		Card spaceCard = this.cards.get(cardIndex);
+		Card slidingCard = this.reverseLookup((SpaceCard) spaceCard);
+		this.getCardSpacePane().changeSlidingDestination(slidingCard, distance);
+	}
+	
+	private Card reverseLookup(SpaceCard spacer) {
+		for (Card key : this.spaceCardMap.keySet()) {
+			if (this.spaceCardMap.get(key) == spacer) {
+				return key;
+			}
+		}
+		return null;
 	}
 
 	public void finishSlidingCard(Card slidingCard) {

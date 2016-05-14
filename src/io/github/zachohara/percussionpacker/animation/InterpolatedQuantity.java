@@ -17,17 +17,33 @@
 package io.github.zachohara.percussionpacker.animation;
 
 public class InterpolatedQuantity {
+	
+	private double lastFraction;
 
 	private double startValue;
 	private double difference;
 
 	public InterpolatedQuantity(double startValue, double difference) {
+		this.lastFraction = 0;
 		this.startValue = startValue;
 		this.difference = difference;
 	}
 
 	public double getInterpolatedValue(double fraction) {
+		this.lastFraction = fraction;
 		return this.startValue + (fraction * this.difference);
+	}
+	
+	public double getLastFraction() {
+		return this.lastFraction;
+	}
+	
+	public double getStartValue() {
+		return this.startValue;
+	}
+	
+	public double getDifference() {
+		return this.difference;
 	}
 
 }

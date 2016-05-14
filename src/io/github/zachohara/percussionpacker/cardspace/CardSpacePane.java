@@ -16,6 +16,9 @@
 
 package io.github.zachohara.percussionpacker.cardspace;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import io.github.zachohara.fxeventcommon.mouse.MouseEventListener;
 import io.github.zachohara.fxeventcommon.mouse.MouseSelfHandler;
 import io.github.zachohara.fxeventcommon.resize.RegionResizeListener;
@@ -48,6 +51,8 @@ public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfH
 	private Card draggingCard;
 	private GhostCard placeholderCard;
 	
+	private Map<Card, VerticalSlideTransition> slideTransitions;
+	
 	private InterpolatedQuantity interpolatedLastX;
 
 	private boolean isDragging;
@@ -67,6 +72,8 @@ public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfH
 		this.columnPane = new ColumnPane();
 		this.columnPane.setLayoutX(0);
 		this.columnPane.setLayoutY(0);
+		
+		this.slideTransitions = new HashMap<Card, VerticalSlideTransition>();
 
 		this.getChildren().add(this.columnPane);
 
@@ -92,13 +99,27 @@ public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfH
 		slidingCard.setLayoutY(localPoint.getY());
 		VerticalSlideTransition transition = new VerticalSlideTransition(slidingCard, distanceY);
 		transition.setCompletionListener(this);
+		this.slideTransitions.put(slidingCard, transition);
 		transition.play();
+	}
+	
+	public void changeSlidingDestination(Card slidingCard, double distanceY) {
+		VerticalSlideTransition transition = this.slideTransitions.get(slidingCard);
+		transition.pause();
+		double lastGoal = transition.getStartValue() + transition.getDifference();
+		double newGoal = lastGoal + distanceY;
+		double difference = newGoal - slidingCard.getLayoutY();
+		VerticalSlideTransition newTransition = new VerticalSlideTransition(slidingCard, difference);
+		newTransition.setCompletionListener(this);
+		this.slideTransitions.put(slidingCard, newTransition);
+		newTransition.play();
 	}
 
 	@Override
 	public void finishSlidingNode(Node slidingNode) {
 		if (slidingNode instanceof Card) {
 			this.getChildren().remove(slidingNode);
+			this.slideTransitions.remove(slidingNode);
 			this.columnPane.finishSlidingCard((Card) slidingNode);
 		}
 	}

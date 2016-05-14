@@ -28,6 +28,14 @@ public class PropertyTransition extends Transition {
 		this.property = property;
 		this.interpolator = new InterpolatedQuantity(property.get(), difference);
 	}
+	
+	public double getStartValue() {
+		return this.interpolator.getStartValue();
+	}
+	
+	public double getDifference() {
+		return this.interpolator.getDifference();
+	}
 
 	@Override
 	public void interpolate(double fraction) {
