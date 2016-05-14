@@ -230,9 +230,7 @@ public class CardList extends VBox implements MouseSelfHandler, ResizeSelfHandle
 		}
 		for (int i = 0; i < this.cards.size(); i++) {
 			if (this.cards.get(i) != this.getChildren().get(i)) {
-				System.out.println(this.cards);
-				System.out.println(this.getChildren());
-				throw new IllegalStateException();
+				throw new IllegalStateException("CardList elements mismatch");
 			}
 		}
 	}

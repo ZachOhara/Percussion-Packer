@@ -153,7 +153,6 @@ public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfH
 	@Override
 	public void progressRegionResize(Region r, double fraction) {
 		this.lastCardX = this.interpolatedLastX.getInterpolatedValue(fraction);
-		System.out.println(this.lastCardX);
 	}
 
 	@Override
