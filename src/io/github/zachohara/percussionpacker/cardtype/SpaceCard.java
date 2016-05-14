@@ -22,7 +22,7 @@ public class SpaceCard extends GhostCard {
 
 	public SpaceCard(Card sizingCard) {
 		super(sizingCard);
-		this.setStyle("-fx-background-color: lightblue");
+		this.setStyle("");
 	}
 
 }
