@@ -103,7 +103,7 @@ public class CardList extends VBox implements MouseSelfHandler, ResizeSelfHandle
 
 	public void dropCard(Card draggingCard, Point2D scenePoint) {
 		double localY = this.sceneToLocal(scenePoint).getY();
-		int insertIndex = 0;
+		int insertIndex = -1;
 		if (draggingCard != null) {
 			insertIndex = this.getDragCardIndex(localY, draggingCard.getHeight());
 		}
