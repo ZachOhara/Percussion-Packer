@@ -30,6 +30,7 @@ import io.github.zachohara.percussionpacker.cardspace.CardSpacePane;
 import io.github.zachohara.percussionpacker.cardtype.GhostCard;
 import io.github.zachohara.percussionpacker.cardtype.SpaceCard;
 import io.github.zachohara.percussionpacker.cardtype.TestCard;
+import io.github.zachohara.percussionpacker.util.GraphicsUtil;
 import io.github.zachohara.percussionpacker.util.MathUtil;
 import io.github.zachohara.percussionpacker.window.PackingStage;
 import javafx.event.EventType;
@@ -51,6 +52,7 @@ public class CardList extends VBox implements MouseSelfHandler, ResizeSelfHandle
 
 		this.cards = new ArrayList<Card>();
 		this.spaceCardMap = new HashMap<Card, SpaceCard>();
+		this.spaceCardMap.put(new TestCard(), new SpaceCard(new TestCard()));
 
 		// --- Test code --- //
 		for (int i = 0; i < 20; i++) {
@@ -130,11 +132,11 @@ public class CardList extends VBox implements MouseSelfHandler, ResizeSelfHandle
 			draggingCardHeight = draggingCard.getHeight();
 		} else { // draggingCard is null
 			oldPlaceholderIndex = this.findGhostCard();
-			newPlaceholderIndex = this.cards.size();
+			newPlaceholderIndex = this.cards.size() - 1;
 			draggingCardHeight = this.cards.get(this.findGhostCard()).getHeight();
 		}
 		for (int i = newPlaceholderIndex; i > oldPlaceholderIndex; i--) {
-			if (i < this.cards.size() && !this.isCardIndexSpacer(i)) {
+			if (!this.isCardIndexSpacer(i)) {
 				this.slideCard(i, -draggingCardHeight);
 			}
 		}
@@ -151,9 +153,10 @@ public class CardList extends VBox implements MouseSelfHandler, ResizeSelfHandle
 
 	private void slideCard(int cardIndex, double distance) {
 		Card slidingCard = this.cards.get(cardIndex);
+		Point2D scenePoint = GraphicsUtil.getScenePosition(slidingCard);
 		SpaceCard spacer = new SpaceCard(slidingCard);
-		this.getCardSpacePane().recieveSlidingCard(slidingCard, distance);
 		this.remove(slidingCard);
+		this.getCardSpacePane().recieveSlidingCard(slidingCard, scenePoint, distance);
 		this.add(cardIndex, spacer);
 		this.spaceCardMap.put(slidingCard, spacer);
 	}

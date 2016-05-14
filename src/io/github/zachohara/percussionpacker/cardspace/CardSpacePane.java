@@ -83,8 +83,8 @@ public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfH
 		this.updateCardPosition(0, 0);
 	}
 
-	public void recieveSlidingCard(Card slidingCard, double distanceY) {
-		Point2D localPoint = GraphicsUtil.getRelativePosition(this, slidingCard);
+	public void recieveSlidingCard(Card slidingCard, Point2D scenePosition, double distanceY) {
+		Point2D localPoint = this.sceneToLocal(scenePosition);
 		this.getChildren().add(slidingCard);
 		this.draggingCard.toFront();
 		slidingCard.setLayoutX(localPoint.getX());
@@ -130,11 +130,9 @@ public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfH
 		}
 		if (this.isDragging) {
 			this.updateCardPosition(dx, dy);
-			//if (!this.isCardResizing) {
-				Column droppedColumn =
-						this.columnPane.dropCard(this.placeholderCard, this.getSceneCardCenter());
-				this.handleDraggingCardResize(droppedColumn);
-			//}
+			Column droppedColumn =
+					this.columnPane.dropCard(this.placeholderCard, this.getSceneCardCenter());
+			this.handleDraggingCardResize(droppedColumn);
 		}
 	}
 
