@@ -74,11 +74,12 @@ public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfH
 		this.setMinHeight(GraphicsUtil.getCumulativeMinHeight(this));
 	}
 
-	public void recieveDraggingCard(Card draggingCard, GhostCard placeholder) {
+	public void recieveDraggingCard(Card draggingCard, Point2D scenePosision, GhostCard placeholder) {
 		this.draggingCard = draggingCard;
 		this.placeholderCard = placeholder;
-		this.lastCardX = GraphicsUtil.getRelativeX(this, this.draggingCard);
-		this.lastCardY = GraphicsUtil.getRelativeY(this, this.draggingCard);
+		Point2D localPosition = this.sceneToLocal(scenePosision);
+		this.lastCardX = localPosition.getX();
+		this.lastCardY = localPosition.getY();
 		this.getChildren().add(this.draggingCard);
 		this.updateCardPosition(0, 0);
 	}
@@ -97,6 +98,7 @@ public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfH
 	@Override
 	public void finishSlidingNode(Node slidingNode) {
 		if (slidingNode instanceof Card) {
+			this.getChildren().remove(slidingNode);
 			this.columnPane.finishSlidingCard((Card) slidingNode);
 		}
 	}

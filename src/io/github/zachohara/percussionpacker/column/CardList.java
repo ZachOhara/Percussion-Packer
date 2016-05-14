@@ -90,9 +90,10 @@ public class CardList extends VBox implements MouseSelfHandler, ResizeSelfHandle
 
 	private void handleCardClick(int index) {
 		Card clickedCard = this.cards.get(index);
+		Point2D scenePosition = GraphicsUtil.getScenePosition(clickedCard);
 		GhostCard placeholder = new GhostCard(clickedCard);
-		this.getCardSpacePane().recieveDraggingCard(clickedCard, placeholder);
 		this.remove(clickedCard);
+		this.getCardSpacePane().recieveDraggingCard(clickedCard, scenePosition, placeholder);
 		this.add(index, placeholder);
 	}
 
@@ -202,21 +203,38 @@ public class CardList extends VBox implements MouseSelfHandler, ResizeSelfHandle
 	protected void add(Card element) {
 		this.cards.add(element);
 		this.getChildren().add(element);
+		this.verifyIntegrity();
 	}
 
 	private void add(int index, Card element) {
 		this.cards.add(index, element);
 		this.getChildren().add(index, element);
+		this.verifyIntegrity();
 	}
 
 	private void remove(Card element) {
 		this.cards.remove(element);
 		this.getChildren().remove(element);
+		this.verifyIntegrity();
 	}
 
 	private void set(int index, Card element) {
 		this.cards.set(index, element);
 		this.getChildren().set(index, element);
+		this.verifyIntegrity();
+	}
+	
+	private void verifyIntegrity() {
+		if (this.cards.size() != this.getChildren().size()) {
+			throw new IllegalStateException("CardList size mismatch");
+		}
+		for (int i = 0; i < this.cards.size(); i++) {
+			if (this.cards.get(i) != this.getChildren().get(i)) {
+				System.out.println(this.cards);
+				System.out.println(this.getChildren());
+				throw new IllegalStateException();
+			}
+		}
 	}
 
 }
