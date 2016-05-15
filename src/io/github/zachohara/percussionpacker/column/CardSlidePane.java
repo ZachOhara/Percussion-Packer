@@ -35,7 +35,7 @@ public class CardSlidePane extends Pane implements ResizeSelfHandler, SlideCompl
 	
 	private CardList cardList;
 	
-	private GhostCard placeholderCard;
+	private GhostCard slidingGhostCard;
 	
 	private Map<Card, VerticalSlideTransition> slideTransitions;
 	
@@ -55,16 +55,19 @@ public class CardSlidePane extends Pane implements ResizeSelfHandler, SlideCompl
 	}
 
 	public void recieveSlidingCard(Card slidingCard, Point2D scenePosition, double distanceY) {
-		Point2D localPoint = this.sceneToLocal(scenePosition);
 		if (slidingCard instanceof GhostCard && !(slidingCard instanceof SpaceCard)) {
-			this.placeholderCard = (GhostCard) slidingCard;
+			this.slidingGhostCard = (GhostCard) slidingCard;
 		}
+		
+		Point2D localPoint = this.sceneToLocal(scenePosition);
 		this.getChildren().add(slidingCard);
 		slidingCard.setLayoutX(localPoint.getX());
 		slidingCard.setLayoutY(localPoint.getY());
-		if (placeholderCard != null) {
-			placeholderCard.toFront();
+		
+		if (slidingGhostCard != null) {
+			slidingGhostCard.toFront();
 		}
+		
 		VerticalSlideTransition transition = new VerticalSlideTransition(slidingCard, distanceY);
 		transition.setCompletionListener(this);
 		this.slideTransitions.put(slidingCard, transition);
@@ -84,17 +87,17 @@ public class CardSlidePane extends Pane implements ResizeSelfHandler, SlideCompl
 	}
 	
 	public void stopGhostCardSlide() {
-		if (this.placeholderCard != null) {
-			this.slideTransitions.get(this.placeholderCard).pause();
-			this.finishSlidingNode(this.placeholderCard);
+		if (this.slidingGhostCard != null) {
+			this.slideTransitions.get(this.slidingGhostCard).pause();
+			this.finishSlidingNode(this.slidingGhostCard);
 		}
 	}
 
 	@Override
 	public void finishSlidingNode(Node slidingNode) {
 		if (slidingNode instanceof Card) {
-			if (slidingNode == this.placeholderCard) {
-				this.placeholderCard = null;
+			if (slidingNode == this.slidingGhostCard) {
+				this.slidingGhostCard = null;
 			}
 			this.getChildren().remove(slidingNode);
 			this.slideTransitions.remove(slidingNode);
