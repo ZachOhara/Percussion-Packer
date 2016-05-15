@@ -15,10 +15,12 @@ public class GhostCard extends Card {
 	public static final Color BACKGROUND_COLOR = Color.web(DECORATION_COLOR, BACKGROUND_OPACITY);
 	
 	public static final double RADIUS = 2;
+	public static final double INSET = 3;
 	
-	public static final String STYLE = generateBackgroundColorString() + "-fx-background-radius: "
-			+ RADIUS + RADIUS + RADIUS + RADIUS + "; -fx-border-color: " + DECORATION_COLOR
-			+ "; -fx-border-radius: " + RADIUS + RADIUS + RADIUS + RADIUS;
+	public static final String STYLE = generateBackgroundColorString()
+			+ "; -fx-background-radius: " + RADIUS + "; -fx-background-insets: " + INSET
+			+ "; -fx-border-radius: " + RADIUS + "; -fx-border-insets: " + INSET
+			+ "; -fx-border-color: " + DECORATION_COLOR;
 
 	public GhostCard(Card sizingCard) {
 		super(sizingCard.getHeight(), false, false);
@@ -48,7 +50,7 @@ public class GhostCard extends Card {
 				+ (255 * BACKGROUND_COLOR.getRed()) + ", "
 				+ (255 * BACKGROUND_COLOR.getGreen()) + ", "
 				+ (255 * BACKGROUND_COLOR.getBlue()) + ", "
-				+ BACKGROUND_COLOR.getOpacity() + "); ";
+				+ BACKGROUND_COLOR.getOpacity() + ")";
 	}
 
 }
