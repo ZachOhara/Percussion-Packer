@@ -42,14 +42,15 @@ public class CardDragPane extends Pane implements MouseSelfHandler, ResizeSelfHa
 	private ColumnPane columnPane;
 
 	private Card draggingCard;
-	private GhostCard placeholderCard;
+	private GhostCard ghostCard;
+	
 	private CenteredWidthTransition resizeTransition;
 	
 	private InterpolatedQuantity interpolatedLastX;
 
-	private boolean isDragging;
-
+	private boolean isCardDragging;
 	private boolean isCardResizing;
+	
 	private double lastMouseX;
 	private double lastMouseY;
 	private double lastCardX;
@@ -62,8 +63,6 @@ public class CardDragPane extends Pane implements MouseSelfHandler, ResizeSelfHa
 		RegionResizeListener.createSelfHandler(this);
 
 		this.columnPane = new ColumnPane();
-		this.columnPane.setLayoutX(0);
-		this.columnPane.setLayoutY(0);
 
 		this.getChildren().add(this.columnPane);
 
@@ -71,9 +70,9 @@ public class CardDragPane extends Pane implements MouseSelfHandler, ResizeSelfHa
 		this.setMinHeight(GraphicsUtil.getCumulativeMinHeight(this));
 	}
 
-	public void recieveDraggingCard(Card draggingCard, Point2D scenePosision, GhostCard placeholder) {
+	public void recieveDraggingCard(Card draggingCard, Point2D scenePosision, GhostCard ghostCard) {
 		this.draggingCard = draggingCard;
-		this.placeholderCard = placeholder;
+		this.ghostCard = ghostCard;
 		Point2D localPosition = this.sceneToLocal(scenePosision);
 		this.lastCardX = localPosition.getX();
 		this.lastCardY = localPosition.getY();
@@ -82,40 +81,40 @@ public class CardDragPane extends Pane implements MouseSelfHandler, ResizeSelfHa
 	}
 
 	@Override
+	public void handleResize() {
+		this.columnPane.setPrefHeight(this.getHeight());
+		this.columnPane.setPrefWidth(this.getWidth());
+	}
+
+	@Override
 	public void handleMouse(MouseEvent event, EventType<? extends MouseEvent> type) {
 		if (type == MouseEvent.MOUSE_PRESSED) {
 			this.lastMouseX = event.getSceneX();
 			this.lastMouseY = event.getSceneY();
-			this.isDragging = false;
+			this.isCardDragging = false;
 		} else if (type == MouseEvent.MOUSE_DRAGGED) {
 			if (this.draggingCard != null) {
 				this.handleMouseDrag(event.getSceneX(), event.getSceneY());
 			}
 		} else if (type == MouseEvent.MOUSE_RELEASED) {
-			this.isDragging = false;
-			if (this.draggingCard != null) {
-				this.columnPane.dropCard(this.draggingCard, this.getSceneCardCenter());
-				this.draggingCard = null;
-				this.placeholderCard = null;
-				this.isDragging = false;
-			}
+			this.handleMouseRelease();
 		}
 	}
 
 	private void handleMouseDrag(double x, double y) {
 		double dx = x - this.lastMouseX;
 		double dy = y - this.lastMouseY;
-		if (CardDragPane.isOverThreshold(dx, dy)) {
-			this.isDragging = true;
+		if (!this.isCardDragging && CardDragPane.isOverThreshold(dx, dy)) {
+			this.isCardDragging = true;
 		}
-		if (this.isDragging) {
+		if (this.isCardDragging) {
 			if (!this.isCardResizing) {
 				this.updateCardPosition(dx, dy);
 			} else {
 				this.resizeTransition.setPositionOffset(dx, dy);
 			}
 			Column droppedColumn =
-					this.columnPane.dropCard(this.placeholderCard, this.getSceneCardCenter());
+					this.columnPane.dropCard(this.ghostCard, this.getSceneCardCenter());
 			this.handleDraggingCardResize(droppedColumn);
 		}
 	}
@@ -132,6 +131,16 @@ public class CardDragPane extends Pane implements MouseSelfHandler, ResizeSelfHa
 			this.resizeTransition.play();
 		}
 	}
+	
+	private void handleMouseRelease() {
+		this.isCardDragging = false;
+		if (this.draggingCard != null) {
+			this.columnPane.dropCard(this.draggingCard, this.getSceneCardCenter());
+			this.draggingCard = null;
+			this.ghostCard = null;
+			this.isCardDragging = false;
+		}
+	}
 
 	@Override
 	public void progressRegionResize(Region r, double fraction) {
@@ -140,15 +149,11 @@ public class CardDragPane extends Pane implements MouseSelfHandler, ResizeSelfHa
 
 	@Override
 	public void finishResizingRegion(Region r) {
-		this.resetDragStartValues();
+		if (this.isCardDragging) {
+			this.resetDragStartValues();
+		}
 		this.isCardResizing = false;
 		this.resizeTransition = null;
-	}
-
-	@Override
-	public void handleResize() {
-		this.columnPane.setPrefHeight(this.getHeight());
-		this.columnPane.setPrefWidth(this.getWidth());
 	}
 	
 	private void resetDragStartValues() {
