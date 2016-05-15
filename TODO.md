@@ -5,17 +5,11 @@
 * Create different types of cards (re-titleable, nameable, etc.)
 * Make CardSpacePane handle the movement of cards by the mouse
 * Add window icons
-* Set a minimum height for the card scroll pane
-* Create different types of columns
-* Make card backing buttons recieve focus on initial click
+* Make card backing buttons recieve focus on initial click if the card position has not changed
 * Make columns assume the current ratios after resizing the window
-* Add a velocity to moving cards
-* Make dragging cards resize to the current hovering column (with a velocity)
-* Make cards seat back into columns
-* Make a single, universal sliding thread and pane system (potentially use card space pane)
-* Resolve duplicate method copySizing in GhostCard and SpaceRegion
 * Hover over top / bottom of scroll pane while dragging should cause scroll
 * Visually differentiate functional buttons and backing buttons
-* Fix the inter-column resizing exception
-* Possibly redesign the column placement system
-* Fix the multiple cards animating when dragging a card down
+* Possibly make the placeholder card animate (underneath the actual content-holding cards)
+* Fix the drag-resizing placement issue
+* Restyle the placeholder card
+* When a new card is created, the applicable column should scroll to the bottom to show the card
