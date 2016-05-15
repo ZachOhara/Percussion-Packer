@@ -82,6 +82,13 @@ public class CardSlidePane extends Pane implements ResizeSelfHandler, SlideCompl
 		this.slideTransitions.put(slidingCard, newTransition);
 		newTransition.play();
 	}
+	
+	public void stopGhostCardSlide() {
+		if (this.placeholderCard != null) {
+			this.slideTransitions.get(this.placeholderCard).pause();
+			this.finishSlidingNode(this.placeholderCard);
+		}
+	}
 
 	@Override
 	public void finishSlidingNode(Node slidingNode) {
@@ -100,9 +107,8 @@ public class CardSlidePane extends Pane implements ResizeSelfHandler, SlideCompl
 	}
 
 	public void dropCard(Card draggingCard, Point2D scenePoint) {
-		if (draggingCard == null && this.placeholderCard != null) {
-			this.slideTransitions.get(this.placeholderCard).pause();
-			this.finishSlidingNode(this.placeholderCard);
+		if (draggingCard == null) {
+			this.stopGhostCardSlide();
 		}
 		this.cardList.dropCard(draggingCard, scenePoint);
 	}
