@@ -18,7 +18,7 @@ package io.github.zachohara.percussionpacker.window;
 
 import io.github.zachohara.fxeventcommon.window.WindowEventListener;
 import io.github.zachohara.fxeventcommon.window.WindowSelfHandler;
-import io.github.zachohara.percussionpacker.cardspace.CardSpacePane;
+import io.github.zachohara.percussionpacker.cardspace.CardDragPane;
 import javafx.application.Platform;
 import javafx.event.EventType;
 import javafx.stage.Stage;
@@ -62,7 +62,7 @@ public class PackingStage extends Stage implements WindowSelfHandler {
 		return this.getHeight() - this.getScene().getHeight();
 	}
 
-	public static CardSpacePane getCardSpacePane() {
+	public static CardDragPane getCardSpacePane() {
 		return PackingStage.singleton.workspaceScene.getWorkspaceRootPane().getCardSpacePane();
 	}
 

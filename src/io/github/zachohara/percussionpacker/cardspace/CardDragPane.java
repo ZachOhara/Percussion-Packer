@@ -34,7 +34,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 
-public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfHandler,
+public class CardDragPane extends Pane implements MouseSelfHandler, ResizeSelfHandler,
 		ResizeProgressListener, ResizeCompletionListener {
 
 	public static final double DRAG_DIFFERENCE_THRESHOLD = 10;
@@ -55,7 +55,7 @@ public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfH
 	private double lastCardX;
 	private double lastCardY;
 
-	public CardSpacePane() {
+	public CardDragPane() {
 		super();
 
 		MouseEventListener.createSelfHandler(this);
@@ -105,7 +105,7 @@ public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfH
 	private void handleMouseDrag(double x, double y) {
 		double dx = x - this.lastMouseX;
 		double dy = y - this.lastMouseY;
-		if (CardSpacePane.isOverThreshold(dx, dy)) {
+		if (CardDragPane.isOverThreshold(dx, dy)) {
 			this.isDragging = true;
 		}
 		if (this.isDragging) {

@@ -18,13 +18,13 @@ package io.github.zachohara.percussionpacker.window;
 
 import io.github.zachohara.fxeventcommon.resize.RegionResizeListener;
 import io.github.zachohara.fxeventcommon.resize.ResizeSelfHandler;
-import io.github.zachohara.percussionpacker.cardspace.CardSpacePane;
+import io.github.zachohara.percussionpacker.cardspace.CardDragPane;
 import io.github.zachohara.percussionpacker.util.GraphicsUtil;
 import javafx.scene.layout.Pane;
 
 public class WorkspaceRootPane extends Pane implements ResizeSelfHandler {
 
-	private CardSpacePane cardPane;
+	private CardDragPane cardPane;
 
 	public WorkspaceRootPane() {
 		super();
@@ -34,7 +34,7 @@ public class WorkspaceRootPane extends Pane implements ResizeSelfHandler {
 		this.setPrefWidth(PackingStage.DEFAULT_WIDTH);
 		this.setPrefHeight(PackingStage.DEFAULT_HEIGHT);
 
-		this.cardPane = new CardSpacePane();
+		this.cardPane = new CardDragPane();
 
 		this.getChildren().add(this.cardPane);
 
@@ -42,7 +42,7 @@ public class WorkspaceRootPane extends Pane implements ResizeSelfHandler {
 		this.setMinHeight(GraphicsUtil.getCumulativeMinHeight(this));
 	}
 
-	protected CardSpacePane getCardSpacePane() {
+	protected CardDragPane getCardSpacePane() {
 		return this.cardPane;
 	}
 
