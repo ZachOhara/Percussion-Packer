@@ -16,9 +16,6 @@
 
 package io.github.zachohara.percussionpacker.cardspace;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import io.github.zachohara.fxeventcommon.mouse.MouseEventListener;
 import io.github.zachohara.fxeventcommon.mouse.MouseSelfHandler;
 import io.github.zachohara.fxeventcommon.resize.RegionResizeListener;
@@ -27,21 +24,18 @@ import io.github.zachohara.percussionpacker.animation.InterpolatedQuantity;
 import io.github.zachohara.percussionpacker.animation.resize.CenteredWidthTransition;
 import io.github.zachohara.percussionpacker.animation.resize.ResizeCompletionListener;
 import io.github.zachohara.percussionpacker.animation.resize.ResizeProgressListener;
-import io.github.zachohara.percussionpacker.animation.slide.SlideCompletionListener;
-import io.github.zachohara.percussionpacker.animation.slide.VerticalSlideTransition;
 import io.github.zachohara.percussionpacker.card.Card;
 import io.github.zachohara.percussionpacker.cardtype.GhostCard;
 import io.github.zachohara.percussionpacker.column.Column;
 import io.github.zachohara.percussionpacker.util.GraphicsUtil;
 import javafx.event.EventType;
 import javafx.geometry.Point2D;
-import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 
 public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfHandler,
-		SlideCompletionListener, ResizeProgressListener, ResizeCompletionListener {
+		ResizeProgressListener, ResizeCompletionListener {
 
 	public static final double DRAG_DIFFERENCE_THRESHOLD = 10;
 
@@ -49,8 +43,6 @@ public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfH
 
 	private Card draggingCard;
 	private GhostCard placeholderCard;
-	
-	private Map<Card, VerticalSlideTransition> slideTransitions;
 	private CenteredWidthTransition resizeTransition;
 	
 	private InterpolatedQuantity interpolatedLastX;
@@ -72,8 +64,6 @@ public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfH
 		this.columnPane = new ColumnPane();
 		this.columnPane.setLayoutX(0);
 		this.columnPane.setLayoutY(0);
-		
-		this.slideTransitions = new HashMap<Card, VerticalSlideTransition>();
 
 		this.getChildren().add(this.columnPane);
 
@@ -89,39 +79,6 @@ public class CardSpacePane extends Pane implements MouseSelfHandler, ResizeSelfH
 		this.lastCardY = localPosition.getY();
 		this.getChildren().add(this.draggingCard);
 		this.updateCardPosition(0, 0);
-	}
-
-	public void recieveSlidingCard(Card slidingCard, Point2D scenePosition, double distanceY) {
-		Point2D localPoint = this.sceneToLocal(scenePosition);
-		this.getChildren().add(slidingCard);
-		this.draggingCard.toFront();
-		slidingCard.setLayoutX(localPoint.getX());
-		slidingCard.setLayoutY(localPoint.getY());
-		VerticalSlideTransition transition = new VerticalSlideTransition(slidingCard, distanceY);
-		transition.setCompletionListener(this);
-		this.slideTransitions.put(slidingCard, transition);
-		transition.play();
-	}
-	
-	public void changeSlidingDestination(Card slidingCard, double distanceY) {
-		VerticalSlideTransition transition = this.slideTransitions.get(slidingCard);
-		transition.pause();
-		double lastGoal = transition.getStartValue() + transition.getDifference();
-		double newGoal = lastGoal + distanceY;
-		double difference = newGoal - slidingCard.getLayoutY();
-		VerticalSlideTransition newTransition = new VerticalSlideTransition(slidingCard, difference);
-		newTransition.setCompletionListener(this);
-		this.slideTransitions.put(slidingCard, newTransition);
-		newTransition.play();
-	}
-
-	@Override
-	public void finishSlidingNode(Node slidingNode) {
-		if (slidingNode instanceof Card) {
-			this.getChildren().remove(slidingNode);
-			this.slideTransitions.remove(slidingNode);
-			this.columnPane.finishSlidingCard((Card) slidingNode);
-		}
 	}
 
 	@Override

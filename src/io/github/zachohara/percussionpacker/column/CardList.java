@@ -40,12 +40,16 @@ import javafx.scene.layout.VBox;
 
 public class CardList extends VBox implements MouseSelfHandler, ResizeSelfHandler {
 
+	private CardSlidePane parent;
+	
 	private List<Card> cards;
 
 	private Map<Card, SpaceCard> spaceCardMap;
 
-	public CardList() {
+	public CardList(CardSlidePane parent) {
 		super();
+		
+		this.parent = parent;
 
 		MouseEventListener.createSelfHandler(this);
 		RegionResizeListener.createSelfHandler(this);
@@ -163,7 +167,7 @@ public class CardList extends VBox implements MouseSelfHandler, ResizeSelfHandle
 		Point2D scenePoint = GraphicsUtil.getScenePosition(slidingCard);
 		SpaceCard spacer = new SpaceCard(slidingCard);
 		this.remove(slidingCard);
-		this.getCardSpacePane().recieveSlidingCard(slidingCard, scenePoint, distance);
+		this.parent.recieveSlidingCard(slidingCard, scenePoint, distance);
 		this.add(cardIndex, spacer);
 		this.spaceCardMap.put(slidingCard, spacer);
 	}
@@ -171,7 +175,7 @@ public class CardList extends VBox implements MouseSelfHandler, ResizeSelfHandle
 	private void changeCardDestination(int cardIndex, double distance) {
 		Card spaceCard = this.cards.get(cardIndex);
 		Card slidingCard = this.reverseLookup((SpaceCard) spaceCard);
-		this.getCardSpacePane().changeSlidingDestination(slidingCard, distance);
+		this.parent.changeSlidingDestination(slidingCard, distance);
 	}
 	
 	private Card reverseLookup(SpaceCard spacer) {

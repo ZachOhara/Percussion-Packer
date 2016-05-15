@@ -26,7 +26,7 @@ public class CardScrollPane extends ScrollPane implements FocusSelfHandler {
 
 	public static final double MIN_HEIGHT = 40;
 
-	private CardList cardList;
+	private CardSlidePane cardSlidePane;
 
 	public CardScrollPane() {
 		super();
@@ -37,26 +37,22 @@ public class CardScrollPane extends ScrollPane implements FocusSelfHandler {
 		this.setVbarPolicy(ScrollBarPolicy.AS_NEEDED);
 		this.setFitToWidth(true);
 
-		this.cardList = new CardList();
-		this.setContent(this.cardList);
+		this.cardSlidePane = new CardSlidePane();
+		this.setContent(this.cardSlidePane);
 
 		this.setMinHeight(MIN_HEIGHT);
 	}
 
 	public void addCard(Card card) {
-		this.cardList.add(card);
+		this.cardSlidePane.addCard(card);
 	}
 
 	public void dropCard(Card draggingCard, Point2D scenePoint) {
-		this.cardList.dropCard(draggingCard, scenePoint);
-	}
-
-	public void finishSlidingCard(Card slidingCard) {
-		this.cardList.finishSlidingCard(slidingCard);
+		this.cardSlidePane.dropCard(draggingCard, scenePoint);
 	}
 
 	public double getAvailbleCardWidth() {
-		return this.cardList.getWidth();
+		return this.cardSlidePane.getWidth();
 	}
 
 	@Override

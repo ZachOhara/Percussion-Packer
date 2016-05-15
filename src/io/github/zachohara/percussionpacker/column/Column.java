@@ -51,10 +51,6 @@ public abstract class Column extends VBox implements ResizeSelfHandler {
 		this.cardList.dropCard(draggingCard, scenePoint);
 	}
 
-	public void finishSlidingCard(Card slidingCard) {
-		this.cardList.finishSlidingCard(slidingCard);
-	}
-
 	public double getAvailableCardWidth() {
 		return this.cardList.getAvailbleCardWidth();
 	}
