@@ -24,6 +24,8 @@ import io.github.zachohara.fxeventcommon.resize.ResizeSelfHandler;
 import io.github.zachohara.percussionpacker.animation.slide.SlideCompletionListener;
 import io.github.zachohara.percussionpacker.animation.slide.VerticalSlideTransition;
 import io.github.zachohara.percussionpacker.card.Card;
+import io.github.zachohara.percussionpacker.cardtype.GhostCard;
+import io.github.zachohara.percussionpacker.cardtype.SpaceCard;
 import io.github.zachohara.percussionpacker.util.GraphicsUtil;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
@@ -32,6 +34,8 @@ import javafx.scene.layout.Pane;
 public class CardSlidePane extends Pane implements ResizeSelfHandler, SlideCompletionListener {
 	
 	private CardList cardList;
+	
+	private GhostCard placeholderCard;
 	
 	private Map<Card, VerticalSlideTransition> slideTransitions;
 	
@@ -52,9 +56,15 @@ public class CardSlidePane extends Pane implements ResizeSelfHandler, SlideCompl
 
 	public void recieveSlidingCard(Card slidingCard, Point2D scenePosition, double distanceY) {
 		Point2D localPoint = this.sceneToLocal(scenePosition);
+		if (slidingCard instanceof GhostCard && !(slidingCard instanceof SpaceCard)) {
+			this.placeholderCard = (GhostCard) slidingCard;
+		}
 		this.getChildren().add(slidingCard);
 		slidingCard.setLayoutX(localPoint.getX());
 		slidingCard.setLayoutY(localPoint.getY());
+		if (placeholderCard != null) {
+			placeholderCard.toFront();
+		}
 		VerticalSlideTransition transition = new VerticalSlideTransition(slidingCard, distanceY);
 		transition.setCompletionListener(this);
 		this.slideTransitions.put(slidingCard, transition);
@@ -76,6 +86,9 @@ public class CardSlidePane extends Pane implements ResizeSelfHandler, SlideCompl
 	@Override
 	public void finishSlidingNode(Node slidingNode) {
 		if (slidingNode instanceof Card) {
+			if (slidingNode == this.placeholderCard) {
+				this.placeholderCard = null;
+			}
 			this.getChildren().remove(slidingNode);
 			this.slideTransitions.remove(slidingNode);
 			this.cardList.finishSlidingCard((Card) slidingNode);
@@ -87,6 +100,10 @@ public class CardSlidePane extends Pane implements ResizeSelfHandler, SlideCompl
 	}
 
 	public void dropCard(Card draggingCard, Point2D scenePoint) {
+		if (draggingCard == null && this.placeholderCard != null) {
+			this.slideTransitions.get(this.placeholderCard).pause();
+			this.finishSlidingNode(this.placeholderCard);
+		}
 		this.cardList.dropCard(draggingCard, scenePoint);
 	}
 

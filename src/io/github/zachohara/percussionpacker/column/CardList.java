@@ -107,6 +107,7 @@ public class CardList extends VBox implements MouseSelfHandler, ResizeSelfHandle
 
 	public void dropCard(Card draggingCard, Point2D scenePoint) {
 		double localY = this.sceneToLocal(scenePoint).getY();
+		localY = Math.min(localY, this.getHeight());
 		int insertIndex = -1;
 		if (draggingCard != null) {
 			insertIndex = this.getDragCardIndex(localY, draggingCard.getHeight());
@@ -116,9 +117,13 @@ public class CardList extends VBox implements MouseSelfHandler, ResizeSelfHandle
 				|| (draggingCard == null && this.findGhostCard() != -1)) {
 			this.slideOtherCards(draggingCard, insertIndex);
 		}
-
-		this.removeGhostCards();
-		if (draggingCard != null) {
+		
+		if (draggingCard == null) {
+			this.removeGhostCards();
+		}
+		
+		if (draggingCard != null && (!(draggingCard instanceof GhostCard) || (!this.cards.contains(draggingCard) && !this.spaceCardMap.containsKey(draggingCard)))) {
+			this.removeGhostCards();
 			this.add(insertIndex, draggingCard);
 		}
 	}
@@ -132,6 +137,8 @@ public class CardList extends VBox implements MouseSelfHandler, ResizeSelfHandle
 			newPlaceholderIndex = insertIndex;
 			if (this.cards.contains(draggingCard)) {
 				oldPlaceholderIndex = this.cards.indexOf(draggingCard);
+			} else if (this.spaceCardMap.keySet().contains(draggingCard)) {
+				oldPlaceholderIndex = this.cards.indexOf(this.spaceCardMap.get(draggingCard));
 			} else {
 				oldPlaceholderIndex = this.cards.size();
 			}
@@ -156,6 +163,11 @@ public class CardList extends VBox implements MouseSelfHandler, ResizeSelfHandle
 				this.changeCardDestination(i, draggingCardHeight);
 			}
 		}
+		
+		if (newPlaceholderIndex != oldPlaceholderIndex
+				&& (this.cards.contains(draggingCard) || this.spaceCardMap.containsKey(draggingCard))) {
+			this.slidePlaceholderCard(draggingCard, oldPlaceholderIndex, newPlaceholderIndex);
+		}
 	}
 	
 	private boolean isCardIndexSpacer(int index) {
@@ -176,6 +188,30 @@ public class CardList extends VBox implements MouseSelfHandler, ResizeSelfHandle
 		Card spaceCard = this.cards.get(cardIndex);
 		Card slidingCard = this.reverseLookup((SpaceCard) spaceCard);
 		this.parent.changeSlidingDestination(slidingCard, distance);
+	}
+	
+	private void slidePlaceholderCard(Card placeholder, int oldIndex, int newIndex) {
+		double cumulHeight = 0;
+		int minIndex = Math.min(oldIndex, newIndex);
+		int maxIndex = Math.max(oldIndex, newIndex);
+		
+		for (int i = minIndex; i < maxIndex; i++) {
+			cumulHeight += this.cards.get(i).getPrefHeight();
+		}
+		
+		if (newIndex < oldIndex) {
+			cumulHeight = -cumulHeight;
+		}
+		
+		if (this.cards.contains(placeholder)) {
+			this.slideCard(this.cards.indexOf(placeholder), cumulHeight);
+		} else {
+			this.changeCardDestination(this.cards.indexOf(this.spaceCardMap.get(placeholder)), cumulHeight);
+		}
+
+		SpaceCard spacer = this.spaceCardMap.get(placeholder);
+		this.remove(spacer);
+		this.add(newIndex, spacer);
 	}
 	
 	private Card reverseLookup(SpaceCard spacer) {
