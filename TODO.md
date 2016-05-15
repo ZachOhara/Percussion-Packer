@@ -10,6 +10,4 @@
 * Hover over top / bottom of scroll pane while dragging should cause scroll
 * Visually differentiate functional buttons and backing buttons
 * Possibly make the placeholder card animate (underneath the actual content-holding cards)
-* Fix the drag-resizing placement issue
-* Restyle the placeholder card
 * When a new card is created, the applicable column should scroll to the bottom to show the card
