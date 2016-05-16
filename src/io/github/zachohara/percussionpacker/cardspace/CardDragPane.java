@@ -34,8 +34,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 
-public class CardDragPane extends Pane implements MouseSelfHandler, ResizeSelfHandler,
-		ResizeProgressListener, ResizeCompletionListener {
+public class CardDragPane extends Pane implements MouseSelfHandler, ResizeSelfHandler, ResizeProgressListener, ResizeCompletionListener {
 
 	public static final double DRAG_DIFFERENCE_THRESHOLD = 10;
 
@@ -43,14 +42,14 @@ public class CardDragPane extends Pane implements MouseSelfHandler, ResizeSelfHa
 
 	private Card draggingCard;
 	private GhostCard ghostCard;
-	
+
 	private CenteredWidthTransition resizeTransition;
-	
+
 	private InterpolatedQuantity interpolatedLastX;
 
 	private boolean isCardDragging;
 	private boolean isCardResizing;
-	
+
 	private double lastMouseX;
 	private double lastMouseY;
 	private double lastCardX;
@@ -127,11 +126,12 @@ public class CardDragPane extends Pane implements MouseSelfHandler, ResizeSelfHa
 			this.resizeTransition.setCompletionListener(this);
 			this.resizeTransition.setProgressListener(this);
 			this.isCardResizing = true;
-			this.interpolatedLastX = new InterpolatedQuantity(this.lastCardX, -(targetWidth - this.draggingCard.getWidth()) / 2);
+			this.interpolatedLastX = new InterpolatedQuantity(this.lastCardX,
+					-(targetWidth - this.draggingCard.getWidth()) / 2);
 			this.resizeTransition.play();
 		}
 	}
-	
+
 	private void handleMouseRelease() {
 		this.isCardDragging = false;
 		if (this.draggingCard != null) {
@@ -155,7 +155,7 @@ public class CardDragPane extends Pane implements MouseSelfHandler, ResizeSelfHa
 		this.isCardResizing = false;
 		this.resizeTransition = null;
 	}
-	
+
 	private void resetDragStartValues() {
 		this.lastMouseX = this.lastMouseX + (this.draggingCard.getLayoutX() - this.lastCardX);
 		this.lastMouseY = this.lastMouseY + (this.draggingCard.getLayoutY() - this.lastCardY);

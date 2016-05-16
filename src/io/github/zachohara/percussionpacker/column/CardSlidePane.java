@@ -32,24 +32,24 @@ import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 
 public class CardSlidePane extends Pane implements ResizeSelfHandler, SlideCompletionListener {
-	
+
 	private CardList cardList;
-	
+
 	private GhostCard slidingGhostCard;
-	
+
 	private Map<Card, VerticalSlideTransition> slideTransitions;
-	
+
 	public CardSlidePane() {
 		super();
-		
+
 		RegionResizeListener.createSelfHandler(this);
-		
+
 		this.cardList = new CardList(this);
-		
+
 		this.slideTransitions = new HashMap<Card, VerticalSlideTransition>();
-		
+
 		this.getChildren().add(this.cardList);
-		
+
 		this.setMinWidth(GraphicsUtil.getCumulativeMinWidth(this));
 		this.setMinHeight(GraphicsUtil.getCumulativeMinHeight(this));
 	}
@@ -58,34 +58,35 @@ public class CardSlidePane extends Pane implements ResizeSelfHandler, SlideCompl
 		if (slidingCard instanceof GhostCard && !(slidingCard instanceof SpaceCard)) {
 			this.slidingGhostCard = (GhostCard) slidingCard;
 		}
-		
+
 		Point2D localPoint = this.sceneToLocal(scenePosition);
 		this.getChildren().add(slidingCard);
 		slidingCard.setLayoutX(localPoint.getX());
 		slidingCard.setLayoutY(localPoint.getY());
-		
-		if (slidingGhostCard != null) {
-			slidingGhostCard.toFront();
+
+		if (this.slidingGhostCard != null) {
+			this.slidingGhostCard.toFront();
 		}
-		
+
 		VerticalSlideTransition transition = new VerticalSlideTransition(slidingCard, distanceY);
 		transition.setCompletionListener(this);
 		this.slideTransitions.put(slidingCard, transition);
 		transition.play();
 	}
-	
+
 	public void changeSlidingDestination(Card slidingCard, double distanceY) {
 		VerticalSlideTransition transition = this.slideTransitions.get(slidingCard);
 		transition.pause();
 		double lastGoal = transition.getStartValue() + transition.getDifference();
 		double newGoal = lastGoal + distanceY;
 		double difference = newGoal - slidingCard.getLayoutY();
-		VerticalSlideTransition newTransition = new VerticalSlideTransition(slidingCard, difference);
+		VerticalSlideTransition newTransition =
+				new VerticalSlideTransition(slidingCard, difference);
 		newTransition.setCompletionListener(this);
 		this.slideTransitions.put(slidingCard, newTransition);
 		newTransition.play();
 	}
-	
+
 	public void stopGhostCardSlide() {
 		if (this.slidingGhostCard != null) {
 			this.slideTransitions.get(this.slidingGhostCard).pause();
@@ -120,5 +121,5 @@ public class CardSlidePane extends Pane implements ResizeSelfHandler, SlideCompl
 	public void handleResize() {
 		this.cardList.setPrefWidth(this.getWidth());
 	}
-	
+
 }

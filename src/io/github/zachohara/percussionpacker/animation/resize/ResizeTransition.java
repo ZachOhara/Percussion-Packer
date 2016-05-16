@@ -26,7 +26,7 @@ import javafx.util.Duration;
 public abstract class ResizeTransition extends Transition implements EventHandler<ActionEvent> {
 
 	public static final double DURATION = 100; // in milliseconds
-	
+
 	private Region resizingRegion;
 	private ResizeProgressListener progressListener;
 	private ResizeCompletionListener completionListener;
@@ -35,23 +35,23 @@ public abstract class ResizeTransition extends Transition implements EventHandle
 
 	public ResizeTransition(Region resizingRegion, double startDim, double finalDim) {
 		super();
-		
+
 		this.resizingRegion = resizingRegion;
-		
+
 		this.interpolater = new InterpolatedQuantity(startDim, finalDim - startDim);
-		
+
 		this.setCycleDuration(Duration.millis(DURATION));
 		this.setOnFinished(this);
 	}
-	
+
 	public void setProgressListener(ResizeProgressListener progressListener) {
 		this.progressListener = progressListener;
 	}
-	
+
 	public void setCompletionListener(ResizeCompletionListener completionListener) {
 		this.completionListener = completionListener;
 	}
-	
+
 	protected Region getResizingRegion() {
 		return this.resizingRegion;
 	}
@@ -65,7 +65,7 @@ public abstract class ResizeTransition extends Transition implements EventHandle
 			this.progressListener.progressRegionResize(this.resizingRegion, fraction);
 		}
 	}
-	
+
 	@Override
 	public void handle(ActionEvent event) {
 		if (this.completionListener != null) {

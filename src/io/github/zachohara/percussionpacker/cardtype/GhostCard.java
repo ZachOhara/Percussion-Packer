@@ -6,18 +6,18 @@ import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 
 public class GhostCard extends Card {
-	
+
 	public static final double BACKGROUND_OPACITY = 0.10;
-	
+
 	public static final String DECORATION_COLOR = "dodgerblue";
-	
+
 	public static final Color BORDER_COLOR = Color.web(DECORATION_COLOR);
 	public static final Color BACKGROUND_COLOR = Color.web(DECORATION_COLOR, BACKGROUND_OPACITY);
-	
+
 	public static final double RADIUS = 2;
 	public static final double INSET = 3;
-	
-	public static final String STYLE = generateBackgroundColorString()
+
+	public static final String STYLE = GhostCard.generateBackgroundColorString()
 			+ "; -fx-background-radius: " + RADIUS + "; -fx-background-insets: " + INSET
 			+ "; -fx-border-radius: " + RADIUS + "; -fx-border-insets: " + INSET
 			+ "; -fx-border-color: " + DECORATION_COLOR;
@@ -26,7 +26,7 @@ public class GhostCard extends Card {
 		super(sizingCard.getHeight(), false, false);
 		this.copySizing(sizingCard);
 		this.hideChildren();
-		
+
 		this.setStyle(STYLE);
 	}
 
@@ -44,7 +44,7 @@ public class GhostCard extends Card {
 			n.setVisible(false);
 		}
 	}
-	
+
 	private static String generateBackgroundColorString() {
 		return "-fx-background-color: rgba("
 				+ (255 * BACKGROUND_COLOR.getRed()) + ", "

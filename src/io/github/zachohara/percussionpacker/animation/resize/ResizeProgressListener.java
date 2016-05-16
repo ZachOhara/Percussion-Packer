@@ -19,7 +19,7 @@ package io.github.zachohara.percussionpacker.animation.resize;
 import javafx.scene.layout.Region;
 
 public interface ResizeProgressListener {
-	
+
 	public void progressRegionResize(Region r, double fraction);
-	
+
 }

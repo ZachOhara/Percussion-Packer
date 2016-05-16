@@ -17,7 +17,7 @@
 package io.github.zachohara.percussionpacker.animation;
 
 public class InterpolatedQuantity {
-	
+
 	private double lastFraction;
 
 	private double startValue;
@@ -33,15 +33,15 @@ public class InterpolatedQuantity {
 		this.lastFraction = fraction;
 		return this.startValue + (fraction * this.difference);
 	}
-	
+
 	public double getLastFraction() {
 		return this.lastFraction;
 	}
-	
+
 	public double getStartValue() {
 		return this.startValue;
 	}
-	
+
 	public double getDifference() {
 		return this.difference;
 	}

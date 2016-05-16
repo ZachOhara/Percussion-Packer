@@ -40,14 +40,14 @@ import javafx.scene.layout.VBox;
 public class CardList extends VBox implements MouseSelfHandler, ResizeSelfHandler {
 
 	private CardSlidePane slidePane;
-	
+
 	private List<Card> cards;
 
 	private Map<Card, SpaceCard> spacerMap;
 
 	public CardList(CardSlidePane parent) {
 		super();
-		
+
 		this.slidePane = parent;
 
 		MouseEventListener.createSelfHandler(this);
@@ -68,7 +68,7 @@ public class CardList extends VBox implements MouseSelfHandler, ResizeSelfHandle
 	public void dropCard(Card draggingCard, Point2D scenePoint) {
 		double localY = this.sceneToLocal(scenePoint).getY();
 		localY = Math.min(localY, this.getHeight());
-		
+
 		if (draggingCard != null) {
 			int insertIndex = this.getDragCardIndex(localY, draggingCard.getHeight());
 			if (draggingCard instanceof GhostCard) {
@@ -80,7 +80,8 @@ public class CardList extends VBox implements MouseSelfHandler, ResizeSelfHandle
 			}
 		} else {
 			if (this.findGhostCard() != -1) {
-				this.slideAllCards((GhostCard) this.cards.get(this.findGhostCard()), this.cards.size() - 1);
+				this.slideAllCards((GhostCard) this.cards.get(this.findGhostCard()),
+						this.cards.size() - 1);
 			}
 			this.removeGhostCard();
 		}
@@ -94,42 +95,42 @@ public class CardList extends VBox implements MouseSelfHandler, ResizeSelfHandle
 		} else {
 			oldGhostIndex = this.cards.size();
 		}
-		
+
 		if (newGhostIndex != oldGhostIndex) {
 			int minIndex = Math.min(oldGhostIndex + 1, newGhostIndex);
 			int maxIndex = Math.max(oldGhostIndex - 1, newGhostIndex);
-			
+
 			if (newGhostIndex > oldGhostIndex) {
 				draggingCardHeight = -draggingCardHeight;
 			}
-			
+
 			for (int i = minIndex; i <= maxIndex; i++) {
-					if (!this.isCardIndexSpacer(i)) {
-						this.slideCard(i, draggingCardHeight);
-					} else {
-						this.changeCardDestination(i, draggingCardHeight);
-					}
+				if (!this.isCardIndexSpacer(i)) {
+					this.slideCard(i, draggingCardHeight);
+				} else {
+					this.changeCardDestination(i, draggingCardHeight);
+				}
 			}
-			
+
 			if (this.containsCard(draggingCard)) {
 				this.slideGhostCard(draggingCard, oldGhostIndex, newGhostIndex);
 			}
 		}
 	}
-	
+
 	private void slideGhostCard(GhostCard ghostCard, int oldIndex, int newIndex) {
 		double cumulHeight = 0;
 		int minIndex = Math.min(oldIndex, newIndex);
 		int maxIndex = Math.max(oldIndex, newIndex);
-		
+
 		for (int i = minIndex; i < maxIndex; i++) {
 			cumulHeight += this.cards.get(i).getPrefHeight();
 		}
-		
+
 		if (newIndex < oldIndex) {
 			cumulHeight = -cumulHeight;
 		}
-		
+
 		int currentIndex = this.indexOfCard(ghostCard);
 		if (this.cards.contains(ghostCard)) {
 			this.slideCard(currentIndex, cumulHeight);
@@ -151,7 +152,7 @@ public class CardList extends VBox implements MouseSelfHandler, ResizeSelfHandle
 		this.add(cardIndex, spacer);
 		this.spacerMap.put(slidingCard, spacer);
 	}
-	
+
 	private void changeCardDestination(int cardIndex, double distance) {
 		Card spacer = this.cards.get(cardIndex);
 		Card slidingCard = this.reverseSpacerLookup((SpaceCard) spacer);
@@ -167,7 +168,6 @@ public class CardList extends VBox implements MouseSelfHandler, ResizeSelfHandle
 	@Override
 	public void handleMouse(MouseEvent event, EventType<? extends MouseEvent> type) {
 		if (type == MouseEvent.MOUSE_PRESSED) {
-			//this.handleMousePress(event.getX(), event.getY());
 			double localY = event.getY();
 			for (int i = 0; i < this.cards.size(); i++) {
 				Card clickedCard = this.cards.get(i);
@@ -205,10 +205,10 @@ public class CardList extends VBox implements MouseSelfHandler, ResizeSelfHandle
 			cumulHeight += this.cards.get(i).getPrefHeight();
 			offsets[i + 1] = Math.abs(localY - (cumulHeight + heightOffset));
 		}
-		
+
 		return MathUtil.minIndex(offsets);
 	}
-	
+
 	private int indexOfCard(Card c) {
 		if (this.cards.contains(c)) {
 			return this.cards.indexOf(c);
@@ -218,11 +218,11 @@ public class CardList extends VBox implements MouseSelfHandler, ResizeSelfHandle
 			return -1;
 		}
 	}
-	
+
 	private boolean containsCard(Card c) {
 		return this.cards.contains(c) || this.spacerMap.containsKey(c);
 	}
-	
+
 	private boolean isCardIndexSpacer(int index) {
 		return this.cards.get(index) instanceof SpaceCard;
 	}
@@ -244,7 +244,7 @@ public class CardList extends VBox implements MouseSelfHandler, ResizeSelfHandle
 		}
 		return -1;
 	}
-	
+
 	private Card reverseSpacerLookup(SpaceCard spacer) {
 		if (!this.spacerMap.containsValue(spacer)) {
 			return null;
@@ -274,7 +274,7 @@ public class CardList extends VBox implements MouseSelfHandler, ResizeSelfHandle
 		this.getChildren().remove(element);
 		this.verifyIntegrity();
 	}
-	
+
 	private void remove(int index) {
 		this.cards.remove(index);
 		this.getChildren().remove(index);
@@ -286,7 +286,7 @@ public class CardList extends VBox implements MouseSelfHandler, ResizeSelfHandle
 		this.getChildren().set(index, element);
 		this.verifyIntegrity();
 	}
-	
+
 	private void verifyIntegrity() {
 		if (this.cards.size() != this.getChildren().size()) {
 			throw new IllegalStateException("CardList size mismatch");
