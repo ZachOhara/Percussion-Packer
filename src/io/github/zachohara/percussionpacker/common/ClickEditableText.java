@@ -29,6 +29,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 
 public class ClickEditableText extends BorderPane implements FocusHandler, MouseHandler, ResizeSelfHandler {
+	
+	public static final double MIN_DRAG_THRESHOLD = 10; // in pixels
 
 	private ResizeHandler notifyableParent;
 
@@ -40,6 +42,9 @@ public class ClickEditableText extends BorderPane implements FocusHandler, Mouse
 
 	private boolean isEditing;
 	private boolean isDragging;
+	
+	private double lastMouseX;
+	private double lastMouseY;
 
 	public ClickEditableText(String defaultText, String fontStyle, double maxFontSize,
 			boolean isEditable) {
@@ -136,8 +141,14 @@ public class ClickEditableText extends BorderPane implements FocusHandler, Mouse
 	public void handleMouse(MouseEvent event, EventType<? extends MouseEvent> type) {
 		if (type == MouseEvent.MOUSE_PRESSED) {
 			this.isDragging = false;
+			this.lastMouseX = event.getSceneX();
+			this.lastMouseY = event.getSceneY();
 		} else if (type == MouseEvent.MOUSE_DRAGGED) {
-			this.isDragging = true;
+			double dx = event.getSceneX() - this.lastMouseX;
+			double dy = event.getSceneY() - this.lastMouseY;
+			if (ClickEditableText.isClickOverThreshold(dx, dy)) {
+				this.isDragging = true;
+			}
 		} else if (type == MouseEvent.MOUSE_RELEASED) {
 			if (this.isEditable && !this.isDragging) {
 				this.startRenaming();
@@ -163,6 +174,10 @@ public class ClickEditableText extends BorderPane implements FocusHandler, Mouse
 		if (this.notifyableParent != null) {
 			this.notifyableParent.handleResize();
 		}
+	}
+	
+	private static boolean isClickOverThreshold(double dx, double dy) {
+		return Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2)) > MIN_DRAG_THRESHOLD;
 	}
 
 }
