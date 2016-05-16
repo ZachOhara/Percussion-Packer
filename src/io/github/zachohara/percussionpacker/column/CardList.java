@@ -61,6 +61,8 @@ public class CardList extends VBox implements MouseSelfHandler, ResizeSelfHandle
 		for (int i = 0; i < 20; i++) {
 			this.add(new TestCard());
 			this.cards.get(i).setTitle(i + "-----------");
+			// this.cards.get(i).setPrefHeight(30 + (30 * Math.random()));
+			// this.cards.get(i).setMinHeight(this.cards.get(i).getPrefHeight());
 		}
 		// ----------------- //
 	}
@@ -130,6 +132,8 @@ public class CardList extends VBox implements MouseSelfHandler, ResizeSelfHandle
 		if (newIndex < oldIndex) {
 			cumulHeight = -cumulHeight;
 		}
+		
+		System.out.println(minIndex + " " + maxIndex + " " + cumulHeight);
 
 		int currentIndex = this.indexOfCard(ghostCard);
 		if (this.cards.contains(ghostCard)) {
