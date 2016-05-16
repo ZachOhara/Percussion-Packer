@@ -9,7 +9,7 @@
 
 ### Cards
 * [?] Add a glow effect to cards
-* Make card text fields recieve focus on initial click if the card position has not changed
+* Adjust the ghost card inset
 
 ### Columns
 * Hover over top / bottom of scroll pane while dragging should cause scroll
