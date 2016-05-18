@@ -43,6 +43,7 @@ public abstract class Card extends StackPane implements MouseSelfHandler, Resize
 
 		this.setPrefHeight(height);
 		this.setMinHeight(height);
+		this.setMaxHeight(height);
 
 		this.backingButton = new BackingButton(this, resizeListener);
 

@@ -61,8 +61,9 @@ public class CardList extends VBox implements MouseSelfHandler, ResizeSelfHandle
 		for (int i = 0; i < 20; i++) {
 			this.add(new TestCard());
 			this.cards.get(i).setTitle(i + "-----------");
-			// this.cards.get(i).setPrefHeight(30 + (30 * Math.random()));
-			// this.cards.get(i).setMinHeight(this.cards.get(i).getPrefHeight());
+			this.cards.get(i).setPrefHeight(30 + (30 * Math.random()));
+			this.cards.get(i).setMinHeight(this.cards.get(i).getPrefHeight());
+			this.cards.get(i).setMaxHeight(this.cards.get(i).getPrefHeight());
 		}
 		// ----------------- //
 	}
@@ -72,7 +73,7 @@ public class CardList extends VBox implements MouseSelfHandler, ResizeSelfHandle
 		localY = Math.min(localY, this.getHeight());
 
 		if (draggingCard != null) {
-			int insertIndex = this.getDragCardIndex(localY, draggingCard.getHeight());
+			int insertIndex = this.getDragCardIndex(localY, draggingCard);
 			if (draggingCard instanceof GhostCard) {
 				this.slideAllCards((GhostCard) draggingCard, insertIndex);
 			}
@@ -132,8 +133,6 @@ public class CardList extends VBox implements MouseSelfHandler, ResizeSelfHandle
 		if (newIndex < oldIndex) {
 			cumulHeight = -cumulHeight;
 		}
-		
-		System.out.println(minIndex + " " + maxIndex + " " + cumulHeight);
 
 		int currentIndex = this.indexOfCard(ghostCard);
 		if (this.cards.contains(ghostCard)) {
@@ -199,15 +198,22 @@ public class CardList extends VBox implements MouseSelfHandler, ResizeSelfHandle
 		}
 	}
 
-	private int getDragCardIndex(double localY, double cardHeight) {
-		final double heightOffset = cardHeight / 2;
+	private int getDragCardIndex(double localCenterY, Card draggingCard) {
+		final double heightOffset = draggingCard.getHeight() / 2;
+		final int draggingCardIndex = this.indexOfCard(draggingCard);
 		double cumulHeight = 0;
 		double[] offsets = new double[this.cards.size() + 1];
 
-		offsets[0] = Math.abs(localY - heightOffset);
+		offsets[0] = Math.abs(localCenterY - heightOffset);
+		int invalidCount = 0;
 		for (int i = 0; i < this.cards.size(); i++) {
-			cumulHeight += this.cards.get(i).getPrefHeight();
-			offsets[i + 1] = Math.abs(localY - (cumulHeight + heightOffset));
+			if (draggingCardIndex != i) {
+				cumulHeight += this.cards.get(i).getPrefHeight();
+				offsets[i + 1 - invalidCount] = Math.abs(localCenterY - (cumulHeight + heightOffset));
+			} else {
+				invalidCount++;
+				offsets[offsets.length - invalidCount] = Double.MAX_VALUE;
+			}
 		}
 
 		return MathUtil.minIndex(offsets);
