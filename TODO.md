@@ -10,6 +10,12 @@
 ### Cards
 * [?] Add a glow effect to cards
 * Adjust the ghost card inset
+* In ParentCard, make re-adding to a list use the dropCard() method (for slide animations)
+* In ParentCard, fix the child indent
+
+### Card List
+* Do not start dragging cards until over the drag threshold
+* Fix the issue with the ghost card trajectory not properly redefining
 
 ### Columns
 * Hover over top / bottom of scroll pane while dragging should cause scroll
