@@ -16,11 +16,11 @@
 
 package io.github.zachohara.percussionpacker.cardtype;
 
-import io.github.zachohara.percussionpacker.card.Card;
+import io.github.zachohara.percussionpacker.card.CardEntity;
 
 public class SpaceCard extends GhostCard {
 
-	public SpaceCard(Card sizingCard) {
+	public SpaceCard(CardEntity sizingCard) {
 		super(sizingCard);
 		this.setStyle("");
 	}

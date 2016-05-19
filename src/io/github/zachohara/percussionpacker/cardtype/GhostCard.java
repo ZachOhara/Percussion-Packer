@@ -1,11 +1,10 @@
 package io.github.zachohara.percussionpacker.cardtype;
 
-import io.github.zachohara.percussionpacker.card.Card;
-import javafx.scene.Node;
+import io.github.zachohara.percussionpacker.card.CardEntity;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 
-public class GhostCard extends Card {
+public class GhostCard extends CardEntity {
 
 	public static final double BACKGROUND_OPACITY = 0.10;
 
@@ -22,10 +21,9 @@ public class GhostCard extends Card {
 			+ "; -fx-border-radius: " + RADIUS + "; -fx-border-insets: " + INSET
 			+ "; -fx-border-color: " + DECORATION_COLOR;
 
-	public GhostCard(Card sizingCard) {
-		super(sizingCard.getHeight(), false, false);
+	public GhostCard(CardEntity sizingCard) {
+		super(false, false);
 		this.copySizing(sizingCard);
-		this.hideChildren();
 
 		this.setStyle(STYLE);
 	}
@@ -37,12 +35,6 @@ public class GhostCard extends Card {
 		this.setPrefHeight(copyFrom.getPrefHeight());
 		this.setMaxWidth(copyFrom.getMaxWidth());
 		this.setMaxHeight(copyFrom.getMaxHeight());
-	}
-
-	private void hideChildren() {
-		for (Node n : this.getChildren()) {
-			n.setVisible(false);
-		}
 	}
 
 	private static String generateBackgroundColorString() {

@@ -24,6 +24,7 @@ import io.github.zachohara.fxeventcommon.resize.ResizeSelfHandler;
 import io.github.zachohara.percussionpacker.animation.slide.SlideCompletionListener;
 import io.github.zachohara.percussionpacker.animation.slide.VerticalSlideTransition;
 import io.github.zachohara.percussionpacker.card.Card;
+import io.github.zachohara.percussionpacker.card.CardEntity;
 import io.github.zachohara.percussionpacker.cardtype.GhostCard;
 import io.github.zachohara.percussionpacker.cardtype.SpaceCard;
 import io.github.zachohara.percussionpacker.util.GraphicsUtil;
@@ -37,7 +38,7 @@ public class CardSlidePane extends Pane implements ResizeSelfHandler, SlideCompl
 
 	private GhostCard slidingGhostCard;
 
-	private Map<Card, VerticalSlideTransition> slideTransitions;
+	private Map<CardEntity, VerticalSlideTransition> slideTransitions;
 
 	public CardSlidePane() {
 		super();
@@ -46,7 +47,7 @@ public class CardSlidePane extends Pane implements ResizeSelfHandler, SlideCompl
 
 		this.cardList = new CardList(this);
 
-		this.slideTransitions = new HashMap<Card, VerticalSlideTransition>();
+		this.slideTransitions = new HashMap<CardEntity, VerticalSlideTransition>();
 
 		this.getChildren().add(this.cardList);
 
@@ -54,7 +55,7 @@ public class CardSlidePane extends Pane implements ResizeSelfHandler, SlideCompl
 		this.setMinHeight(GraphicsUtil.getCumulativeMinHeight(this));
 	}
 
-	public void recieveSlidingCard(Card slidingCard, Point2D scenePosition, double distanceY) {
+	public void recieveSlidingCard(CardEntity slidingCard, Point2D scenePosition, double distanceY) {
 		if (slidingCard instanceof GhostCard && !(slidingCard instanceof SpaceCard)) {
 			this.slidingGhostCard = (GhostCard) slidingCard;
 		}
@@ -74,7 +75,7 @@ public class CardSlidePane extends Pane implements ResizeSelfHandler, SlideCompl
 		transition.play();
 	}
 
-	public void changeSlidingDestination(Card slidingCard, double distanceY) {
+	public void changeSlidingDestination(CardEntity slidingCard, double distanceY) {
 		VerticalSlideTransition transition = this.slideTransitions.get(slidingCard);
 		transition.pause();
 		double lastGoal = transition.getStartValue() + transition.getDifference();
@@ -96,21 +97,21 @@ public class CardSlidePane extends Pane implements ResizeSelfHandler, SlideCompl
 
 	@Override
 	public void finishSlidingNode(Node slidingNode) {
-		if (slidingNode instanceof Card) {
+		if (slidingNode instanceof CardEntity) {
 			if (slidingNode == this.slidingGhostCard) {
 				this.slidingGhostCard = null;
 			}
 			this.getChildren().remove(slidingNode);
 			this.slideTransitions.remove(slidingNode);
-			this.cardList.finishSlidingCard((Card) slidingNode);
+			this.cardList.finishSlidingCard((CardEntity) slidingNode);
 		}
 	}
 
-	public void addCard(Card card) {
+	public void addCard(CardEntity card) {
 		this.cardList.add(card);
 	}
 
-	public void dropCard(Card draggingCard, Point2D scenePoint) {
+	public void dropCard(CardEntity draggingCard, Point2D scenePoint) {
 		if (draggingCard == null) {
 			this.stopGhostCardSlide();
 		}

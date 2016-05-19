@@ -19,6 +19,7 @@ package io.github.zachohara.percussionpacker.column;
 import io.github.zachohara.fxeventcommon.resize.RegionResizeListener;
 import io.github.zachohara.fxeventcommon.resize.ResizeSelfHandler;
 import io.github.zachohara.percussionpacker.card.Card;
+import io.github.zachohara.percussionpacker.card.CardEntity;
 import javafx.geometry.Point2D;
 import javafx.scene.layout.VBox;
 
@@ -47,7 +48,7 @@ public abstract class Column extends VBox implements ResizeSelfHandler {
 		this.cardList.addCard(card);
 	}
 
-	public void dropCard(Card draggingCard, Point2D scenePoint) {
+	public void dropCard(CardEntity draggingCard, Point2D scenePoint) {
 		this.cardList.dropCard(draggingCard, scenePoint);
 	}
 

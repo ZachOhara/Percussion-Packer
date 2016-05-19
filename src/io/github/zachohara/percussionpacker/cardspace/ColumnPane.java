@@ -19,6 +19,7 @@ package io.github.zachohara.percussionpacker.cardspace;
 import io.github.zachohara.fxeventcommon.resize.RegionResizeListener;
 import io.github.zachohara.fxeventcommon.resize.ResizeSelfHandler;
 import io.github.zachohara.percussionpacker.card.Card;
+import io.github.zachohara.percussionpacker.card.CardEntity;
 import io.github.zachohara.percussionpacker.column.Column;
 import io.github.zachohara.percussionpacker.columntype.EquipmentColumn;
 import io.github.zachohara.percussionpacker.columntype.MalletColumn;
@@ -52,7 +53,7 @@ public class ColumnPane extends HBox implements ResizeSelfHandler {
 		this.setMinHeight(GraphicsUtil.getMaximumMinHeight(this));
 	}
 
-	public Column dropCard(Card draggingCard, Point2D scenePoint) {
+	public Column dropCard(CardEntity draggingCard, Point2D scenePoint) {
 		Point2D localPoint = this.sceneToLocal(scenePoint);
 		Column hoveringColumn = this.getHoveringColumn(localPoint.getX());
 		for (Column c : this.columns) {
