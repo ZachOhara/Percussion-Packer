@@ -17,30 +17,42 @@
 package io.github.zachohara.percussionpacker.common;
 
 import io.github.zachohara.fxeventcommon.resize.RegionResizeListener;
-import io.github.zachohara.fxeventcommon.resize.ResizeHandler;
+import io.github.zachohara.fxeventcommon.resize.ResizeSelfHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 
-public class BackingButton extends Button implements ResizeHandler {
+public class BackingButton extends Region implements ResizeSelfHandler {
 
 	public static final int HEIGHT_OFFSET = 1; // in pixels
 
-	private Region parent;
+	private Button button;
 
-	public BackingButton(Region parent, RegionResizeListener parentListener) {
+	public BackingButton() {
 		super();
-		this.setFocusTraversable(false);
-		this.parent = parent;
-		parentListener.addHandler(this);
+		
+		RegionResizeListener.createSelfHandler(this);
+		
+		this.button = new Button();
+		this.button.setFocusTraversable(false);
 		StackPane.setAlignment(this, Pos.TOP_CENTER);
+		
+		this.getChildren().add(button);
+	}
+	
+	public void arm() {
+		this.button.arm();
+	}
+	
+	public void disarm() {
+		this.button.disarm();
 	}
 
 	@Override
 	public void handleResize() {
-		this.setPrefHeight(this.parent.getHeight() - HEIGHT_OFFSET);
-		this.setPrefWidth(this.parent.getWidth());
+		this.button.setPrefHeight(this.getHeight() - HEIGHT_OFFSET);
+		this.button.setPrefWidth(this.getWidth());
 	}
 
 }

@@ -20,7 +20,6 @@ import io.github.zachohara.fxeventcommon.resize.RegionResizeListener;
 import io.github.zachohara.fxeventcommon.resize.ResizeSelfHandler;
 import io.github.zachohara.percussionpacker.common.BackingButton;
 import io.github.zachohara.percussionpacker.common.ShrinkableLabel;
-import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 
 public class ColumnTitle extends StackPane implements ResizeSelfHandler {
@@ -35,19 +34,19 @@ public class ColumnTitle extends StackPane implements ResizeSelfHandler {
 	public static final double MIN_HEIGHT = 40; // in pixels
 
 	private ShrinkableLabel titleText;
-	private Button baseButton;
+	private BackingButton baseButton;
 
 	public ColumnTitle(String name) {
 		super();
 
-		RegionResizeListener resizeListener = RegionResizeListener.createSelfHandler(this);
+		RegionResizeListener.createSelfHandler(this);
 
 		this.titleText = new ShrinkableLabel(TITLE_FONT, MAX_FONT_SIZE);
 		this.titleText.setText(name);
 		this.titleText.setWidthBuffer(WIDTH_BUFFER);
 		this.titleText.setHeightBuffer(HEIGHT_BUFFER);
 
-		this.baseButton = new BackingButton(this, resizeListener);
+		this.baseButton = new BackingButton();
 
 		this.setPrefHeight(PREF_HEIGHT);
 		this.setMinHeight(MIN_HEIGHT);
@@ -59,6 +58,8 @@ public class ColumnTitle extends StackPane implements ResizeSelfHandler {
 	public void handleResize() {
 		this.titleText.setPrefWidth(this.getWidth());
 		this.titleText.setPrefHeight(this.getHeight());
+		this.baseButton.setPrefWidth(this.getWidth());
+		this.baseButton.setPrefHeight(this.getHeight());
 	}
 
 }
