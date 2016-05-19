@@ -23,13 +23,12 @@ import io.github.zachohara.fxeventcommon.resize.ResizeSelfHandler;
 import io.github.zachohara.percussionpacker.common.BackingButton;
 import javafx.event.EventType;
 import javafx.geometry.Point2D;
-import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 
 public abstract class Card extends StackPane implements MouseSelfHandler, ResizeSelfHandler {
 
-	private Button backingButton;
+	private BackingButton backingButton;
 	private CardContentPane contentPane;
 
 	private boolean retitleable;
@@ -39,13 +38,13 @@ public abstract class Card extends StackPane implements MouseSelfHandler, Resize
 		super();
 
 		MouseEventListener.createSelfHandler(this);
-		RegionResizeListener resizeListener = RegionResizeListener.createSelfHandler(this);
+		RegionResizeListener.createSelfHandler(this);
 
 		this.setPrefHeight(height);
 		this.setMinHeight(height);
 		this.setMaxHeight(height);
 
-		this.backingButton = new BackingButton(this, resizeListener);
+		this.backingButton = new BackingButton();
 
 		this.retitleable = retitleable;
 		this.nameable = nameable;
@@ -94,6 +93,8 @@ public abstract class Card extends StackPane implements MouseSelfHandler, Resize
 	public void handleResize() {
 		this.contentPane.setPrefWidth(this.getWidth());
 		this.contentPane.setPrefHeight(this.getHeight());
+		this.backingButton.setPrefWidth(this.getWidth());
+		this.backingButton.setPrefHeight(this.getHeight());
 	}
 
 }
