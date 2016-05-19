@@ -16,23 +16,40 @@
 
 package io.github.zachohara.percussionpacker.cardentity;
 
+import io.github.zachohara.percussionpacker.column.CardList;
 import javafx.geometry.Point2D;
 import javafx.scene.layout.StackPane;
 
 public abstract class CardEntity extends StackPane {
 	
+	private CardList owner;
+	
+	private final boolean isDraggable;
 	private final boolean isRetitleable;
 	private final boolean isNameable;
 	
 	private boolean isDragging;
 	
-	public CardEntity(boolean retitleable, boolean nameable) {
+	public CardEntity(boolean draggable, boolean retitleable, boolean nameable) {
 		super();
 		
+		this.isDraggable = draggable;
 		this.isRetitleable = retitleable;
 		this.isNameable = nameable;
 		
 		this.isDragging = false;
+	}
+	
+	public void setOwner(CardList owner) {
+		this.owner = owner;
+	}
+	
+	protected final CardList getOwner() {
+		return this.owner;
+	}
+	
+	public final boolean isDraggable() {
+		return this.isDraggable;
 	}
 	
 	protected final boolean isRetitleable() {
@@ -67,12 +84,6 @@ public abstract class CardEntity extends StackPane {
 	public Point2D getCenterPoint() {
 		return new Point2D(this.getLayoutX() + (this.getWidth() / 2),
 				this.getLayoutY() + (this.getHeight() / 2));
-	}
-	
-	protected void setImmutableHeight(double height) {
-		this.setPrefHeight(height);
-		this.setMinHeight(height);
-		this.setMaxHeight(height);
 	}
 	
 }

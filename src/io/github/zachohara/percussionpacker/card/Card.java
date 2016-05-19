@@ -30,8 +30,8 @@ public abstract class Card extends CardEntity implements MouseSelfHandler, Resiz
 	private BackingButton backingButton;
 	private CardContentPane contentPane;
 
-	protected Card(double height, boolean retitleable, boolean nameable) {
-		super(retitleable, nameable);
+	public Card(double height, boolean retitleable, boolean nameable) {
+		super(true, retitleable, nameable);
 
 		MouseEventListener.createSelfHandler(this);
 		RegionResizeListener.createSelfHandler(this);
@@ -77,18 +77,16 @@ public abstract class Card extends CardEntity implements MouseSelfHandler, Resiz
 
 	@Override
 	public void handleResize() {
-		this.setCardContentHeight(this.getHeight());
-		this.setCardContentWidth(this.getWidth());
+		this.backingButton.setPrefWidth(this.getWidth());
+		this.backingButton.setPrefHeight(this.getHeight());
+		this.contentPane.setPrefWidth(this.getWidth());
+		this.contentPane.setPrefHeight(this.getHeight());
 	}
 	
-	protected void setCardContentHeight(double height) {
-		this.contentPane.setPrefHeight(height);
-		this.backingButton.setPrefHeight(height);
-	}
-	
-	protected void setCardContentWidth(double width) {
-		this.contentPane.setPrefWidth(width);
-		this.backingButton.setPrefWidth(width);
+	private void setImmutableHeight(double height) {
+		this.setPrefHeight(height);
+		this.setMinHeight(height);
+		this.setMaxHeight(height);
 	}
 
 }

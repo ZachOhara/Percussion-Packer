@@ -21,7 +21,7 @@ public class GhostCard extends CardEntity {
 			+ "; -fx-border-color: " + DECORATION_COLOR;
 
 	public GhostCard(CardEntity sizingCard) {
-		super(false, false);
+		super(false, false, false);
 		
 		GraphicsUtil.copySizing(sizingCard, this);
 

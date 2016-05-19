@@ -21,67 +21,74 @@ import java.util.List;
 
 import io.github.zachohara.fxeventcommon.resize.ResizeSelfHandler;
 import io.github.zachohara.percussionpacker.card.Card;
-import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
+import io.github.zachohara.percussionpacker.column.CardList;
 
 public abstract class ParentCard extends Card implements ResizeSelfHandler {
 	
 	public static final double DEFAULT_CHILD_INDENT = 30; // in pixels
 	public static final double INSET_DECAY = 0.75;
 	
-	public static final double ADD_BUTTON_HEIGHT = 24; // in pixels
+	public static final String BUTTON_TEXT = "Add an instrument";
 	
-	private final double headHeight;
+	private CreateChildButton createChildButton;
 	
-	private Button addChildButton;
-	
-	private List<ChildCard> children;
+	private List<ParentCard> children;
 	private double childIndent;
 	
 	protected ParentCard(double height, boolean retitleable, boolean nameable) {
 		super(height, retitleable, nameable);
-		this.headHeight = height;
 		
-		this.addChildButton = new Button("Add a child...");
-		this.addChildButton.setLayoutX(this.getChildIndent());
-		this.addChildButton.setLayoutY(this.headHeight);
-		this.addChildButton.setPrefHeight(ADD_BUTTON_HEIGHT);
-		StackPane.setAlignment(this.addChildButton, Pos.BOTTOM_RIGHT);
+		this.createChildButton = new CreateChildButton(BUTTON_TEXT);
 		
-		this.setImmutableHeight(this.headHeight + ADD_BUTTON_HEIGHT);
-		
-		this.children = new LinkedList<ChildCard>();
+		this.children = new LinkedList<ParentCard>();
 		this.setChildIndent(DEFAULT_CHILD_INDENT);
-		
-		this.getChildren().add(this.addChildButton);
 	}
 	
-	public void addChild(ChildCard child) {
+	public void addChild(ParentCard child) {
 		this.applyIndentToChild(child);
 		child.setChildIndent(this.getChildIndent() * INSET_DECAY);
 		this.children.add(child);
 	}
 	
 	@Override
-	protected void startDragging() {
-		for (Card c : this.children) {
-			c.setVisible(false);
+	public void setOwner(CardList owner) {
+		if (this.getOwner() != null && owner == null) {
+			this.removeAllChildren();
+			super.setOwner(owner);
+		} else if (this.getOwner() == null && owner != null) {
+			super.setOwner(owner);
+			this.addAllChildren();
 		}
+	}
+	
+	@Override
+	protected void startDragging() {
+		this.removeAllChildren();
 	}
 	
 	@Override
 	protected void finishDragging() {
+		this.addAllChildren();
+	}
+	
+	private void removeAllChildren() {
 		for (Card c : this.children) {
-			c.setVisible(true);
+			this.getOwner().remove(c);
 		}
+		this.getOwner().remove(this.createChildButton);
+	}
+	
+	private void addAllChildren() {
+		int thisIndex = this.getOwner().indexOf(this);
+		for (int i = 0; i < this.children.size(); i++) {
+			this.getOwner().add(thisIndex + i + 1, this.children.get(i));
+		}
+		this.getOwner().add(thisIndex + this.children.size() + 1, this.createChildButton);
 	}
 	
 	@Override
 	public void handleResize() {
-		this.setCardContentHeight(this.headHeight);
-		this.setCardContentWidth(this.getWidth());
-		this.addChildButton.setPrefWidth(this.getWidth() - this.getChildIndent());
+		this.createChildButton.setPrefWidth(this.getWidth() - this.getChildIndent());
 		this.applyIndentToAllChildren();
 	}
 	
@@ -93,17 +100,17 @@ public abstract class ParentCard extends Card implements ResizeSelfHandler {
 		return this.childIndent;
 	}
 	
-	protected List<ChildCard> getChildCards() {
+	protected List<ParentCard> getChildCards() {
 		return this.children;
 	}
 	
 	private void applyIndentToAllChildren() {
-		for (Card c : this.getChildCards()) {
+		for (ParentCard c : this.getChildCards()) {
 			this.applyIndentToChild(c);
 		}
 	}
 	
-	private void applyIndentToChild(Card child) {
+	private void applyIndentToChild(ParentCard child) {
 		child.setLayoutX(this.getLayoutX() + this.getChildIndent());
 		child.setPrefWidth(this.getWidth() - this.getChildIndent());
 	}

@@ -22,7 +22,7 @@ import io.github.zachohara.percussionpacker.util.GraphicsUtil;
 public class SpaceCard extends CardEntity {
 
 	public SpaceCard(CardEntity sizingCard) {
-		super(false, false);
+		super(false, false, false);
 		
 		GraphicsUtil.copySizing(sizingCard, this);
 		

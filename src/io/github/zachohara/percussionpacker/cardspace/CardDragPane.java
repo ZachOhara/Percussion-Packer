@@ -24,7 +24,7 @@ import io.github.zachohara.percussionpacker.animation.InterpolatedQuantity;
 import io.github.zachohara.percussionpacker.animation.resize.CenteredWidthTransition;
 import io.github.zachohara.percussionpacker.animation.resize.ResizeCompletionListener;
 import io.github.zachohara.percussionpacker.animation.resize.ResizeProgressListener;
-import io.github.zachohara.percussionpacker.card.Card;
+import io.github.zachohara.percussionpacker.cardentity.CardEntity;
 import io.github.zachohara.percussionpacker.cardentity.GhostCard;
 import io.github.zachohara.percussionpacker.column.Column;
 import io.github.zachohara.percussionpacker.util.GraphicsUtil;
@@ -40,7 +40,7 @@ public class CardDragPane extends Pane implements MouseSelfHandler, ResizeSelfHa
 
 	private ColumnPane columnPane;
 
-	private Card draggingCard;
+	private CardEntity draggingCard;
 	private GhostCard ghostCard;
 
 	private CenteredWidthTransition resizeTransition;
@@ -69,7 +69,7 @@ public class CardDragPane extends Pane implements MouseSelfHandler, ResizeSelfHa
 		this.setMinHeight(GraphicsUtil.getCumulativeMinHeight(this));
 	}
 
-	public void recieveDraggingCard(Card draggingCard, Point2D scenePosision, GhostCard ghostCard) {
+	public void recieveDraggingCard(CardEntity draggingCard, Point2D scenePosision, GhostCard ghostCard) {
 		this.draggingCard = draggingCard;
 		this.ghostCard = ghostCard;
 		Point2D localPosition = this.sceneToLocal(scenePosision);
