@@ -1,7 +1,6 @@
-package io.github.zachohara.percussionpacker.cardtype;
+package io.github.zachohara.percussionpacker.cardentity;
 
-import io.github.zachohara.percussionpacker.card.CardEntity;
-import javafx.scene.layout.Region;
+import io.github.zachohara.percussionpacker.util.GraphicsUtil;
 import javafx.scene.paint.Color;
 
 public class GhostCard extends CardEntity {
@@ -23,18 +22,10 @@ public class GhostCard extends CardEntity {
 
 	public GhostCard(CardEntity sizingCard) {
 		super(false, false);
-		this.copySizing(sizingCard);
+		
+		GraphicsUtil.copySizing(sizingCard, this);
 
 		this.setStyle(STYLE);
-	}
-
-	private void copySizing(Region copyFrom) {
-		this.setMinWidth(copyFrom.getMinWidth());
-		this.setMinHeight(copyFrom.getMinHeight());
-		this.setPrefWidth(copyFrom.getPrefWidth());
-		this.setPrefHeight(copyFrom.getPrefHeight());
-		this.setMaxWidth(copyFrom.getMaxWidth());
-		this.setMaxHeight(copyFrom.getMaxHeight());
 	}
 
 	private static String generateBackgroundColorString() {

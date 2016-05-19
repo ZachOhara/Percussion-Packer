@@ -19,7 +19,7 @@ package io.github.zachohara.percussionpacker.column;
 import io.github.zachohara.fxeventcommon.focus.FocusChangeListener;
 import io.github.zachohara.fxeventcommon.focus.FocusSelfHandler;
 import io.github.zachohara.percussionpacker.card.Card;
-import io.github.zachohara.percussionpacker.card.CardEntity;
+import io.github.zachohara.percussionpacker.cardentity.CardEntity;
 import javafx.geometry.Point2D;
 import javafx.scene.control.ScrollPane;
 

@@ -25,7 +25,7 @@ import io.github.zachohara.percussionpacker.animation.resize.CenteredWidthTransi
 import io.github.zachohara.percussionpacker.animation.resize.ResizeCompletionListener;
 import io.github.zachohara.percussionpacker.animation.resize.ResizeProgressListener;
 import io.github.zachohara.percussionpacker.card.Card;
-import io.github.zachohara.percussionpacker.cardtype.GhostCard;
+import io.github.zachohara.percussionpacker.cardentity.GhostCard;
 import io.github.zachohara.percussionpacker.column.Column;
 import io.github.zachohara.percussionpacker.util.GraphicsUtil;
 import javafx.event.EventType;

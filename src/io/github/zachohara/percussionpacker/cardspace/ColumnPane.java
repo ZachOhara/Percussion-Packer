@@ -18,8 +18,7 @@ package io.github.zachohara.percussionpacker.cardspace;
 
 import io.github.zachohara.fxeventcommon.resize.RegionResizeListener;
 import io.github.zachohara.fxeventcommon.resize.ResizeSelfHandler;
-import io.github.zachohara.percussionpacker.card.Card;
-import io.github.zachohara.percussionpacker.card.CardEntity;
+import io.github.zachohara.percussionpacker.cardentity.CardEntity;
 import io.github.zachohara.percussionpacker.column.Column;
 import io.github.zachohara.percussionpacker.columntype.EquipmentColumn;
 import io.github.zachohara.percussionpacker.columntype.MalletColumn;

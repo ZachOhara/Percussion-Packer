@@ -19,7 +19,7 @@ package io.github.zachohara.percussionpacker.column;
 import io.github.zachohara.fxeventcommon.resize.RegionResizeListener;
 import io.github.zachohara.fxeventcommon.resize.ResizeSelfHandler;
 import io.github.zachohara.percussionpacker.card.Card;
-import io.github.zachohara.percussionpacker.card.CardEntity;
+import io.github.zachohara.percussionpacker.cardentity.CardEntity;
 import javafx.geometry.Point2D;
 import javafx.scene.layout.VBox;
 

@@ -20,6 +20,7 @@ import io.github.zachohara.fxeventcommon.mouse.MouseEventListener;
 import io.github.zachohara.fxeventcommon.mouse.MouseSelfHandler;
 import io.github.zachohara.fxeventcommon.resize.RegionResizeListener;
 import io.github.zachohara.fxeventcommon.resize.ResizeSelfHandler;
+import io.github.zachohara.percussionpacker.cardentity.CardEntity;
 import io.github.zachohara.percussionpacker.common.BackingButton;
 import javafx.event.EventType;
 import javafx.scene.input.MouseEvent;
