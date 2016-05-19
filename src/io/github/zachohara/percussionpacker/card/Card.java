@@ -23,7 +23,9 @@ import io.github.zachohara.fxeventcommon.resize.ResizeSelfHandler;
 import io.github.zachohara.percussionpacker.common.BackingButton;
 import javafx.event.EventType;
 import javafx.geometry.Point2D;
+import javafx.geometry.Pos;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 
 public abstract class Card extends StackPane implements MouseSelfHandler, ResizeSelfHandler {
@@ -42,21 +44,22 @@ public abstract class Card extends StackPane implements MouseSelfHandler, Resize
 		MouseEventListener.createSelfHandler(this);
 		RegionResizeListener.createSelfHandler(this);
 
-		this.setPrefHeight(height);
-		this.setMinHeight(height);
-		this.setMaxHeight(height);
+		this.setImmutableHeight(height);
 
 		this.backingButton = new BackingButton();
+		this.backingButton.setMaxSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
+		StackPane.setAlignment(this.backingButton, Pos.TOP_CENTER);
 
 		this.retitleable = retitleable;
 		this.nameable = nameable;
+		this.isDragging = false;
 
 		this.contentPane = new CardContentPane(this.retitleable, this.nameable);
 		this.contentPane.setMinWidth(0);
+		this.contentPane.setMaxSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
+		StackPane.setAlignment(this.contentPane, Pos.TOP_CENTER);
 
 		this.getChildren().addAll(this.backingButton, this.contentPane);
-		
-		this.setIsDragging(false);
 	}
 
 	public String getTitle() {
@@ -116,10 +119,24 @@ public abstract class Card extends StackPane implements MouseSelfHandler, Resize
 
 	@Override
 	public void handleResize() {
-		this.contentPane.setPrefWidth(this.getWidth());
-		this.contentPane.setPrefHeight(this.getHeight());
-		this.backingButton.setPrefWidth(this.getWidth());
-		this.backingButton.setPrefHeight(this.getHeight());
+		this.setCardContentHeight(this.getHeight());
+		this.setCardContentWidth(this.getWidth());
+	}
+	
+	protected void setCardContentHeight(double height) {
+		this.contentPane.setPrefHeight(height);
+		this.backingButton.setPrefHeight(height);
+	}
+	
+	protected void setCardContentWidth(double width) {
+		this.contentPane.setPrefWidth(width);
+		this.backingButton.setPrefWidth(width);
+	}
+	
+	protected void setImmutableHeight(double height) {
+		this.setPrefHeight(height);
+		this.setMinHeight(height);
+		this.setMaxHeight(height);
 	}
 
 }

@@ -16,9 +16,7 @@
 
 package io.github.zachohara.percussionpacker.cardtype;
 
-import io.github.zachohara.percussionpacker.card.Card;
-
-public class SongNameCard extends Card {
+public class SongNameCard extends ParentCard {
 
 	public static final double HEIGHT = 40; // in pixels
 
