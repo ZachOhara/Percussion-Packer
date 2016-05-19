@@ -73,6 +73,7 @@ public class CardList extends VBox implements MouseSelfHandler, ResizeSelfHandle
 		localY = Math.min(localY, this.getHeight());
 
 		if (draggingCard != null) {
+			draggingCard.setIsDragging(false);
 			int insertIndex = this.getDragCardIndex(localY, draggingCard);
 			if (draggingCard instanceof GhostCard) {
 				this.slideAllCards((GhostCard) draggingCard, insertIndex);
@@ -187,6 +188,7 @@ public class CardList extends VBox implements MouseSelfHandler, ResizeSelfHandle
 		Point2D scenePosition = GraphicsUtil.getScenePosition(clickedCard);
 		GhostCard ghostCard = new GhostCard(clickedCard);
 		this.remove(clickedCard);
+		clickedCard.setIsDragging(true);
 		PackingStage.getCardSpacePane().recieveDraggingCard(clickedCard, scenePosition, ghostCard);
 		this.add(index, ghostCard);
 	}

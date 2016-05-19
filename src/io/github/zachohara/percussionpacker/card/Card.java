@@ -34,6 +34,8 @@ public abstract class Card extends StackPane implements MouseSelfHandler, Resize
 
 	private boolean retitleable;
 	private boolean nameable;
+	
+	private boolean isDragging;
 
 	protected Card(double height, boolean retitleable, boolean nameable) {
 		super();
@@ -54,6 +56,8 @@ public abstract class Card extends StackPane implements MouseSelfHandler, Resize
 		this.contentPane.setMinWidth(0);
 
 		this.getChildren().addAll(this.backingButton, this.contentPane);
+		
+		this.setIsDragging(false);
 	}
 
 	public String getTitle() {
@@ -70,6 +74,27 @@ public abstract class Card extends StackPane implements MouseSelfHandler, Resize
 
 	public void setName(String name) {
 		this.contentPane.setName(name);
+	}
+	
+	public void setIsDragging(boolean isDragging) {
+		this.isDragging = isDragging;
+		if (this.isDragging) {
+			this.startDragging();
+		} else {
+			this.finishDragging();
+		}
+	}
+	
+	protected boolean isDragging() {
+		return this.isDragging;
+	}
+	
+	protected void startDragging() {
+		// take no action
+	}
+	
+	protected void finishDragging() {
+		// take no action
 	}
 
 	public Point2D getCenterPoint() {
