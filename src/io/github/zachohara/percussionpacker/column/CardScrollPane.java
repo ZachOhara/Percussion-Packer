@@ -18,6 +18,7 @@ package io.github.zachohara.percussionpacker.column;
 
 import io.github.zachohara.fxeventcommon.focus.FocusChangeListener;
 import io.github.zachohara.fxeventcommon.focus.FocusSelfHandler;
+import io.github.zachohara.percussionpacker.animation.scroll.VerticalScrollTransition;
 import io.github.zachohara.percussionpacker.card.Card;
 import io.github.zachohara.percussionpacker.cardentity.CardEntity;
 import javafx.geometry.Point2D;
@@ -70,7 +71,7 @@ public class CardScrollPane extends ScrollPane implements FocusSelfHandler {
 	}
 	
 	private void scrollToPosition(double verticalPos) {
-		this.setVvalue(verticalPos);
+		new VerticalScrollTransition(this, verticalPos).play();
 	}
 	
 	public double getTopVisibleLine() {
