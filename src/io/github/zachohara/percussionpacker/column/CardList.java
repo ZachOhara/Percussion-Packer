@@ -125,6 +125,10 @@ public class CardList extends VBox implements MouseSelfHandler, ResizeSelfHandle
 		double cumulHeight = 0;
 		int minIndex = Math.min(oldIndex, newIndex);
 		int maxIndex = Math.max(oldIndex, newIndex);
+		if (newIndex > oldIndex) {
+			minIndex += 1;
+			maxIndex += 1;
+		}
 
 		for (int i = minIndex; i < maxIndex; i++) {
 			cumulHeight += this.cards.get(i).getPrefHeight();
