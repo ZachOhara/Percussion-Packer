@@ -90,7 +90,6 @@ public class CardList extends VBox implements CardOwner, MouseSelfHandler, Resiz
 			if (ghostIndex != -1) {
 				GhostCard ghostCard = (GhostCard) this.cards.get(ghostIndex);
 				this.slideAllCards(ghostCard, this.cards.size() - 1);
-				ghostCard.setOwner(null);
 			}
 			this.removeGhostCard();
 			return -1;
@@ -199,9 +198,7 @@ public class CardList extends VBox implements CardOwner, MouseSelfHandler, Resiz
 		CardEntity clickedCard = this.cards.get(index);
 		Point2D scenePosition = GraphicsUtil.getScenePosition(clickedCard);
 		GhostCard ghostCard = new GhostCard(clickedCard);
-		clickedCard.setOwner(null);
 		this.remove(clickedCard);
-		//clickedCard.setIsDragging(true);
 		PackingStage.getCardSpacePane().recieveDraggingCard(clickedCard, scenePosition, ghostCard);
 		this.add(index, ghostCard);
 	}
@@ -302,6 +299,8 @@ public class CardList extends VBox implements CardOwner, MouseSelfHandler, Resiz
 		this.cards.add(index, element);
 		this.getChildren().add(index, element);
 		this.verifyIntegrity();
+		element.setOwner(this);
+		element.setIsDragging(false);
 		return this.getVerticalPositionOfIndex(index);
 	}
 
@@ -312,14 +311,12 @@ public class CardList extends VBox implements CardOwner, MouseSelfHandler, Resiz
 	}
 
 	private void remove(int index) {
-		this.cards.get(index).setOwner(null);
 		this.cards.remove(index);
 		this.getChildren().remove(index);
 		this.verifyIntegrity();
 	}
 
 	private void set(int index, CardEntity element) {
-		this.cards.get(index).setOwner(null);
 		this.cards.set(index, element);
 		this.getChildren().set(index, element);
 		this.verifyIntegrity();

@@ -40,7 +40,7 @@ public abstract class CardEntity extends StackPane {
 		this.isDragging = false;
 	}
 	
-	public void setOwner(CardOwner owner) {
+	public final void setOwner(CardOwner owner) {
 		this.owner = owner;
 	}
 	
@@ -60,7 +60,7 @@ public abstract class CardEntity extends StackPane {
 		return this.isNameable;
 	}
 	
-	public void setIsDragging(boolean isDragging) {
+	public final void setIsDragging(boolean isDragging) {
 		this.isDragging = isDragging;
 		if (this.isDragging) {
 			this.startDragging();

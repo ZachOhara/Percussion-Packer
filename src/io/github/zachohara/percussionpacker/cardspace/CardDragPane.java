@@ -105,6 +105,7 @@ public class CardDragPane extends Pane implements MouseSelfHandler, ResizeSelfHa
 		double dy = y - this.lastMouseY;
 		if (!this.isCardDragging && CardDragPane.isOverThreshold(dx, dy)) {
 			this.isCardDragging = true;
+			this.draggingCard.setIsDragging(true);
 		}
 		if (this.isCardDragging) {
 			if (!this.isCardResizing) {
