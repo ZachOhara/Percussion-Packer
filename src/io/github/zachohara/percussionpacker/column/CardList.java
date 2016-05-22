@@ -40,6 +40,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 
 public class CardList extends VBox implements MouseSelfHandler, ResizeSelfHandler {
+	
+	public static final double SCROLL_BUFFER = 10; // in pixels
 
 	private CardSlidePane slidePane;
 	private CardScrollPane scrollPane;
@@ -295,8 +297,9 @@ public class CardList extends VBox implements MouseSelfHandler, ResizeSelfHandle
 	private void makeCardVisible(int index, double height) {
 		Platform.runLater(new Runnable() {
 			public void run() {
-				double topLine = getPositionOfIndex(index);
-				double bottomLine = topLine + height;
+				double position = getPositionOfIndex(index);
+				double topLine = position - SCROLL_BUFFER;
+				double bottomLine = position + height + SCROLL_BUFFER;
 				if (topLine < scrollPane.getBottomVisibleLine()) {
 					scrollPane.makeLineVisible(topLine);
 				}
