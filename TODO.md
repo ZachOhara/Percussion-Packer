@@ -15,12 +15,10 @@
 * In ParentCard, fix the child indent
 
 ### Card List
-* Do not start dragging cards until over the drag threshold
 * Fix the issue with the ghost card trajectory not properly redefining
 
 ### Columns
 * Hover over top / bottom of scroll pane while dragging should cause scroll
-* When a new card is created, the applicable column should scroll to the bottom to show the card
 
 ### Column Pane
 * Make columns assume the current ratios after resizing the window
