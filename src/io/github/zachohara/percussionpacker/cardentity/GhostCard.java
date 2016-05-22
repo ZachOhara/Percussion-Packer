@@ -13,7 +13,7 @@ public class GhostCard extends CardEntity {
 	public static final Color BACKGROUND_COLOR = Color.web(DECORATION_COLOR, BACKGROUND_OPACITY);
 
 	public static final double RADIUS = 2;
-	public static final double INSET = 3;
+	public static final double INSET = 5;
 
 	public static final String STYLE = GhostCard.generateBackgroundColorString()
 			+ "; -fx-background-radius: " + RADIUS + "; -fx-background-insets: " + INSET

@@ -80,6 +80,10 @@ public abstract class CardEntity extends StackPane {
 	protected void finishDragging() {
 		// take no action
 	}
+	
+	public double getDisplayHeight() {
+		return this.getPrefHeight();
+	}
 
 	public Point2D getCenterPoint() {
 		return new Point2D(this.getLayoutX() + (this.getWidth() / 2),

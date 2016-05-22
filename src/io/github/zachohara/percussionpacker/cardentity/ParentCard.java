@@ -84,6 +84,19 @@ public abstract class ParentCard extends Card implements ResizeSelfHandler {
 			this.getOwner().add(thisIndex + i + 1, this.children.get(i));
 		}
 		this.getOwner().add(thisIndex + this.children.size() + 1, this.createChildButton);
+		//this.getOwner().getScrollPane().makeLineVisible(this.getLayoutY());
+		//this.getOwner().getScrollPane().makeLineVisible(this.getLayoutY() + this.getCumulativeHeight());
+	}
+	
+	@Override
+	public double getDisplayHeight() {
+		double  cumulHeight = 0;
+		cumulHeight +=  this.getPrefHeight();
+		for (ParentCard p : this.children) {
+			cumulHeight += p.getPrefHeight();
+		}
+		cumulHeight += this.createChildButton.getPrefHeight();
+		return cumulHeight;
 	}
 	
 	@Override

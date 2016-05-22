@@ -39,12 +39,12 @@ public class CardSlidePane extends Pane implements ResizeSelfHandler, SlideCompl
 
 	private Map<CardEntity, VerticalSlideTransition> slideTransitions;
 
-	public CardSlidePane() {
+	public CardSlidePane(CardScrollPane parent) {
 		super();
 
 		RegionResizeListener.createSelfHandler(this);
 
-		this.cardList = new CardList(this);
+		this.cardList = new CardList(this, parent);
 
 		this.slideTransitions = new HashMap<CardEntity, VerticalSlideTransition>();
 

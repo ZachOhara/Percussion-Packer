@@ -32,6 +32,7 @@ import io.github.zachohara.percussionpacker.cardtype.TestCard;
 import io.github.zachohara.percussionpacker.util.GraphicsUtil;
 import io.github.zachohara.percussionpacker.util.MathUtil;
 import io.github.zachohara.percussionpacker.window.PackingStage;
+import javafx.application.Platform;
 import javafx.event.EventType;
 import javafx.geometry.Point2D;
 import javafx.scene.input.MouseEvent;
@@ -40,15 +41,17 @@ import javafx.scene.layout.VBox;
 public class CardList extends VBox implements MouseSelfHandler, ResizeSelfHandler {
 
 	private CardSlidePane slidePane;
+	private CardScrollPane scrollPane;
 
 	private List<CardEntity> cards;
 
 	private Map<CardEntity, SpaceCard> spacerMap;
 
-	public CardList(CardSlidePane parent) {
+	public CardList(CardSlidePane slidePane, CardScrollPane scrollPane) {
 		super();
 
-		this.slidePane = parent;
+		this.slidePane = slidePane;
+		this.scrollPane = scrollPane;
 
 		MouseEventListener.createSelfHandler(this);
 		RegionResizeListener.createSelfHandler(this);
@@ -59,14 +62,21 @@ public class CardList extends VBox implements MouseSelfHandler, ResizeSelfHandle
 
 		// --- Test code --- //
 		for (int i = 0; i < 20; i++) {
-			this.add(new TestCard());
+			this.cards.add(new TestCard());
 			((TestCard) this.cards.get(i)).setTitle(i + "-----------");
-			this.cards.get(i).setPrefHeight(30 + (30 * Math.random()));
-			this.cards.get(i).setMinHeight(this.cards.get(i).getPrefHeight());
-			this.cards.get(i).setMaxHeight(this.cards.get(i).getPrefHeight());
+			this.getChildren().add(this.cards.get(i));
+			//this.cards.get(i).setPrefHeight(30 + (30 * Math.random()));
+			//this.cards.get(i).setMinHeight(this.cards.get(i).getPrefHeight());
+			//this.cards.get(i).setMaxHeight(this.cards.get(i).getPrefHeight());
 		}
 		// ----------------- //
 	}
+	
+	/*
+	public CardScrollPane getScrollPane() {
+		return this.scrollPane;
+	}
+	*/
 
 	public void dropCard(CardEntity draggingCard, Point2D scenePoint) {
 		double localY = this.sceneToLocal(scenePoint).getY();
@@ -276,12 +286,32 @@ public class CardList extends VBox implements MouseSelfHandler, ResizeSelfHandle
 	public int indexOf(CardEntity element) {
 		return this.cards.indexOf(element);
 	}
+	
+	private void makeCardVisible(int index, double height) {
+		Platform.runLater(new Runnable() {
+			public void run() {
+				double topLine = getPositionOfIndex(index);
+				double bottomLine = topLine + height;
+				if (topLine < scrollPane.getBottomVisibleLine()) {
+					scrollPane.makeLineVisible(topLine);
+				}
+				if (bottomLine > scrollPane.getTopVisibleLine()) {
+					scrollPane.makeLineVisible(bottomLine);
+				}
+			}
+		});
+	}
+	
+	private double getPositionOfIndex(int index) {
+		double position = 0;
+		for (int i = 0; i < index; i++) {
+			position += this.cards.get(i).getPrefHeight();
+		}
+		return position;
+	}
 
 	protected void add(CardEntity element) {
-		this.cards.add(element);
-		this.getChildren().add(element);
-		this.verifyIntegrity();
-		element.setOwner(this);
+		this.add(this.cards.size(), element);
 	}
 
 	public void add(int index, CardEntity element) {
@@ -289,6 +319,7 @@ public class CardList extends VBox implements MouseSelfHandler, ResizeSelfHandle
 		this.getChildren().add(index, element);
 		this.verifyIntegrity();
 		element.setOwner(this);
+		this.makeCardVisible(index, element.getDisplayHeight());
 	}
 
 	public void remove(CardEntity element) {
