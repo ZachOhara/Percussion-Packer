@@ -44,7 +44,7 @@ public class CardSlidePane extends Pane implements ResizeSelfHandler, SlideCompl
 
 		RegionResizeListener.createSelfHandler(this);
 
-		this.cardList = new CardList(this, parent);
+		this.cardList = new CardList(this);
 
 		this.slideTransitions = new HashMap<CardEntity, VerticalSlideTransition>();
 
@@ -106,15 +106,15 @@ public class CardSlidePane extends Pane implements ResizeSelfHandler, SlideCompl
 		}
 	}
 
-	public void addCard(CardEntity card) {
-		this.cardList.add(card);
+	public double addCard(CardEntity card) {
+		return this.cardList.add(card);
 	}
 
-	public void dropCard(CardEntity draggingCard, Point2D scenePoint) {
+	public double dropCard(CardEntity draggingCard, Point2D scenePoint) {
 		if (draggingCard == null) {
 			this.stopGhostCardSlide();
 		}
-		this.cardList.dropCard(draggingCard, scenePoint);
+		return this.cardList.dropCard(draggingCard, scenePoint);
 	}
 
 	@Override

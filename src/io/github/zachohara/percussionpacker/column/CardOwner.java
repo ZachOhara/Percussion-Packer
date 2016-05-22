@@ -22,7 +22,7 @@ public interface CardOwner {
 	
 	public int indexOf(CardEntity card);
 	
-	public void add(int index, CardEntity card);
+	public double add(int index, CardEntity card);
 	
 	public void remove(CardEntity card);
 

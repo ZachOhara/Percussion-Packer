@@ -21,10 +21,13 @@ import io.github.zachohara.fxeventcommon.focus.FocusSelfHandler;
 import io.github.zachohara.percussionpacker.animation.scroll.VerticalScrollTransition;
 import io.github.zachohara.percussionpacker.card.Card;
 import io.github.zachohara.percussionpacker.cardentity.CardEntity;
+import javafx.application.Platform;
 import javafx.geometry.Point2D;
 import javafx.scene.control.ScrollPane;
 
 public class CardScrollPane extends ScrollPane implements FocusSelfHandler {
+	
+	public static final double SCROLL_BUFFER = 10; // in pixels
 
 	public static final double MIN_HEIGHT = 40;
 
@@ -46,18 +49,14 @@ public class CardScrollPane extends ScrollPane implements FocusSelfHandler {
 	}
 
 	public void addCard(Card card) {
-		this.cardSlidePane.addCard(card);
+		double position = this.cardSlidePane.addCard(card);
+		this.makeCardVisible(position, card.getDisplayHeight());
 	}
 
 	public void dropCard(CardEntity draggingCard, Point2D scenePoint) {
-		this.cardSlidePane.dropCard(draggingCard, scenePoint);
-	}
-	
-	public void makeLineVisible(double targetLine) {
-		if (targetLine < this.getTopVisibleLine()) {
-			this.scrollToPosition(this.calculateTopVvalue(targetLine));
-		} else if (targetLine > this.getBottomVisibleLine()) {
-			this.scrollToPosition(this.calculateBottomVvalue(targetLine));
+		double position = this.cardSlidePane.dropCard(draggingCard, scenePoint);
+		if (draggingCard != null) {
+			this.makeCardVisible(position, draggingCard.getDisplayHeight());
 		}
 	}
 
@@ -68,6 +67,29 @@ public class CardScrollPane extends ScrollPane implements FocusSelfHandler {
 	@Override
 	public void handleFocusChange(boolean hasFocus) {
 		this.setFocused(false);
+	}
+	
+	private void makeCardVisible(double position, double height) {
+		Platform.runLater(new Runnable() {
+			public void run() {
+				double topLine = position - SCROLL_BUFFER;
+				double bottomLine = position + height + SCROLL_BUFFER;
+				if (topLine < getBottomVisibleLine()) {
+					makeLineVisible(topLine);
+				}
+				if (bottomLine > getTopVisibleLine()) {
+					makeLineVisible(bottomLine);
+				}
+			}
+		});
+	}
+	
+	public void makeLineVisible(double targetLine) {
+		if (targetLine < this.getTopVisibleLine()) {
+			this.scrollToPosition(this.calculateTopVvalue(targetLine));
+		} else if (targetLine > this.getBottomVisibleLine()) {
+			this.scrollToPosition(this.calculateBottomVvalue(targetLine));
+		}
 	}
 	
 	private void scrollToPosition(double verticalPos) {
