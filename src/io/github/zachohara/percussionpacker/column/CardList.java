@@ -25,6 +25,7 @@ import io.github.zachohara.fxeventcommon.mouse.MouseEventListener;
 import io.github.zachohara.fxeventcommon.mouse.MouseSelfHandler;
 import io.github.zachohara.fxeventcommon.resize.RegionResizeListener;
 import io.github.zachohara.fxeventcommon.resize.ResizeSelfHandler;
+import io.github.zachohara.percussionpacker.card.Card;
 import io.github.zachohara.percussionpacker.cardentity.CardEntity;
 import io.github.zachohara.percussionpacker.cardentity.GhostCard;
 import io.github.zachohara.percussionpacker.cardtype.SpaceCard;
@@ -323,7 +324,9 @@ public class CardList extends VBox implements MouseSelfHandler, ResizeSelfHandle
 		this.getChildren().add(index, element);
 		this.verifyIntegrity();
 		element.setOwner(this);
-		this.makeCardVisible(index, element.getDisplayHeight());
+		if (element instanceof Card) {
+			this.makeCardVisible(index, element.getDisplayHeight());
+		}
 	}
 
 	public void remove(CardEntity element) {

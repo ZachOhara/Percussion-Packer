@@ -53,7 +53,6 @@ public class CardScrollPane extends ScrollPane implements FocusSelfHandler {
 	}
 	
 	public void makeLineVisible(double targetLine) {
-		System.out.println(targetLine + " " + this.getBottomVisibleLine());
 		if (targetLine < this.getTopVisibleLine()) {
 			this.scrollToPosition(this.calculateTopVvalue(targetLine));
 		} else if (targetLine > this.getBottomVisibleLine()) {
