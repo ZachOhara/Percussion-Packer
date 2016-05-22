@@ -85,11 +85,13 @@ public class CardScrollPane extends ScrollPane implements FocusSelfHandler {
 	}
 	
 	private double calculateTopVvalue(double topLine) {
-		return Math.min(1, topLine / (this.cardSlidePane.getHeight() - this.getHeight()));
+		double scrollPosition = topLine / (this.cardSlidePane.getHeight() - this.getHeight());
+		double vValue = (scrollPosition * (this.getVmax() - this.getVmin())) + this.getVmin();
+		return Math.min(1, vValue);
 	}
 	
 	private double calculateBottomVvalue(double bottomLine) {
-		return Math.max(0, bottomLine + this.getHeight() / this.cardSlidePane.getHeight());
+		return Math.max(0, this.calculateTopVvalue(bottomLine - this.getHeight()));
 	}
 
 }
