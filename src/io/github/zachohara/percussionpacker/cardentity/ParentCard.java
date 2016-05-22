@@ -21,7 +21,7 @@ import java.util.List;
 
 import io.github.zachohara.fxeventcommon.resize.ResizeSelfHandler;
 import io.github.zachohara.percussionpacker.card.Card;
-import io.github.zachohara.percussionpacker.column.CardList;
+import io.github.zachohara.percussionpacker.column.CardOwner;
 
 public abstract class ParentCard extends Card implements ResizeSelfHandler {
 	
@@ -51,7 +51,7 @@ public abstract class ParentCard extends Card implements ResizeSelfHandler {
 	}
 	
 	@Override
-	public void setOwner(CardList owner) {
+	public void setOwner(CardOwner owner) {
 		if (this.getOwner() != null && owner == null) {
 			this.removeAllChildren();
 			super.setOwner(owner);
@@ -84,8 +84,6 @@ public abstract class ParentCard extends Card implements ResizeSelfHandler {
 			this.getOwner().add(thisIndex + i + 1, this.children.get(i));
 		}
 		this.getOwner().add(thisIndex + this.children.size() + 1, this.createChildButton);
-		//this.getOwner().getScrollPane().makeLineVisible(this.getLayoutY());
-		//this.getOwner().getScrollPane().makeLineVisible(this.getLayoutY() + this.getCumulativeHeight());
 	}
 	
 	@Override

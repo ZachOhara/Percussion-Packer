@@ -16,13 +16,13 @@
 
 package io.github.zachohara.percussionpacker.cardentity;
 
-import io.github.zachohara.percussionpacker.column.CardList;
+import io.github.zachohara.percussionpacker.column.CardOwner;
 import javafx.geometry.Point2D;
 import javafx.scene.layout.StackPane;
 
 public abstract class CardEntity extends StackPane {
 	
-	private CardList owner;
+	private CardOwner owner;
 	
 	private final boolean isDraggable;
 	private final boolean isRetitleable;
@@ -40,11 +40,11 @@ public abstract class CardEntity extends StackPane {
 		this.isDragging = false;
 	}
 	
-	public void setOwner(CardList owner) {
+	public void setOwner(CardOwner owner) {
 		this.owner = owner;
 	}
 	
-	protected final CardList getOwner() {
+	protected final CardOwner getOwner() {
 		return this.owner;
 	}
 	

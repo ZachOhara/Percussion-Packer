@@ -39,7 +39,7 @@ import javafx.geometry.Point2D;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 
-public class CardList extends VBox implements MouseSelfHandler, ResizeSelfHandler {
+public class CardList extends VBox implements CardOwner, MouseSelfHandler, ResizeSelfHandler {
 	
 	public static final double SCROLL_BUFFER = 10; // in pixels
 
