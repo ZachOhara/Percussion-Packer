@@ -18,13 +18,14 @@
 * Fix the issue with the ghost card trajectory not properly redefining
 
 ### Columns
-* Hover over top / bottom of scroll pane while dragging should cause scroll
+* Find the cause of the strange dragging bug
 
 ### Column Pane
 * Make columns assume the current ratios after resizing the window
 
 ### Card Drag Pane
 * [?] Make cards drag from the mouse position, and make them resize about that position
+* When adding a card (or ghost card) to a column, the column should split to both top and bottom, not just bottom
 
 ### Transitions
 * Make the scroll transition non-linear

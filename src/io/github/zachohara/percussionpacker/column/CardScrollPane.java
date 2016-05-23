@@ -18,20 +18,29 @@ package io.github.zachohara.percussionpacker.column;
 
 import io.github.zachohara.fxeventcommon.focus.FocusChangeListener;
 import io.github.zachohara.fxeventcommon.focus.FocusSelfHandler;
+import io.github.zachohara.percussionpacker.animation.scroll.InfiniteScroll;
 import io.github.zachohara.percussionpacker.animation.scroll.VerticalScrollTransition;
 import io.github.zachohara.percussionpacker.card.Card;
 import io.github.zachohara.percussionpacker.cardentity.CardEntity;
+import io.github.zachohara.percussionpacker.cardentity.GhostCard;
 import javafx.application.Platform;
 import javafx.geometry.Point2D;
 import javafx.scene.control.ScrollPane;
 
 public class CardScrollPane extends ScrollPane implements FocusSelfHandler {
+
+	public static final double MIN_HEIGHT = 40;
+	
+	public static final double SCROLL_DISTANCE = 100; // in pixels
 	
 	public static final double SCROLL_BUFFER = 10; // in pixels
 
-	public static final double MIN_HEIGHT = 40;
-
+	private InfiniteScroll hoverScroll;
+	
 	private CardSlidePane cardSlidePane;
+
+	private CardEntity draggingCard;
+	private Point2D hoveringScenePoint;
 
 	public CardScrollPane() {
 		super();
@@ -41,6 +50,8 @@ public class CardScrollPane extends ScrollPane implements FocusSelfHandler {
 		this.setHbarPolicy(ScrollBarPolicy.NEVER);
 		this.setVbarPolicy(ScrollBarPolicy.AS_NEEDED);
 		this.setFitToWidth(true);
+		
+		this.hoverScroll = new InfiniteScroll(this);
 
 		this.cardSlidePane = new CardSlidePane(this);
 		this.setContent(this.cardSlidePane);
@@ -54,9 +65,31 @@ public class CardScrollPane extends ScrollPane implements FocusSelfHandler {
 	}
 
 	public void dropCard(CardEntity draggingCard, Point2D scenePoint) {
-		double position = this.cardSlidePane.dropCard(draggingCard, scenePoint);
-		if (draggingCard != null) {
-			this.makeCardVisible(position, draggingCard.getDisplayHeight());
+		this.draggingCard = draggingCard;
+		this.hoveringScenePoint = scenePoint;
+		double position = updateHoveringCardPosition();
+		if (this.draggingCard instanceof Card) {
+			this.makeCardVisible(position, this.draggingCard.getDisplayHeight());
+			this.hoverScroll.setScrollRate(0);
+		} else if (draggingCard instanceof GhostCard) {
+			double localY = this.sceneToLocal(scenePoint).getY();
+			this.hoverScroll.setScrollRate(this.getScrollRate(localY));
+		} else if (draggingCard == null) {
+			this.hoverScroll.setScrollRate(0);
+		}
+	}
+	
+	public double updateHoveringCardPosition() {
+		return this.cardSlidePane.dropCard(this.draggingCard, this.hoveringScenePoint);
+	}
+	
+	private double getScrollRate(double localY) {
+		if (localY < SCROLL_DISTANCE) {
+			return -(SCROLL_DISTANCE - localY) / SCROLL_DISTANCE;
+		} else if (localY > this.getHeight() - SCROLL_DISTANCE) {
+			return (SCROLL_DISTANCE - (this.getHeight() - localY)) / SCROLL_DISTANCE;
+		} else {
+			return 0;
 		}
 	}
 
