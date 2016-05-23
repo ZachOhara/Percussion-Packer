@@ -173,9 +173,11 @@ public class CardList extends VBox implements CardOwner, MouseSelfHandler, Resiz
 	}
 
 	public void finishSlidingCard(CardEntity slidingCard) {
-		SpaceCard spacer = this.spacerMap.remove(slidingCard);
-		int insertIndex = this.cards.indexOf(spacer);
-		this.set(insertIndex, slidingCard);
+		if (!this.cards.contains(slidingCard)) {
+			SpaceCard spacer = this.spacerMap.remove(slidingCard);
+			int insertIndex = this.cards.indexOf(spacer);
+			this.set(insertIndex, slidingCard);
+		}
 	}
 
 	@Override
