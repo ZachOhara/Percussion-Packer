@@ -31,7 +31,7 @@ public class CardScrollPane extends ScrollPane implements FocusSelfHandler {
 
 	public static final double MIN_HEIGHT = 40;
 	
-	public static final double SCROLL_DISTANCE = 100; // in pixels
+	public static final double SCROLL_DISTANCE = 50; // in pixels
 	
 	public static final double SCROLL_BUFFER = 10; // in pixels
 
