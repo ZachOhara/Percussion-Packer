@@ -31,7 +31,7 @@ public abstract class ParentCard extends Card implements ResizeSelfHandler {
 	
 	private CreateChildButton createChildButton;
 	
-	private List<ParentCard> children;
+	private List<CardEntity> children;
 	private double childIndent;
 	
 	protected ParentCard(double height, boolean retitleable, boolean nameable) {
@@ -39,14 +39,15 @@ public abstract class ParentCard extends Card implements ResizeSelfHandler {
 		
 		this.createChildButton = new CreateChildButton(BUTTON_TEXT);
 		
-		this.children = new LinkedList<ParentCard>();
+		this.children = new LinkedList<CardEntity>();
+		this.children.add(this.createChildButton);
 		this.setChildIndent(DEFAULT_CHILD_INDENT);
 	}
 	
 	public void addChild(ParentCard child) {
 		this.applyIndentToChild(child);
 		child.setChildIndent(this.getChildIndent() * INSET_DECAY);
-		this.children.add(child);
+		this.children.add(this.children.size() - 1, child);
 	}
 	
 	@Override
@@ -60,28 +61,20 @@ public abstract class ParentCard extends Card implements ResizeSelfHandler {
 	}
 	
 	private void removeAllChildren() {
-		for (Card c : this.children) {
-			this.getOwner().remove(c);
-		}
-		this.getOwner().remove(this.createChildButton);
+		this.getOwner().removeChildren(this, this.children);
 	}
 	
 	private void addAllChildren() {
-		int thisIndex = this.getOwner().indexOf(this);
-		for (int i = 0; i < this.children.size(); i++) {
-			this.getOwner().add(thisIndex + i + 1, this.children.get(i));
-		}
-		this.getOwner().add(thisIndex + this.children.size() + 1, this.createChildButton);
+		this.getOwner().addChildren(this, this.children);
 	}
 	
 	@Override
 	public double getDisplayHeight() {
-		double  cumulHeight = 0;
-		cumulHeight +=  this.getPrefHeight();
-		for (ParentCard p : this.children) {
-			cumulHeight += p.getPrefHeight();
+		double cumulHeight = 0;
+		cumulHeight += this.getPrefHeight();
+		for (CardEntity c : this.children) {
+			cumulHeight += c.getPrefHeight();
 		}
-		cumulHeight += this.createChildButton.getPrefHeight();
 		return cumulHeight;
 	}
 	
@@ -99,17 +92,17 @@ public abstract class ParentCard extends Card implements ResizeSelfHandler {
 		return this.childIndent;
 	}
 	
-	protected List<ParentCard> getChildCards() {
+	protected List<CardEntity> getChildCards() {
 		return this.children;
 	}
 	
 	private void applyIndentToAllChildren() {
-		for (ParentCard c : this.getChildCards()) {
+		for (CardEntity c : this.children) {
 			this.applyIndentToChild(c);
 		}
 	}
 	
-	private void applyIndentToChild(ParentCard child) {
+	private void applyIndentToChild(CardEntity child) {
 		child.setLayoutX(this.getLayoutX() + this.getChildIndent());
 		child.setPrefWidth(this.getWidth() - this.getChildIndent());
 	}

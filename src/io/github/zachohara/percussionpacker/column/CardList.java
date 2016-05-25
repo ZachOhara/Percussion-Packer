@@ -165,6 +165,12 @@ public class CardList extends VBox implements CardOwner, MouseSelfHandler, Resiz
 		this.add(cardIndex, spacer);
 		this.spacerMap.put(slidingCard, spacer);
 	}
+	
+	private void createSpaceAtIndex(int index, double space) {
+		for (int i = index; i < this.cards.size(); i++) {
+			this.slideCard(i, space);
+		}
+	}
 
 	private void changeCardDestination(int cardIndex, double distance) {
 		CardEntity spacer = this.cards.get(cardIndex);
@@ -178,6 +184,30 @@ public class CardList extends VBox implements CardOwner, MouseSelfHandler, Resiz
 			int insertIndex = this.cards.indexOf(spacer);
 			this.set(insertIndex, slidingCard);
 		}
+	}
+	
+	@Override
+	public void addChildren(CardEntity parent, List<CardEntity> children) {
+		int parentIndex = this.createSpace(parent, children, 1);
+		for (int i = 0; i < children.size(); i++) {
+			this.add(parentIndex + i + 1, children.get(i));
+		}
+	}
+	
+	@Override
+	public void removeChildren(CardEntity parent, List<CardEntity> children) {
+		int parentIndex = this.createSpace(parent, children, -1);
+		for (int i = children.size() - 1; i >= 0; i--) {
+			this.remove(parentIndex + i + 1);
+		}
+	}
+	
+	private int createSpace(CardEntity parent, List<CardEntity> children, int direction) {
+		int parentIndex = this.cards.indexOf(parent);
+		double necessarySpace = parent.getDisplayHeight() - parent.getPrefHeight();
+		System.out.println(necessarySpace + " " + parent.getDisplayHeight());
+		this.createSpaceAtIndex(parentIndex + 1, necessarySpace * direction);
+		return parentIndex;
 	}
 
 	@Override
@@ -281,10 +311,6 @@ public class CardList extends VBox implements CardOwner, MouseSelfHandler, Resiz
 		return null;
 	}
 	
-	public int indexOf(CardEntity element) {
-		return this.cards.indexOf(element);
-	}
-	
 	private double getVerticalPositionOfIndex(int index) {
 		double position = 0;
 		for (int i = 0; i < index; i++) {
@@ -297,7 +323,7 @@ public class CardList extends VBox implements CardOwner, MouseSelfHandler, Resiz
 		return this.add(this.cards.size(), element);
 	}
 
-	public double add(int index, CardEntity element) {
+	private double add(int index, CardEntity element) {
 		this.cards.add(index, element);
 		this.getChildren().add(index, element);
 		this.verifyIntegrity();
@@ -306,7 +332,7 @@ public class CardList extends VBox implements CardOwner, MouseSelfHandler, Resiz
 		return this.getVerticalPositionOfIndex(index);
 	}
 
-	public void remove(CardEntity element) {
+	private void remove(CardEntity element) {
 		this.cards.remove(element);
 		this.getChildren().remove(element);
 		this.verifyIntegrity();
