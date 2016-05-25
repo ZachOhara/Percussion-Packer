@@ -205,7 +205,6 @@ public class CardList extends VBox implements CardOwner, MouseSelfHandler, Resiz
 	private int createSpace(CardEntity parent, List<CardEntity> children, int direction) {
 		int parentIndex = this.cards.indexOf(parent);
 		double necessarySpace = parent.getDisplayHeight() - parent.getPrefHeight();
-		System.out.println(necessarySpace + " " + parent.getDisplayHeight());
 		this.createSpaceAtIndex(parentIndex + 1, necessarySpace * direction);
 		return parentIndex;
 	}
