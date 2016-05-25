@@ -13,6 +13,7 @@
 * Add a right-click menu
 * In ParentCard, make re-adding to a list use the dropCard() method (for slide animations)
 * In ParentCard, fix the child indent
+* Animate child cards sliding down and out of parent cards
 
 ### Card List
 * Fix the issue with the ghost card trajectory not properly redefining
@@ -26,6 +27,9 @@
 ### Card Drag Pane
 * [?] Make cards drag from the mouse position, and make them resize about that position
 * When adding a card (or ghost card) to a column, the column should split to both top and bottom, not just bottom
+
+### Card Scroll Pane
+* While the mouse hovers over a scroll pane, the mouse wheel should scroll the pane
 
 ### Transitions
 * Make the scroll transition non-linear
