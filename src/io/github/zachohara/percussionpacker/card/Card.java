@@ -88,5 +88,10 @@ public abstract class Card extends CardEntity implements MouseSelfHandler, Resiz
 		this.setMinHeight(height);
 		this.setMaxHeight(height);
 	}
+	
+	@Override
+	public String toString() {
+		return "Card[title=\"" + this.getTitle() + "\", name=\"" + this.getName() + "\"]";
+	}
 
 }
