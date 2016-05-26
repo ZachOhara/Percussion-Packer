@@ -25,7 +25,7 @@ import io.github.zachohara.percussionpacker.card.Card;
 public abstract class ParentCard extends Card implements ResizeSelfHandler {
 	
 	public static final double DEFAULT_CHILD_INDENT = 30; // in pixels
-	public static final double INSET_DECAY = 0.75;
+	public static final double INDENT_DECAY = 0.75;
 	
 	public static final String BUTTON_TEXT = "Add an instrument";
 	
@@ -41,30 +41,24 @@ public abstract class ParentCard extends Card implements ResizeSelfHandler {
 		
 		this.children = new LinkedList<CardEntity>();
 		this.children.add(this.createChildButton);
+		
 		this.setChildIndent(DEFAULT_CHILD_INDENT);
 	}
 	
 	public void addChild(ParentCard child) {
-		this.applyIndentToChild(child);
-		child.setChildIndent(this.getChildIndent() * INSET_DECAY);
+		this.updateChildIndent(child);
 		this.children.add(this.children.size() - 1, child);
 	}
 	
 	@Override
 	protected void startDragging() {
-		this.removeAllChildren();
+		// remove all children from the list
+		this.getOwner().removeChildren(this, this.children);
 	}
 	
 	@Override
 	protected void finishDragging() {
-		this.addAllChildren();
-	}
-	
-	private void removeAllChildren() {
-		this.getOwner().removeChildren(this, this.children);
-	}
-	
-	private void addAllChildren() {
+		// add all children to the list
 		this.getOwner().addChildren(this, this.children);
 	}
 	
@@ -73,37 +67,23 @@ public abstract class ParentCard extends Card implements ResizeSelfHandler {
 		double cumulHeight = 0;
 		cumulHeight += this.getPrefHeight();
 		for (CardEntity c : this.children) {
-			cumulHeight += c.getPrefHeight();
+			cumulHeight += c.getPrefHeight() + 1;
 		}
 		return cumulHeight;
 	}
 	
-	@Override
-	public void handleResize() {
-		this.createChildButton.setPrefWidth(this.getWidth() - this.getChildIndent());
-		this.applyIndentToAllChildren();
-	}
-	
 	protected void setChildIndent(double indent) {
 		this.childIndent = indent;
-	}
-	
-	protected double getChildIndent() {
-		return this.childIndent;
-	}
-	
-	protected List<CardEntity> getChildCards() {
-		return this.children;
-	}
-	
-	private void applyIndentToAllChildren() {
 		for (CardEntity c : this.children) {
-			this.applyIndentToChild(c);
+			this.updateChildIndent(c);
 		}
 	}
 	
-	private void applyIndentToChild(CardEntity child) {
-		child.setIndent(this.getChildIndent());
+	private void updateChildIndent(CardEntity child) {
+		child.setIndent(this.childIndent);
+		if (child instanceof ParentCard) {
+			((ParentCard) child).setChildIndent(this.childIndent * INDENT_DECAY);
+		}		
 	}
 	
 }
