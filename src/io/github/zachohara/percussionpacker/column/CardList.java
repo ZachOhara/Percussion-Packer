@@ -60,7 +60,7 @@ public class CardList extends VBox implements CardOwner, MouseSelfHandler, Resiz
 		// --- Test code --- //
 		for (int i = 0; i < 20; i++) {
 			this.cards.add(new TestCard());
-			((TestCard) this.cards.get(i)).setTitle(i + "-----------");
+			((TestCard) this.cards.get(i)).setTitle(i + "");// + "-----------");
 			this.getChildren().add(this.cards.get(i));
 			//this.cards.get(i).setPrefHeight(30 + (30 * Math.random()));
 			//this.cards.get(i).setMinHeight(this.cards.get(i).getPrefHeight());
@@ -74,7 +74,6 @@ public class CardList extends VBox implements CardOwner, MouseSelfHandler, Resiz
 		localY = Math.min(localY, this.getHeight());
 
 		if (draggingCard != null) {
-			//draggingCard.setIsDragging(false);
 			int insertIndex = this.getDragCardIndex(localY, draggingCard);
 			if (draggingCard instanceof GhostCard) {
 				this.slideAllCards((GhostCard) draggingCard, insertIndex);
@@ -114,11 +113,7 @@ public class CardList extends VBox implements CardOwner, MouseSelfHandler, Resiz
 			}
 
 			for (int i = minIndex; i <= maxIndex; i++) {
-				if (!this.isCardIndexSpacer(i)) {
-					this.slideCard(i, draggingCardHeight);
-				} else {
-					this.changeCardDestination(i, draggingCardHeight);
-				}
+				this.slideCard(i, draggingCardHeight);
 			}
 
 			if (this.containsCard(draggingCard)) {
@@ -145,18 +140,22 @@ public class CardList extends VBox implements CardOwner, MouseSelfHandler, Resiz
 		}
 
 		int currentIndex = this.indexOfCard(ghostCard);
-		if (this.cards.contains(ghostCard)) {
-			this.slideCard(currentIndex, cumulHeight);
-		} else {
-			this.changeCardDestination(currentIndex, cumulHeight);
-		}
+		this.slideCard(currentIndex, cumulHeight);
 
 		SpaceCard spacer = this.spacerMap.get(ghostCard);
 		this.remove(spacer);
 		this.add(newIndex, spacer);
 	}
-
+	
 	private void slideCard(int cardIndex, double distance) {
+		if (this.cards.get(cardIndex) instanceof SpaceCard) {
+			this.changeCardDestination(cardIndex, distance);
+		} else {
+			this.startSlidingCard(cardIndex, distance);
+		}
+	}
+
+	private void startSlidingCard(int cardIndex, double distance) {
 		CardEntity slidingCard = this.cards.get(cardIndex);
 		Point2D scenePoint = GraphicsUtil.getScenePosition(slidingCard);
 		SpaceCard spacer = new SpaceCard(slidingCard);
@@ -279,10 +278,6 @@ public class CardList extends VBox implements CardOwner, MouseSelfHandler, Resiz
 
 	private boolean containsCard(CardEntity c) {
 		return this.cards.contains(c) || this.spacerMap.containsKey(c);
-	}
-
-	private boolean isCardIndexSpacer(int index) {
-		return this.cards.get(index) instanceof SpaceCard;
 	}
 
 	private void removeGhostCard() {
