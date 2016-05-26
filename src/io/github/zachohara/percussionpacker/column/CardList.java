@@ -68,6 +68,12 @@ public class CardList extends VBox implements CardOwner, MouseSelfHandler, Resiz
 		}
 		// ----------------- //
 	}
+	
+	/* 
+	 * +------------------------------+
+	 * | Card-dropping infrastructure |
+	 * +------------------------------+
+	 */
 
 	public double dropCard(CardEntity draggingCard, Point2D scenePoint) {
 		double localY = this.sceneToLocal(scenePoint).getY();
@@ -76,7 +82,7 @@ public class CardList extends VBox implements CardOwner, MouseSelfHandler, Resiz
 		if (draggingCard != null) {
 			int insertIndex = this.getDragCardIndex(localY, draggingCard);
 			if (draggingCard instanceof GhostCard) {
-				this.slideAllCards((GhostCard) draggingCard, insertIndex);
+				this.slideDisplacedCards((GhostCard) draggingCard, insertIndex);
 			}
 			if (!this.containsCard(draggingCard)) {
 				this.removeGhostCard();
@@ -88,14 +94,14 @@ public class CardList extends VBox implements CardOwner, MouseSelfHandler, Resiz
 			int ghostIndex = this.findGhostCard();
 			if (ghostIndex != -1) {
 				GhostCard ghostCard = (GhostCard) this.cards.get(ghostIndex);
-				this.slideAllCards(ghostCard, this.cards.size() - 1);
+				this.slideDisplacedCards(ghostCard, this.cards.size() - 1);
 			}
 			this.removeGhostCard();
 			return -1;
 		}
 	}
 
-	private void slideAllCards(GhostCard draggingCard, int newGhostIndex) {
+	private void slideDisplacedCards(GhostCard draggingCard, int newGhostIndex) {
 		double draggingCardHeight = draggingCard.getHeight();
 		int oldGhostIndex;
 		if (this.containsCard(draggingCard)) {
@@ -147,12 +153,24 @@ public class CardList extends VBox implements CardOwner, MouseSelfHandler, Resiz
 		this.add(newIndex, spacer);
 	}
 	
+	/*
+	 * +----------------------+
+	 * | Card sliding methods |
+	 * +----------------------+
+	 */
+	
 	private void slideCard(int cardIndex, double distance) {
 		if (this.cards.get(cardIndex) instanceof SpaceCard) {
 			this.changeCardDestination(cardIndex, distance);
 		} else {
 			this.startSlidingCard(cardIndex, distance);
 		}
+	}
+
+	private void changeCardDestination(int cardIndex, double distance) {
+		CardEntity spacer = this.cards.get(cardIndex);
+		CardEntity slidingCard = this.reverseSpacerLookup((SpaceCard) spacer);
+		this.slidePane.changeSlidingDestination(slidingCard, distance);
 	}
 
 	private void startSlidingCard(int cardIndex, double distance) {
@@ -164,18 +182,6 @@ public class CardList extends VBox implements CardOwner, MouseSelfHandler, Resiz
 		this.add(cardIndex, spacer);
 		this.spacerMap.put(slidingCard, spacer);
 	}
-	
-	private void createSpaceAtIndex(int index, double space) {
-		for (int i = index; i < this.cards.size(); i++) {
-			this.slideCard(i, space);
-		}
-	}
-
-	private void changeCardDestination(int cardIndex, double distance) {
-		CardEntity spacer = this.cards.get(cardIndex);
-		CardEntity slidingCard = this.reverseSpacerLookup((SpaceCard) spacer);
-		this.slidePane.changeSlidingDestination(slidingCard, distance);
-	}
 
 	public void finishSlidingCard(CardEntity slidingCard) {
 		if (!this.cards.contains(slidingCard)) {
@@ -184,6 +190,12 @@ public class CardList extends VBox implements CardOwner, MouseSelfHandler, Resiz
 			this.set(insertIndex, slidingCard);
 		}
 	}
+	
+	/*
+	 * +---------------------+
+	 * | Child card handling |
+	 * +---------------------+
+	 */
 	
 	@Override
 	public void addChildren(CardEntity parent, List<CardEntity> children) {
@@ -212,6 +224,18 @@ public class CardList extends VBox implements CardOwner, MouseSelfHandler, Resiz
 		this.createSpaceAtIndex(parentIndex + indexOffset + 1, necessarySpace * direction);
 		return parentIndex;
 	}
+	
+	private void createSpaceAtIndex(int index, double space) {
+		for (int i = index; i < this.cards.size(); i++) {
+			this.slideCard(i, space);
+		}
+	}
+	
+	/*
+	 * +----------------------+
+	 * | Mouse input handling |
+	 * +----------------------+
+	 */
 
 	@Override
 	public void handleMouse(MouseEvent event, EventType<? extends MouseEvent> type) {
@@ -237,6 +261,12 @@ public class CardList extends VBox implements CardOwner, MouseSelfHandler, Resiz
 		PackingStage.getCardSpacePane().recieveDraggingCard(clickedCard, scenePosition, ghostCard);
 		this.add(index, ghostCard);
 	}
+	
+	/*
+	 * +-----------------+
+	 * | Resize handling |
+	 * +-----------------+
+	 */
 
 	@Override
 	public void handleResize() {
@@ -244,6 +274,12 @@ public class CardList extends VBox implements CardOwner, MouseSelfHandler, Resiz
 			c.setPrefWidth(this.getWidth());
 		}
 	}
+	
+	/*
+	 * +----------------------+
+	 * | Raw list maintenence |
+	 * +----------------------+
+	 */
 
 	private int getDragCardIndex(double localCenterY, CardEntity draggingCard) {
 		final double heightOffset = draggingCard.getHeight() / 2;
@@ -317,6 +353,12 @@ public class CardList extends VBox implements CardOwner, MouseSelfHandler, Resiz
 		}
 		return position;
 	}
+	
+	/*
+	 * +-------------------------------+
+	 * | Raw list modification methods |
+	 * +-------------------------------+
+	 */
 
 	protected double add(CardEntity element) {
 		return this.add(this.cards.size(), element);
