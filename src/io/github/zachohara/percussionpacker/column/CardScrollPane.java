@@ -117,7 +117,7 @@ public class CardScrollPane extends ScrollPane implements FocusSelfHandler {
 		});
 	}
 	
-	public void makeLineVisible(double targetLine) {
+	private void makeLineVisible(double targetLine) {
 		if (targetLine < this.getTopVisibleLine()) {
 			this.scrollToPosition(this.calculateTopVvalue(targetLine));
 		} else if (targetLine > this.getBottomVisibleLine()) {
@@ -129,13 +129,13 @@ public class CardScrollPane extends ScrollPane implements FocusSelfHandler {
 		new VerticalScrollTransition(this, verticalPos).play();
 	}
 	
-	public double getTopVisibleLine() {
+	private double getTopVisibleLine() {
 		double scrollPosition = (this.getVvalue() - this.getVmin()) / (this.getVmax() - this.getVmin());
 		double visibleLine = (scrollPosition * this.cardSlidePane.getHeight()) - (scrollPosition * this.getHeight());
 		return visibleLine;
 	}
 	
-	public double getBottomVisibleLine() {
+	private double getBottomVisibleLine() {
 		return this.getTopVisibleLine() + this.getHeight();
 	}
 	
