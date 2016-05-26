@@ -40,7 +40,7 @@ public class CreateChildButton extends CardEntity implements ResizeSelfHandler {
 		this.button.setPrefHeight(DEFAULT_BUTTON_HEIGHT);
 		this.setPrefHeight(this.button.getPrefHeight());
 		
-		this.getChildren().add(this.button);
+		this.getDisplayPane().getChildren().add(this.button);
 	}
 	
 	public void addHandler(ButtonHandler handler) {

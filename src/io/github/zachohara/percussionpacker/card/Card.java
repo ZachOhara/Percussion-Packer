@@ -18,14 +18,12 @@ package io.github.zachohara.percussionpacker.card;
 
 import io.github.zachohara.fxeventcommon.mouse.MouseEventListener;
 import io.github.zachohara.fxeventcommon.mouse.MouseSelfHandler;
-import io.github.zachohara.fxeventcommon.resize.RegionResizeListener;
-import io.github.zachohara.fxeventcommon.resize.ResizeSelfHandler;
 import io.github.zachohara.percussionpacker.cardentity.CardEntity;
 import io.github.zachohara.percussionpacker.common.BackingButton;
 import javafx.event.EventType;
 import javafx.scene.input.MouseEvent;
 
-public abstract class Card extends CardEntity implements MouseSelfHandler, ResizeSelfHandler {
+public abstract class Card extends CardEntity implements MouseSelfHandler {
 	
 	private BackingButton backingButton;
 	private CardContentPane contentPane;
@@ -34,7 +32,6 @@ public abstract class Card extends CardEntity implements MouseSelfHandler, Resiz
 		super(true, retitleable, nameable);
 
 		MouseEventListener.createSelfHandler(this);
-		RegionResizeListener.createSelfHandler(this);
 		
 		this.setImmutableHeight(height);
 
@@ -43,7 +40,7 @@ public abstract class Card extends CardEntity implements MouseSelfHandler, Resiz
 		this.contentPane = new CardContentPane(retitleable, nameable);
 		this.contentPane.setMinWidth(0);
 
-		this.getChildren().addAll(this.backingButton, this.contentPane);
+		this.getDisplayPane().getChildren().addAll(this.backingButton, this.contentPane);
 	}
 
 	public String getTitle() {
@@ -77,9 +74,10 @@ public abstract class Card extends CardEntity implements MouseSelfHandler, Resiz
 
 	@Override
 	public void handleResize() {
-		this.backingButton.setPrefWidth(this.getWidth());
+		super.handleResize();
+		this.backingButton.setPrefWidth(this.getContentWidth());
 		this.backingButton.setPrefHeight(this.getHeight());
-		this.contentPane.setPrefWidth(this.getWidth());
+		this.contentPane.setPrefWidth(this.getContentWidth());
 		this.contentPane.setPrefHeight(this.getHeight());
 	}
 	

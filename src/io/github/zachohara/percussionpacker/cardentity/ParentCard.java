@@ -103,8 +103,7 @@ public abstract class ParentCard extends Card implements ResizeSelfHandler {
 	}
 	
 	private void applyIndentToChild(CardEntity child) {
-		child.setLayoutX(this.getLayoutX() + this.getChildIndent());
-		child.setPrefWidth(this.getWidth() - this.getChildIndent());
+		child.setIndent(this.getChildIndent());
 	}
 	
 }
