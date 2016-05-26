@@ -188,7 +188,7 @@ public class CardList extends VBox implements CardOwner, MouseSelfHandler, Resiz
 	
 	@Override
 	public void addChildren(CardEntity parent, List<CardEntity> children) {
-		int parentIndex = this.createSpace(parent, children, 1);
+		int parentIndex = this.createSpace(parent, 0, children, 1);
 		for (int i = 0; i < children.size(); i++) {
 			this.add(parentIndex + i + 1, children.get(i));
 		}
@@ -196,16 +196,21 @@ public class CardList extends VBox implements CardOwner, MouseSelfHandler, Resiz
 	
 	@Override
 	public void removeChildren(CardEntity parent, List<CardEntity> children) {
-		int parentIndex = this.createSpace(parent, children, -1);
+		int parentIndex = this.createSpace(parent, children.size(), children, -1);
 		for (int i = children.size() - 1; i >= 0; i--) {
 			this.remove(parentIndex + i + 1);
 		}
 	}
 	
-	private int createSpace(CardEntity parent, List<CardEntity> children, int direction) {
+	private int createSpace(CardEntity parent, int indexOffset, List<CardEntity> children,
+			int direction) {
 		int parentIndex = this.cards.indexOf(parent);
+		if (parentIndex == -1) {
+			parentIndex = this.findGhostCard();
+			// if the card is not in the list, assume it's being dragged
+		}
 		double necessarySpace = parent.getDisplayHeight() - parent.getPrefHeight();
-		this.createSpaceAtIndex(parentIndex + 1, necessarySpace * direction);
+		this.createSpaceAtIndex(parentIndex + indexOffset + 1, necessarySpace * direction);
 		return parentIndex;
 	}
 
