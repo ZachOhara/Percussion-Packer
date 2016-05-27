@@ -80,7 +80,7 @@ public class ColumnPane extends HBox implements ResizeSelfHandler {
 
 		// check if the point is in a column
 		for (Column c : this.columns) {
-			if (c.getLayoutX() <= localX && localX < c.getLayoutX() + c.getWidth()) {
+			if (c.canRecieveCards() && c.getLayoutX() <= localX && localX < c.getLayoutX() + c.getWidth()) {
 				return c;
 			}
 		}

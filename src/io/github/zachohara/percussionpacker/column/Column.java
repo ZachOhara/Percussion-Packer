@@ -20,10 +20,11 @@ import io.github.zachohara.fxeventcommon.resize.RegionResizeListener;
 import io.github.zachohara.fxeventcommon.resize.ResizeSelfHandler;
 import io.github.zachohara.percussionpacker.card.Card;
 import io.github.zachohara.percussionpacker.cardentity.CardEntity;
+import io.github.zachohara.percussionpacker.cardspace.CardDragTarget;
 import javafx.geometry.Point2D;
 import javafx.scene.layout.VBox;
 
-public abstract class Column extends VBox implements ResizeSelfHandler {
+public abstract class Column extends VBox implements CardDragTarget, ResizeSelfHandler {
 
 	public static final int MIN_WIDTH = 120;
 
@@ -50,6 +51,11 @@ public abstract class Column extends VBox implements ResizeSelfHandler {
 
 	public void dropCard(CardEntity draggingCard, Point2D scenePoint) {
 		this.cardList.dropCard(draggingCard, scenePoint);
+	}
+	
+	@Override
+	public boolean canRecieveCards() {
+		return true;
 	}
 
 	public double getAvailableCardWidth() {
