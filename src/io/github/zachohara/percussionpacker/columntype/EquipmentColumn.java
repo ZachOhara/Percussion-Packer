@@ -25,5 +25,10 @@ public class EquipmentColumn extends Column {
 	public EquipmentColumn() {
 		super(TITLE);
 	}
+	
+	@Override
+	public boolean canRecieveCards() {
+		return false;
+	}
 
 }

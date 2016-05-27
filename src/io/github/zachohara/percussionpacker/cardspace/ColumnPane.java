@@ -25,6 +25,7 @@ import io.github.zachohara.percussionpacker.columntype.MalletColumn;
 import io.github.zachohara.percussionpacker.columntype.PackingColumn;
 import io.github.zachohara.percussionpacker.columntype.SongColumn;
 import io.github.zachohara.percussionpacker.util.GraphicsUtil;
+import io.github.zachohara.percussionpacker.util.MathUtil;
 import javafx.geometry.Point2D;
 import javafx.scene.layout.HBox;
 
@@ -67,37 +68,24 @@ public class ColumnPane extends HBox implements ResizeSelfHandler {
 	}
 
 	private Column getHoveringColumn(double localX) {
-		// check if too far left
-		if (localX < this.columns[0].getLayoutX()) {
-			return this.columns[0];
-		}
-
-		// check if too far right
-		Column lastColumn = this.columns[this.columns.length - 1];
-		if (localX >= lastColumn.getLayoutX() + lastColumn.getWidth()) {
-			return lastColumn;
-		}
-
 		// check if the point is in a column
 		for (Column c : this.columns) {
-			if (c.getLayoutX() <= localX && localX < c.getLayoutX() + c.getWidth()) {
+			if (c.canRecieveCards() && c.getLayoutX() <= localX && localX < c.getLayoutX() + c.getWidth()) {
 				return c;
 			}
 		}
-
-		// check if the point is on a boundary
-		for (int i = 0; i < this.separators.length; i++) {
-			ColumnSeparator sep = this.separators[i];
-			if (sep.getLayoutX() <= localX && localX < sep.getLayoutX() + sep.getWidth()) {
-				if (localX < sep.getLayoutX() + (sep.getWidth() / 2)) {
-					return this.columns[i];
-				} else {
-					return this.columns[i + 1];
-				}
+		double[] distances = new double[this.columns.length];
+		for (int i = 0; i < this.columns.length; i++) {
+			Column column = this.columns[i];
+			if (!column.canRecieveCards()) {
+				distances[i] = Double.MAX_VALUE;
+			} else if (localX < column.getLayoutX()) {
+				distances[i] = column.getLayoutX() - localX;
+			} else {
+				distances[i] = localX - (column.getLayoutX() + column.getWidth());
 			}
 		}
-
-		throw new IllegalArgumentException("X-Coordinate could not be placed to a column");
+		return this.columns[MathUtil.minIndex(distances)];
 	}
 
 	protected void finishColumnResizing() {
