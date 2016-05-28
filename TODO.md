@@ -20,7 +20,6 @@
 * Make the 'add child' button work
 
 ### Card List
-* Fix the issue with the ghost card trajectory not properly redefining
 * Make adding a new card always scroll, instead of snap
 
 ### Columns

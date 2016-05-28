@@ -27,6 +27,7 @@ import io.github.zachohara.percussionpacker.cardentity.CardEntity;
 import io.github.zachohara.percussionpacker.cardentity.GhostCard;
 import io.github.zachohara.percussionpacker.cardentity.SpaceCard;
 import io.github.zachohara.percussionpacker.util.GraphicsUtil;
+import javafx.animation.Interpolator;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
@@ -83,6 +84,7 @@ public class CardSlidePane extends Pane implements ResizeSelfHandler, SlideCompl
 		double difference = newGoal - slidingCard.getLayoutY();
 		VerticalSlideTransition newTransition =
 				new VerticalSlideTransition(slidingCard, difference);
+		newTransition.setInterpolator(Interpolator.EASE_OUT);
 		newTransition.setCompletionListener(this);
 		this.slideTransitions.put(slidingCard, newTransition);
 		newTransition.play();
