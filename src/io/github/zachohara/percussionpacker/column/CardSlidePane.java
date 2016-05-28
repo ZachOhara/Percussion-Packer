@@ -25,7 +25,7 @@ import io.github.zachohara.percussionpacker.animation.slide.SlideCompletionListe
 import io.github.zachohara.percussionpacker.animation.slide.VerticalSlideTransition;
 import io.github.zachohara.percussionpacker.cardentity.CardEntity;
 import io.github.zachohara.percussionpacker.cardentity.GhostCard;
-import io.github.zachohara.percussionpacker.cardtype.SpaceCard;
+import io.github.zachohara.percussionpacker.cardentity.SpaceCard;
 import io.github.zachohara.percussionpacker.util.GraphicsUtil;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;

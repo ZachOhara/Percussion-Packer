@@ -27,7 +27,7 @@ import io.github.zachohara.fxeventcommon.resize.RegionResizeListener;
 import io.github.zachohara.fxeventcommon.resize.ResizeSelfHandler;
 import io.github.zachohara.percussionpacker.cardentity.CardEntity;
 import io.github.zachohara.percussionpacker.cardentity.GhostCard;
-import io.github.zachohara.percussionpacker.cardtype.SpaceCard;
+import io.github.zachohara.percussionpacker.cardentity.SpaceCard;
 import io.github.zachohara.percussionpacker.cardtype.TestCard;
 import io.github.zachohara.percussionpacker.util.GraphicsUtil;
 import io.github.zachohara.percussionpacker.util.MathUtil;

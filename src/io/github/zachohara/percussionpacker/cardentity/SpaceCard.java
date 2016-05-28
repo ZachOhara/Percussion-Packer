@@ -14,9 +14,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package io.github.zachohara.percussionpacker.cardtype;
+package io.github.zachohara.percussionpacker.cardentity;
 
-import io.github.zachohara.percussionpacker.cardentity.CardEntity;
 import io.github.zachohara.percussionpacker.util.GraphicsUtil;
 
 public class SpaceCard extends CardEntity {
