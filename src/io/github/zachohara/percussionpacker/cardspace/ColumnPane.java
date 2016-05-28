@@ -70,7 +70,8 @@ public class ColumnPane extends HBox implements ResizeSelfHandler {
 	private Column getHoveringColumn(CardEntity card, double localX) {
 		// check if the point is in a column
 		for (Column c : this.columns) {
-			if (c.canRecieveCard(card) && c.getLayoutX() <= localX && localX < c.getLayoutX() + c.getWidth()) {
+			if (c.canRecieveCard(card) && c.getLayoutX() <= localX
+					&& localX < c.getLayoutX() + c.getWidth()) {
 				return c;
 			}
 		}

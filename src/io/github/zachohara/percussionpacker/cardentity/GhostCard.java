@@ -15,7 +15,7 @@ public class GhostCard extends CardEntity {
 
 	public static final double RADIUS = 2;
 	public static final double INSET = 5;
-	
+
 	private CardEntity parentCard;
 
 	public static final String STYLE = GhostCard.generateBackgroundColorString()
@@ -25,14 +25,14 @@ public class GhostCard extends CardEntity {
 
 	public GhostCard(CardEntity sizingCard) {
 		super(false, false, false);
-		
+
 		this.parentCard = sizingCard;
-		
+
 		GraphicsUtil.copySizing(sizingCard, this);
 
 		this.setStyle(STYLE);
 	}
-	
+
 	@Override
 	public Column getColumn() {
 		return this.parentCard.getColumn();
@@ -45,7 +45,7 @@ public class GhostCard extends CardEntity {
 				+ (255 * BACKGROUND_COLOR.getBlue()) + ", "
 				+ BACKGROUND_COLOR.getOpacity() + ")";
 	}
-	
+
 	@Override
 	public String toString() {
 		return "GhostCard[parent=" + this.parentCard + "]";

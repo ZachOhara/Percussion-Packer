@@ -48,9 +48,9 @@ public abstract class Column extends VBox implements ResizeSelfHandler {
 		for (int i = 0; i < 20; i++) {
 			TestCard card = new TestCard();
 			card.setTitle(i + "");
-			//card.setPrefHeight(30 + (30 * Math.random()));
-			//card.setMinHeight(card.getPrefHeight());
-			//card.setMaxHeight(card.getPrefHeight());
+			// card.setPrefHeight(30 + (30 * Math.random()));
+			// card.setMinHeight(card.getPrefHeight());
+			// card.setMaxHeight(card.getPrefHeight());
 			this.addCard(card);
 		}
 		// ----------------- //
@@ -67,7 +67,7 @@ public abstract class Column extends VBox implements ResizeSelfHandler {
 		}
 		this.cardList.dropCard(draggingCard, scenePoint);
 	}
-	
+
 	public boolean canRecieveCard(CardEntity card) {
 		return true;
 	}

@@ -26,7 +26,7 @@ public class EquipmentColumn extends Column {
 	public EquipmentColumn() {
 		super(TITLE);
 	}
-	
+
 	@Override
 	public boolean canRecieveCard(CardEntity card) {
 		Column owner = card.getColumn();

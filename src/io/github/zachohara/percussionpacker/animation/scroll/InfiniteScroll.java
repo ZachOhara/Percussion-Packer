@@ -24,29 +24,29 @@ import javafx.event.EventHandler;
 import javafx.util.Duration;
 
 public class InfiniteScroll extends Transition implements EventHandler<ActionEvent> {
-	
+
 	public static final double DURATION = 1000; // milliseconds
 	public static final double RATE = 0.4; // change in vValue per duration
-	
+
 	private final CardScrollPane scrollPane;
-	
+
 	private int polarity;
-	
+
 	private double startVvalue;
-	
+
 	public InfiniteScroll(CardScrollPane scrollPane) {
 		super();
 		this.scrollPane = scrollPane;
-		
+
 		this.setInterpolator(Interpolator.LINEAR);
-		
+
 		this.setCycleDuration(Duration.millis(DURATION));
 		this.setOnFinished(this);
-		
+
 		this.setScrollRate(0);
 		this.reset();
 	}
-	
+
 	public void setScrollRate(double rate) {
 		this.setRate(Math.abs(rate));
 		if (rate == 0) {
@@ -54,7 +54,7 @@ public class InfiniteScroll extends Transition implements EventHandler<ActionEve
 		} else {
 			this.play();
 		}
-		if (Math.signum(rate) != polarity) {
+		if (Math.signum(rate) != this.polarity) {
 			this.polarity = (int) Math.signum(rate);
 			this.reset();
 		}
@@ -63,18 +63,18 @@ public class InfiniteScroll extends Transition implements EventHandler<ActionEve
 	@Override
 	protected void interpolate(double fraction) {
 		this.scrollPane.updateHoveringCardPosition();
-		this.scrollPane.setVvalue(this.startVvalue + (polarity * fraction * RATE));
+		this.scrollPane.setVvalue(this.startVvalue + (this.polarity * fraction * RATE));
 	}
 
 	@Override
 	public void handle(ActionEvent event) {
 		this.reset();
 	}
-	
+
 	private void reset() {
-		this.startVvalue = scrollPane.getVvalue();
+		this.startVvalue = this.scrollPane.getVvalue();
 		this.jumpTo(Duration.ZERO);
 		this.play();
 	}
-	
+
 }

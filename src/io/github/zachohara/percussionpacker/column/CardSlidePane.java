@@ -54,7 +54,8 @@ public class CardSlidePane extends Pane implements ResizeSelfHandler, SlideCompl
 		this.setMinHeight(GraphicsUtil.getCumulativeMinHeight(this));
 	}
 
-	public void recieveSlidingCard(CardEntity slidingCard, Point2D scenePosition, double distanceY) {
+	public void recieveSlidingCard(CardEntity slidingCard, Point2D scenePosition,
+			double distanceY) {
 		if (slidingCard instanceof GhostCard && !(slidingCard instanceof SpaceCard)) {
 			this.slidingGhostCard = (GhostCard) slidingCard;
 		}

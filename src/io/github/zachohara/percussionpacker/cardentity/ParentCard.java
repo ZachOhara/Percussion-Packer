@@ -23,45 +23,45 @@ import io.github.zachohara.fxeventcommon.resize.ResizeSelfHandler;
 import io.github.zachohara.percussionpacker.card.Card;
 
 public abstract class ParentCard extends Card implements ResizeSelfHandler {
-	
+
 	public static final double DEFAULT_CHILD_INDENT = 30; // in pixels
 	public static final double INDENT_DECAY = 0.75;
-	
+
 	public static final String BUTTON_TEXT = "Add an instrument";
-	
+
 	private CreateChildButton createChildButton;
-	
+
 	private List<CardEntity> children;
 	private double childIndent;
-	
+
 	protected ParentCard(double height, boolean retitleable, boolean nameable) {
 		super(height, retitleable, nameable);
-		
+
 		this.createChildButton = new CreateChildButton(BUTTON_TEXT);
-		
+
 		this.children = new LinkedList<CardEntity>();
 		this.children.add(this.createChildButton);
-		
+
 		this.setChildIndent(DEFAULT_CHILD_INDENT);
 	}
-	
+
 	public void addChild(ParentCard child) {
 		this.updateChildIndent(child);
 		this.children.add(this.children.size() - 1, child);
 	}
-	
+
 	@Override
 	protected void startDragging() {
 		// remove all children from the list
 		this.getOwner().removeChildren(this, this.children);
 	}
-	
+
 	@Override
 	protected void finishDragging() {
 		// add all children to the list
 		this.getOwner().addChildren(this, this.children);
 	}
-	
+
 	@Override
 	public double getDisplayHeight() {
 		double cumulHeight = 0;
@@ -71,19 +71,19 @@ public abstract class ParentCard extends Card implements ResizeSelfHandler {
 		}
 		return cumulHeight;
 	}
-	
+
 	protected void setChildIndent(double indent) {
 		this.childIndent = indent;
 		for (CardEntity c : this.children) {
 			this.updateChildIndent(c);
 		}
 	}
-	
+
 	private void updateChildIndent(CardEntity child) {
 		child.setIndent(this.childIndent);
 		if (child instanceof ParentCard) {
 			((ParentCard) child).setChildIndent(this.childIndent * INDENT_DECAY);
-		}		
+		}
 	}
-	
+
 }

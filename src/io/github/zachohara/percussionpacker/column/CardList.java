@@ -57,11 +57,15 @@ public class CardList extends VBox implements CardOwner, MouseSelfHandler, Resiz
 		this.spacerMap = new HashMap<CardEntity, SpaceCard>();
 		this.spacerMap.put(new TestCard(), new SpaceCard(new TestCard()));
 	}
-	
-	/* 
+
+	/*
+	 * @formatter:off
+	 *
 	 * +------------------------------+
 	 * | Card-dropping infrastructure |
 	 * +------------------------------+
+	 *
+	 * @formatter:on
 	 */
 
 	public double dropCard(CardEntity draggingCard, Point2D scenePoint) {
@@ -141,13 +145,17 @@ public class CardList extends VBox implements CardOwner, MouseSelfHandler, Resiz
 		this.remove(spacer);
 		this.add(newIndex, spacer);
 	}
-	
+
 	/*
+	 * @formatter:off
+	 *
 	 * +----------------------+
 	 * | Card sliding methods |
 	 * +----------------------+
+	 *
+	 * @formatter:on
 	 */
-	
+
 	private void slideCard(int cardIndex, double distance) {
 		if (this.cards.get(cardIndex) instanceof SpaceCard) {
 			this.changeCardDestination(cardIndex, distance);
@@ -179,13 +187,17 @@ public class CardList extends VBox implements CardOwner, MouseSelfHandler, Resiz
 			this.set(insertIndex, slidingCard);
 		}
 	}
-	
+
 	/*
+	 * @formatter:off
+	 *
 	 * +---------------------+
 	 * | Child card handling |
 	 * +---------------------+
+	 *
+	 * @formatter:on
 	 */
-	
+
 	@Override
 	public void addChildren(CardEntity parent, List<CardEntity> children) {
 		int parentIndex = this.createSpace(parent, 0, children, 1);
@@ -193,7 +205,7 @@ public class CardList extends VBox implements CardOwner, MouseSelfHandler, Resiz
 			this.add(parentIndex + i + 1, children.get(i));
 		}
 	}
-	
+
 	@Override
 	public void removeChildren(CardEntity parent, List<CardEntity> children) {
 		int parentIndex = this.createSpace(parent, children.size(), children, -1);
@@ -201,7 +213,7 @@ public class CardList extends VBox implements CardOwner, MouseSelfHandler, Resiz
 			this.remove(parentIndex + i + 1);
 		}
 	}
-	
+
 	private int createSpace(CardEntity parent, int indexOffset, List<CardEntity> children,
 			int direction) {
 		int parentIndex = this.cards.indexOf(parent);
@@ -213,17 +225,21 @@ public class CardList extends VBox implements CardOwner, MouseSelfHandler, Resiz
 		this.createSpaceAtIndex(parentIndex + indexOffset + 1, necessarySpace * direction);
 		return parentIndex;
 	}
-	
+
 	private void createSpaceAtIndex(int index, double space) {
 		for (int i = index; i < this.cards.size(); i++) {
 			this.slideCard(i, space);
 		}
 	}
-	
+
 	/*
+	 * @formatter:off
+	 *
 	 * +----------------------+
 	 * | Mouse input handling |
 	 * +----------------------+
+	 *
+	 * @formatter:on
 	 */
 
 	@Override
@@ -250,11 +266,15 @@ public class CardList extends VBox implements CardOwner, MouseSelfHandler, Resiz
 		PackingStage.getCardSpacePane().recieveDraggingCard(clickedCard, scenePosition, ghostCard);
 		this.add(index, ghostCard);
 	}
-	
+
 	/*
+	 * @formatter:off
+	 *
 	 * +-----------------+
 	 * | Resize handling |
 	 * +-----------------+
+	 *
+	 * @formatter:on
 	 */
 
 	@Override
@@ -263,11 +283,15 @@ public class CardList extends VBox implements CardOwner, MouseSelfHandler, Resiz
 			c.setPrefWidth(this.getWidth());
 		}
 	}
-	
+
 	/*
+	 * @formatter:off
+	 *
 	 * +----------------------+
 	 * | Raw list maintenence |
 	 * +----------------------+
+	 *
+	 * @formatter:on
 	 */
 
 	private int getDragCardIndex(double localCenterY, CardEntity draggingCard) {
@@ -281,7 +305,8 @@ public class CardList extends VBox implements CardOwner, MouseSelfHandler, Resiz
 		for (int i = 0; i < this.cards.size(); i++) {
 			if (draggingCardIndex != i) {
 				cumulHeight += this.cards.get(i).getPrefHeight();
-				offsets[i + 1 - invalidCount] = Math.abs(localCenterY - (cumulHeight + heightOffset));
+				offsets[i + 1 - invalidCount] =
+						Math.abs(localCenterY - (cumulHeight + heightOffset));
 			} else {
 				invalidCount++;
 				offsets[offsets.length - invalidCount] = Double.MAX_VALUE;
@@ -334,7 +359,7 @@ public class CardList extends VBox implements CardOwner, MouseSelfHandler, Resiz
 		}
 		return null;
 	}
-	
+
 	private double getVerticalPositionOfIndex(int index) {
 		double position = 0;
 		for (int i = 0; i < index; i++) {
@@ -342,11 +367,15 @@ public class CardList extends VBox implements CardOwner, MouseSelfHandler, Resiz
 		}
 		return position;
 	}
-	
+
 	/*
+	 * @formatter:off
+	 *
 	 * +-------------------------------+
 	 * | Raw list modification methods |
 	 * +-------------------------------+
+	 *
+	 * @formatter:on
 	 */
 
 	protected double add(CardEntity element) {

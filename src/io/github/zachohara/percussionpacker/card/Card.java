@@ -24,7 +24,7 @@ import javafx.event.EventType;
 import javafx.scene.input.MouseEvent;
 
 public abstract class Card extends CardEntity implements MouseSelfHandler {
-	
+
 	private BackingButton backingButton;
 	private CardContentPane contentPane;
 
@@ -32,7 +32,7 @@ public abstract class Card extends CardEntity implements MouseSelfHandler {
 		super(true, retitleable, nameable);
 
 		MouseEventListener.createSelfHandler(this);
-		
+
 		this.setImmutableHeight(height);
 
 		this.backingButton = new BackingButton();
@@ -80,13 +80,13 @@ public abstract class Card extends CardEntity implements MouseSelfHandler {
 		this.contentPane.setPrefWidth(this.getContentWidth());
 		this.contentPane.setPrefHeight(this.getHeight());
 	}
-	
+
 	private void setImmutableHeight(double height) {
 		this.setPrefHeight(height);
 		this.setMinHeight(height);
 		this.setMaxHeight(height);
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Card[title=\"" + this.getTitle() + "\", name=\"" + this.getName() + "\"]";

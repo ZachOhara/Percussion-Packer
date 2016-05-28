@@ -21,9 +21,9 @@ import java.util.List;
 import io.github.zachohara.percussionpacker.cardentity.CardEntity;
 
 public interface CardOwner {
-	
+
 	public void addChildren(CardEntity parent, List<CardEntity> children);
-	
+
 	public void removeChildren(CardEntity parent, List<CardEntity> children);
 
 }

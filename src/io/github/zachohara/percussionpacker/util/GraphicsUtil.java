@@ -90,7 +90,7 @@ public class GraphicsUtil {
 	public static Point2D getScenePosition(Node n) {
 		return n.localToScene(Point2D.ZERO);
 	}
-	
+
 	public static void copySizing(Region copyFrom, Region copyTo) {
 		copyTo.setMinWidth(copyFrom.getMinWidth());
 		copyTo.setMinHeight(copyFrom.getMinHeight());

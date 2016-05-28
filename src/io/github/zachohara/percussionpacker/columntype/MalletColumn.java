@@ -26,7 +26,7 @@ public class MalletColumn extends Column {
 	public MalletColumn() {
 		super(TITLE);
 	}
-	
+
 	@Override
 	public boolean canRecieveCard(CardEntity card) {
 		Column owner = card.getColumn();

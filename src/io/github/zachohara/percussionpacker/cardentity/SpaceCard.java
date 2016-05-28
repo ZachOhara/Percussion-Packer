@@ -19,19 +19,19 @@ package io.github.zachohara.percussionpacker.cardentity;
 import io.github.zachohara.percussionpacker.util.GraphicsUtil;
 
 public class SpaceCard extends CardEntity {
-	
+
 	private CardEntity parentCard;
 
 	public SpaceCard(CardEntity sizingCard) {
 		super(false, false, false);
-		
+
 		this.parentCard = sizingCard;
-		
+
 		GraphicsUtil.copySizing(sizingCard, this);
-		
+
 		this.setStyle("");
 	}
-	
+
 	@Override
 	public String toString() {
 		return "SpaceCard[parent=" + this.parentCard + "]";

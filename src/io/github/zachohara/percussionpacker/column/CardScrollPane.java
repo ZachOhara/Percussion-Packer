@@ -30,13 +30,13 @@ import javafx.scene.control.ScrollPane;
 public class CardScrollPane extends ScrollPane implements FocusSelfHandler {
 
 	public static final double MIN_HEIGHT = 40;
-	
+
 	public static final double SCROLL_DISTANCE = 50; // in pixels
-	
+
 	public static final double SCROLL_BUFFER = 10; // in pixels
 
 	private InfiniteScroll hoverScroll;
-	
+
 	private CardSlidePane cardSlidePane;
 
 	private CardEntity draggingCard;
@@ -50,7 +50,7 @@ public class CardScrollPane extends ScrollPane implements FocusSelfHandler {
 		this.setHbarPolicy(ScrollBarPolicy.NEVER);
 		this.setVbarPolicy(ScrollBarPolicy.AS_NEEDED);
 		this.setFitToWidth(true);
-		
+
 		this.hoverScroll = new InfiniteScroll(this);
 
 		this.cardSlidePane = new CardSlidePane(this);
@@ -67,7 +67,7 @@ public class CardScrollPane extends ScrollPane implements FocusSelfHandler {
 	public void dropCard(CardEntity draggingCard, Point2D scenePoint) {
 		this.draggingCard = draggingCard;
 		this.hoveringScenePoint = scenePoint;
-		double position = updateHoveringCardPosition();
+		double position = this.updateHoveringCardPosition();
 		if (this.draggingCard instanceof Card) {
 			this.makeCardVisible(position, this.draggingCard.getDisplayHeight());
 			this.hoverScroll.setScrollRate(0);
@@ -78,11 +78,11 @@ public class CardScrollPane extends ScrollPane implements FocusSelfHandler {
 			this.hoverScroll.setScrollRate(0);
 		}
 	}
-	
+
 	public double updateHoveringCardPosition() {
 		return this.cardSlidePane.dropCard(this.draggingCard, this.hoveringScenePoint);
 	}
-	
+
 	private double getScrollRate(double localY) {
 		if (localY < SCROLL_DISTANCE) {
 			return -(SCROLL_DISTANCE - localY) / SCROLL_DISTANCE;
@@ -101,22 +101,24 @@ public class CardScrollPane extends ScrollPane implements FocusSelfHandler {
 	public void handleFocusChange(boolean hasFocus) {
 		this.setFocused(false);
 	}
-	
+
 	private void makeCardVisible(double position, double height) {
 		Platform.runLater(new Runnable() {
+
+			@Override
 			public void run() {
 				double topLine = position - SCROLL_BUFFER;
 				double bottomLine = position + height + SCROLL_BUFFER;
-				if (topLine < getBottomVisibleLine()) {
-					makeLineVisible(topLine);
+				if (topLine < CardScrollPane.this.getBottomVisibleLine()) {
+					CardScrollPane.this.makeLineVisible(topLine);
 				}
-				if (bottomLine > getTopVisibleLine()) {
-					makeLineVisible(bottomLine);
+				if (bottomLine > CardScrollPane.this.getTopVisibleLine()) {
+					CardScrollPane.this.makeLineVisible(bottomLine);
 				}
 			}
 		});
 	}
-	
+
 	private void makeLineVisible(double targetLine) {
 		if (targetLine < this.getTopVisibleLine()) {
 			this.scrollToPosition(this.calculateTopVvalue(targetLine));
@@ -124,27 +126,29 @@ public class CardScrollPane extends ScrollPane implements FocusSelfHandler {
 			this.scrollToPosition(this.calculateBottomVvalue(targetLine));
 		}
 	}
-	
+
 	private void scrollToPosition(double verticalPos) {
 		new VerticalScrollTransition(this, verticalPos).play();
 	}
-	
+
 	private double getTopVisibleLine() {
-		double scrollPosition = (this.getVvalue() - this.getVmin()) / (this.getVmax() - this.getVmin());
-		double visibleLine = (scrollPosition * this.cardSlidePane.getHeight()) - (scrollPosition * this.getHeight());
+		double scrollPosition =
+				(this.getVvalue() - this.getVmin()) / (this.getVmax() - this.getVmin());
+		double visibleLine = (scrollPosition * this.cardSlidePane.getHeight())
+				- (scrollPosition * this.getHeight());
 		return visibleLine;
 	}
-	
+
 	private double getBottomVisibleLine() {
 		return this.getTopVisibleLine() + this.getHeight();
 	}
-	
+
 	private double calculateTopVvalue(double topLine) {
 		double scrollPosition = topLine / (this.cardSlidePane.getHeight() - this.getHeight());
 		double vValue = (scrollPosition * (this.getVmax() - this.getVmin())) + this.getVmin();
 		return Math.min(1, vValue);
 	}
-	
+
 	private double calculateBottomVvalue(double bottomLine) {
 		return Math.max(0, this.calculateTopVvalue(bottomLine - this.getHeight()));
 	}

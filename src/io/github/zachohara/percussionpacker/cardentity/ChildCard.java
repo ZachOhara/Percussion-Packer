@@ -21,5 +21,5 @@ public abstract class ChildCard extends ParentCard {
 	protected ChildCard(double height, boolean retitleable, boolean nameable) {
 		super(height, retitleable, nameable);
 	}
-	
+
 }

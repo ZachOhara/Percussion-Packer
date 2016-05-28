@@ -41,7 +41,7 @@ public class SongColumn extends Column implements ButtonHandler {
 		new ButtonPressListener(this.addSongButton).addHandler(this);
 		this.getChildren().add(this.addSongButton);
 	}
-	
+
 	@Override
 	public boolean canRecieveCard(CardEntity card) {
 		return card.getColumn() instanceof SongColumn;
