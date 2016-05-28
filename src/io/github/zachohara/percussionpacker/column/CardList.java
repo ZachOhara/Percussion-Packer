@@ -282,6 +282,9 @@ public class CardList extends VBox implements CardOwner, MouseSelfHandler, Resiz
 		for (CardEntity c : this.cards) {
 			c.setPrefWidth(this.getWidth());
 		}
+		for (CardEntity c : this.spacerMap.keySet()) {
+			c.setPrefWidth(this.getWidth());
+		}
 	}
 
 	/*
