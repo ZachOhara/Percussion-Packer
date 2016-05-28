@@ -16,6 +16,7 @@
 
 package io.github.zachohara.percussionpacker.columntype;
 
+import io.github.zachohara.percussionpacker.cardentity.CardEntity;
 import io.github.zachohara.percussionpacker.column.Column;
 
 public class EquipmentColumn extends Column {
@@ -27,8 +28,9 @@ public class EquipmentColumn extends Column {
 	}
 	
 	@Override
-	public boolean canRecieveCards() {
-		return false;
+	public boolean canRecieveCard(CardEntity card) {
+		Column owner = card.getColumn();
+		return owner instanceof EquipmentColumn || owner instanceof PackingColumn;
 	}
 
 }

@@ -55,7 +55,7 @@ public class ColumnPane extends HBox implements ResizeSelfHandler {
 
 	public Column dropCard(CardEntity draggingCard, Point2D scenePoint) {
 		Point2D localPoint = this.sceneToLocal(scenePoint);
-		Column hoveringColumn = this.getHoveringColumn(localPoint.getX());
+		Column hoveringColumn = this.getHoveringColumn(draggingCard, localPoint.getX());
 		for (Column c : this.columns) {
 			if (c != hoveringColumn) {
 				c.dropCard(null, Point2D.ZERO);
@@ -67,17 +67,17 @@ public class ColumnPane extends HBox implements ResizeSelfHandler {
 		return hoveringColumn;
 	}
 
-	private Column getHoveringColumn(double localX) {
+	private Column getHoveringColumn(CardEntity card, double localX) {
 		// check if the point is in a column
 		for (Column c : this.columns) {
-			if (c.canRecieveCards() && c.getLayoutX() <= localX && localX < c.getLayoutX() + c.getWidth()) {
+			if (c.canRecieveCard(card) && c.getLayoutX() <= localX && localX < c.getLayoutX() + c.getWidth()) {
 				return c;
 			}
 		}
 		double[] distances = new double[this.columns.length];
 		for (int i = 0; i < this.columns.length; i++) {
 			Column column = this.columns[i];
-			if (!column.canRecieveCards()) {
+			if (!column.canRecieveCard(card)) {
 				distances[i] = Double.MAX_VALUE;
 			} else if (localX < column.getLayoutX()) {
 				distances[i] = column.getLayoutX() - localX;

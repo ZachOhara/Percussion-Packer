@@ -19,6 +19,7 @@ package io.github.zachohara.percussionpacker.columntype;
 import io.github.zachohara.fxeventcommon.button.ButtonHandler;
 import io.github.zachohara.fxeventcommon.button.ButtonPressListener;
 import io.github.zachohara.percussionpacker.card.Card;
+import io.github.zachohara.percussionpacker.cardentity.CardEntity;
 import io.github.zachohara.percussionpacker.cardtype.SongNameCard;
 import io.github.zachohara.percussionpacker.column.Column;
 import javafx.scene.control.Button;
@@ -39,6 +40,11 @@ public class SongColumn extends Column implements ButtonHandler {
 		this.addSongButton.setStyle(BUTTON_STYLE);
 		new ButtonPressListener(this.addSongButton).addHandler(this);
 		this.getChildren().add(this.addSongButton);
+	}
+	
+	@Override
+	public boolean canRecieveCard(CardEntity card) {
+		return card.getColumn() instanceof SongColumn;
 	}
 
 	@Override

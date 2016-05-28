@@ -21,7 +21,7 @@ import io.github.zachohara.percussionpacker.util.GraphicsUtil;
 
 public class SpaceCard extends CardEntity {
 	
-	private CardEntity parentCard; // only used in toString()
+	private CardEntity parentCard;
 
 	public SpaceCard(CardEntity sizingCard) {
 		super(false, false, false);
@@ -35,7 +35,7 @@ public class SpaceCard extends CardEntity {
 	
 	@Override
 	public String toString() {
-		return "SpaceCard[parent=" + parentCard + "]";
+		return "SpaceCard[parent=" + this.parentCard + "]";
 	}
 
 }

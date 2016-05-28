@@ -19,6 +19,7 @@ package io.github.zachohara.percussionpacker.cardentity;
 import io.github.zachohara.fxeventcommon.resize.RegionResizeListener;
 import io.github.zachohara.fxeventcommon.resize.ResizeSelfHandler;
 import io.github.zachohara.percussionpacker.column.CardOwner;
+import io.github.zachohara.percussionpacker.column.Column;
 import javafx.geometry.Point2D;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
@@ -26,6 +27,7 @@ import javafx.scene.layout.StackPane;
 
 public abstract class CardEntity extends BorderPane implements ResizeSelfHandler {
 	
+	private Column column;
 	private CardOwner owner;
 	
 	private Pane indentPane;
@@ -55,6 +57,14 @@ public abstract class CardEntity extends BorderPane implements ResizeSelfHandler
 		
 		this.setLeft(this.indentPane);
 		this.setCenter(this.displayPane);
+	}
+	
+	public Column getColumn() {
+		return this.column;
+	}
+	
+	public void setColumn(Column column) {
+		this.column = column;
 	}
 	
 	protected StackPane getDisplayPane() {
