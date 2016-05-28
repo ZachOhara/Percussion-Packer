@@ -18,6 +18,7 @@
 * Animate child cards sliding in and out of parent cards
 * Make the 'add child' button more stylized
 * Make the 'add child' button work
+* Show a "..." on dragging parent cards that have children
 
 ### Card List
 * Make adding a new card always scroll, instead of snap
@@ -30,7 +31,6 @@
 
 ### Card Drag Pane
 * When adding a card (or ghost card) to a column, the column should split to both top and bottom, not just bottom
-* Animate the dragging card 'snapping' back to its ghost card
 * Add horizontal card slide transisions
 
 ### Card Scroll Pane
