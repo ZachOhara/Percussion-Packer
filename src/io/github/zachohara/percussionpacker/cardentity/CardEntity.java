@@ -51,7 +51,7 @@ public abstract class CardEntity extends BorderPane implements ResizeSelfHandler
 		this.isRetitleable = retitleable;
 		this.isNameable = nameable;
 		
-		this.isDragging = false;
+		this.isDragging = true;
 		
 		this.setIndent(0);
 		
@@ -96,11 +96,13 @@ public abstract class CardEntity extends BorderPane implements ResizeSelfHandler
 	}
 	
 	public final void setIsDragging(boolean isDragging) {
-		this.isDragging = isDragging;
-		if (this.isDragging) {
-			this.startDragging();
-		} else {
-			this.finishDragging();
+		if (this.isDragging != isDragging) {
+			this.isDragging = isDragging;
+			if (this.isDragging) {
+				this.startDragging();
+			} else {
+				this.finishDragging();
+			}
 		}
 	}
 	
