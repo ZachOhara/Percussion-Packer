@@ -56,17 +56,6 @@ public class CardList extends VBox implements CardOwner, MouseSelfHandler, Resiz
 		this.cards = new ArrayList<CardEntity>();
 		this.spacerMap = new HashMap<CardEntity, SpaceCard>();
 		this.spacerMap.put(new TestCard(), new SpaceCard(new TestCard()));
-
-		// --- Test code --- //
-		for (int i = 0; i < 20; i++) {
-			this.cards.add(new TestCard());
-			((TestCard) this.cards.get(i)).setTitle(i + "");// + "-----------");
-			this.getChildren().add(this.cards.get(i));
-			//this.cards.get(i).setPrefHeight(30 + (30 * Math.random()));
-			//this.cards.get(i).setMinHeight(this.cards.get(i).getPrefHeight());
-			//this.cards.get(i).setMaxHeight(this.cards.get(i).getPrefHeight());
-		}
-		// ----------------- //
 	}
 	
 	/* 
