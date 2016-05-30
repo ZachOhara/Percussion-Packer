@@ -26,8 +26,8 @@ import io.github.zachohara.percussionpacker.cardtype.EquipmentCard;
 
 public abstract class ParentCard extends Card implements ButtonHandler, ResizeSelfHandler {
 
-	public static final double DEFAULT_CHILD_INDENT = 30; // in pixels
-	public static final double INDENT_DECAY = 1.75;
+	public static final double DEFAULT_CHILD_INDENT = 25; // in pixels
+	public static final double INDENT_DECAY = 0.9;
 
 	public static final String BUTTON_TEXT = "Add an instrument";
 
@@ -93,7 +93,7 @@ public abstract class ParentCard extends Card implements ButtonHandler, ResizeSe
 	}
 
 	private void updateChildIndent(CardEntity child) {
-		child.setIndent(this.childIndent);
+		child.setIndent(this.getIndent() + this.childIndent);
 		if (child instanceof ParentCard) {
 			((ParentCard) child).setChildIndent(this.childIndent * INDENT_DECAY);
 		}
