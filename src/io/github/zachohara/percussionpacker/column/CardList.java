@@ -241,7 +241,6 @@ public class CardList extends VBox implements CardOwner, MouseSelfHandler, Resiz
 			// if the card is not in the list, assume it's being dragged
 		}
 		double necessarySpace = CardList.getHeightOfList(children) + 1;
-		System.out.println(parent.getTitle() + " displayHeight is " + parent.getDisplayHeight() + ", necessarySpace is " + necessarySpace);
 		this.createSpaceAtIndex(parentIndex + indexOffset + 1, necessarySpace * direction);
 		return parentIndex;
 	}
