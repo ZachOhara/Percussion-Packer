@@ -27,6 +27,7 @@ import io.github.zachohara.fxeventcommon.resize.RegionResizeListener;
 import io.github.zachohara.fxeventcommon.resize.ResizeSelfHandler;
 import io.github.zachohara.percussionpacker.cardentity.CardEntity;
 import io.github.zachohara.percussionpacker.cardentity.GhostCard;
+import io.github.zachohara.percussionpacker.cardentity.ParentCard;
 import io.github.zachohara.percussionpacker.cardentity.SpaceCard;
 import io.github.zachohara.percussionpacker.cardtype.TestCard;
 import io.github.zachohara.percussionpacker.util.GraphicsUtil;
@@ -35,6 +36,7 @@ import io.github.zachohara.percussionpacker.window.PackingStage;
 import javafx.event.EventType;
 import javafx.geometry.Point2D;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 
 public class CardList extends VBox implements CardOwner, MouseSelfHandler, ResizeSelfHandler {
@@ -197,31 +199,49 @@ public class CardList extends VBox implements CardOwner, MouseSelfHandler, Resiz
 	 *
 	 * @formatter:on
 	 */
-
+	
 	@Override
-	public void addChildren(CardEntity parent, List<CardEntity> children) {
-		int parentIndex = this.createSpace(parent, 0, children, 1);
-		for (int i = 0; i < children.size(); i++) {
-			this.add(parentIndex + i + 1, children.get(i));
+	public void addChild(ParentCard parent, CardEntity child, int relativeIndex) {
+		int parentIndex = this.cards.indexOf(parent);
+		int insertIndex = parentIndex + relativeIndex;
+		double localPosY = this.getVerticalPositionOfIndex(insertIndex);
+		Point2D dropPos = new Point2D(0, localPosY);
+		this.dropCard(child, this.localToScene(dropPos));
+		if (child instanceof ParentCard) {
+			((ParentCard) child).setIsDragging(false);
 		}
 	}
 
 	@Override
-	public void removeChildren(CardEntity parent, List<CardEntity> children) {
-		int parentIndex = this.createSpace(parent, children.size(), children, -1);
+	public void addChildren(ParentCard parent, List<CardEntity> children) {
+		int parentIndex = this.createSpace(parent, 0, 1, children);
+		int indexOffset = 0;
+		for (int i = 0; i < children.size(); i++) {
+			CardEntity child = children.get(i);
+			this.add(1 + parentIndex + i + indexOffset, child);
+			if (child instanceof ParentCard) {
+				indexOffset += ((ParentCard) child).getNumChildren();
+			}
+		}
+	}
+
+	@Override
+	public void removeChildren(ParentCard parent, List<CardEntity> children) {
+		int parentIndex = this.createSpace(parent, parent.getNumChildren(), -1, children);
 		for (int i = children.size() - 1; i >= 0; i--) {
+			children.get(i).setIsDragging(true);
 			this.remove(parentIndex + i + 1);
 		}
 	}
 
-	private int createSpace(CardEntity parent, int indexOffset, List<CardEntity> children,
-			int direction) {
+	private int createSpace(ParentCard parent, int indexOffset, int direction, List<CardEntity> children) {
 		int parentIndex = this.cards.indexOf(parent);
 		if (parentIndex == -1) {
 			parentIndex = this.findGhostCard();
 			// if the card is not in the list, assume it's being dragged
 		}
-		double necessarySpace = parent.getDisplayHeight() - parent.getPrefHeight();
+		double necessarySpace = CardList.getHeightOfList(children) + 1;
+		System.out.println(parent.getTitle() + " displayHeight is " + parent.getDisplayHeight() + ", necessarySpace is " + necessarySpace);
 		this.createSpaceAtIndex(parentIndex + indexOffset + 1, necessarySpace * direction);
 		return parentIndex;
 	}
@@ -230,6 +250,14 @@ public class CardList extends VBox implements CardOwner, MouseSelfHandler, Resiz
 		for (int i = index; i < this.cards.size(); i++) {
 			this.slideCard(i, space);
 		}
+	}
+	
+	private static double getHeightOfList(List<? extends Region> elements) {
+		double cumulHeight = 0;
+		for (Region r : elements) {
+			cumulHeight += r.getPrefHeight();
+		}
+		return cumulHeight;
 	}
 
 	/*

@@ -29,8 +29,9 @@ public class GhostCard extends CardEntity {
 		this.parentCard = sizingCard;
 
 		GraphicsUtil.copySizing(sizingCard, this);
+		this.setIndent(this.parentCard.getIndent());
 
-		this.setStyle(STYLE);
+		this.getDisplayPane().setStyle(STYLE);
 	}
 
 	@Override

@@ -19,11 +19,14 @@ package io.github.zachohara.percussionpacker.column;
 import java.util.List;
 
 import io.github.zachohara.percussionpacker.cardentity.CardEntity;
+import io.github.zachohara.percussionpacker.cardentity.ParentCard;
 
 public interface CardOwner {
+	
+	public void addChild(ParentCard parent, CardEntity child, int relativeIndex);
 
-	public void addChildren(CardEntity parent, List<CardEntity> children);
+	public void addChildren(ParentCard parent, List<CardEntity> children);
 
-	public void removeChildren(CardEntity parent, List<CardEntity> children);
+	public void removeChildren(ParentCard parent, List<CardEntity> children);
 
 }

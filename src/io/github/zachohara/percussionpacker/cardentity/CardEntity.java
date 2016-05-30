@@ -70,8 +70,12 @@ public abstract class CardEntity extends BorderPane implements ResizeSelfHandler
 	protected StackPane getDisplayPane() {
 		return this.displayPane;
 	}
+	
+	protected double getIndent() {
+		return this.indentPane.getPrefWidth();
+	}
 
-	public void setIndent(double indent) {
+	protected void setIndent(double indent) {
 		this.indentPane.setPrefWidth(indent);
 	}
 
