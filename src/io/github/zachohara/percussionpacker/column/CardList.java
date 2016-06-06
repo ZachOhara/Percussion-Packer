@@ -21,10 +21,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import io.github.zachohara.fxeventcommon.mouse.MouseEventListener;
-import io.github.zachohara.fxeventcommon.mouse.MouseSelfHandler;
-import io.github.zachohara.fxeventcommon.resize.RegionResizeListener;
-import io.github.zachohara.fxeventcommon.resize.ResizeSelfHandler;
+import io.github.zachohara.eventfx.mouse.MouseEventListener;
+import io.github.zachohara.eventfx.mouse.MouseSelfHandler;
+import io.github.zachohara.eventfx.resize.RegionResizeListener;
+import io.github.zachohara.eventfx.resize.ResizeSelfHandler;
 import io.github.zachohara.percussionpacker.cardentity.CardEntity;
 import io.github.zachohara.percussionpacker.cardentity.GhostCard;
 import io.github.zachohara.percussionpacker.cardentity.ParentCard;

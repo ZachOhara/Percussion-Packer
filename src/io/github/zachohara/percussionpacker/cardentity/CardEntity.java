@@ -16,8 +16,8 @@
 
 package io.github.zachohara.percussionpacker.cardentity;
 
-import io.github.zachohara.fxeventcommon.resize.RegionResizeListener;
-import io.github.zachohara.fxeventcommon.resize.ResizeSelfHandler;
+import io.github.zachohara.eventfx.resize.RegionResizeListener;
+import io.github.zachohara.eventfx.resize.ResizeSelfHandler;
 import io.github.zachohara.percussionpacker.column.CardOwner;
 import io.github.zachohara.percussionpacker.column.Column;
 import javafx.geometry.Point2D;

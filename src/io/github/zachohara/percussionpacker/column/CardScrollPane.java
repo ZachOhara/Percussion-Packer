@@ -16,8 +16,8 @@
 
 package io.github.zachohara.percussionpacker.column;
 
-import io.github.zachohara.fxeventcommon.focus.FocusChangeListener;
-import io.github.zachohara.fxeventcommon.focus.FocusSelfHandler;
+import io.github.zachohara.eventfx.focus.FocusChangeListener;
+import io.github.zachohara.eventfx.focus.FocusSelfHandler;
 import io.github.zachohara.percussionpacker.animation.scroll.InfiniteScroll;
 import io.github.zachohara.percussionpacker.animation.scroll.VerticalScrollTransition;
 import io.github.zachohara.percussionpacker.card.Card;

@@ -16,9 +16,9 @@
 
 package io.github.zachohara.percussionpacker.common;
 
-import io.github.zachohara.fxeventcommon.focus.FocusListenable;
-import io.github.zachohara.fxeventcommon.key.KeyEventListener;
-import io.github.zachohara.fxeventcommon.key.KeySelfHandler;
+import io.github.zachohara.eventfx.focus.FocusListenable;
+import io.github.zachohara.eventfx.key.KeyEventListener;
+import io.github.zachohara.eventfx.key.KeySelfHandler;
 import javafx.event.EventType;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;

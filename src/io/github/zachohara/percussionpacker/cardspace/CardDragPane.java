@@ -16,10 +16,10 @@
 
 package io.github.zachohara.percussionpacker.cardspace;
 
-import io.github.zachohara.fxeventcommon.mouse.MouseEventListener;
-import io.github.zachohara.fxeventcommon.mouse.MouseSelfHandler;
-import io.github.zachohara.fxeventcommon.resize.RegionResizeListener;
-import io.github.zachohara.fxeventcommon.resize.ResizeSelfHandler;
+import io.github.zachohara.eventfx.mouse.MouseEventListener;
+import io.github.zachohara.eventfx.mouse.MouseSelfHandler;
+import io.github.zachohara.eventfx.resize.RegionResizeListener;
+import io.github.zachohara.eventfx.resize.ResizeSelfHandler;
 import io.github.zachohara.percussionpacker.animation.InterpolatedQuantity;
 import io.github.zachohara.percussionpacker.animation.resize.CenteredWidthTransition;
 import io.github.zachohara.percussionpacker.animation.resize.ResizeCompletionListener;
