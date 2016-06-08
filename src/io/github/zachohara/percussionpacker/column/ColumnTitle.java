@@ -16,8 +16,8 @@
 
 package io.github.zachohara.percussionpacker.column;
 
-import io.github.zachohara.fxeventcommon.resize.RegionResizeListener;
-import io.github.zachohara.fxeventcommon.resize.ResizeSelfHandler;
+import io.github.zachohara.eventfx.resize.RegionResizeListener;
+import io.github.zachohara.eventfx.resize.ResizeSelfHandler;
 import io.github.zachohara.percussionpacker.common.BackingButton;
 import io.github.zachohara.percussionpacker.common.ShrinkableLabel;
 import javafx.scene.layout.StackPane;

@@ -16,11 +16,12 @@
 
 package io.github.zachohara.percussionpacker.column;
 
-import io.github.zachohara.fxeventcommon.resize.RegionResizeListener;
-import io.github.zachohara.fxeventcommon.resize.ResizeSelfHandler;
+import io.github.zachohara.eventfx.resize.RegionResizeListener;
+import io.github.zachohara.eventfx.resize.ResizeSelfHandler;
 import io.github.zachohara.percussionpacker.card.Card;
 import io.github.zachohara.percussionpacker.cardentity.CardEntity;
 import io.github.zachohara.percussionpacker.cardspace.CardDragTarget;
+import io.github.zachohara.percussionpacker.cardtype.TestCard;
 import javafx.geometry.Point2D;
 import javafx.scene.layout.VBox;
 
@@ -43,18 +44,37 @@ public abstract class Column extends VBox implements CardDragTarget, ResizeSelfH
 
 		this.setMinWidth(MIN_WIDTH);
 		this.setMinHeight(this.calculateMinHeight());
+
+		// --- Test code --- //
+		for (int i = 0; i < 20; i++) {
+			TestCard card = new TestCard();
+			card.setTitle(i + "");
+			// card.setPrefHeight(30 + (30 * Math.random()));
+			// card.setMinHeight(card.getPrefHeight());
+			// card.setMaxHeight(card.getPrefHeight());
+			this.addCard(card);
+		}
+		// ----------------- //
 	}
 
 	public void addCard(Card card) {
+		card.setColumn(this);
 		this.cardList.addCard(card);
 	}
 
 	public void dropCard(CardEntity draggingCard, Point2D scenePoint) {
+		if (draggingCard != null) {
+			draggingCard.setColumn(this);
+		}
 		this.cardList.dropCard(draggingCard, scenePoint);
 	}
 	
 	@Override
 	public boolean canRecieveCards() {
+		return true;
+	}
+
+	public boolean canRecieveCard(CardEntity card) {
 		return true;
 	}
 

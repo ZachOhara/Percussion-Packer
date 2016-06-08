@@ -2,8 +2,8 @@
 	
 	<property name="main-class" value="io.github.zachohara.percussionpacker.PercussionPacker"/>
 	
-	<property name="Event-Common.classpath" value="../JavaFX-Event-Common/bin/"/>
-	<property name="classpath" value="${Event-Common.classpath};"/>
+	<property name="JavaFX-Event.classpath" value="../JavaFX-Event/bin/"/>
+	<property name="JavaFX-Material.classpath" value="../JavaFX-Material/bin/"/>
 
 	
 	<property name="version" value="v0.11a"/>
@@ -11,7 +11,8 @@
 
 	<target name="jar">
 		<jar destfile="${jar-name}" basedir="bin">
-			<fileset dir="${Event-Common.classpath}"/>
+			<fileset dir="${JavaFX-Event.classpath}"/>
+			<fileset dir="${JavaFX-Material.classpath}"/>
 			<manifest>
 				<attribute name="Main-Class" value="${main-class}"/>
 			</manifest>

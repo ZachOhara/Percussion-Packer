@@ -21,13 +21,13 @@ import javafx.scene.control.ScrollPane;
 import javafx.util.Duration;
 
 public class VerticalScrollTransition extends PropertyTransition {
-	
+
 	public static final double DURATION = 500; // in milliseconds
-	
+
 	public VerticalScrollTransition(ScrollPane pane, double endValue) {
 		super(pane.vvalueProperty(), endValue - pane.getVvalue());
-		
+
 		this.setCycleDuration(Duration.millis(DURATION));
 	}
-	
+
 }

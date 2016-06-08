@@ -16,8 +16,8 @@
 
 package io.github.zachohara.percussionpacker.common;
 
-import io.github.zachohara.fxeventcommon.resize.RegionResizeListener;
-import io.github.zachohara.fxeventcommon.resize.ResizeSelfHandler;
+import io.github.zachohara.eventfx.resize.RegionResizeListener;
+import io.github.zachohara.eventfx.resize.ResizeSelfHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Region;
@@ -31,20 +31,20 @@ public class BackingButton extends Region implements ResizeSelfHandler {
 
 	public BackingButton() {
 		super();
-		
+
 		RegionResizeListener.createSelfHandler(this);
-		
+
 		this.button = new Button();
 		this.button.setFocusTraversable(false);
 		StackPane.setAlignment(this, Pos.TOP_CENTER);
-		
-		this.getChildren().add(button);
+
+		this.getChildren().add(this.button);
 	}
-	
+
 	public void arm() {
 		this.button.arm();
 	}
-	
+
 	public void disarm() {
 		this.button.disarm();
 	}

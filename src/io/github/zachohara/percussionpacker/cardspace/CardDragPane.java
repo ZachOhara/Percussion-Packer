@@ -16,25 +16,29 @@
 
 package io.github.zachohara.percussionpacker.cardspace;
 
-import io.github.zachohara.fxeventcommon.mouse.MouseEventListener;
-import io.github.zachohara.fxeventcommon.mouse.MouseSelfHandler;
-import io.github.zachohara.fxeventcommon.resize.RegionResizeListener;
-import io.github.zachohara.fxeventcommon.resize.ResizeSelfHandler;
+import io.github.zachohara.eventfx.mouse.MouseEventListener;
+import io.github.zachohara.eventfx.mouse.MouseSelfHandler;
+import io.github.zachohara.eventfx.resize.RegionResizeListener;
+import io.github.zachohara.eventfx.resize.ResizeSelfHandler;
 import io.github.zachohara.percussionpacker.animation.InterpolatedQuantity;
 import io.github.zachohara.percussionpacker.animation.resize.CenteredWidthTransition;
 import io.github.zachohara.percussionpacker.animation.resize.ResizeCompletionListener;
 import io.github.zachohara.percussionpacker.animation.resize.ResizeProgressListener;
+import io.github.zachohara.percussionpacker.animation.slide.BidirectionalSlideTransition;
+import io.github.zachohara.percussionpacker.animation.slide.SlideCompletionListener;
+import io.github.zachohara.percussionpacker.animation.slide.SlideTransition;
 import io.github.zachohara.percussionpacker.cardentity.CardEntity;
 import io.github.zachohara.percussionpacker.cardentity.GhostCard;
 import io.github.zachohara.percussionpacker.column.Column;
 import io.github.zachohara.percussionpacker.util.GraphicsUtil;
 import javafx.event.EventType;
 import javafx.geometry.Point2D;
+import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 
-public class CardDragPane extends Pane implements MouseSelfHandler, ResizeSelfHandler, ResizeProgressListener, ResizeCompletionListener {
+public class CardDragPane extends Pane implements MouseSelfHandler, ResizeSelfHandler, SlideCompletionListener, ResizeProgressListener, ResizeCompletionListener {
 
 	public static final double DRAG_DIFFERENCE_THRESHOLD = 10;
 
@@ -69,7 +73,8 @@ public class CardDragPane extends Pane implements MouseSelfHandler, ResizeSelfHa
 		this.setMinHeight(GraphicsUtil.getCumulativeMinHeight(this));
 	}
 
-	public void recieveDraggingCard(CardEntity draggingCard, Point2D scenePosision, GhostCard ghostCard) {
+	public void recieveDraggingCard(CardEntity draggingCard, Point2D scenePosision,
+			GhostCard ghostCard) {
 		this.draggingCard = draggingCard;
 		this.ghostCard = ghostCard;
 		Point2D localPosition = this.sceneToLocal(scenePosision);
@@ -136,11 +141,20 @@ public class CardDragPane extends Pane implements MouseSelfHandler, ResizeSelfHa
 	private void handleMouseRelease() {
 		this.isCardDragging = false;
 		if (this.draggingCard != null) {
-			this.columnPane.dropCard(this.draggingCard, this.getSceneCardCenter());
-			this.draggingCard = null;
-			this.ghostCard = null;
-			this.isCardDragging = false;
+			Point2D ghostPos = GraphicsUtil.getRelativePosition(this, this.ghostCard);
+			double dx = ghostPos.getX() - this.draggingCard.getLayoutX();
+			double dy = ghostPos.getY() - this.draggingCard.getLayoutY();
+			SlideTransition slideTransition = new BidirectionalSlideTransition(this.draggingCard, dx, dy);
+			slideTransition.setCompletionListener(this);
+			slideTransition.play();
 		}
+	}
+	
+	@Override
+	public void finishSlidingNode(Node slidingNode) {
+		this.columnPane.dropCard(this.draggingCard, this.getSceneCardCenter());
+		this.draggingCard = null;
+		this.ghostCard = null;
 	}
 
 	@Override

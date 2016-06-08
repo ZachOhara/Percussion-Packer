@@ -16,33 +16,33 @@
 
 package io.github.zachohara.percussionpacker.cardentity;
 
-import io.github.zachohara.fxeventcommon.button.ButtonHandler;
-import io.github.zachohara.fxeventcommon.button.ButtonPressListener;
-import io.github.zachohara.fxeventcommon.resize.RegionResizeListener;
-import io.github.zachohara.fxeventcommon.resize.ResizeSelfHandler;
+import io.github.zachohara.eventfx.button.ButtonHandler;
+import io.github.zachohara.eventfx.button.ButtonPressListener;
+import io.github.zachohara.eventfx.resize.RegionResizeListener;
+import io.github.zachohara.eventfx.resize.ResizeSelfHandler;
 import javafx.scene.control.Button;
 
 public class CreateChildButton extends CardEntity implements ResizeSelfHandler {
-	
+
 	public static final double DEFAULT_BUTTON_HEIGHT = 24; // in pixels
-	
+
 	private Button button;
 	private ButtonPressListener listener;
-	
+
 	public CreateChildButton(String buttonText) {
 		super(false, false, false);
-		
+
 		RegionResizeListener.createSelfHandler(this);
-		
+
 		this.button = new Button(buttonText);
 		this.listener = new ButtonPressListener(this.button);
-		
+
 		this.button.setPrefHeight(DEFAULT_BUTTON_HEIGHT);
 		this.setPrefHeight(this.button.getPrefHeight());
-		
+
 		this.getDisplayPane().getChildren().add(this.button);
 	}
-	
+
 	public void addHandler(ButtonHandler handler) {
 		this.listener.addHandler(handler);
 	}
@@ -51,5 +51,5 @@ public class CreateChildButton extends CardEntity implements ResizeSelfHandler {
 	public void handleResize() {
 		this.button.setPrefWidth(this.getWidth());
 	}
-	
+
 }

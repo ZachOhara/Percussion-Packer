@@ -3,30 +3,35 @@
 ### Visuals
 * Add window icons
 * Visually differentiate functional buttons and backing buttons
+* Add colorization options
 
 ### Interface
 * Add a 'reset column width' button
 
 ### Cards
-* [?] Add a glow effect to cards
+* [?] Add a shadow to dragging Cards
 * Adjust the ghost card inset
 * Add a right-click menu
-* In ParentCard, make re-adding to a list use the dropCard() method (for slide animations)
-* In ParentCard, fix the child indent
-* Animate child cards sliding down and out of parent cards
+* Add a small background to the card title
+
+### Parent Cards
+* Animate child cards sliding in and out of parent cards
+* Make the 'add child' button more stylized
+* Make the 'add child' button work
+* Show a "..." on dragging parent cards that have children
 
 ### Card List
-* Fix the issue with the ghost card trajectory not properly redefining
+* Make adding a new card always scroll, instead of snap
 
 ### Columns
-* Find the cause of the strange dragging bug
+* Find the cause of the strange dragging exception bug
 
 ### Column Pane
 * Make columns assume the current ratios after resizing the window
 
 ### Card Drag Pane
-* [?] Make cards drag from the mouse position, and make them resize about that position
 * When adding a card (or ghost card) to a column, the column should split to both top and bottom, not just bottom
+* Add horizontal card slide transisions
 
 ### Card Scroll Pane
 * While the mouse hovers over a scroll pane, the mouse wheel should scroll the pane

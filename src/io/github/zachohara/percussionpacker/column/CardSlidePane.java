@@ -19,14 +19,15 @@ package io.github.zachohara.percussionpacker.column;
 import java.util.HashMap;
 import java.util.Map;
 
-import io.github.zachohara.fxeventcommon.resize.RegionResizeListener;
-import io.github.zachohara.fxeventcommon.resize.ResizeSelfHandler;
+import io.github.zachohara.eventfx.resize.RegionResizeListener;
+import io.github.zachohara.eventfx.resize.ResizeSelfHandler;
 import io.github.zachohara.percussionpacker.animation.slide.SlideCompletionListener;
 import io.github.zachohara.percussionpacker.animation.slide.VerticalSlideTransition;
 import io.github.zachohara.percussionpacker.cardentity.CardEntity;
 import io.github.zachohara.percussionpacker.cardentity.GhostCard;
-import io.github.zachohara.percussionpacker.cardtype.SpaceCard;
+import io.github.zachohara.percussionpacker.cardentity.SpaceCard;
 import io.github.zachohara.percussionpacker.util.GraphicsUtil;
+import javafx.animation.Interpolator;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
@@ -54,7 +55,8 @@ public class CardSlidePane extends Pane implements ResizeSelfHandler, SlideCompl
 		this.setMinHeight(GraphicsUtil.getCumulativeMinHeight(this));
 	}
 
-	public void recieveSlidingCard(CardEntity slidingCard, Point2D scenePosition, double distanceY) {
+	public void recieveSlidingCard(CardEntity slidingCard, Point2D scenePosition,
+			double distanceY) {
 		if (slidingCard instanceof GhostCard && !(slidingCard instanceof SpaceCard)) {
 			this.slidingGhostCard = (GhostCard) slidingCard;
 		}
@@ -82,6 +84,7 @@ public class CardSlidePane extends Pane implements ResizeSelfHandler, SlideCompl
 		double difference = newGoal - slidingCard.getLayoutY();
 		VerticalSlideTransition newTransition =
 				new VerticalSlideTransition(slidingCard, difference);
+		newTransition.setInterpolator(Interpolator.EASE_OUT);
 		newTransition.setCompletionListener(this);
 		this.slideTransitions.put(slidingCard, newTransition);
 		newTransition.play();

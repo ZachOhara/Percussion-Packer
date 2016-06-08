@@ -16,8 +16,8 @@
 
 package io.github.zachohara.percussionpacker.cardspace;
 
-import io.github.zachohara.fxeventcommon.resize.RegionResizeListener;
-import io.github.zachohara.fxeventcommon.resize.ResizeSelfHandler;
+import io.github.zachohara.eventfx.resize.RegionResizeListener;
+import io.github.zachohara.eventfx.resize.ResizeSelfHandler;
 import io.github.zachohara.percussionpacker.cardentity.CardEntity;
 import io.github.zachohara.percussionpacker.column.Column;
 import io.github.zachohara.percussionpacker.columntype.EquipmentColumn;
@@ -25,6 +25,7 @@ import io.github.zachohara.percussionpacker.columntype.MalletColumn;
 import io.github.zachohara.percussionpacker.columntype.PackingColumn;
 import io.github.zachohara.percussionpacker.columntype.SongColumn;
 import io.github.zachohara.percussionpacker.util.GraphicsUtil;
+import io.github.zachohara.percussionpacker.util.MathUtil;
 import javafx.geometry.Point2D;
 import javafx.scene.layout.HBox;
 
@@ -54,7 +55,7 @@ public class ColumnPane extends HBox implements ResizeSelfHandler {
 
 	public Column dropCard(CardEntity draggingCard, Point2D scenePoint) {
 		Point2D localPoint = this.sceneToLocal(scenePoint);
-		Column hoveringColumn = this.getHoveringColumn(localPoint.getX());
+		Column hoveringColumn = this.getHoveringColumn(draggingCard, localPoint.getX());
 		for (Column c : this.columns) {
 			if (c != hoveringColumn) {
 				c.dropCard(null, Point2D.ZERO);
@@ -66,38 +67,26 @@ public class ColumnPane extends HBox implements ResizeSelfHandler {
 		return hoveringColumn;
 	}
 
-	private Column getHoveringColumn(double localX) {
-		// check if too far left
-		if (localX < this.columns[0].getLayoutX()) {
-			return this.columns[0];
-		}
-
-		// check if too far right
-		Column lastColumn = this.columns[this.columns.length - 1];
-		if (localX >= lastColumn.getLayoutX() + lastColumn.getWidth()) {
-			return lastColumn;
-		}
-
+	private Column getHoveringColumn(CardEntity card, double localX) {
 		// check if the point is in a column
 		for (Column c : this.columns) {
-			if (c.canRecieveCards() && c.getLayoutX() <= localX && localX < c.getLayoutX() + c.getWidth()) {
+			if (c.canRecieveCard(card) && c.getLayoutX() <= localX
+					&& localX < c.getLayoutX() + c.getWidth()) {
 				return c;
 			}
 		}
-
-		// check if the point is on a boundary
-		for (int i = 0; i < this.separators.length; i++) {
-			ColumnSeparator sep = this.separators[i];
-			if (sep.getLayoutX() <= localX && localX < sep.getLayoutX() + sep.getWidth()) {
-				if (localX < sep.getLayoutX() + (sep.getWidth() / 2)) {
-					return this.columns[i];
-				} else {
-					return this.columns[i + 1];
-				}
+		double[] distances = new double[this.columns.length];
+		for (int i = 0; i < this.columns.length; i++) {
+			Column column = this.columns[i];
+			if (!column.canRecieveCard(card)) {
+				distances[i] = Double.MAX_VALUE;
+			} else if (localX < column.getLayoutX()) {
+				distances[i] = column.getLayoutX() - localX;
+			} else {
+				distances[i] = localX - (column.getLayoutX() + column.getWidth());
 			}
 		}
-
-		throw new IllegalArgumentException("X-Coordinate could not be placed to a column");
+		return this.columns[MathUtil.minIndex(distances)];
 	}
 
 	protected void finishColumnResizing() {

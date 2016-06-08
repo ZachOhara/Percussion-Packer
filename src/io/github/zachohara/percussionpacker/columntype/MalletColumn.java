@@ -16,6 +16,7 @@
 
 package io.github.zachohara.percussionpacker.columntype;
 
+import io.github.zachohara.percussionpacker.cardentity.CardEntity;
 import io.github.zachohara.percussionpacker.column.Column;
 
 public class MalletColumn extends Column {
@@ -24,6 +25,12 @@ public class MalletColumn extends Column {
 
 	public MalletColumn() {
 		super(TITLE);
+	}
+
+	@Override
+	public boolean canRecieveCard(CardEntity card) {
+		Column owner = card.getColumn();
+		return owner instanceof MalletColumn || owner instanceof PackingColumn;
 	}
 
 }

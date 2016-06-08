@@ -14,14 +14,27 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package io.github.zachohara.percussionpacker.columntype;
+package io.github.zachohara.percussionpacker.cardentity;
 
-import io.github.zachohara.percussionpacker.column.Column;
+import io.github.zachohara.percussionpacker.util.GraphicsUtil;
 
-public class TestColumn extends Column {
+public class SpaceCard extends CardEntity {
 
-	public TestColumn(String title) {
-		super(title);
+	private CardEntity parentCard;
+
+	public SpaceCard(CardEntity sizingCard) {
+		super(false, false, false);
+
+		this.parentCard = sizingCard;
+
+		GraphicsUtil.copySizing(sizingCard, this);
+
+		this.setStyle("");
+	}
+
+	@Override
+	public String toString() {
+		return "SpaceCard[parent=" + this.parentCard + "]";
 	}
 
 }
