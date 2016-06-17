@@ -20,7 +20,7 @@ import io.github.zachohara.percussionpacker.card.Card;
 
 public class TestCard extends Card {
 
-	public static final double DEFAULT_HEIGHT = 40; // in pixels
+	public static final double DEFAULT_HEIGHT = 60; // in pixels
 
 	public TestCard() {
 		super(DEFAULT_HEIGHT, true, true);

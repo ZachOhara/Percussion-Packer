@@ -65,12 +65,14 @@ public abstract class ParentCard extends Card implements ButtonHandler, ResizeSe
 
 	@Override
 	protected void startDragging() {
+		super.startDragging();
 		// remove all children from the list
 		this.getOwner().removeChildren(this, this.children);
 	}
 
 	@Override
 	protected void finishDragging() {
+		super.finishDragging();
 		// add all children to the list
 		this.getOwner().addChildren(this, this.children);
 	}

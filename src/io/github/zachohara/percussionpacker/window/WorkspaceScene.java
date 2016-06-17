@@ -18,37 +18,33 @@ package io.github.zachohara.percussionpacker.window;
 
 import io.github.zachohara.eventfx.mouse.MouseEventListener;
 import io.github.zachohara.eventfx.mouse.MouseSelfHandler;
+import io.github.zachohara.materialfx.MaterialScene;
 import io.github.zachohara.percussionpacker.common.UnfocusableTextField;
 import io.github.zachohara.percussionpacker.util.GraphicsUtil;
 import javafx.event.EventType;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
 
-public class WorkspaceScene extends Scene implements MouseSelfHandler {
-
-	private WorkspaceRootPane rootPane;
+public class WorkspaceScene extends MaterialScene implements MouseSelfHandler {
 
 	public WorkspaceScene() {
 		super(new WorkspaceRootPane());
 
 		MouseEventListener.createSelfHandler(this);
-
-		this.rootPane = (WorkspaceRootPane) this.getRoot();
 	}
 
 	protected WorkspaceRootPane getWorkspaceRootPane() {
-		return this.rootPane;
+		return (WorkspaceRootPane) this.getRootPane();
 	}
 
 	public double getMinWidth() {
-		return this.rootPane.getMinWidth();
+		return this.getRootPane().getMinWidth();
 	}
 
 	public double getMinHeight() {
-		return this.rootPane.getMinHeight();
+		return this.getRootPane().getMinHeight();
 	}
 
 	@Override
@@ -64,7 +60,7 @@ public class WorkspaceScene extends Scene implements MouseSelfHandler {
 						&& mouseX < textFieldPos.getX() + textField.getWidth()
 						&& textFieldPos.getY() <= mouseY
 						&& mouseY < textFieldPos.getY() + textField.getHeight())) {
-					this.rootPane.requestFocus();
+					this.getRootPane().requestFocus();
 				}
 			}
 		}

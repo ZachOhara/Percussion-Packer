@@ -18,14 +18,14 @@ package io.github.zachohara.percussionpacker.card;
 
 import io.github.zachohara.eventfx.mouse.MouseEventListener;
 import io.github.zachohara.eventfx.mouse.MouseSelfHandler;
+import io.github.zachohara.materialfx.surface.MaterialCard;
 import io.github.zachohara.percussionpacker.cardentity.CardEntity;
-import io.github.zachohara.percussionpacker.common.BackingButton;
 import javafx.event.EventType;
 import javafx.scene.input.MouseEvent;
 
 public abstract class Card extends CardEntity implements MouseSelfHandler {
-
-	private BackingButton backingButton;
+	
+	private MaterialCard backingCard;
 	private CardContentPane contentPane;
 
 	public Card(double height, boolean retitleable, boolean nameable) {
@@ -35,12 +35,12 @@ public abstract class Card extends CardEntity implements MouseSelfHandler {
 
 		this.setImmutableHeight(height);
 
-		this.backingButton = new BackingButton();
+		this.backingCard = new MaterialCard();
 
 		this.contentPane = new CardContentPane(retitleable, nameable);
 		this.contentPane.setMinWidth(0);
 
-		this.getDisplayPane().getChildren().addAll(this.backingButton, this.contentPane);
+		this.getDisplayPane().getChildren().addAll(this.backingCard, this.contentPane);
 	}
 
 	public String getTitle() {
@@ -66,17 +66,17 @@ public abstract class Card extends CardEntity implements MouseSelfHandler {
 	@Override
 	public void handleMouse(MouseEvent event, EventType<? extends MouseEvent> type) {
 		if (type == MouseEvent.MOUSE_ENTERED) {
-			this.backingButton.arm();
+			//this.backingButton.arm();
 		} else if (type == MouseEvent.MOUSE_EXITED) {
-			this.backingButton.disarm();
+			//this.backingButton.disarm();
 		}
 	}
 
 	@Override
 	public void handleResize() {
 		super.handleResize();
-		this.backingButton.setPrefWidth(this.getContentWidth());
-		this.backingButton.setPrefHeight(this.getHeight());
+		this.backingCard.setPrefWidth(this.getContentWidth());
+		this.backingCard.setPrefHeight(this.getHeight());
 		this.contentPane.setPrefWidth(this.getContentWidth());
 		this.contentPane.setPrefHeight(this.getHeight());
 	}
@@ -85,6 +85,18 @@ public abstract class Card extends CardEntity implements MouseSelfHandler {
 		this.setPrefHeight(height);
 		this.setMinHeight(height);
 		this.setMaxHeight(height);
+	}
+	
+	@Override
+	protected void startDragging() {
+		super.startDragging();
+		this.backingCard.raise();
+	}
+	
+	@Override
+	protected void finishDragging() {
+		super.startDragging();
+		this.backingCard.rest();
 	}
 
 	@Override
