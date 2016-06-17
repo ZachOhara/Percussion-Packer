@@ -17,13 +17,13 @@
 package io.github.zachohara.percussionpacker.common;
 
 import io.github.zachohara.eventastic.resize.RegionResizeListener;
-import io.github.zachohara.eventastic.resize.ResizeSelfHandler;
+import io.github.zachohara.eventastic.resize.SelfResizeHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 
-public class BackingButton extends Region implements ResizeSelfHandler {
+public class BackingButton extends Region implements SelfResizeHandler {
 
 	public static final int HEIGHT_OFFSET = 1; // in pixels
 

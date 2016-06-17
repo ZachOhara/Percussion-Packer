@@ -17,12 +17,12 @@
 package io.github.zachohara.percussionpacker.card;
 
 import io.github.zachohara.eventastic.resize.RegionResizeListener;
-import io.github.zachohara.eventastic.resize.ResizeSelfHandler;
+import io.github.zachohara.eventastic.resize.SelfResizeHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.layout.BorderPane;
 
-public class CardContentPane extends BorderPane implements ResizeSelfHandler {
+public class CardContentPane extends BorderPane implements SelfResizeHandler {
 
 	public static final double HORIZONTAL_INSET_MARGIN = 8; // in pixels
 	public static final double VERTICAL_INSET_MARGIN = 0;

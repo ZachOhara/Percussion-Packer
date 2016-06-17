@@ -20,11 +20,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 import io.github.zachohara.eventastic.button.ButtonHandler;
-import io.github.zachohara.eventastic.resize.ResizeSelfHandler;
+import io.github.zachohara.eventastic.resize.SelfResizeHandler;
 import io.github.zachohara.percussionpacker.card.Card;
 import io.github.zachohara.percussionpacker.cardtype.EquipmentCard;
 
-public abstract class ParentCard extends Card implements ButtonHandler, ResizeSelfHandler {
+public abstract class ParentCard extends Card implements ButtonHandler, SelfResizeHandler {
 
 	public static final double DEFAULT_CHILD_INDENT = 25; // in pixels
 	public static final double INDENT_DECAY = 0.9;

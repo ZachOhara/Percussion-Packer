@@ -17,7 +17,7 @@
 package io.github.zachohara.percussionpacker.cardspace;
 
 import io.github.zachohara.eventastic.resize.RegionResizeListener;
-import io.github.zachohara.eventastic.resize.ResizeSelfHandler;
+import io.github.zachohara.eventastic.resize.SelfResizeHandler;
 import io.github.zachohara.percussionpacker.cardentity.CardEntity;
 import io.github.zachohara.percussionpacker.column.Column;
 import io.github.zachohara.percussionpacker.columntype.EquipmentColumn;
@@ -29,7 +29,7 @@ import io.github.zachohara.percussionpacker.util.MathUtil;
 import javafx.geometry.Point2D;
 import javafx.scene.layout.HBox;
 
-public class ColumnPane extends HBox implements ResizeSelfHandler {
+public class ColumnPane extends HBox implements SelfResizeHandler {
 
 	public static final int NUM_COLUMNS = 4;
 	public static final int NUM_SEPARATORS = NUM_COLUMNS - 1;

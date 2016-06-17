@@ -17,7 +17,7 @@
 package io.github.zachohara.percussionpacker.column;
 
 import io.github.zachohara.eventastic.focus.FocusChangeListener;
-import io.github.zachohara.eventastic.focus.FocusSelfHandler;
+import io.github.zachohara.eventastic.focus.SelfFocusHandler;
 import io.github.zachohara.percussionpacker.animation.scroll.InfiniteScroll;
 import io.github.zachohara.percussionpacker.animation.scroll.VerticalScrollTransition;
 import io.github.zachohara.percussionpacker.card.Card;
@@ -27,7 +27,7 @@ import javafx.application.Platform;
 import javafx.geometry.Point2D;
 import javafx.scene.control.ScrollPane;
 
-public class CardScrollPane extends ScrollPane implements FocusSelfHandler {
+public class CardScrollPane extends ScrollPane implements SelfFocusHandler {
 
 	public static final double MIN_HEIGHT = 40;
 

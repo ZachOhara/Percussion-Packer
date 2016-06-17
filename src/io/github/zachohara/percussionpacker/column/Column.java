@@ -17,14 +17,14 @@
 package io.github.zachohara.percussionpacker.column;
 
 import io.github.zachohara.eventastic.resize.RegionResizeListener;
-import io.github.zachohara.eventastic.resize.ResizeSelfHandler;
+import io.github.zachohara.eventastic.resize.SelfResizeHandler;
 import io.github.zachohara.percussionpacker.card.Card;
 import io.github.zachohara.percussionpacker.cardentity.CardEntity;
 import io.github.zachohara.percussionpacker.cardtype.TestCard;
 import javafx.geometry.Point2D;
 import javafx.scene.layout.VBox;
 
-public abstract class Column extends VBox implements ResizeSelfHandler {
+public abstract class Column extends VBox implements SelfResizeHandler {
 
 	public static final int MIN_WIDTH = 120;
 

@@ -17,7 +17,7 @@
 package io.github.zachohara.percussionpacker.cardentity;
 
 import io.github.zachohara.eventastic.resize.RegionResizeListener;
-import io.github.zachohara.eventastic.resize.ResizeSelfHandler;
+import io.github.zachohara.eventastic.resize.SelfResizeHandler;
 import io.github.zachohara.percussionpacker.column.CardOwner;
 import io.github.zachohara.percussionpacker.column.Column;
 import javafx.geometry.Point2D;
@@ -25,7 +25,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
-public abstract class CardEntity extends BorderPane implements ResizeSelfHandler {
+public abstract class CardEntity extends BorderPane implements SelfResizeHandler {
 
 	private Column column;
 	private CardOwner owner;

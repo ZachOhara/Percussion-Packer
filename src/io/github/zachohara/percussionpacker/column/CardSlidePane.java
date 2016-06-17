@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import io.github.zachohara.eventastic.resize.RegionResizeListener;
-import io.github.zachohara.eventastic.resize.ResizeSelfHandler;
+import io.github.zachohara.eventastic.resize.SelfResizeHandler;
 import io.github.zachohara.percussionpacker.animation.slide.SlideCompletionListener;
 import io.github.zachohara.percussionpacker.animation.slide.VerticalSlideTransition;
 import io.github.zachohara.percussionpacker.cardentity.CardEntity;
@@ -32,7 +32,7 @@ import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 
-public class CardSlidePane extends Pane implements ResizeSelfHandler, SlideCompletionListener {
+public class CardSlidePane extends Pane implements SelfResizeHandler, SlideCompletionListener {
 
 	private CardList cardList;
 

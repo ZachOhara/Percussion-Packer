@@ -22,9 +22,9 @@ import java.util.List;
 import java.util.Map;
 
 import io.github.zachohara.eventastic.mouse.MouseEventListener;
-import io.github.zachohara.eventastic.mouse.MouseSelfHandler;
+import io.github.zachohara.eventastic.mouse.SelfMouseHandler;
 import io.github.zachohara.eventastic.resize.RegionResizeListener;
-import io.github.zachohara.eventastic.resize.ResizeSelfHandler;
+import io.github.zachohara.eventastic.resize.SelfResizeHandler;
 import io.github.zachohara.percussionpacker.cardentity.CardEntity;
 import io.github.zachohara.percussionpacker.cardentity.GhostCard;
 import io.github.zachohara.percussionpacker.cardentity.ParentCard;
@@ -39,7 +39,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 
-public class CardList extends VBox implements CardOwner, MouseSelfHandler, ResizeSelfHandler {
+public class CardList extends VBox implements CardOwner, SelfMouseHandler, SelfResizeHandler {
 
 	private CardSlidePane slidePane;
 

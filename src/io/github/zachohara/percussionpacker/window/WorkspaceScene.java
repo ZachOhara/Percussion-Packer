@@ -17,7 +17,7 @@
 package io.github.zachohara.percussionpacker.window;
 
 import io.github.zachohara.eventastic.mouse.MouseEventListener;
-import io.github.zachohara.eventastic.mouse.MouseSelfHandler;
+import io.github.zachohara.eventastic.mouse.SelfMouseHandler;
 import io.github.zachohara.percussionpacker.common.UnfocusableTextField;
 import io.github.zachohara.percussionpacker.util.GraphicsUtil;
 import javafx.event.EventType;
@@ -27,7 +27,7 @@ import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
 
-public class WorkspaceScene extends Scene implements MouseSelfHandler {
+public class WorkspaceScene extends Scene implements SelfMouseHandler {
 
 	private WorkspaceRootPane rootPane;
 

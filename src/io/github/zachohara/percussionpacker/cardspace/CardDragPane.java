@@ -17,9 +17,9 @@
 package io.github.zachohara.percussionpacker.cardspace;
 
 import io.github.zachohara.eventastic.mouse.MouseEventListener;
-import io.github.zachohara.eventastic.mouse.MouseSelfHandler;
+import io.github.zachohara.eventastic.mouse.SelfMouseHandler;
 import io.github.zachohara.eventastic.resize.RegionResizeListener;
-import io.github.zachohara.eventastic.resize.ResizeSelfHandler;
+import io.github.zachohara.eventastic.resize.SelfResizeHandler;
 import io.github.zachohara.percussionpacker.animation.InterpolatedQuantity;
 import io.github.zachohara.percussionpacker.animation.resize.CenteredWidthTransition;
 import io.github.zachohara.percussionpacker.animation.resize.ResizeCompletionListener;
@@ -38,7 +38,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 
-public class CardDragPane extends Pane implements MouseSelfHandler, ResizeSelfHandler, SlideCompletionListener, ResizeProgressListener, ResizeCompletionListener {
+public class CardDragPane extends Pane implements SelfMouseHandler, SelfResizeHandler, SlideCompletionListener, ResizeProgressListener, ResizeCompletionListener {
 
 	public static final double DRAG_DIFFERENCE_THRESHOLD = 10;
 

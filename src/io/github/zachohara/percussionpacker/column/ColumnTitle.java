@@ -17,12 +17,12 @@
 package io.github.zachohara.percussionpacker.column;
 
 import io.github.zachohara.eventastic.resize.RegionResizeListener;
-import io.github.zachohara.eventastic.resize.ResizeSelfHandler;
+import io.github.zachohara.eventastic.resize.SelfResizeHandler;
 import io.github.zachohara.percussionpacker.common.BackingButton;
 import io.github.zachohara.percussionpacker.common.ShrinkableLabel;
 import javafx.scene.layout.StackPane;
 
-public class ColumnTitle extends StackPane implements ResizeSelfHandler {
+public class ColumnTitle extends StackPane implements SelfResizeHandler {
 
 	public static final String TITLE_FONT = "Roboto Medium";
 	public static final double MAX_FONT_SIZE = 24;

@@ -18,14 +18,14 @@ package io.github.zachohara.percussionpacker.common;
 
 import io.github.zachohara.eventastic.mouse.MouseListenable;
 import io.github.zachohara.eventastic.resize.RegionResizeListener;
-import io.github.zachohara.eventastic.resize.ResizeSelfHandler;
+import io.github.zachohara.eventastic.resize.SelfResizeHandler;
 import io.github.zachohara.materialish.font.MaterialLabel;
 import javafx.geometry.Pos;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
-public class ShrinkableLabel extends BorderPane implements MouseListenable, ResizeSelfHandler {
+public class ShrinkableLabel extends BorderPane implements MouseListenable, SelfResizeHandler {
 
 	public static final double DEFAULT_WIDTH_BUFFER = 1; // in pixels
 	public static final double DEFAULT_HEIGHT_BUFFER = 2; // in pixels

@@ -17,13 +17,13 @@
 package io.github.zachohara.percussionpacker.card;
 
 import io.github.zachohara.eventastic.mouse.MouseEventListener;
-import io.github.zachohara.eventastic.mouse.MouseSelfHandler;
+import io.github.zachohara.eventastic.mouse.SelfMouseHandler;
 import io.github.zachohara.percussionpacker.cardentity.CardEntity;
 import io.github.zachohara.percussionpacker.common.BackingButton;
 import javafx.event.EventType;
 import javafx.scene.input.MouseEvent;
 
-public abstract class Card extends CardEntity implements MouseSelfHandler {
+public abstract class Card extends CardEntity implements SelfMouseHandler {
 
 	private BackingButton backingButton;
 	private CardContentPane contentPane;

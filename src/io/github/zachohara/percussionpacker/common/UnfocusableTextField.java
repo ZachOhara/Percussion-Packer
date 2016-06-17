@@ -18,13 +18,13 @@ package io.github.zachohara.percussionpacker.common;
 
 import io.github.zachohara.eventastic.focus.FocusListenable;
 import io.github.zachohara.eventastic.key.KeyEventListener;
-import io.github.zachohara.eventastic.key.KeySelfHandler;
+import io.github.zachohara.eventastic.key.SelfKeyHandler;
 import javafx.event.EventType;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
-public class UnfocusableTextField extends TextField implements KeySelfHandler, FocusListenable {
+public class UnfocusableTextField extends TextField implements SelfKeyHandler, FocusListenable {
 
 	public UnfocusableTextField() {
 		super();

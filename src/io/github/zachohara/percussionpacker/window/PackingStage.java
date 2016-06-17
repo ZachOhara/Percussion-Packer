@@ -17,14 +17,14 @@
 package io.github.zachohara.percussionpacker.window;
 
 import io.github.zachohara.eventastic.window.WindowEventListener;
-import io.github.zachohara.eventastic.window.WindowSelfHandler;
+import io.github.zachohara.eventastic.window.SelfWindowHandler;
 import io.github.zachohara.percussionpacker.cardspace.CardDragPane;
 import javafx.application.Platform;
 import javafx.event.EventType;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
-public class PackingStage extends Stage implements WindowSelfHandler {
+public class PackingStage extends Stage implements SelfWindowHandler {
 
 	public static final String WINDOW_TITLE = "Percussion Packer by Zach Ohara";
 	public static final int DEFAULT_HEIGHT = 500; // in pixels

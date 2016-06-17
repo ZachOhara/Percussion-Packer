@@ -17,17 +17,17 @@
 package io.github.zachohara.percussionpacker.cardentity;
 
 import io.github.zachohara.eventastic.button.ButtonHandler;
-import io.github.zachohara.eventastic.button.ButtonPressListener;
+import io.github.zachohara.eventastic.button.ButtonListener;
 import io.github.zachohara.eventastic.resize.RegionResizeListener;
-import io.github.zachohara.eventastic.resize.ResizeSelfHandler;
+import io.github.zachohara.eventastic.resize.SelfResizeHandler;
 import javafx.scene.control.Button;
 
-public class CreateChildButton extends CardEntity implements ResizeSelfHandler {
+public class CreateChildButton extends CardEntity implements SelfResizeHandler {
 
 	public static final double DEFAULT_BUTTON_HEIGHT = 24; // in pixels
 
 	private Button button;
-	private ButtonPressListener listener;
+	private ButtonListener listener;
 
 	public CreateChildButton(String buttonText) {
 		super(false, false, false);
@@ -35,7 +35,7 @@ public class CreateChildButton extends CardEntity implements ResizeSelfHandler {
 		RegionResizeListener.createSelfHandler(this);
 
 		this.button = new Button(buttonText);
-		this.listener = new ButtonPressListener(this.button);
+		this.listener = new ButtonListener(this.button);
 
 		this.button.setPrefHeight(DEFAULT_BUTTON_HEIGHT);
 		this.setPrefHeight(this.button.getPrefHeight());

@@ -17,12 +17,12 @@
 package io.github.zachohara.percussionpacker.window;
 
 import io.github.zachohara.eventastic.resize.RegionResizeListener;
-import io.github.zachohara.eventastic.resize.ResizeSelfHandler;
+import io.github.zachohara.eventastic.resize.SelfResizeHandler;
 import io.github.zachohara.percussionpacker.cardspace.CardDragPane;
 import io.github.zachohara.percussionpacker.util.GraphicsUtil;
 import javafx.scene.layout.Pane;
 
-public class WorkspaceRootPane extends Pane implements ResizeSelfHandler {
+public class WorkspaceRootPane extends Pane implements SelfResizeHandler {
 
 	private CardDragPane cardPane;
 

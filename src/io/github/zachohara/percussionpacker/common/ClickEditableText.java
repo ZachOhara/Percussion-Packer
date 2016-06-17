@@ -22,13 +22,13 @@ import io.github.zachohara.eventastic.mouse.MouseEventListener;
 import io.github.zachohara.eventastic.mouse.MouseHandler;
 import io.github.zachohara.eventastic.resize.RegionResizeListener;
 import io.github.zachohara.eventastic.resize.ResizeHandler;
-import io.github.zachohara.eventastic.resize.ResizeSelfHandler;
+import io.github.zachohara.eventastic.resize.SelfResizeHandler;
 import javafx.event.EventType;
 import javafx.geometry.Pos;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 
-public class ClickEditableText extends BorderPane implements FocusHandler, MouseHandler, ResizeSelfHandler {
+public class ClickEditableText extends BorderPane implements FocusHandler, MouseHandler, SelfResizeHandler {
 
 	public static final double MIN_DRAG_THRESHOLD = 10; // in pixels
 

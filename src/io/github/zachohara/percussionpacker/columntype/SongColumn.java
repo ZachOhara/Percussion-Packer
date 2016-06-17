@@ -17,7 +17,7 @@
 package io.github.zachohara.percussionpacker.columntype;
 
 import io.github.zachohara.eventastic.button.ButtonHandler;
-import io.github.zachohara.eventastic.button.ButtonPressListener;
+import io.github.zachohara.eventastic.button.ButtonListener;
 import io.github.zachohara.percussionpacker.card.Card;
 import io.github.zachohara.percussionpacker.cardentity.CardEntity;
 import io.github.zachohara.percussionpacker.cardtype.SongNameCard;
@@ -38,7 +38,7 @@ public class SongColumn extends Column implements ButtonHandler {
 		this.addSongButton = new Button(BUTTON_TEXT);
 		this.addSongButton.setPrefHeight(BUTTON_HEIGHT);
 		this.addSongButton.setStyle(BUTTON_STYLE);
-		new ButtonPressListener(this.addSongButton).addHandler(this);
+		new ButtonListener(this.addSongButton).addHandler(this);
 		this.getChildren().add(this.addSongButton);
 	}
 

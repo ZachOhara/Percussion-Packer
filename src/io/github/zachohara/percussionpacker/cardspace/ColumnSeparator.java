@@ -17,14 +17,14 @@
 package io.github.zachohara.percussionpacker.cardspace;
 
 import io.github.zachohara.eventastic.mouse.MouseEventListener;
-import io.github.zachohara.eventastic.mouse.MouseSelfHandler;
+import io.github.zachohara.eventastic.mouse.SelfMouseHandler;
 import io.github.zachohara.percussionpacker.column.Column;
 import javafx.event.EventType;
 import javafx.scene.Cursor;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 
-public class ColumnSeparator extends Pane implements MouseSelfHandler {
+public class ColumnSeparator extends Pane implements SelfMouseHandler {
 
 	public static final String STYLE = "-fx-background-color: black;"
 			+ "-fx-background-radius: 3 3 3 3";
