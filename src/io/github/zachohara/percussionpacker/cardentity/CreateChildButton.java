@@ -27,24 +27,19 @@ public class CreateChildButton extends CardEntity implements SelfResizeHandler {
 	public static final double DEFAULT_BUTTON_HEIGHT = 24; // in pixels
 
 	private Button button;
-	private ButtonListener listener;
 
-	public CreateChildButton(String buttonText) {
+	public CreateChildButton(String buttonText, ButtonHandler handler) {
 		super(false, false, false);
 
-		RegionResizeListener.createSelfHandler(this);
+		new RegionResizeListener(this);
 
 		this.button = new Button(buttonText);
-		this.listener = new ButtonListener(this.button);
+		new ButtonListener(this.button, handler);
 
 		this.button.setPrefHeight(DEFAULT_BUTTON_HEIGHT);
 		this.setPrefHeight(this.button.getPrefHeight());
 
 		this.getDisplayPane().getChildren().add(this.button);
-	}
-
-	public void addHandler(ButtonHandler handler) {
-		this.listener.addHandler(handler);
 	}
 
 	@Override

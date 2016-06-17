@@ -37,8 +37,7 @@ public abstract class ParentCard extends Card implements ButtonHandler, SelfResi
 	protected ParentCard(double height, boolean retitleable, boolean nameable) {
 		super(height, retitleable, nameable);
 
-		CreateChildButton button = new CreateChildButton(BUTTON_TEXT);
-		button.addHandler(this);
+		CreateChildButton button = new CreateChildButton(BUTTON_TEXT, this);
 
 		this.children = new LinkedList<CardEntity>();
 		this.children.add(button);

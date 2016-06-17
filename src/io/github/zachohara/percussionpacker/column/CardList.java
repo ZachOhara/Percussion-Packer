@@ -52,8 +52,8 @@ public class CardList extends VBox implements CardOwner, SelfMouseHandler, SelfR
 
 		this.slidePane = slidePane;
 
-		MouseEventListener.createSelfHandler(this);
-		RegionResizeListener.createSelfHandler(this);
+		new MouseEventListener(this);
+		new RegionResizeListener(this);
 
 		this.cards = new ArrayList<CardEntity>();
 		this.spacerMap = new HashMap<CardEntity, SpaceCard>();

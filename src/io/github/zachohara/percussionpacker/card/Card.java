@@ -31,7 +31,7 @@ public abstract class Card extends CardEntity implements SelfMouseHandler {
 	public Card(double height, boolean retitleable, boolean nameable) {
 		super(true, retitleable, nameable);
 
-		MouseEventListener.createSelfHandler(this);
+		new MouseEventListener(this);
 
 		this.setImmutableHeight(height);
 

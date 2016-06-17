@@ -62,8 +62,8 @@ public class CardDragPane extends Pane implements SelfMouseHandler, SelfResizeHa
 	public CardDragPane() {
 		super();
 
-		MouseEventListener.createSelfHandler(this);
-		RegionResizeListener.createSelfHandler(this);
+		new MouseEventListener(this);
+		new RegionResizeListener(this);
 
 		this.columnPane = new ColumnPane();
 

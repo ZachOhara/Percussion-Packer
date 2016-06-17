@@ -42,7 +42,7 @@ public abstract class CardEntity extends BorderPane implements SelfResizeHandler
 	public CardEntity(boolean draggable, boolean retitleable, boolean nameable) {
 		super();
 
-		RegionResizeListener.createSelfHandler(this);
+		new RegionResizeListener(this);
 
 		this.indentPane = new Pane();
 		this.displayPane = new StackPane();

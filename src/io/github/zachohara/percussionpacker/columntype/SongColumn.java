@@ -38,7 +38,7 @@ public class SongColumn extends Column implements ButtonHandler {
 		this.addSongButton = new Button(BUTTON_TEXT);
 		this.addSongButton.setPrefHeight(BUTTON_HEIGHT);
 		this.addSongButton.setStyle(BUTTON_STYLE);
-		new ButtonListener(this.addSongButton).addHandler(this);
+		new ButtonListener(this.addSongButton, this);
 		this.getChildren().add(this.addSongButton);
 	}
 

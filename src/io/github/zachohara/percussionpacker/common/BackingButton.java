@@ -32,7 +32,7 @@ public class BackingButton extends Region implements SelfResizeHandler {
 	public BackingButton() {
 		super();
 
-		RegionResizeListener.createSelfHandler(this);
+		new RegionResizeListener(this);
 
 		this.button = new Button();
 		this.button.setFocusTraversable(false);

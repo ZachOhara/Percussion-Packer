@@ -34,7 +34,7 @@ public abstract class Column extends VBox implements SelfResizeHandler {
 	protected Column(String title) {
 		super();
 
-		RegionResizeListener.createSelfHandler(this);
+		new RegionResizeListener(this);
 
 		this.titlePane = new ColumnTitle(title);
 		this.cardList = new CardScrollPane();

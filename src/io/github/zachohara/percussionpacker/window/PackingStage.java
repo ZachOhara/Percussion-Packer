@@ -37,7 +37,7 @@ public class PackingStage extends Stage implements SelfWindowHandler {
 	public PackingStage() {
 		super();
 
-		WindowEventListener.createSelfHandler(this);
+		new WindowEventListener(this);
 
 		PackingStage.singleton = this;
 

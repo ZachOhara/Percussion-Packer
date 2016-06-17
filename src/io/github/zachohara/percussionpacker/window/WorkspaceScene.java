@@ -34,7 +34,7 @@ public class WorkspaceScene extends Scene implements SelfMouseHandler {
 	public WorkspaceScene() {
 		super(new WorkspaceRootPane());
 
-		MouseEventListener.createSelfHandler(this);
+		new MouseEventListener(this);
 
 		this.rootPane = (WorkspaceRootPane) this.getRoot();
 	}

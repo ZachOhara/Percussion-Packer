@@ -41,7 +41,7 @@ public class ColumnPane extends HBox implements SelfResizeHandler {
 	public ColumnPane() {
 		super();
 
-		RegionResizeListener.createSelfHandler(this);
+		new RegionResizeListener(this);
 
 		this.widthRatios = new double[NUM_COLUMNS];
 		this.columns = new Column[NUM_COLUMNS];

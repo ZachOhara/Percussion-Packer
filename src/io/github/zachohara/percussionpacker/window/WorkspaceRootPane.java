@@ -29,7 +29,7 @@ public class WorkspaceRootPane extends Pane implements SelfResizeHandler {
 	public WorkspaceRootPane() {
 		super();
 
-		RegionResizeListener.createSelfHandler(this);
+		new RegionResizeListener(this);
 
 		this.setPrefWidth(PackingStage.DEFAULT_WIDTH);
 		this.setPrefHeight(PackingStage.DEFAULT_HEIGHT);

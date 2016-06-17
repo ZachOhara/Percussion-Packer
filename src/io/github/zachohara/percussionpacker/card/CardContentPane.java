@@ -39,7 +39,7 @@ public class CardContentPane extends BorderPane implements SelfResizeHandler {
 	public CardContentPane(boolean retitleable, boolean nameable) {
 		super();
 
-		RegionResizeListener.createSelfHandler(this);
+		new RegionResizeListener(this);
 
 		this.title = new CardTitle(retitleable);
 		this.title.setNotifyableParent(this);

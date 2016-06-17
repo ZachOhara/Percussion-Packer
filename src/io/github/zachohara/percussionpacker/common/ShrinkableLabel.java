@@ -42,7 +42,7 @@ public class ShrinkableLabel extends BorderPane implements MouseListenable, Self
 	public ShrinkableLabel(String fontStyle, double maxFontSize) {
 		super();
 
-		RegionResizeListener.createSelfHandler(this);
+		new RegionResizeListener(this);
 
 		this.maxFontSize = maxFontSize;
 		this.widthBuffer = DEFAULT_WIDTH_BUFFER;

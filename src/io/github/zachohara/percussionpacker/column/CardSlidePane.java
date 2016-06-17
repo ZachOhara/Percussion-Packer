@@ -43,7 +43,7 @@ public class CardSlidePane extends Pane implements SelfResizeHandler, SlideCompl
 	public CardSlidePane(CardScrollPane parent) {
 		super();
 
-		RegionResizeListener.createSelfHandler(this);
+		new RegionResizeListener(this);
 
 		this.cardList = new CardList(this);
 

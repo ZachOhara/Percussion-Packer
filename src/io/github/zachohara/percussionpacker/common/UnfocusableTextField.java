@@ -29,7 +29,7 @@ public class UnfocusableTextField extends TextField implements SelfKeyHandler, F
 	public UnfocusableTextField() {
 		super();
 
-		KeyEventListener.createSelfHandler(this);
+		new KeyEventListener(this);
 	}
 
 	@Override

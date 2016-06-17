@@ -50,17 +50,17 @@ public class ClickEditableText extends BorderPane implements FocusHandler, Mouse
 			boolean isEditable) {
 		super();
 
-		RegionResizeListener.createSelfHandler(this);
+		new RegionResizeListener(this);
 
 		this.defaultText = defaultText;
 		this.isEditable = isEditable;
 
 		this.displayLabel = new ShrinkableLabel(fontStyle, maxFontSize);
-		new MouseEventListener(this.displayLabel).addHandler(this);
+		new MouseEventListener(this.displayLabel, this);
 		BorderPane.setAlignment(this.displayLabel, Pos.CENTER);
 
 		this.textField = new UnfocusableTextField();
-		new FocusChangeListener(this.textField).addHandler(this);
+		new FocusChangeListener(this.textField, this);
 		BorderPane.setAlignment(this.textField, Pos.CENTER);
 
 		this.finishRenaming();

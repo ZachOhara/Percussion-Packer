@@ -45,7 +45,7 @@ public class CardScrollPane extends ScrollPane implements SelfFocusHandler {
 	public CardScrollPane() {
 		super();
 
-		FocusChangeListener.createSelfHandler(this);
+		new FocusChangeListener(this);
 
 		this.setHbarPolicy(ScrollBarPolicy.NEVER);
 		this.setVbarPolicy(ScrollBarPolicy.AS_NEEDED);
