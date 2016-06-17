@@ -19,8 +19,8 @@ package io.github.zachohara.percussionpacker.cardentity;
 import java.util.LinkedList;
 import java.util.List;
 
-import io.github.zachohara.eventfx.button.ButtonHandler;
-import io.github.zachohara.eventfx.resize.ResizeSelfHandler;
+import io.github.zachohara.eventastic.button.ButtonHandler;
+import io.github.zachohara.eventastic.resize.ResizeSelfHandler;
 import io.github.zachohara.percussionpacker.card.Card;
 import io.github.zachohara.percussionpacker.cardtype.EquipmentCard;
 

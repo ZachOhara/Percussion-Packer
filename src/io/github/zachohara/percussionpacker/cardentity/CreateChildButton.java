@@ -16,10 +16,10 @@
 
 package io.github.zachohara.percussionpacker.cardentity;
 
-import io.github.zachohara.eventfx.button.ButtonHandler;
-import io.github.zachohara.eventfx.button.ButtonPressListener;
-import io.github.zachohara.eventfx.resize.RegionResizeListener;
-import io.github.zachohara.eventfx.resize.ResizeSelfHandler;
+import io.github.zachohara.eventastic.button.ButtonHandler;
+import io.github.zachohara.eventastic.button.ButtonPressListener;
+import io.github.zachohara.eventastic.resize.RegionResizeListener;
+import io.github.zachohara.eventastic.resize.ResizeSelfHandler;
 import javafx.scene.control.Button;
 
 public class CreateChildButton extends CardEntity implements ResizeSelfHandler {

@@ -16,8 +16,8 @@
 
 package io.github.zachohara.percussionpacker.card;
 
-import io.github.zachohara.eventfx.mouse.MouseEventListener;
-import io.github.zachohara.eventfx.mouse.MouseSelfHandler;
+import io.github.zachohara.eventastic.mouse.MouseEventListener;
+import io.github.zachohara.eventastic.mouse.MouseSelfHandler;
 import io.github.zachohara.percussionpacker.cardentity.CardEntity;
 import io.github.zachohara.percussionpacker.common.BackingButton;
 import javafx.event.EventType;

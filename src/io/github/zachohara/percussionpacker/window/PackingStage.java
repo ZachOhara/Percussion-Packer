@@ -16,8 +16,8 @@
 
 package io.github.zachohara.percussionpacker.window;
 
-import io.github.zachohara.eventfx.window.WindowEventListener;
-import io.github.zachohara.eventfx.window.WindowSelfHandler;
+import io.github.zachohara.eventastic.window.WindowEventListener;
+import io.github.zachohara.eventastic.window.WindowSelfHandler;
 import io.github.zachohara.percussionpacker.cardspace.CardDragPane;
 import javafx.application.Platform;
 import javafx.event.EventType;

@@ -16,13 +16,13 @@
 
 package io.github.zachohara.percussionpacker.common;
 
-import io.github.zachohara.eventfx.focus.FocusChangeListener;
-import io.github.zachohara.eventfx.focus.FocusHandler;
-import io.github.zachohara.eventfx.mouse.MouseEventListener;
-import io.github.zachohara.eventfx.mouse.MouseHandler;
-import io.github.zachohara.eventfx.resize.RegionResizeListener;
-import io.github.zachohara.eventfx.resize.ResizeHandler;
-import io.github.zachohara.eventfx.resize.ResizeSelfHandler;
+import io.github.zachohara.eventastic.focus.FocusChangeListener;
+import io.github.zachohara.eventastic.focus.FocusHandler;
+import io.github.zachohara.eventastic.mouse.MouseEventListener;
+import io.github.zachohara.eventastic.mouse.MouseHandler;
+import io.github.zachohara.eventastic.resize.RegionResizeListener;
+import io.github.zachohara.eventastic.resize.ResizeHandler;
+import io.github.zachohara.eventastic.resize.ResizeSelfHandler;
 import javafx.event.EventType;
 import javafx.geometry.Pos;
 import javafx.scene.input.MouseEvent;
