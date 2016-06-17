@@ -19,12 +19,11 @@ package io.github.zachohara.percussionpacker.common;
 import io.github.zachohara.eventfx.mouse.MouseListenable;
 import io.github.zachohara.eventfx.resize.RegionResizeListener;
 import io.github.zachohara.eventfx.resize.ResizeSelfHandler;
+import io.github.zachohara.materialish.font.MaterialLabel;
 import javafx.geometry.Pos;
-import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 
 public class ShrinkableLabel extends BorderPane implements MouseListenable, ResizeSelfHandler {
 
@@ -38,8 +37,7 @@ public class ShrinkableLabel extends BorderPane implements MouseListenable, Resi
 	private double widthBuffer;
 	private double heightBuffer;
 
-	private Font font;
-	private Label displayText;
+	private MaterialLabel displayText;
 
 	public ShrinkableLabel(String fontStyle, double maxFontSize) {
 		super();
@@ -49,12 +47,11 @@ public class ShrinkableLabel extends BorderPane implements MouseListenable, Resi
 		this.maxFontSize = maxFontSize;
 		this.widthBuffer = DEFAULT_WIDTH_BUFFER;
 		this.heightBuffer = DEFAULT_HEIGHT_BUFFER;
-
-		this.font = new Font(fontStyle, 0);
-		this.displayText = new Label();
+		
+		this.displayText = new MaterialLabel();
+		this.setFont(fontStyle);
 
 		this.displayText.setAlignment(Pos.CENTER);
-		this.displayText.setTextAlignment(TextAlignment.CENTER);
 
 		this.setFontSize(this.maxFontSize);
 
@@ -83,8 +80,8 @@ public class ShrinkableLabel extends BorderPane implements MouseListenable, Resi
 	}
 
 	public void setFont(String font) {
-		this.font = new Font(font, this.getFontSize());
-		this.displayText.setFont(this.font);
+		this.displayText.setFontStyle(font);
+		//this.font = this.displayText.getFont();
 		this.handleResize();
 	}
 
@@ -98,6 +95,8 @@ public class ShrinkableLabel extends BorderPane implements MouseListenable, Resi
 
 	@Override
 	public void handleResize() {
+		this.displayText.setPrefWidth(this.getWidth());
+		this.displayText.setPrefHeight(this.getHeight());
 		if (this.textHasSize()) {
 			while (this.isTextUndersized()) {
 				this.incrementFontSize(FONT_SIZE_INCREMENT);
@@ -113,12 +112,11 @@ public class ShrinkableLabel extends BorderPane implements MouseListenable, Resi
 	}
 
 	private double getFontSize() {
-		return this.font.getSize();
+		return this.displayText.getFontSize();
 	}
 
 	private void setFontSize(double size) {
-		this.font = new Font(this.font.getName(), size);
-		this.displayText.setFont(this.font);
+		this.displayText.setFontSize(size);
 	}
 
 	private boolean isTextOversized() {
@@ -157,7 +155,7 @@ public class ShrinkableLabel extends BorderPane implements MouseListenable, Resi
 		Text duplicate = new Text();
 		duplicate.setText(this.displayText.getText());
 		duplicate.setStyle(this.displayText.getStyle());
-		duplicate.setFont(new Font(this.font.getName(), this.maxFontSize));
+		duplicate.setFont(new Font(this.displayText.getFont().getName(), this.maxFontSize));
 		return duplicate;
 	}
 

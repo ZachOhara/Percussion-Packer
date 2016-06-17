@@ -24,7 +24,7 @@ import javafx.scene.layout.StackPane;
 
 public class ColumnTitle extends StackPane implements ResizeSelfHandler {
 
-	public static final String TITLE_FONT = "Arial Bold";
+	public static final String TITLE_FONT = "Roboto Medium";
 	public static final double MAX_FONT_SIZE = 24;
 
 	public static final double WIDTH_BUFFER = 8;
