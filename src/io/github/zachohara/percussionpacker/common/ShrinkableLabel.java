@@ -33,20 +33,25 @@ public class ShrinkableLabel extends BorderPane implements MouseListenable, Self
 	public static final double FONT_SIZE_INCREMENT = 0.1;
 	public static final double MIN_FONT_SIZE = 1;
 
-	private double maxFontSize;
-	private double widthBuffer;
-	private double heightBuffer;
+	private final MaterialLabel displayText;
+	
+	private final double widthBuffer;
+	private final double heightBuffer;
 
-	private MaterialLabel displayText;
+	private double maxFontSize;
 
 	public ShrinkableLabel(String fontStyle, double maxFontSize) {
+		this(fontStyle, maxFontSize, DEFAULT_WIDTH_BUFFER, DEFAULT_HEIGHT_BUFFER);
+	}
+	
+	public ShrinkableLabel(String fontStyle, double maxFontSize, double widthBuffer, double heightBuffer) {
 		super();
 
 		new RegionResizeListener(this);
 
 		this.maxFontSize = maxFontSize;
-		this.widthBuffer = DEFAULT_WIDTH_BUFFER;
-		this.heightBuffer = DEFAULT_HEIGHT_BUFFER;
+		this.widthBuffer = widthBuffer;
+		this.heightBuffer = heightBuffer;
 		
 		this.displayText = new MaterialLabel();
 		this.setFont(fontStyle);
@@ -56,14 +61,6 @@ public class ShrinkableLabel extends BorderPane implements MouseListenable, Self
 		this.setFontSize(this.maxFontSize);
 
 		this.setCenter(this.displayText);
-	}
-
-	public void setWidthBuffer(double widthBuffer) {
-		this.widthBuffer = widthBuffer;
-	}
-
-	public void setHeightBuffer(double heightBuffer) {
-		this.heightBuffer = heightBuffer;
 	}
 
 	public String getText() {
@@ -81,7 +78,6 @@ public class ShrinkableLabel extends BorderPane implements MouseListenable, Self
 
 	public void setFont(String font) {
 		this.displayText.setFontStyle(font);
-		//this.font = this.displayText.getFont();
 		this.handleResize();
 	}
 

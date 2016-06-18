@@ -41,10 +41,8 @@ public class ColumnTitle extends StackPane implements SelfResizeHandler {
 
 		new RegionResizeListener(this);
 
-		this.titleText = new ShrinkableLabel(TITLE_FONT, MAX_FONT_SIZE);
+		this.titleText = new ShrinkableLabel(TITLE_FONT, MAX_FONT_SIZE, WIDTH_BUFFER, HEIGHT_BUFFER);
 		this.titleText.setText(name);
-		this.titleText.setWidthBuffer(WIDTH_BUFFER);
-		this.titleText.setHeightBuffer(HEIGHT_BUFFER);
 
 		this.baseButton = new BackingButton();
 

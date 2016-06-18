@@ -98,14 +98,6 @@ public class ClickEditableText extends BorderPane implements FocusHandler, Mouse
 		this.notifyParent();
 	}
 
-	public void setWidthBuffer(double widthBuffer) {
-		this.displayLabel.setWidthBuffer(widthBuffer);
-	}
-
-	public void setHeightBuffer(double heightBuffer) {
-		this.displayLabel.setHeightBuffer(heightBuffer);
-	}
-
 	public void setDisplayTextStyle(String style) {
 		this.displayLabel.setTextStyle(style);
 	}

@@ -42,8 +42,9 @@ public class CardNameTag extends ClickEditableText {
 	public CardNameTag() {
 		super(DEFAULT_TEXT, UNNAMED_FONT, MAX_FONT_SIZE, true);
 
-		this.setWidthBuffer(CardNameTag.getBackgroundHorizontalOffset());
-		this.setHeightBuffer(CardNameTag.getBackgroundVerticalOffset());
+		// not needed?
+		//this.setWidthBuffer(CardNameTag.getBackgroundHorizontalOffset());
+		//this.setHeightBuffer(CardNameTag.getBackgroundVerticalOffset());
 	}
 
 	@Override
@@ -60,6 +61,7 @@ public class CardNameTag extends ClickEditableText {
 		super.setText(text);
 	}
 
+	/*
 	private static double getBackgroundHorizontalOffset() {
 		return 2 * BACKGROUND_WIDTH;
 	}
@@ -67,5 +69,6 @@ public class CardNameTag extends ClickEditableText {
 	private static double getBackgroundVerticalOffset() {
 		return 2 * BACKGROUND_HEIGHT;
 	}
+	*/
 
 }
