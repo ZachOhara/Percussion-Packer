@@ -91,8 +91,6 @@ public class ShrinkableLabel extends BorderPane implements MouseListenable, Self
 
 	@Override
 	public void handleResize() {
-		this.displayText.setPrefWidth(this.getWidth());
-		this.displayText.setPrefHeight(this.getHeight());
 		if (this.textHasSize()) {
 			while (this.isTextUndersized()) {
 				this.incrementFontSize(FONT_SIZE_INCREMENT);
