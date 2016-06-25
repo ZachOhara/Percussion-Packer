@@ -14,20 +14,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package io.github.zachohara.percussionpacker.animation.scroll;
+package io.github.zachohara.percussionpacker.animation;
 
-import io.github.zachohara.percussionpacker.animation.PropertyTransition;
-import javafx.scene.control.ScrollPane;
-import javafx.util.Duration;
+import io.github.zachohara.materialish.transition.translation.TranslationTransition;
+import io.github.zachohara.percussionpacker.cardentity.CardEntity;
 
-public class VerticalScrollTransition extends PropertyTransition {
-
-	public static final double DURATION = 500; // in milliseconds
-
-	public VerticalScrollTransition(ScrollPane pane, double endValue) {
-		super(pane.vvalueProperty(), endValue - pane.getVvalue());
+public class CardAlignmentSnap extends TranslationTransition {
+	
+	private static final double DURATION = 150; // milliseconds;
+	
+	public CardAlignmentSnap(CardEntity translatingCard, double distanceX, double distanceY) {
+		super(translatingCard, distanceX, distanceY);
 		
-		this.setCycleDuration(Duration.millis(DURATION));
+		this.setMilliDuration(DURATION);
 	}
-
+	
 }

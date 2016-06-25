@@ -16,30 +16,17 @@
 
 package io.github.zachohara.percussionpacker.animation;
 
-import javafx.animation.Transition;
-import javafx.beans.property.DoubleProperty;
+import io.github.zachohara.materialish.transition.scroll.VerticalScroll;
+import javafx.scene.control.ScrollPane;
 
-public class PropertyTransition extends Transition {
-
-	private DoubleProperty property;
-	private InterpolatedQuantity interpolator;
-
-	public PropertyTransition(DoubleProperty property, double difference) {
-		this.property = property;
-		this.interpolator = new InterpolatedQuantity(property.get(), difference);
+public class CardListScroll extends VerticalScroll {
+	
+	private static final double DURATION = 500; // milliseconds
+	
+	public CardListScroll(ScrollPane scrollingPane, double endValue) {
+		super(scrollingPane, endValue);
+		
+		this.setMilliDuration(DURATION);
 	}
-
-	public double getStartValue() {
-		return this.interpolator.getStartValue();
-	}
-
-	public double getDifference() {
-		return this.interpolator.getDifference();
-	}
-
-	@Override
-	public void interpolate(double fraction) {
-		this.property.set(this.interpolator.getInterpolatedValue(fraction));
-	}
-
+	
 }

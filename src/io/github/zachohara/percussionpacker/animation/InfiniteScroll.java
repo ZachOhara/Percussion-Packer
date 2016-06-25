@@ -14,7 +14,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package io.github.zachohara.percussionpacker.animation.scroll;
+package io.github.zachohara.percussionpacker.animation;
 
 import io.github.zachohara.percussionpacker.column.CardScrollPane;
 import javafx.animation.Interpolator;

@@ -18,8 +18,8 @@ package io.github.zachohara.percussionpacker.column;
 
 import io.github.zachohara.eventastic.focus.FocusChangeListener;
 import io.github.zachohara.eventastic.focus.SelfFocusHandler;
-import io.github.zachohara.percussionpacker.animation.scroll.InfiniteScroll;
-import io.github.zachohara.percussionpacker.animation.scroll.VerticalScrollTransition;
+import io.github.zachohara.percussionpacker.animation.CardListScroll;
+import io.github.zachohara.percussionpacker.animation.InfiniteScroll;
 import io.github.zachohara.percussionpacker.card.Card;
 import io.github.zachohara.percussionpacker.cardentity.CardEntity;
 import io.github.zachohara.percussionpacker.cardentity.GhostCard;
@@ -128,7 +128,7 @@ public class CardScrollPane extends ScrollPane implements SelfFocusHandler {
 	}
 
 	private void scrollToPosition(double verticalPos) {
-		new VerticalScrollTransition(this, verticalPos).play();
+		new CardListScroll(this, verticalPos).play();
 	}
 
 	private double getTopVisibleLine() {

@@ -21,24 +21,25 @@ import java.util.Map;
 
 import io.github.zachohara.eventastic.resize.RegionResizeListener;
 import io.github.zachohara.eventastic.resize.SelfResizeHandler;
-import io.github.zachohara.percussionpacker.animation.slide.SlideCompletionListener;
-import io.github.zachohara.percussionpacker.animation.slide.VerticalSlideTransition;
+import io.github.zachohara.materialish.transition.MaterialTransition;
+import io.github.zachohara.materialish.transition.TransitionCompletionListener;
+import io.github.zachohara.percussionpacker.animation.VerticalCardTranslation;
 import io.github.zachohara.percussionpacker.cardentity.CardEntity;
 import io.github.zachohara.percussionpacker.cardentity.GhostCard;
 import io.github.zachohara.percussionpacker.cardentity.SpaceCard;
+import io.github.zachohara.percussionpacker.util.DataUtil;
 import io.github.zachohara.percussionpacker.util.GraphicsUtil;
 import javafx.animation.Interpolator;
 import javafx.geometry.Point2D;
-import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 
-public class CardSlidePane extends Pane implements SelfResizeHandler, SlideCompletionListener {
+public class CardSlidePane extends Pane implements SelfResizeHandler, TransitionCompletionListener {
 
 	private CardList cardList;
 
 	private GhostCard slidingGhostCard;
 
-	private Map<CardEntity, VerticalSlideTransition> slideTransitions;
+	private Map<CardEntity, VerticalCardTranslation> slideTransitions;
 
 	public CardSlidePane(CardScrollPane parent) {
 		super();
@@ -47,7 +48,7 @@ public class CardSlidePane extends Pane implements SelfResizeHandler, SlideCompl
 
 		this.cardList = new CardList(this);
 
-		this.slideTransitions = new HashMap<CardEntity, VerticalSlideTransition>();
+		this.slideTransitions = new HashMap<CardEntity, VerticalCardTranslation>();
 
 		this.getChildren().add(this.cardList);
 
@@ -70,22 +71,21 @@ public class CardSlidePane extends Pane implements SelfResizeHandler, SlideCompl
 			this.slidingGhostCard.toFront();
 		}
 
-		VerticalSlideTransition transition = new VerticalSlideTransition(slidingCard, distanceY);
-		transition.setCompletionListener(this);
+		VerticalCardTranslation transition = new VerticalCardTranslation(slidingCard, distanceY);
+		transition.addCompletionListener(this);
 		this.slideTransitions.put(slidingCard, transition);
 		transition.play();
 	}
 
 	public void changeSlidingDestination(CardEntity slidingCard, double distanceY) {
-		VerticalSlideTransition transition = this.slideTransitions.get(slidingCard);
+		VerticalCardTranslation transition = this.slideTransitions.get(slidingCard);
 		transition.pause();
-		double lastGoal = transition.getStartValue() + transition.getDifference();
+		double lastGoal = transition.getEndValue();
 		double newGoal = lastGoal + distanceY;
 		double difference = newGoal - slidingCard.getLayoutY();
-		VerticalSlideTransition newTransition =
-				new VerticalSlideTransition(slidingCard, difference);
+		VerticalCardTranslation newTransition = new VerticalCardTranslation(slidingCard, difference);
 		newTransition.setInterpolator(Interpolator.EASE_OUT);
-		newTransition.setCompletionListener(this);
+		newTransition.addCompletionListener(this);
 		this.slideTransitions.put(slidingCard, newTransition);
 		newTransition.play();
 	}
@@ -93,20 +93,28 @@ public class CardSlidePane extends Pane implements SelfResizeHandler, SlideCompl
 	public void stopGhostCardSlide() {
 		if (this.slidingGhostCard != null) {
 			this.slideTransitions.get(this.slidingGhostCard).pause();
-			this.finishSlidingNode(this.slidingGhostCard);
+			this.finishSlidingCard(this.slidingGhostCard);
 		}
 	}
 
 	@Override
-	public void finishSlidingNode(Node slidingNode) {
-		if (slidingNode instanceof CardEntity) {
-			if (slidingNode == this.slidingGhostCard) {
-				this.slidingGhostCard = null;
+	public void handleTransitionCompletion(MaterialTransition transition) {
+		if (transition instanceof VerticalCardTranslation) {
+			CardEntity slidingCard = DataUtil.reverseMapLookup(this.slideTransitions, (VerticalCardTranslation) transition);
+			if (slidingCard != null) {
+				this.finishSlidingCard(slidingCard);
 			}
-			this.getChildren().remove(slidingNode);
-			this.slideTransitions.remove(slidingNode);
-			this.cardList.finishSlidingCard((CardEntity) slidingNode);
 		}
+	}
+	
+	private void finishSlidingCard(CardEntity slidingCard) {
+		if (slidingCard == this.slidingGhostCard) {
+			this.slidingGhostCard = null;
+		}
+		this.getChildren().remove(slidingCard);
+		this.slideTransitions.remove(slidingCard);
+		this.cardList.finishSlidingCard((CardEntity) slidingCard);
+		
 	}
 
 	public double addCard(CardEntity card) {

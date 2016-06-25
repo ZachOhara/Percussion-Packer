@@ -18,8 +18,6 @@ package io.github.zachohara.percussionpacker.animation;
 
 import io.github.zachohara.materialish.transition.resize.CenteredWidthResize;
 import io.github.zachohara.percussionpacker.cardentity.CardEntity;
-import javafx.util.Duration;
-
 
 public class CardResizeTransition extends CenteredWidthResize {
 	
@@ -28,7 +26,7 @@ public class CardResizeTransition extends CenteredWidthResize {
 	public CardResizeTransition(CardEntity resizingCard, double newWidth) {
 		super(resizingCard, newWidth);
 		
-		this.setCycleDuration(Duration.millis(DURATION));
+		this.setMilliDuration(DURATION);
 	}
 	
 }

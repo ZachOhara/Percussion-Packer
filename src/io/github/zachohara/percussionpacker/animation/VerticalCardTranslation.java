@@ -14,12 +14,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package io.github.zachohara.percussionpacker.animation.slide;
+package io.github.zachohara.percussionpacker.animation;
 
-import javafx.scene.Node;
+import io.github.zachohara.materialish.transition.translation.VerticalTranslation;
+import io.github.zachohara.percussionpacker.cardentity.CardEntity;
 
-public interface SlideCompletionListener {
-
-	public void finishSlidingNode(Node slidingNode);
-
+public class VerticalCardTranslation extends VerticalTranslation {
+	
+	private static final double DURATION = 150; // milliseconds;
+	
+	public VerticalCardTranslation(CardEntity translatingCard, double distanceY) {
+		super(translatingCard, distanceY);
+		
+		this.setMilliDuration(DURATION);
+	}
+	
 }

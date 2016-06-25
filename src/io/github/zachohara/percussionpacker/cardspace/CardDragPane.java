@@ -20,26 +20,24 @@ import io.github.zachohara.eventastic.mouse.MouseEventListener;
 import io.github.zachohara.eventastic.mouse.SelfMouseHandler;
 import io.github.zachohara.eventastic.resize.RegionResizeListener;
 import io.github.zachohara.eventastic.resize.SelfResizeHandler;
+import io.github.zachohara.materialish.transition.InterpolatedQuantity;
+import io.github.zachohara.materialish.transition.MaterialTransition;
 import io.github.zachohara.materialish.transition.TransitionCompletionListener;
 import io.github.zachohara.materialish.transition.TransitionProgressListener;
 import io.github.zachohara.materialish.transition.resize.CenteredWidthResize;
+import io.github.zachohara.materialish.transition.translation.TranslationTransition;
+import io.github.zachohara.percussionpacker.animation.CardAlignmentSnap;
 import io.github.zachohara.percussionpacker.animation.CardResizeTransition;
-import io.github.zachohara.percussionpacker.animation.InterpolatedQuantity;
-import io.github.zachohara.percussionpacker.animation.slide.BidirectionalSlideTransition;
-import io.github.zachohara.percussionpacker.animation.slide.SlideCompletionListener;
-import io.github.zachohara.percussionpacker.animation.slide.SlideTransition;
 import io.github.zachohara.percussionpacker.cardentity.CardEntity;
 import io.github.zachohara.percussionpacker.cardentity.GhostCard;
 import io.github.zachohara.percussionpacker.column.Column;
 import io.github.zachohara.percussionpacker.util.GraphicsUtil;
 import javafx.event.EventType;
 import javafx.geometry.Point2D;
-import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 
-public class CardDragPane extends Pane implements SelfMouseHandler, SelfResizeHandler, SlideCompletionListener,
-TransitionCompletionListener<CenteredWidthResize>, TransitionProgressListener<CenteredWidthResize> {
+public class CardDragPane extends Pane implements SelfMouseHandler, SelfResizeHandler, TransitionCompletionListener, TransitionProgressListener {
 
 	public static final double DRAG_DIFFERENCE_THRESHOLD = 10;
 
@@ -146,32 +144,40 @@ TransitionCompletionListener<CenteredWidthResize>, TransitionProgressListener<Ce
 			Point2D ghostPos = GraphicsUtil.getRelativePosition(this, this.ghostCard);
 			double dx = ghostPos.getX() - this.draggingCard.getLayoutX();
 			double dy = ghostPos.getY() - this.draggingCard.getLayoutY();
-			SlideTransition slideTransition = new BidirectionalSlideTransition(this.draggingCard, dx, dy);
-			slideTransition.setCompletionListener(this);
+			TranslationTransition slideTransition = new CardAlignmentSnap(this.draggingCard, dx, dy);
+			slideTransition.addCompletionListener(this);
 			slideTransition.play();
 		}
 	}
+
+	@Override
+	public void handleTransitionProgress(MaterialTransition transition, double progress) {
+		this.interpolatedLastX.interpolate(progress);
+		this.lastCardX = this.interpolatedLastX.getCurrentValue();
+	}
+
+	@Override
+	public void handleTransitionCompletion(MaterialTransition transition) {
+		if (transition instanceof CenteredWidthResize) {
+			this.finishResizing();
+		} else if (transition instanceof TranslationTransition) {
+			this.finishTranslating();
+		}
+	}
 	
-	@Override
-	public void finishSlidingNode(Node slidingNode) {
-		this.columnPane.dropCard(this.draggingCard, this.getSceneCardCenter());
-		this.draggingCard = null;
-		this.ghostCard = null;
-	}
-
-	@Override
-	public void handleTransitionProgress(CenteredWidthResize transition, double progress) {
-		this.lastCardX = this.interpolatedLastX.getInterpolatedValue(progress);
-	}
-
-	@Override
-	public void handleTransitionCompletion(CenteredWidthResize transition) {
+	private void finishResizing() {
 		if (this.isCardDragging) {
 			this.resetDragStartValues();
 			GraphicsUtil.absorbTranslation(this.draggingCard);
 		}
 		this.isCardResizing = false;
 		this.resizeTransition = null;
+	}
+	
+	private void finishTranslating() {
+		this.columnPane.dropCard(this.draggingCard, this.getSceneCardCenter());
+		this.draggingCard = null;
+		this.ghostCard = null;
 	}
 
 	private void resetDragStartValues() {

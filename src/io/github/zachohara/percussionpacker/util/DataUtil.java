@@ -14,36 +14,24 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package io.github.zachohara.percussionpacker.animation;
+package io.github.zachohara.percussionpacker.util;
 
-public class InterpolatedQuantity {
+import java.util.Map;
+import java.util.Map.Entry;
 
-	private double lastFraction;
-
-	private double startValue;
-	private double difference;
-
-	public InterpolatedQuantity(double startValue, double difference) {
-		this.lastFraction = 0;
-		this.startValue = startValue;
-		this.difference = difference;
+public class DataUtil {
+	
+	private DataUtil() {
+		// take no action
 	}
-
-	public double getInterpolatedValue(double fraction) {
-		this.lastFraction = fraction;
-		return this.startValue + (fraction * this.difference);
+	
+	public static <K, V> K reverseMapLookup(Map<K, V> map, V value) {
+		for (Entry<K,V> entry : map.entrySet()) {
+			if (entry.getValue() == value) {
+				return entry.getKey();
+			}
+		}
+		return null;
 	}
-
-	public double getLastFraction() {
-		return this.lastFraction;
-	}
-
-	public double getStartValue() {
-		return this.startValue;
-	}
-
-	public double getDifference() {
-		return this.difference;
-	}
-
+	
 }
