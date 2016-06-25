@@ -26,7 +26,7 @@ public class VerticalScrollTransition extends PropertyTransition {
 
 	public VerticalScrollTransition(ScrollPane pane, double endValue) {
 		super(pane.vvalueProperty(), endValue - pane.getVvalue());
-
+		
 		this.setCycleDuration(Duration.millis(DURATION));
 	}
 

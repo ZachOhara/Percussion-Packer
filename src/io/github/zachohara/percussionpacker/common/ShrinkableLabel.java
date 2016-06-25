@@ -19,7 +19,7 @@ package io.github.zachohara.percussionpacker.common;
 import io.github.zachohara.eventastic.mouse.MouseListenable;
 import io.github.zachohara.eventastic.resize.RegionResizeListener;
 import io.github.zachohara.eventastic.resize.SelfResizeHandler;
-import io.github.zachohara.materialish.font.MaterialLabel;
+import io.github.zachohara.materialish.text.MaterialLabel;
 import javafx.geometry.Pos;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Font;
