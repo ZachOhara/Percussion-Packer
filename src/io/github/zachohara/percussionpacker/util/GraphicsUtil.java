@@ -99,5 +99,12 @@ public class GraphicsUtil {
 		copyTo.setMaxWidth(copyFrom.getMaxWidth());
 		copyTo.setMaxHeight(copyFrom.getMaxHeight());
 	}
+	
+	public static void absorbTranslation(Node n) {
+		n.setLayoutX(n.getLayoutX() + n.getTranslateX());
+		n.setLayoutY(n.getLayoutY() + n.getTranslateY());
+		n.setTranslateX(0);
+		n.setTranslateY(0);
+	}
 
 }

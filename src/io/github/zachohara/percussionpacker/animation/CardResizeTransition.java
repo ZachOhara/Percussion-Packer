@@ -14,19 +14,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package io.github.zachohara.percussionpacker.animation.resize;
+package io.github.zachohara.percussionpacker.animation;
 
-import javafx.scene.layout.Region;
+import io.github.zachohara.materialish.transition.resize.CenteredWidthResize;
+import io.github.zachohara.percussionpacker.cardentity.CardEntity;
+import javafx.util.Duration;
 
-public class WidthTransition extends ResizeTransition {
 
-	public WidthTransition(Region resizing, double newWidth) {
-		super(resizing, resizing.getWidth(), newWidth);
+public class CardResizeTransition extends CenteredWidthResize {
+	
+	private static final double DURATION = 100; // milliseconds
+	
+	public CardResizeTransition(CardEntity resizingCard, double newWidth) {
+		super(resizingCard, newWidth);
+		
+		this.setCycleDuration(Duration.millis(DURATION));
 	}
-
-	@Override
-	protected void setCurrentDim(double currentValue) {
-		this.getResizingRegion().setPrefWidth(currentValue);
-	}
-
+	
 }

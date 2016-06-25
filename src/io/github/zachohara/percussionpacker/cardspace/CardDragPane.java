@@ -20,10 +20,11 @@ import io.github.zachohara.eventastic.mouse.MouseEventListener;
 import io.github.zachohara.eventastic.mouse.SelfMouseHandler;
 import io.github.zachohara.eventastic.resize.RegionResizeListener;
 import io.github.zachohara.eventastic.resize.SelfResizeHandler;
+import io.github.zachohara.materialish.transition.TransitionCompletionListener;
+import io.github.zachohara.materialish.transition.TransitionProgressListener;
+import io.github.zachohara.materialish.transition.resize.CenteredWidthResize;
+import io.github.zachohara.percussionpacker.animation.CardResizeTransition;
 import io.github.zachohara.percussionpacker.animation.InterpolatedQuantity;
-import io.github.zachohara.percussionpacker.animation.resize.CenteredWidthTransition;
-import io.github.zachohara.percussionpacker.animation.resize.ResizeCompletionListener;
-import io.github.zachohara.percussionpacker.animation.resize.ResizeProgressListener;
 import io.github.zachohara.percussionpacker.animation.slide.BidirectionalSlideTransition;
 import io.github.zachohara.percussionpacker.animation.slide.SlideCompletionListener;
 import io.github.zachohara.percussionpacker.animation.slide.SlideTransition;
@@ -36,9 +37,9 @@ import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Region;
 
-public class CardDragPane extends Pane implements SelfMouseHandler, SelfResizeHandler, SlideCompletionListener, ResizeProgressListener, ResizeCompletionListener {
+public class CardDragPane extends Pane implements SelfMouseHandler, SelfResizeHandler, SlideCompletionListener,
+TransitionCompletionListener<CenteredWidthResize>, TransitionProgressListener<CenteredWidthResize> {
 
 	public static final double DRAG_DIFFERENCE_THRESHOLD = 10;
 
@@ -47,7 +48,7 @@ public class CardDragPane extends Pane implements SelfMouseHandler, SelfResizeHa
 	private CardEntity draggingCard;
 	private GhostCard ghostCard;
 
-	private CenteredWidthTransition resizeTransition;
+	private CenteredWidthResize resizeTransition;
 
 	private InterpolatedQuantity interpolatedLastX;
 
@@ -116,7 +117,8 @@ public class CardDragPane extends Pane implements SelfMouseHandler, SelfResizeHa
 			if (!this.isCardResizing) {
 				this.updateCardPosition(dx, dy);
 			} else {
-				this.resizeTransition.setPositionOffset(dx, dy);
+				this.draggingCard.setTranslateX(dx);
+				this.draggingCard.setTranslateY(dy);
 			}
 			Column droppedColumn =
 					this.columnPane.dropCard(this.ghostCard, this.getSceneCardCenter());
@@ -128,9 +130,9 @@ public class CardDragPane extends Pane implements SelfMouseHandler, SelfResizeHa
 		double targetWidth = droppedColumn.getAvailableCardWidth();
 		if (!this.isCardResizing && this.draggingCard.getWidth() != targetWidth) {
 			this.resetDragStartValues();
-			this.resizeTransition = new CenteredWidthTransition(this.draggingCard, targetWidth);
-			this.resizeTransition.setCompletionListener(this);
-			this.resizeTransition.setProgressListener(this);
+			this.resizeTransition = new CardResizeTransition(this.draggingCard, targetWidth);
+			this.resizeTransition.addCompletionListener(this);
+			this.resizeTransition.addProgressListener(this);
 			this.isCardResizing = true;
 			this.interpolatedLastX = new InterpolatedQuantity(this.lastCardX,
 					-(targetWidth - this.draggingCard.getWidth()) / 2);
@@ -158,14 +160,15 @@ public class CardDragPane extends Pane implements SelfMouseHandler, SelfResizeHa
 	}
 
 	@Override
-	public void progressRegionResize(Region r, double fraction) {
-		this.lastCardX = this.interpolatedLastX.getInterpolatedValue(fraction);
+	public void handleTransitionProgress(CenteredWidthResize transition, double progress) {
+		this.lastCardX = this.interpolatedLastX.getInterpolatedValue(progress);
 	}
 
 	@Override
-	public void finishResizingRegion(Region r) {
+	public void handleTransitionCompletion(CenteredWidthResize transition) {
 		if (this.isCardDragging) {
 			this.resetDragStartValues();
+			GraphicsUtil.absorbTranslation(this.draggingCard);
 		}
 		this.isCardResizing = false;
 		this.resizeTransition = null;
@@ -184,7 +187,9 @@ public class CardDragPane extends Pane implements SelfMouseHandler, SelfResizeHa
 	}
 
 	private Point2D getSceneCardCenter() {
-		return this.localToScene(this.draggingCard.getCenterPoint());
+		Point2D scenePoint = this.localToScene(this.draggingCard.getCenterPoint());
+		scenePoint = scenePoint.add(this.draggingCard.getTranslateX(), this.draggingCard.getTranslateY());
+		return scenePoint;
 	}
 
 	private static boolean isOverThreshold(double dx, double dy) {
