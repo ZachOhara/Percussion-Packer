@@ -32,7 +32,7 @@ public class PackingStage extends Stage implements SelfWindowHandler {
 
 	private static PackingStage singleton;
 
-	private WorkspaceScene workspaceScene;
+	private final WorkspaceScene workspaceScene;
 
 	public PackingStage() {
 		super();
@@ -62,7 +62,7 @@ public class PackingStage extends Stage implements SelfWindowHandler {
 		return this.getHeight() - this.getScene().getHeight();
 	}
 
-	public static CardDragPane getCardSpacePane() {
+	public static final CardDragPane getCardSpacePane() {
 		return PackingStage.singleton.workspaceScene.getWorkspaceRootPane().getCardSpacePane();
 	}
 

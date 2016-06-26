@@ -24,7 +24,7 @@ import javafx.scene.layout.Pane;
 
 public class WorkspaceRootPane extends Pane implements SelfResizeHandler {
 
-	private CardDragPane cardPane;
+	private final CardDragPane cardPane;
 
 	public WorkspaceRootPane() {
 		super();
@@ -42,7 +42,7 @@ public class WorkspaceRootPane extends Pane implements SelfResizeHandler {
 		this.setMinHeight(GraphicsUtil.getCumulativeMinHeight(this));
 	}
 
-	protected CardDragPane getCardSpacePane() {
+	protected final CardDragPane getCardSpacePane() {
 		return this.cardPane;
 	}
 

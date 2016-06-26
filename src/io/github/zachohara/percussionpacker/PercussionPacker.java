@@ -22,11 +22,14 @@ import javafx.stage.Stage;
 
 public class PercussionPacker extends Application {
 
-	private Stage mainStage;
+	private final Stage mainStage;
+	
+	public PercussionPacker() {
+		this.mainStage = new PackingStage();
+	}
 
 	@Override
-	public void start(Stage primaryStage) throws Exception {
-		this.mainStage = new PackingStage();
+	public final void start(Stage primaryStage) throws Exception {
 		this.mainStage.show();
 		// use our own stage, and leave the given stage to the garbage collector
 	}

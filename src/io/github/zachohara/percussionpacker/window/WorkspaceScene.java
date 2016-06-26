@@ -29,7 +29,7 @@ import javafx.scene.layout.Region;
 
 public class WorkspaceScene extends Scene implements SelfMouseHandler {
 
-	private WorkspaceRootPane rootPane;
+	private final WorkspaceRootPane rootPane;
 
 	public WorkspaceScene() {
 		super(new WorkspaceRootPane());
