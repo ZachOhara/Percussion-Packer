@@ -100,7 +100,9 @@ public abstract class ParentCard extends Card implements ButtonHandler, SelfResi
 	
 	@Override
 	public void handleButtonPress() {
-		this.addChild(new EquipmentCard());
+		ParentCard newCard = new EquipmentCard();
+		newCard.setColumn(this.getColumn());
+		this.addChild(newCard);
 	}
 
 }
