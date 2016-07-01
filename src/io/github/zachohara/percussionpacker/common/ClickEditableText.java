@@ -37,8 +37,8 @@ public class ClickEditableText extends BorderPane implements FocusHandler, Mouse
 	private String defaultText;
 	private boolean isEditable;
 
-	private ShrinkableLabel displayLabel;
-	private UnfocusableTextField textField;
+	private final ShrinkableLabel displayLabel;
+	private final UnfocusableTextField textField;
 
 	private boolean isEditing;
 	private boolean isDragging;
@@ -66,19 +66,19 @@ public class ClickEditableText extends BorderPane implements FocusHandler, Mouse
 		this.finishRenaming();
 	}
 
-	public double getIdealTextWidth() {
+	public final double getIdealTextWidth() {
 		return this.displayLabel.getIdealTextWidth();
 	}
 
-	public double getIdealTextHeight() {
+	public final double getIdealTextHeight() {
 		return this.displayLabel.getIdealTextHeight();
 	}
 
-	public boolean isEditing() {
+	public final boolean isEditing() {
 		return this.isEditing;
 	}
 
-	public String getText() {
+	public final String getText() {
 		if (!this.displayLabel.getText().equals(this.defaultText)) {
 			return this.displayLabel.getText();
 		} else {
@@ -98,19 +98,19 @@ public class ClickEditableText extends BorderPane implements FocusHandler, Mouse
 		this.notifyParent();
 	}
 
-	public void setDisplayTextStyle(String style) {
+	public final void setDisplayTextStyle(String style) {
 		this.displayLabel.setTextStyle(style);
 	}
 
-	public void setDisplayFont(String font) {
+	public final void setDisplayFont(String font) {
 		this.displayLabel.setFont(font);
 	}
 
-	public void setDisplayPaneStyle(String style) {
+	public final void setDisplayPaneStyle(String style) {
 		this.displayLabel.setStyle(style);
 	}
 
-	public void setNotifyableParent(ResizeHandler parent) {
+	public final void setNotifyableParent(ResizeHandler parent) {
 		this.notifyableParent = parent;
 	}
 
@@ -148,27 +148,27 @@ public class ClickEditableText extends BorderPane implements FocusHandler, Mouse
 		}
 	}
 
-	public void startRenaming() {
+	public final void startRenaming() {
 		this.isEditing = true;
 		this.notifyParent();
 		this.setCenter(this.textField);
 		this.textField.requestFocus();
 	}
 
-	private void finishRenaming() {
+	private final void finishRenaming() {
 		this.isEditing = false;
 		this.notifyParent();
 		this.setText(this.textField.getText());
 		this.setCenter(this.displayLabel);
 	}
 
-	private void notifyParent() {
+	private final void notifyParent() {
 		if (this.notifyableParent != null) {
 			this.notifyableParent.handleResize();
 		}
 	}
 
-	private static boolean isClickOverThreshold(double dx, double dy) {
+	private static final boolean isClickOverThreshold(double dx, double dy) {
 		return Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2)) > MIN_DRAG_THRESHOLD;
 	}
 

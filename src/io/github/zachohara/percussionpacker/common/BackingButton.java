@@ -27,7 +27,7 @@ public class BackingButton extends Region implements SelfResizeHandler {
 
 	public static final int HEIGHT_OFFSET = 1; // in pixels
 
-	private Button button;
+	private final Button button;
 
 	public BackingButton() {
 		super();
@@ -41,11 +41,11 @@ public class BackingButton extends Region implements SelfResizeHandler {
 		this.getChildren().add(this.button);
 	}
 
-	public void arm() {
+	public final void arm() {
 		this.button.arm();
 	}
 
-	public void disarm() {
+	public final void disarm() {
 		this.button.disarm();
 	}
 

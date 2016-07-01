@@ -30,10 +30,10 @@ public class ColumnSeparator extends Pane implements SelfMouseHandler {
 			+ "-fx-background-radius: 3 3 3 3";
 	public static final double THICKNESS = 3; // in pixels
 
-	private ColumnPane parent;
+	private final ColumnPane parent;
 
-	private Column leftColumn;
-	private Column rightColumn;
+	private final Column leftColumn;
+	private final Column rightColumn;
 
 	private boolean isDragging;
 	private double lastMouseX;

@@ -34,9 +34,9 @@ public class ColumnPane extends HBox implements SelfResizeHandler {
 	public static final int NUM_COLUMNS = 4;
 	public static final int NUM_SEPARATORS = NUM_COLUMNS - 1;
 
-	private double[] widthRatios;
-	private Column[] columns;
-	private ColumnSeparator[] separators;
+	private final double[] widthRatios;
+	private final Column[] columns;
+	private final ColumnSeparator[] separators;
 
 	public ColumnPane() {
 		super();
@@ -53,7 +53,7 @@ public class ColumnPane extends HBox implements SelfResizeHandler {
 		this.setMinHeight(GraphicsUtil.getMaximumMinHeight(this));
 	}
 
-	public Column dropCard(CardEntity draggingCard, Point2D scenePoint) {
+	public final Column dropCard(CardEntity draggingCard, Point2D scenePoint) {
 		Point2D localPoint = this.sceneToLocal(scenePoint);
 		Column hoveringColumn = this.getHoveringColumn(draggingCard, localPoint.getX());
 		for (Column c : this.columns) {
@@ -67,7 +67,7 @@ public class ColumnPane extends HBox implements SelfResizeHandler {
 		return hoveringColumn;
 	}
 
-	private Column getHoveringColumn(CardEntity card, double localX) {
+	private final Column getHoveringColumn(CardEntity card, double localX) {
 		// check if the point is in a column
 		for (Column c : this.columns) {
 			if (c.canRecieveCard(card) && c.getLayoutX() <= localX

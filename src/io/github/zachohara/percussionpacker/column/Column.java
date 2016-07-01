@@ -28,8 +28,8 @@ public abstract class Column extends VBox implements SelfResizeHandler {
 
 	public static final int MIN_WIDTH = 120;
 
-	private ColumnTitle titlePane;
-	private CardScrollPane cardList;
+	private final ColumnTitle titlePane;
+	private final CardScrollPane cardList;
 
 	protected Column(String title) {
 		super();
@@ -56,12 +56,12 @@ public abstract class Column extends VBox implements SelfResizeHandler {
 		// ----------------- //
 	}
 
-	public void addCard(Card card) {
+	public final void addCard(Card card) {
 		card.setColumn(this);
 		this.cardList.addCard(card);
 	}
 
-	public void dropCard(CardEntity draggingCard, Point2D scenePoint) {
+	public final void dropCard(CardEntity draggingCard, Point2D scenePoint) {
 		if (draggingCard != null) {
 			draggingCard.setColumn(this);
 		}
@@ -72,7 +72,7 @@ public abstract class Column extends VBox implements SelfResizeHandler {
 		return true;
 	}
 
-	public double getAvailableCardWidth() {
+	public final double getAvailableCardWidth() {
 		return this.cardList.getAvailbleCardWidth();
 	}
 

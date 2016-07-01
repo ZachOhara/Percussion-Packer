@@ -39,15 +39,15 @@ public class WorkspaceScene extends Scene implements SelfMouseHandler {
 		this.rootPane = (WorkspaceRootPane) this.getRoot();
 	}
 
-	protected WorkspaceRootPane getWorkspaceRootPane() {
+	protected final WorkspaceRootPane getWorkspaceRootPane() {
 		return this.rootPane;
 	}
 
-	public double getMinWidth() {
+	public final double getMinWidth() {
 		return this.rootPane.getMinWidth();
 	}
 
-	public double getMinHeight() {
+	public final double getMinHeight() {
 		return this.rootPane.getMinHeight();
 	}
 

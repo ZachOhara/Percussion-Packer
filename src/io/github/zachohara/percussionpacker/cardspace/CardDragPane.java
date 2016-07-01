@@ -41,7 +41,7 @@ public class CardDragPane extends Pane implements SelfMouseHandler, SelfResizeHa
 
 	public static final double DRAG_DIFFERENCE_THRESHOLD = 10;
 
-	private ColumnPane columnPane;
+	private final ColumnPane columnPane;
 
 	private CardEntity draggingCard;
 	private GhostCard ghostCard;
@@ -72,7 +72,7 @@ public class CardDragPane extends Pane implements SelfMouseHandler, SelfResizeHa
 		this.setMinHeight(GraphicsUtil.getCumulativeMinHeight(this));
 	}
 
-	public void recieveDraggingCard(CardEntity draggingCard, Point2D scenePosision,
+	public final void recieveDraggingCard(CardEntity draggingCard, Point2D scenePosision,
 			GhostCard ghostCard) {
 		this.draggingCard = draggingCard;
 		this.ghostCard = ghostCard;

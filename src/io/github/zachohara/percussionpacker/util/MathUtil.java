@@ -16,13 +16,13 @@
 
 package io.github.zachohara.percussionpacker.util;
 
-public class MathUtil {
+public final class MathUtil {
 
 	private MathUtil() {
 		// take no action
 	}
 
-	public static int minIndex(double[] array) {
+	public static final int minIndex(double[] array) {
 		int minIndex = -1;
 		double min = Double.MAX_VALUE;
 		for (int i = 0; i < array.length; i++) {

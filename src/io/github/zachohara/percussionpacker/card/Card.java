@@ -25,8 +25,8 @@ import javafx.scene.input.MouseEvent;
 
 public abstract class Card extends CardEntity implements SelfMouseHandler {
 
-	private BackingButton backingButton;
-	private CardContentPane contentPane;
+	private final BackingButton backingButton;
+	private final CardContentPane contentPane;
 
 	public Card(double height, boolean retitleable, boolean nameable) {
 		super(true, retitleable, nameable);
@@ -43,28 +43,28 @@ public abstract class Card extends CardEntity implements SelfMouseHandler {
 		this.getDisplayPane().getChildren().addAll(this.backingButton, this.contentPane);
 	}
 
-	public String getTitle() {
+	public final String getTitle() {
 		return this.contentPane.getTitle();
 	}
 
-	public void setTitle(String title) {
+	public final void setTitle(String title) {
 		this.contentPane.setTitle(title);
 	}
 
-	public String getName() {
+	public final String getName() {
 		return this.contentPane.getName();
 	}
 
-	public void setName(String name) {
+	public final void setName(String name) {
 		this.contentPane.setName(name);
 	}
 
-	public void promptRetitle() {
+	public final void promptRetitle() {
 		this.contentPane.promptRetitle();
 	}
 
 	@Override
-	public void handleMouse(MouseEvent event, EventType<? extends MouseEvent> type) {
+	public final void handleMouse(MouseEvent event, EventType<? extends MouseEvent> type) {
 		if (type == MouseEvent.MOUSE_ENTERED) {
 			this.backingButton.arm();
 		} else if (type == MouseEvent.MOUSE_EXITED) {

@@ -63,29 +63,29 @@ public class ShrinkableLabel extends BorderPane implements MouseListenable, Self
 		this.setCenter(this.displayText);
 	}
 
-	public String getText() {
+	public final String getText() {
 		return this.displayText.getText();
 	}
 
-	public void setText(String text) {
+	public final void setText(String text) {
 		this.displayText.setText(text);
 		this.handleResize();
 	}
 
-	public void setTextStyle(String style) {
+	public final void setTextStyle(String style) {
 		this.displayText.setStyle(style);
 	}
 
-	public void setFont(String font) {
+	public final void setFont(String font) {
 		this.displayText.setFontStyle(font);
 		this.handleResize();
 	}
 
-	public double getIdealTextWidth() {
+	public final double getIdealTextWidth() {
 		return this.getDuplicateText().prefWidth(0) + this.widthBuffer;
 	}
 
-	public double getIdealTextHeight() {
+	public final double getIdealTextHeight() {
 		return this.getDuplicateText().prefHeight(0) + this.heightBuffer;
 	}
 

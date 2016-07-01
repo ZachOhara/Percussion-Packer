@@ -19,13 +19,13 @@ package io.github.zachohara.percussionpacker.util;
 import java.util.Map;
 import java.util.Map.Entry;
 
-public class DataUtil {
+public final class DataUtil {
 	
 	private DataUtil() {
 		// take no action
 	}
 	
-	public static <K, V> K reverseMapLookup(Map<K, V> map, V value) {
+	public final static <K, V> K reverseMapLookup(Map<K, V> map, V value) {
 		for (Entry<K,V> entry : map.entrySet()) {
 			if (entry.getValue() == value) {
 				return entry.getKey();

@@ -20,7 +20,7 @@ import io.github.zachohara.percussionpacker.util.GraphicsUtil;
 
 public class SpaceCard extends CardEntity {
 
-	private CardEntity parentCard;
+	private final CardEntity parentCard;
 
 	public SpaceCard(CardEntity sizingCard) {
 		super(false, false, false);

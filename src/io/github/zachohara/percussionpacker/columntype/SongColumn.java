@@ -31,7 +31,7 @@ public class SongColumn extends Column implements ButtonHandler {
 	public static final double BUTTON_HEIGHT = 60;
 	public static final String BUTTON_STYLE = "-fx-font-size: 16";
 
-	private Button addSongButton;
+	private final Button addSongButton;
 
 	public SongColumn() {
 		super(TITLE);

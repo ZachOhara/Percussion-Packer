@@ -41,11 +41,11 @@ import javafx.scene.layout.VBox;
 
 public class CardList extends VBox implements CardOwner, SelfMouseHandler, SelfResizeHandler {
 
-	private CardSlidePane slidePane;
+	private final CardSlidePane slidePane;
 
-	private List<CardEntity> cards;
+	private final List<CardEntity> cards;
 
-	private Map<CardEntity, SpaceCard> spacerMap;
+	private final Map<CardEntity, SpaceCard> spacerMap;
 
 	public CardList(CardSlidePane slidePane) {
 		super();
@@ -70,7 +70,7 @@ public class CardList extends VBox implements CardOwner, SelfMouseHandler, SelfR
 	 * @formatter:on
 	 */
 
-	public double dropCard(CardEntity draggingCard, Point2D scenePoint) {
+	public final double dropCard(CardEntity draggingCard, Point2D scenePoint) {
 		double localY = this.sceneToLocal(scenePoint).getY();
 		localY = Math.min(localY, this.getHeight());
 
@@ -182,7 +182,7 @@ public class CardList extends VBox implements CardOwner, SelfMouseHandler, SelfR
 		this.spacerMap.put(slidingCard, spacer);
 	}
 
-	public void finishSlidingCard(CardEntity slidingCard) {
+	public final void finishSlidingCard(CardEntity slidingCard) {
 		if (!this.cards.contains(slidingCard)) {
 			SpaceCard spacer = this.spacerMap.remove(slidingCard);
 			int insertIndex = this.cards.indexOf(spacer);
@@ -408,7 +408,7 @@ public class CardList extends VBox implements CardOwner, SelfMouseHandler, SelfR
 	 * @formatter:on
 	 */
 
-	protected double add(CardEntity element) {
+	protected final double add(CardEntity element) {
 		return this.add(this.cards.size(), element);
 	}
 

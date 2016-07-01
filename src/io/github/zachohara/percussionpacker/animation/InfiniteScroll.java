@@ -47,7 +47,7 @@ public class InfiniteScroll extends Transition implements EventHandler<ActionEve
 		this.reset();
 	}
 
-	public void setScrollRate(double rate) {
+	public final void setScrollRate(double rate) {
 		this.setRate(Math.abs(rate));
 		if (rate == 0) {
 			this.stop();

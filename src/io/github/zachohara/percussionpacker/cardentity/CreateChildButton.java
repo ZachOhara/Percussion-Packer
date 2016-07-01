@@ -26,7 +26,7 @@ public class CreateChildButton extends CardEntity implements SelfResizeHandler {
 
 	public static final double DEFAULT_BUTTON_HEIGHT = 24; // in pixels
 
-	private Button button;
+	private final Button button;
 
 	public CreateChildButton(String buttonText, ButtonHandler handler) {
 		super(false, false, false);

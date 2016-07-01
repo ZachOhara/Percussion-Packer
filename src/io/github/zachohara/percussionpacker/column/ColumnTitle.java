@@ -33,8 +33,8 @@ public class ColumnTitle extends StackPane implements SelfResizeHandler {
 	public static final double PREF_HEIGHT = 80; // in pixels
 	public static final double MIN_HEIGHT = 40; // in pixels
 
-	private ShrinkableLabel titleText;
-	private BackingButton baseButton;
+	private final ShrinkableLabel titleText;
+	private final BackingButton baseButton;
 
 	public ColumnTitle(String name) {
 		super();

@@ -30,8 +30,8 @@ public abstract class CardEntity extends BorderPane implements SelfResizeHandler
 	private Column column;
 	private CardOwner owner;
 
-	private Pane indentPane;
-	private StackPane displayPane;
+	private final Pane indentPane;
+	private final StackPane displayPane;
 
 	private final boolean isDraggable;
 	private final boolean isRetitleable;
@@ -63,19 +63,19 @@ public abstract class CardEntity extends BorderPane implements SelfResizeHandler
 		return this.column;
 	}
 
-	public void setColumn(Column column) {
+	public final void setColumn(Column column) {
 		this.column = column;
 	}
 
-	protected StackPane getDisplayPane() {
+	protected final StackPane getDisplayPane() {
 		return this.displayPane;
 	}
 	
-	protected double getIndent() {
+	protected final double getIndent() {
 		return this.indentPane.getPrefWidth();
 	}
 
-	protected void setIndent(double indent) {
+	protected final void setIndent(double indent) {
 		this.indentPane.setPrefWidth(indent);
 	}
 
@@ -126,11 +126,11 @@ public abstract class CardEntity extends BorderPane implements SelfResizeHandler
 		return this.getPrefHeight();
 	}
 
-	public double getContentWidth() {
+	public final double getContentWidth() {
 		return this.displayPane.getWidth();
 	}
 
-	public Point2D getCenterPoint() {
+	public final Point2D getCenterPoint() {
 		return new Point2D(this.getLayoutX() + (this.getWidth() / 2),
 				this.getLayoutY() + (this.getHeight() / 2));
 	}

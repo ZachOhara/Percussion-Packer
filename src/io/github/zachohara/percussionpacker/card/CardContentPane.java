@@ -31,10 +31,10 @@ public class CardContentPane extends BorderPane implements SelfResizeHandler {
 	// Determined experimentally; do not change here
 	public static final double TEXT_FIELD_WIDTH_MARGIN = 3; // in pixels
 
-	private CardTitle title;
-	private CardNameTag nameTag;
+	private final CardTitle title;
+	private final CardNameTag nameTag;
 
-	private boolean nameable;
+	private final boolean nameable;
 
 	public CardContentPane(boolean retitleable, boolean nameable) {
 		super();
@@ -59,28 +59,28 @@ public class CardContentPane extends BorderPane implements SelfResizeHandler {
 		}
 	}
 
-	public String getTitle() {
+	public final String getTitle() {
 		return this.title.getText();
 	}
 
-	public void setTitle(String title) {
+	public final void setTitle(String title) {
 		this.title.setText(title);
 	}
 
-	public String getName() {
+	public final String getName() {
 		return this.nameTag.getText();
 	}
 
-	public void setName(String name) {
+	public final void setName(String name) {
 		this.nameTag.setText(name);
 	}
 
-	public void promptRetitle() {
+	public final void promptRetitle() {
 		this.title.startRenaming();
 	}
 
 	@Override
-	public void handleResize() {
+	public final void handleResize() {
 		double idealWidth = this.title.getIdealTextWidth() + this.getNameWidth() + 1;
 		double availableWidth = this.getWidth() - this.getHorizontalInsetTotal();
 		double fractionAvailable = Math.min(1, availableWidth / idealWidth);

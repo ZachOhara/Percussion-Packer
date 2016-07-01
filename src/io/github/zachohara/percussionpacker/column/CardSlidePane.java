@@ -56,7 +56,7 @@ public class CardSlidePane extends Pane implements SelfResizeHandler, Transition
 		this.setMinHeight(GraphicsUtil.getCumulativeMinHeight(this));
 	}
 
-	public void recieveSlidingCard(CardEntity slidingCard, Point2D scenePosition,
+	public final void recieveSlidingCard(CardEntity slidingCard, Point2D scenePosition,
 			double distanceY) {
 		if (slidingCard instanceof GhostCard && !(slidingCard instanceof SpaceCard)) {
 			this.slidingGhostCard = (GhostCard) slidingCard;
@@ -77,7 +77,7 @@ public class CardSlidePane extends Pane implements SelfResizeHandler, Transition
 		transition.play();
 	}
 
-	public void changeSlidingDestination(CardEntity slidingCard, double distanceY) {
+	public final void changeSlidingDestination(CardEntity slidingCard, double distanceY) {
 		VerticalCardTranslation transition = this.slideTransitions.get(slidingCard);
 		transition.pause();
 		double lastGoal = transition.getEndValue();
@@ -90,7 +90,7 @@ public class CardSlidePane extends Pane implements SelfResizeHandler, Transition
 		newTransition.play();
 	}
 
-	public void stopGhostCardSlide() {
+	public final void stopGhostCardSlide() {
 		if (this.slidingGhostCard != null) {
 			this.slideTransitions.get(this.slidingGhostCard).pause();
 			this.finishSlidingCard(this.slidingGhostCard);
@@ -117,11 +117,11 @@ public class CardSlidePane extends Pane implements SelfResizeHandler, Transition
 		
 	}
 
-	public double addCard(CardEntity card) {
+	public final double addCard(CardEntity card) {
 		return this.cardList.add(card);
 	}
 
-	public double dropCard(CardEntity draggingCard, Point2D scenePoint) {
+	public final double dropCard(CardEntity draggingCard, Point2D scenePoint) {
 		if (draggingCard == null) {
 			this.stopGhostCardSlide();
 		}

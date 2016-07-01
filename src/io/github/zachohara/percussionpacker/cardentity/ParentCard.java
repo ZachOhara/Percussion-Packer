@@ -45,7 +45,7 @@ public abstract class ParentCard extends Card implements ButtonHandler, SelfResi
 		this.setChildIndent(DEFAULT_CHILD_INDENT);
 	}
 	
-	public int getNumChildren() {
+	public final int getNumChildren() {
 		int numChildren = this.children.size();
 		for (CardEntity card : this.children) {
 			if (card instanceof ParentCard) {
@@ -55,7 +55,7 @@ public abstract class ParentCard extends Card implements ButtonHandler, SelfResi
 		return numChildren;
 	}
 
-	public void addChild(ParentCard child) {
+	public final void addChild(ParentCard child) {
 		this.updateChildIndent(child);
 		int insertIndex = this.children.size() - 1;
 		this.children.add(insertIndex, child);
@@ -63,19 +63,19 @@ public abstract class ParentCard extends Card implements ButtonHandler, SelfResi
 	}
 
 	@Override
-	protected void startDragging() {
+	protected final void startDragging() {
 		// remove all children from the list
 		this.getOwner().removeChildren(this, this.children);
 	}
 
 	@Override
-	protected void finishDragging() {
+	protected final void finishDragging() {
 		// add all children to the list
 		this.getOwner().addChildren(this, this.children);
 	}
 
 	@Override
-	public double getDisplayHeight() {
+	public final double getDisplayHeight() {
 		double cumulHeight = 0;
 		cumulHeight += this.getPrefHeight();
 		for (CardEntity c : this.children) {
@@ -84,14 +84,14 @@ public abstract class ParentCard extends Card implements ButtonHandler, SelfResi
 		return cumulHeight;
 	}
 
-	protected void setChildIndent(double indent) {
+	protected final void setChildIndent(double indent) {
 		this.childIndent = indent;
 		for (CardEntity c : this.children) {
 			this.updateChildIndent(c);
 		}
 	}
 
-	private void updateChildIndent(CardEntity child) {
+	private final void updateChildIndent(CardEntity child) {
 		child.setIndent(this.getIndent() + this.childIndent);
 		if (child instanceof ParentCard) {
 			((ParentCard) child).setChildIndent(this.childIndent * INDENT_DECAY);
@@ -99,7 +99,7 @@ public abstract class ParentCard extends Card implements ButtonHandler, SelfResi
 	}
 	
 	@Override
-	public void handleButtonPress() {
+	public final void handleButtonPress() {
 		ParentCard newCard = new EquipmentCard();
 		newCard.setColumn(this.getColumn());
 		this.addChild(newCard);

@@ -59,12 +59,12 @@ public class CardScrollPane extends ScrollPane implements SelfFocusHandler {
 		this.setMinHeight(MIN_HEIGHT);
 	}
 
-	public void addCard(Card card) {
+	public final void addCard(Card card) {
 		double position = this.cardSlidePane.addCard(card);
 		this.makeCardVisible(position, card.getDisplayHeight());
 	}
 
-	public void dropCard(CardEntity draggingCard, Point2D scenePoint) {
+	public final void dropCard(CardEntity draggingCard, Point2D scenePoint) {
 		this.draggingCard = draggingCard;
 		this.hoveringScenePoint = scenePoint;
 		double position = this.updateHoveringCardPosition();
@@ -79,11 +79,11 @@ public class CardScrollPane extends ScrollPane implements SelfFocusHandler {
 		}
 	}
 
-	public double updateHoveringCardPosition() {
+	public final double updateHoveringCardPosition() {
 		return this.cardSlidePane.dropCard(this.draggingCard, this.hoveringScenePoint);
 	}
 
-	private double getScrollRate(double localY) {
+	private final double getScrollRate(double localY) {
 		if (localY < SCROLL_DISTANCE) {
 			return -(SCROLL_DISTANCE - localY) / SCROLL_DISTANCE;
 		} else if (localY > this.getHeight() - SCROLL_DISTANCE) {
@@ -93,7 +93,7 @@ public class CardScrollPane extends ScrollPane implements SelfFocusHandler {
 		}
 	}
 
-	public double getAvailbleCardWidth() {
+	public final double getAvailbleCardWidth() {
 		return this.cardSlidePane.getWidth();
 	}
 
